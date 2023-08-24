@@ -1,0 +1,67 @@
+name: daone
+description: A new Flutter project.
+version: 1.0.0+1
+environment: 
+  sdk: '>=3.0.0 <4.0.0'
+dependencies: 
+  flutter: 
+    sdk: flutter
+  get: ^4.6.5
+  connectivity_plus: ^4.0.2
+  shared_preferences: ^2.2.0
+  cached_network_image: ^3.2.3
+  flutter_svg: ^2.0.7
+  flutter_svg_provider: ^1.0.4
+  outline_gradient_button: ^2.0.1+1
+  intl: ^0.18.1
+dev_dependencies: 
+  flutter_test: 
+    sdk: flutter
+flutter: 
+  uses-material-design: true
+  assets: 
+    - assets/
+    - assets/images/
+  fonts: 
+    - family: Poppins
+      fonts: 
+        - asset: assets/fonts/PoppinsBold.ttf
+          weight: 700
+        - asset: assets/fonts/PoppinsRegular.ttf
+          weight: 400
+        - asset: assets/fonts/PoppinsMedium.ttf
+          weight: 500
+        - asset: assets/fonts/PoppinsSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/PoppinsMediumItalic.ttf
+          weight: 500
+    - family: Inter
+      fonts: 
+        - asset: assets/fonts/InterRegular.ttf
+          weight: 400
+        - asset: assets/fonts/InterBold.ttf
+          weight: 700
+        - asset: assets/fonts/InterMedium.ttf
+          weight: 500
+    - family: Radley
+      fonts: 
+        - asset: assets/fonts/RadleyRegular.ttf
+          weight: 400
+    - family: Hind Siliguri
+      fonts: 
+        - asset: assets/fonts/HindSiliguriMedium.ttf
+          weight: 500
+        - asset: assets/fonts/HindSiliguriSemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/HindSiliguriRegular.ttf
+          weight: 400
+    - family: DM Sans
+      fonts: 
+        - asset: assets/fonts/DMSansMedium.ttf
+          weight: 500
+    - family: Roboto
+      fonts: 
+        - asset: assets/fonts/RobotoRegular.ttf
+          weight: 400
+        - asset: assets/fonts/RobotoMedium.ttf
+          weight: 500
