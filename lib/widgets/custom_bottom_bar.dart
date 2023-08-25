@@ -44,6 +44,9 @@ class CustomBottomBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: getVerticalSize(
+        100,
+      ),
       margin: getMargin(
         left: 30,
         right: 29,
@@ -71,55 +74,60 @@ class CustomBottomBar extends StatelessWidget {
           ),
         ],
       ),
-      child: Obx(
-        () => BottomNavigationBar(
-          backgroundColor: Colors.transparent,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
-          elevation: 0,
-          currentIndex: selectedIndex.value,
-          type: BottomNavigationBarType.fixed,
-          items: List.generate(bottomMenuList.length, (index) {
-            return BottomNavigationBarItem(
-              icon: CustomImageView(
-                svgPath: bottomMenuList[index].icon,
-                height: getSize(
-                  24,
-                ),
-                width: getSize(
-                  24,
-                ),
-                color: appTheme.indigo100,
-              ),
-              activeIcon: Container(
-                padding: getPadding(
-                  all: 11,
-                ),
-                decoration: AppDecoration.fill9.copyWith(
-                  borderRadius: BorderRadiusStyle.circleBorder25,
-                ),
-                child: CustomImageView(
-                  svgPath: bottomMenuList[index].activeIcon,
+      child: Center(
+        child: Obx(
+          () => BottomNavigationBar(
+            backgroundColor: Colors.transparent,
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
+            elevation: 0,
+            currentIndex: selectedIndex.value,
+            type: BottomNavigationBarType.fixed,
+            items: List.generate(bottomMenuList.length, (index) {
+              return BottomNavigationBarItem(
+                icon: CustomImageView(
+                  svgPath: bottomMenuList[index].icon,
                   height: getSize(
-                    28,
+                    24,
                   ),
                   width: getSize(
-                    28,
+                    24,
                   ),
-                  color: appTheme.whiteA700,
-                  margin: getMargin(
-                    top: 11,
-                    bottom: 11,
+                  color: appTheme.indigo100,
+                ),
+                activeIcon: Container(
+                  padding: getPadding(
+                    left: 10,
+                    right: 10,
+                    top: 5,
+                    bottom: 5,
+                  ),
+                  decoration: AppDecoration.fill9.copyWith(
+                    borderRadius: BorderRadiusStyle.circleBorder25,
+                  ),
+                  child: CustomImageView(
+                    svgPath: bottomMenuList[index].activeIcon,
+                    height: getSize(
+                      28,
+                    ),
+                    width: getSize(
+                      28,
+                    ),
+                    color: appTheme.whiteA700,
+                    margin: getMargin(
+                      top: 11,
+                      bottom: 11,
+                    ),
                   ),
                 ),
-              ),
-              label: '',
-            );
-          }),
-          onTap: (index) {
-            selectedIndex.value = index;
-            onChanged?.call(bottomMenuList[index].type);
-          },
+                label: '',
+              );
+            }),
+            onTap: (index) {
+              selectedIndex.value = index;
+              onChanged?.call(bottomMenuList[index].type);
+            },
+          ),
         ),
       ),
     );
