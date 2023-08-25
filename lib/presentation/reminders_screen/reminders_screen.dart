@@ -34,59 +34,37 @@ class RemindersScreen extends GetWidget<RemindersController> {
                   left: 24,
                   top: 45,
                 ),
-                child: Row(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CustomAppBar(
-                      height: getVerticalSize(
-                        198,
-                      ),
-                      leadingWidth: 375,
-                      leading: AppbarIconbutton(
-                        svgPath: ImageConstant.imgInfo,
-                        margin: getMargin(
-                          left: 24,
-                          right: 303,
-                        ),
-                      ),
+                    AppbarIconbutton(
+                      svgPath: ImageConstant.imgInfo,
                     ),
-                    Container(
-                      height: getVerticalSize(
-                        165,
-                      ),
-                      width: getHorizontalSize(
-                        161,
-                      ),
-                      margin: getMargin(
-                        top: 32,
-                      ),
-                      padding: getPadding(
-                        left: 14,
-                        top: 8,
-                        right: 14,
-                        bottom: 8,
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: fs.Svg(
-                            ImageConstant.imgGroup141,
-                          ),
-                          fit: BoxFit.cover,
+                    Center(
+                      child: Container(
+
+
+                        child: Stack(
+                          children: [
+                            CustomImageView(
+                              svgPath: ImageConstant.imgGroup141,
+
+                              fit: BoxFit.scaleDown,
+                              alignment: Alignment.center,
+
+                            ),
+                            CustomImageView(
+                              svgPath: ImageConstant.imgFrameDeepOrangeA20006,
+                              height: getVerticalSize(
+                                146,
+                              ),
+                              width: getHorizontalSize(
+                                127,
+                              ),
+                              alignment: Alignment.center,
+                            ),
+                          ],
                         ),
-                      ),
-                      child: Stack(
-                        children: [
-                          CustomImageView(
-                            svgPath: ImageConstant.imgFrameDeepOrangeA20006,
-                            height: getVerticalSize(
-                              146,
-                            ),
-                            width: getHorizontalSize(
-                              127,
-                            ),
-                            alignment: Alignment.centerLeft,
-                          ),
-                        ],
                       ),
                     ),
                   ],
@@ -243,7 +221,7 @@ class RemindersScreen extends GetWidget<RemindersController> {
                         ),
                         Container(
                           height: getVerticalSize(
-                            41,
+                            60,
                           ),
                           width: getHorizontalSize(
                             319,
@@ -265,16 +243,11 @@ class RemindersScreen extends GetWidget<RemindersController> {
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: getPadding(
-                                    top: 1,
-                                  ),
-                                  child: Text(
-                                    "lbl_how_many".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.labelLargeGray90003,
-                                  ),
+                                child: Text(
+                                  "lbl_how_many".tr,
+                                  overflow: TextOverflow.ellipsis,
+                                  textAlign: TextAlign.left,
+                                  style: CustomTextStyles.labelLargeGray90003,
                                 ),
                               ),
                               SliderTheme(
