@@ -1,3 +1,6 @@
+import 'package:daone/presentation/affirmation_blast_dialog/affirmation_blast_dialog.dart';
+
+import '../../widgets/custom_bottom_bar.dart';
 import '../home_screen/widgets/completedtask_item_widget.dart';
 import 'controller/home_controller.dart';
 import 'models/completedtask_item_model.dart';
@@ -25,6 +28,7 @@ class HomeScreen extends GetWidget<HomeController> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: CustomBottomBar(),
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
           height: getVerticalSize(
@@ -89,86 +93,91 @@ class HomeScreen extends GetWidget<HomeController> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SizedBox(
-                  height: getVerticalSize(
-                    124,
-                  ),
-                  width: getHorizontalSize(
-                    317,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgBa,
-                        height: getVerticalSize(
-                          124,
-                        ),
-                        width: getHorizontalSize(
-                          317,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            22,
-                          ),
-                        ),
-                        alignment: Alignment.center,
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
+                InkWell(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.blogScreen);
+                  },
+                  child: SizedBox(
+                    height: getVerticalSize(
+                      124,
+                    ),
+                    width: getHorizontalSize(
+                      317,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        CustomImageView(
+                          imagePath: ImageConstant.imgBa,
                           height: getVerticalSize(
-                            83,
+                            124,
                           ),
                           width: getHorizontalSize(
-                            273,
+                            317,
                           ),
-                          margin: getMargin(
-                            bottom: 11,
+                          radius: BorderRadius.circular(
+                            getHorizontalSize(
+                              22,
+                            ),
                           ),
-                          child: Stack(
-                            alignment: Alignment.bottomRight,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: SizedBox(
-                                  width: getHorizontalSize(
-                                    205,
-                                  ),
-                                  child: Text(
-                                    "msg_transform_your_mind".tr,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles
-                                        .titleSmallPoppinsWhiteA70015,
+                          alignment: Alignment.center,
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                            height: getVerticalSize(
+                              83,
+                            ),
+                            width: getHorizontalSize(
+                              273,
+                            ),
+                            margin: getMargin(
+                              bottom: 11,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.bottomRight,
+                              children: [
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: SizedBox(
+                                    width: getHorizontalSize(
+                                      205,
+                                    ),
+                                    child: Text(
+                                      "msg_transform_your_mind".tr,
+                                      maxLines: 3,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: CustomTextStyles
+                                          .titleSmallPoppinsWhiteA70015,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              CustomElevatedButton(
-                                text: "lbl_read_more".tr,
-                                buttonStyle: CustomButtonStyles
-                                    .fillDeeporangeA20006
-                                    .copyWith(
-                                        fixedSize:
-                                            MaterialStateProperty.all<Size>(
-                                                Size(
-                                  getHorizontalSize(
-                                    75,
-                                  ),
-                                  getVerticalSize(
-                                    23,
-                                  ),
-                                ))),
-                                buttonTextStyle:
-                                    CustomTextStyles.labelSmallWhiteA700,
-                                alignment: Alignment.bottomRight,
-                              ),
-                            ],
+                                CustomElevatedButton(
+                                  text: "lbl_read_more".tr,
+                                  buttonStyle: CustomButtonStyles
+                                      .fillDeeporangeA20006
+                                      .copyWith(
+                                          fixedSize:
+                                              MaterialStateProperty.all<Size>(
+                                                  Size(
+                                    getHorizontalSize(
+                                      75,
+                                    ),
+                                    getVerticalSize(
+                                      23,
+                                    ),
+                                  ))),
+                                  buttonTextStyle:
+                                      CustomTextStyles.labelSmallWhiteA700,
+                                  alignment: Alignment.bottomRight,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
                 CustomImageView(
@@ -484,109 +493,119 @@ class HomeScreen extends GetWidget<HomeController> {
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: Container(
-                          height: getVerticalSize(
-                            149,
-                          ),
-                          width: getHorizontalSize(
-                            151,
-                          ),
-                          margin: getMargin(
-                            right: 30,
-                          ),
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgRectangle11,
-                                height: getVerticalSize(
-                                  149,
-                                ),
-                                width: getHorizontalSize(
-                                  151,
-                                ),
-                                radius: BorderRadius.circular(
-                                  getHorizontalSize(
-                                    15,
-                                  ),
-                                ),
-                                alignment: Alignment.center,
-                              ),
-                              Align(
-                                alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                  padding: getPadding(
-                                    left: 14,
-                                    right: 13,
-                                    bottom: 11,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        width: getHorizontalSize(
-                                          124,
-                                        ),
-                                        child: Text(
-                                          "msg_i_deserve_to_experience".tr,
-                                          maxLines: 4,
-                                          overflow: TextOverflow.ellipsis,
-                                          textAlign: TextAlign.center,
-                                          style: CustomTextStyles
-                                              .bodyMediumRadleyGray800,
-                                        ),
-                                      ),
-                                      CustomImageView(
-                                        svgPath:
-                                            ImageConstant.imgArrowrightBlack900,
-                                        height: getSize(
-                                          20,
-                                        ),
-                                        width: getSize(
-                                          20,
-                                        ),
-                                        margin: getMargin(
-                                          top: 12,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          margin: getMargin(
-                            left: 30,
-                            right: 29,
-                            bottom: 95,
-                          ),
-                          padding: getPadding(
-                            left: 20,
-                            top: 12,
-                            right: 20,
-                            bottom: 12,
-                          ),
-                          decoration: AppDecoration.outline1.copyWith(
-                            borderRadius: BorderRadiusStyle.circleBorder37,
-                          ),
-                          child: CustomImageView(
-                            svgPath: ImageConstant.imgGroup681,
+                        child: InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.selectAffirmationScreen);
+                          },
+                          child: Container(
                             height: getVerticalSize(
-                              50,
+                              149,
                             ),
                             width: getHorizontalSize(
-                              268,
+                              151,
+                            ),
+                            margin: getMargin(
+                              right: 30,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgRectangle11,
+                                  height: getVerticalSize(
+                                    149,
+                                  ),
+                                  width: getHorizontalSize(
+                                    151,
+                                  ),
+                                  radius: BorderRadius.circular(
+                                    getHorizontalSize(
+                                      15,
+                                    ),
+                                  ),
+                                  alignment: Alignment.center,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 14,
+                                      right: 13,
+                                      bottom: 11,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          width: getHorizontalSize(
+                                            124,
+                                          ),
+                                          child: Text(
+                                            "msg_i_deserve_to_experience".tr,
+                                            maxLines: 4,
+                                            overflow: TextOverflow.ellipsis,
+                                            textAlign: TextAlign.center,
+                                            style: CustomTextStyles
+                                                .bodyMediumRadleyGray800,
+                                          ),
+                                        ),
+                                        CustomImageView(
+                                          svgPath:
+                                              ImageConstant.imgArrowrightBlack900,
+                                          height: getSize(
+                                            20,
+                                          ),
+                                          width: getSize(
+                                            20,
+                                          ),
+                                          margin: getMargin(
+                                            top: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
+
+                      // navigation bar notworking
+                      // Align(
+                      //   alignment: Alignment.bottomCenter,
+                      //   child: Container(
+                      //     margin: getMargin(
+                      //       left: 30,
+                      //       right: 29,
+                      //       bottom: 95,
+                      //     ),
+                      //     padding: getPadding(
+                      //       left: 20,
+                      //       top: 12,
+                      //       right: 20,
+                      //       bottom: 12,
+                      //     ),
+                      //     decoration: AppDecoration.outline1.copyWith(
+                      //       borderRadius: BorderRadiusStyle.circleBorder37,
+                      //     ),
+                      //     child: CustomImageView(
+                      //       svgPath: ImageConstant.imgGroup681,
+                      //       height: getVerticalSize(
+                      //         50,
+                      //       ),
+                      //       width: getHorizontalSize(
+                      //         268,
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       CustomElevatedButton(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.dailyIntensionRecordScreen);
+                        },
                         text: "lbl_daily_intension".tr,
                         margin: getMargin(
                           top: 165,

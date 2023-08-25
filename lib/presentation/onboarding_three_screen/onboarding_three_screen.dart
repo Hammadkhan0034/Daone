@@ -63,57 +63,60 @@ class OnboardingThreeScreen extends GetWidget<OnboardingThreeController> {
                 ),
               ),
               Spacer(),
-              // Align(
-              //   alignment: Alignment.centerRight,
-              //   child: Card(
-              //     clipBehavior: Clip.antiAlias,
-              //     elevation: 0,
-              //     margin: getMargin(
-              //       right: 30,
-              //       bottom: 40,
-              //     ),
-              //     shape: RoundedRectangleBorder(
-              //       side: BorderSide(
-              //         color: appTheme.gray50,
-              //         width: getHorizontalSize(
-              //           1,
-              //         ),
-              //       ),
-              //       borderRadius: BorderRadiusStyle.circleBorder30,
-              //     ),
-              //     child: Container(
-              //       height: getSize(
-              //         60,
-              //       ),
-              //       width: getSize(
-              //         60,
-              //       ),
-              //       decoration: AppDecoration.outline.copyWith(
-              //         borderRadius: BorderRadiusStyle.circleBorder30,
-              //       ),
-              //       child: Stack(
-              //         children: [
-              //           CustomImageView(
-              //             imagePath: ImageConstant.imgEllipse360x60,
-              //             height: getSize(
-              //               60,
-              //             ),
-              //             width: getSize(
-              //               60,
-              //             ),
-              //             alignment: Alignment.center,
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 0,
+                  margin: getMargin(
+                    right: 30,
+                    bottom: 40,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: appTheme.gray50,
+                      width: getHorizontalSize(
+                        1,
+                      ),
+                    ),
+                    borderRadius: BorderRadiusStyle.circleBorder30,
+                  ),
+                  child: Container(
+                    height: getSize(
+                      60,
+                    ),
+                    width: getSize(
+                      60,
+                    ),
+                    decoration: AppDecoration.outline.copyWith(
+                      borderRadius: BorderRadiusStyle.circleBorder30,
+                    ),
+                    child: Stack(
+                      children: [
+                        CustomImageView(
+                          imagePath: ImageConstant.imgEllipse360x60,
+                          height: getSize(
+                            60,
+                          ),
+                          width: getSize(
+                            60,
+                          ),
+                          alignment: Alignment.center,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         floatingActionButton: CustomFloatingButton(
-          height: 75,
-          width: 75,
+          onTap:(){
+            Get.toNamed(AppRoutes.onboardingFourScreen);
+          } ,
+          height: 50,
+          width: 50,
           child: CustomImageView(
             svgPath: ImageConstant.imgArrowright,
             height: getVerticalSize(

@@ -41,6 +41,9 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       CustomIconButton(
+                        onTap: (){
+                          Get.back();
+                        },
                         height: 48,
                         width: 48,
                         margin: getMargin(
@@ -106,47 +109,52 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                       ),
                     ],
                   ),
-                  Container(
-                    margin: getMargin(
-                      top: 43,
-                    ),
-                    padding: getPadding(
-                      left: 109,
-                      top: 19,
-                      right: 109,
-                      bottom: 19,
-                    ),
-                    decoration: AppDecoration.fill3.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder14,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomImageView(
-                          svgPath: ImageConstant.imgPlus,
-                          height: getSize(
-                            22,
+                  InkWell(
+                    onTap: (){
+                        Get.toNamed(AppRoutes.addTaskScreen);
+                    },
+                    child: Container(
+                      margin: getMargin(
+                        top: 43,
+                      ),
+                      padding: getPadding(
+                        left: 109,
+                        top: 19,
+                        right: 109,
+                        bottom: 19,
+                      ),
+                      decoration: AppDecoration.fill3.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder14,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomImageView(
+                            svgPath: ImageConstant.imgPlus,
+                            height: getSize(
+                              22,
+                            ),
+                            width: getSize(
+                              22,
+                            ),
+                            margin: getMargin(
+                              top: 3,
+                            ),
                           ),
-                          width: getSize(
-                            22,
+                          Padding(
+                            padding: getPadding(
+                              top: 6,
+                            ),
+                            child: Text(
+                              "lbl_add_new_task".tr,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyles.titleSmallPoppinsWhiteA700,
+                            ),
                           ),
-                          margin: getMargin(
-                            top: 3,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            top: 6,
-                          ),
-                          child: Text(
-                            "lbl_add_new_task".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: CustomTextStyles.titleSmallPoppinsWhiteA700,
-                          ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                   Padding(
@@ -177,8 +185,13 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                               .value
                               .selectTaskItemList
                               .value[index];
-                          return SelectTaskItemWidget(
-                            model,
+                          return InkWell(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.sleepTrackerScreen);
+                            },
+                            child: SelectTaskItemWidget(
+                              model,
+                            ),
                           );
                         },
                       ),

@@ -60,7 +60,8 @@ class CustomElevatedButton extends BaseButton {
             visualDensity: VisualDensity(horizontal: -4, vertical: -4),
             padding: MaterialStateProperty.all(EdgeInsets.zero),
           ),
-          onPressed: onTap ?? () {},
+          onPressed: onTap ?? () {
+          },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,

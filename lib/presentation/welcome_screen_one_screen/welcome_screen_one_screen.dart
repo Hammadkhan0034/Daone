@@ -72,6 +72,6 @@ class WelcomeScreenOneScreen extends GetWidget<WelcomeScreenOneController> {
   }
 
   void onTapBtnGetStarted() {
-    Get.toNamed(AppRoutes.onboardingOneScreen);
+    Get.toNamed(AppRoutes.loginPageScreen);
   }
 }

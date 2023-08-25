@@ -143,383 +143,403 @@ class BlogScreen extends GetWidget<BlogController> {
                       style: CustomTextStyles.titleSmallPoppinsBlack900SemiBold,
                     ),
                   ),
-                  Padding(
-                    padding: getPadding(
-                      left: 3,
-                      top: 13,
-                      right: 4,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgRectangle5918,
-                          height: getVerticalSize(
-                            86,
-                          ),
-                          width: getHorizontalSize(
-                            87,
-                          ),
-                          radius: BorderRadius.circular(
-                            getHorizontalSize(
-                              8,
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.latestBlogScreen);
+                    },
+                    child: Padding(
+                      padding: getPadding(
+                        left: 3,
+                        top: 13,
+                        right: 4,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgRectangle5918,
+                            height: getVerticalSize(
+                              86,
                             ),
-                          ),
-                          margin: getMargin(
-                            bottom: 3,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            top: 3,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: getHorizontalSize(
-                                  50,
-                                ),
-                                padding: getPadding(
-                                  left: 7,
-                                  top: 2,
-                                  right: 7,
-                                  bottom: 2,
-                                ),
-                                decoration: AppDecoration.txtFill4.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.txtCircleBorder7,
-                                ),
-                                child: Text(
-                                  "lbl_affirmation".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      CustomTextStyles.poppinsWhiteA700Regular6,
-                                ),
-                              ),
-                              Container(
-                                width: getHorizontalSize(
-                                  206,
-                                ),
-                                margin: getMargin(
-                                  top: 10,
-                                ),
-                                child: Text(
-                                  "msg_the_power_of_se".tr,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles
-                                      .labelLargeBlack900SemiBold,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  top: 3,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "lbl_by_philips".tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          CustomTextStyles.bodySmallGray60003,
-                                    ),
-                                    Container(
-                                      height: getSize(
-                                        5,
-                                      ),
-                                      width: getSize(
-                                        5,
-                                      ),
-                                      margin: getMargin(
-                                        left: 9,
-                                        top: 3,
-                                        bottom: 7,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: appTheme.gray60003,
-                                        borderRadius: BorderRadius.circular(
-                                          getHorizontalSize(
-                                            2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 13,
-                                      ),
-                                      child: Text(
-                                        "lbl_august_01_2023".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60003,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      left: 3,
-                      top: 21,
-                    ),
-                    child: Row(
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgRectangle591886x87,
-                          height: getVerticalSize(
-                            86,
-                          ),
-                          width: getHorizontalSize(
-                            87,
-                          ),
-                          radius: BorderRadius.circular(
-                            getHorizontalSize(
-                              8,
+                            width: getHorizontalSize(
+                              87,
                             ),
-                          ),
-                          margin: getMargin(
-                            bottom: 3,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 17,
-                            top: 3,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: getHorizontalSize(
-                                  50,
-                                ),
-                                padding: getPadding(
-                                  left: 7,
-                                  top: 2,
-                                  right: 7,
-                                  bottom: 2,
-                                ),
-                                decoration: AppDecoration.txtFill4.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.txtCircleBorder7,
-                                ),
-                                child: Text(
-                                  "lbl_affirmation".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      CustomTextStyles.poppinsWhiteA700Regular6,
-                                ),
+                            radius: BorderRadius.circular(
+                              getHorizontalSize(
+                                8,
                               ),
-                              Container(
-                                width: getHorizontalSize(
-                                  165,
-                                ),
-                                margin: getMargin(
-                                  top: 10,
-                                ),
-                                child: Text(
-                                  "msg_unraveling_the_concept".tr,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles
-                                      .labelLargeBlack900SemiBold,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  top: 3,
-                                ),
-                                child: Row(
-                                  children: [
-                                    Text(
-                                      "lbl_by_philips".tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          CustomTextStyles.bodySmallGray60003,
-                                    ),
-                                    Container(
-                                      height: getSize(
-                                        5,
-                                      ),
-                                      width: getSize(
-                                        5,
-                                      ),
-                                      margin: getMargin(
-                                        left: 9,
-                                        top: 3,
-                                        bottom: 7,
-                                      ),
-                                      decoration: BoxDecoration(
-                                        color: appTheme.gray60003,
-                                        borderRadius: BorderRadius.circular(
-                                          getHorizontalSize(
-                                            2,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 13,
-                                      ),
-                                      child: Text(
-                                        "lbl_july_28_2023".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60003,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      left: 3,
-                      top: 21,
-                      right: 4,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgRectangle59181,
-                          height: getVerticalSize(
-                            86,
-                          ),
-                          width: getHorizontalSize(
-                            87,
-                          ),
-                          radius: BorderRadius.circular(
-                            getHorizontalSize(
-                              8,
                             ),
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            top: 3,
-                            bottom: 39,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: getHorizontalSize(
-                                  50,
-                                ),
-                                padding: getPadding(
-                                  left: 7,
-                                  top: 2,
-                                  right: 7,
-                                  bottom: 2,
-                                ),
-                                decoration: AppDecoration.txtFill4.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.txtCircleBorder7,
-                                ),
-                                child: Text(
-                                  "lbl_affirmation".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style:
-                                      CustomTextStyles.poppinsWhiteA700Regular6,
-                                ),
-                              ),
-                              Container(
-                                width: getHorizontalSize(
-                                  206,
-                                ),
-                                margin: getMargin(
-                                  top: 8,
-                                ),
-                                child: Text(
-                                  "msg_the_power_of_se".tr,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles
-                                      .labelLargeBlack900SemiBold,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      left: 4,
-                      top: 133,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            top: 3,
-                            bottom: 3,
-                          ),
-                          child: Text(
-                            "msg_workout_progress".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        CustomDropDown(
-                          width: getHorizontalSize(
-                            76,
-                          ),
-                          icon: Container(
                             margin: getMargin(
-                              left: 5,
-                              right: 10,
-                            ),
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgArrowdown,
+                              bottom: 3,
                             ),
                           ),
-                          hintText: "lbl_weekly".tr,
-                          textStyle: CustomTextStyles.bodySmallWhiteA70010,
-                          items: controller
-                              .blogModelObj.value.dropdownItemList.value,
-                          contentPadding: getPadding(
-                            left: 10,
-                            top: 7,
-                            bottom: 7,
+                          Padding(
+                            padding: getPadding(
+                              top: 3,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: getHorizontalSize(
+                                    50,
+                                  ),
+                                  padding: getPadding(
+                                    left: 7,
+                                    top: 2,
+                                    right: 7,
+                                    bottom: 2,
+                                  ),
+                                  decoration: AppDecoration.txtFill4.copyWith(
+                                    borderRadius:
+                                        BorderRadiusStyle.txtCircleBorder7,
+                                  ),
+                                  child: Text(
+                                    "lbl_affirmation".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        CustomTextStyles.poppinsWhiteA700Regular6,
+                                  ),
+                                ),
+                                Container(
+                                  width: getHorizontalSize(
+                                    206,
+                                  ),
+                                  margin: getMargin(
+                                    top: 10,
+                                  ),
+                                  child: Text(
+                                    "msg_the_power_of_se".tr,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles
+                                        .labelLargeBlack900SemiBold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 3,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "lbl_by_philips".tr,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style:
+                                            CustomTextStyles.bodySmallGray60003,
+                                      ),
+                                      Container(
+                                        height: getSize(
+                                          5,
+                                        ),
+                                        width: getSize(
+                                          5,
+                                        ),
+                                        margin: getMargin(
+                                          left: 9,
+                                          top: 3,
+                                          bottom: 7,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: appTheme.gray60003,
+                                          borderRadius: BorderRadius.circular(
+                                            getHorizontalSize(
+                                              2,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: getPadding(
+                                          left: 13,
+                                        ),
+                                        child: Text(
+                                          "lbl_august_01_2023".tr,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style:
+                                              CustomTextStyles.bodySmallGray60003,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          onChanged: (value) {
-                            controller.onSelected(value);
-                          },
-                        ),
-                      ],
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.latestBlogScreen);
+                    },
+                    child: Padding(
+                      padding: getPadding(
+                        left: 3,
+                        top: 21,
+                      ),
+                      child: Row(
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgRectangle591886x87,
+                            height: getVerticalSize(
+                              86,
+                            ),
+                            width: getHorizontalSize(
+                              87,
+                            ),
+                            radius: BorderRadius.circular(
+                              getHorizontalSize(
+                                8,
+                              ),
+                            ),
+                            margin: getMargin(
+                              bottom: 3,
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(
+                              left: 17,
+                              top: 3,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: getHorizontalSize(
+                                    50,
+                                  ),
+                                  padding: getPadding(
+                                    left: 7,
+                                    top: 2,
+                                    right: 7,
+                                    bottom: 2,
+                                  ),
+                                  decoration: AppDecoration.txtFill4.copyWith(
+                                    borderRadius:
+                                        BorderRadiusStyle.txtCircleBorder7,
+                                  ),
+                                  child: Text(
+                                    "lbl_affirmation".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        CustomTextStyles.poppinsWhiteA700Regular6,
+                                  ),
+                                ),
+                                Container(
+                                  width: getHorizontalSize(
+                                    165,
+                                  ),
+                                  margin: getMargin(
+                                    top: 10,
+                                  ),
+                                  child: Text(
+                                    "msg_unraveling_the_concept".tr,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles
+                                        .labelLargeBlack900SemiBold,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    top: 3,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        "lbl_by_philips".tr,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style:
+                                            CustomTextStyles.bodySmallGray60003,
+                                      ),
+                                      Container(
+                                        height: getSize(
+                                          5,
+                                        ),
+                                        width: getSize(
+                                          5,
+                                        ),
+                                        margin: getMargin(
+                                          left: 9,
+                                          top: 3,
+                                          bottom: 7,
+                                        ),
+                                        decoration: BoxDecoration(
+                                          color: appTheme.gray60003,
+                                          borderRadius: BorderRadius.circular(
+                                            getHorizontalSize(
+                                              2,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: getPadding(
+                                          left: 13,
+                                        ),
+                                        child: Text(
+                                          "lbl_july_28_2023".tr,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style:
+                                              CustomTextStyles.bodySmallGray60003,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.latestBlogScreen);
+                    },
+                    child: Padding(
+                      padding: getPadding(
+                        left: 3,
+                        top: 21,
+                        right: 4,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomImageView(
+                            imagePath: ImageConstant.imgRectangle59181,
+                            height: getVerticalSize(
+                              86,
+                            ),
+                            width: getHorizontalSize(
+                              87,
+                            ),
+                            radius: BorderRadius.circular(
+                              getHorizontalSize(
+                                8,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(
+                              top: 3,
+                              bottom: 39,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: getHorizontalSize(
+                                    50,
+                                  ),
+                                  padding: getPadding(
+                                    left: 7,
+                                    top: 2,
+                                    right: 7,
+                                    bottom: 2,
+                                  ),
+                                  decoration: AppDecoration.txtFill4.copyWith(
+                                    borderRadius:
+                                        BorderRadiusStyle.txtCircleBorder7,
+                                  ),
+                                  child: Text(
+                                    "lbl_affirmation".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        CustomTextStyles.poppinsWhiteA700Regular6,
+                                  ),
+                                ),
+                                Container(
+                                  width: getHorizontalSize(
+                                    206,
+                                  ),
+                                  margin: getMargin(
+                                    top: 8,
+                                  ),
+                                  child: Text(
+                                    "msg_the_power_of_se".tr,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles
+                                        .labelLargeBlack900SemiBold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.latestBlogScreen);
+                    },
+                    child: Padding(
+                      padding: getPadding(
+                        left: 4,
+                        top: 133,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: getPadding(
+                              top: 3,
+                              bottom: 3,
+                            ),
+                            child: Text(
+                              "msg_workout_progress".tr,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: theme.textTheme.titleMedium,
+                            ),
+                          ),
+                          CustomDropDown(
+                            width: getHorizontalSize(
+                              76,
+                            ),
+                            icon: Container(
+                              margin: getMargin(
+                                left: 5,
+                                right: 10,
+                              ),
+                              child: CustomImageView(
+                                svgPath: ImageConstant.imgArrowdown,
+                              ),
+                            ),
+                            hintText: "lbl_weekly".tr,
+                            textStyle: CustomTextStyles.bodySmallWhiteA70010,
+                            items: controller
+                                .blogModelObj.value.dropdownItemList.value,
+                            contentPadding: getPadding(
+                              left: 10,
+                              top: 7,
+                              bottom: 7,
+                            ),
+                            onChanged: (value) {
+                              controller.onSelected(value);
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                   Container(

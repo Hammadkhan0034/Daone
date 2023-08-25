@@ -1,3 +1,5 @@
+import 'package:daone/widgets/custom_bottom_bar.dart';
+
 import '../add_task_screen/widgets/chipviewgroupfo_item_widget.dart';
 import 'controller/add_task_controller.dart';
 import 'models/chipviewgroupfo_item_model.dart';
@@ -24,6 +26,7 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: CustomBottomBar(),
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
@@ -32,6 +35,9 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
           ),
           leadingWidth: 72,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 24,
@@ -495,6 +501,9 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                     ),
                   ),
                   CustomElevatedButton(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.viewAllTaskTabContainerScreen);
+                    },
                     text: "lbl_create".tr,
                     margin: getMargin(
                       top: 37,

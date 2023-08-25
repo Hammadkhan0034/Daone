@@ -98,6 +98,9 @@ class DailyIntensionRecordOneScreen
                 ),
               ),
               CustomElevatedButton(
+                onTap: (){
+                  Get.toNamed(AppRoutes.updateRemindersScreen);
+                },
                 width: getHorizontalSize(
                   315,
                 ),

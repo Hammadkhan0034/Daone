@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+
 import 'controller/register_page_one_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/validation_functions.dart';
@@ -272,6 +274,9 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 ),
                 Spacer(),
                 CustomElevatedButton(
+                   onTap: (){
+        Get.toNamed(AppRoutes.successRegistrationScreen);
+        },
                   width: getHorizontalSize(
                     315,
                   ),
@@ -400,6 +405,9 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                           style: CustomTextStyles.titleSmallPoppinsGray90002,
                         ),
                         TextSpan(
+                          recognizer: TapGestureRecognizer()..onTap=(){
+                              Get.toNamed(AppRoutes.loginPageScreen);
+                          },
                           text: "lbl_login".tr,
                           style:
                               CustomTextStyles.titleSmallPoppinsErrorContainer,

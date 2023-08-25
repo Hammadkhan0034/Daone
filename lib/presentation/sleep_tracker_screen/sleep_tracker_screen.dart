@@ -25,6 +25,9 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
           ),
           leadingWidth: 78,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 30,

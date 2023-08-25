@@ -16,28 +16,36 @@ class CustomBottomBar extends StatelessWidget {
       icon: ImageConstant.imgIconlycurvedhome,
       activeIcon: ImageConstant.imgIconlycurvedhome,
       type: BottomBarEnum.Iconlycurvedhome,
+      route: AppRoutes.homeScreen,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgMenu,
       activeIcon: ImageConstant.imgMenu,
       type: BottomBarEnum.Menu,
+      route: AppRoutes.viewAllTaskTabContainerScreen
     ),
     BottomMenuModel(
       icon: ImageConstant.imgBiplus,
       activeIcon: ImageConstant.imgBiplus,
       type: BottomBarEnum.Biplus,
+      route: AppRoutes.selectTaskScreen,
     ),
     BottomMenuModel(
       icon: ImageConstant.imgCheckmarkIndigo100,
       activeIcon: ImageConstant.imgCheckmarkIndigo100,
       type: BottomBarEnum.Checkmarkindigo100,
+      route: AppRoutes.statsScreen
     ),
     BottomMenuModel(
       icon: ImageConstant.imgUserDeepOrangeA20001,
       activeIcon: ImageConstant.imgUserDeepOrangeA20001,
       type: BottomBarEnum.Userdeeporangea20001,
+      route: AppRoutes.accountSettingScreen,
     )
   ];
+  // void onTapBtnGetStarted() {
+  //   Get.toNamed(AppRoutes.loginPageScreen);
+  // }
 
   Function(BottomBarEnum)? onChanged;
 
@@ -74,8 +82,8 @@ class CustomBottomBar extends StatelessWidget {
       child: Obx(
         () => BottomNavigationBar(
           backgroundColor: Colors.transparent,
-          showSelectedLabels: false,
-          showUnselectedLabels: false,
+          showSelectedLabels: true,
+          //showUnselectedLabels: false,
           elevation: 0,
           currentIndex: selectedIndex.value,
           type: BottomNavigationBarType.fixed,
@@ -117,8 +125,9 @@ class CustomBottomBar extends StatelessWidget {
             );
           }),
           onTap: (index) {
+              Get.toNamed(bottomMenuList[index].route);
             selectedIndex.value = index;
-            onChanged?.call(bottomMenuList[index].type);
+           // onChanged?.call(bottomMenuList[index].type);
           },
         ),
       ),
@@ -139,6 +148,7 @@ class BottomMenuModel {
     required this.icon,
     required this.activeIcon,
     required this.type,
+    required this.route
   });
 
   String icon;
@@ -146,6 +156,7 @@ class BottomMenuModel {
   String activeIcon;
 
   BottomBarEnum type;
+  var route;
 }
 
 class DefaultWidget extends StatelessWidget {

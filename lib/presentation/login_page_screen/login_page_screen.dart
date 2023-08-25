@@ -1,3 +1,5 @@
+import 'package:flutter/gestures.dart';
+
 import 'controller/login_page_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/validation_functions.dart';
@@ -277,6 +279,9 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                           style: CustomTextStyles.bodyMediumGray90002_1,
                         ),
                         TextSpan(
+                          recognizer: TapGestureRecognizer()..onTap= (){
+                            Get.toNamed(AppRoutes.onboardingOneScreen);
+                          },
                           text: "lbl_register".tr,
                           style:
                               CustomTextStyles.titleSmallPoppinsErrorContainer,
