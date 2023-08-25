@@ -50,6 +50,7 @@ class OnboardingTwoScreen extends GetWidget<OnboardingTwoController> {
                         margin: getMargin(
                           left: 7,
                           right: 8,
+                          top: 20,
                         ),
                         decoration: BoxDecoration(
                           image: DecorationImage(
@@ -59,37 +60,43 @@ class OnboardingTwoScreen extends GetWidget<OnboardingTwoController> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        child: CustomAppBar(
-                          height: getVerticalSize(
-                            105,
-                          ),
-                          title: AppbarImage(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: getVerticalSize(20)),
+                          child: CustomAppBar(
                             height: getVerticalSize(
                               105,
                             ),
-                            width: getHorizontalSize(
-                              47,
-                            ),
-                            imagePath: ImageConstant.img868722,
-                            margin: getMargin(
-                              left: 71,
-                            ),
-                          ),
-                          actions: [
-                            AppbarImage(
+                            title: AppbarImage(
                               height: getVerticalSize(
                                 105,
                               ),
                               width: getHorizontalSize(
                                 47,
                               ),
-                              imagePath: ImageConstant.img868721,
+                              imagePath: ImageConstant.img868722,
                               margin: getMargin(
-                                left: 80,
-                                right: 80,
+                                left: 71,
                               ),
                             ),
-                          ],
+                            actions: [
+                              Padding(
+                                padding: EdgeInsets.only(top: getVerticalSize(20)),
+                                child: AppbarImage(
+                                  height: getVerticalSize(
+                                    150,
+                                  ),
+                                  width: getHorizontalSize(
+                                    47,
+                                  ),
+                                  imagePath: ImageConstant.img868721,
+                                  margin: getMargin(
+                                    left: 80,
+                                    right: 80,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -125,57 +132,57 @@ class OnboardingTwoScreen extends GetWidget<OnboardingTwoController> {
                 ),
               ),
               Spacer(),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Card(
-                  clipBehavior: Clip.antiAlias,
-                  elevation: 0,
-                  margin: getMargin(
-                    right: 30,
-                    bottom: 40,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(
-                      color: appTheme.gray50,
-                      width: getHorizontalSize(
-                        1,
-                      ),
-                    ),
-                    borderRadius: BorderRadiusStyle.circleBorder30,
-                  ),
-                  child: Container(
-                    height: getSize(
-                      60,
-                    ),
-                    width: getSize(
-                      60,
-                    ),
-                    decoration: AppDecoration.outline.copyWith(
-                      borderRadius: BorderRadiusStyle.circleBorder30,
-                    ),
-                    child: Stack(
-                      children: [
-                        CustomImageView(
-                          imagePath: ImageConstant.imgEllipse3,
-                          height: getVerticalSize(
-                            60,
-                          ),
-                          width: getHorizontalSize(
-                            30,
-                          ),
-                          alignment: Alignment.centerRight,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Card(
+              //     clipBehavior: Clip.antiAlias,
+              //     elevation: 0,
+              //     margin: getMargin(
+              //       right: 30,
+              //       bottom: 40,
+              //     ),
+              //     shape: RoundedRectangleBorder(
+              //       side: BorderSide(
+              //         color: appTheme.gray50,
+              //         width: getHorizontalSize(
+              //           1,
+              //         ),
+              //       ),
+              //       borderRadius: BorderRadiusStyle.circleBorder30,
+              //     ),
+              //     child: Container(
+              //       height: getSize(
+              //         60,
+              //       ),
+              //       width: getSize(
+              //         60,
+              //       ),
+              //       decoration: AppDecoration.outline.copyWith(
+              //         borderRadius: BorderRadiusStyle.circleBorder30,
+              //       ),
+              //       child: Stack(
+              //         children: [
+              //           CustomImageView(
+              //             imagePath: ImageConstant.imgEllipse3,
+              //             height: getVerticalSize(
+              //               60,
+              //             ),
+              //             width: getHorizontalSize(
+              //               30,
+              //             ),
+              //             alignment: Alignment.centerRight,
+              //           ),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
         floatingActionButton: CustomFloatingButton(
-          height: 50,
-          width: 50,
+          height: 75,
+          width: 75,
           child: CustomImageView(
             svgPath: ImageConstant.imgArrowright,
             height: getVerticalSize(
