@@ -19,21 +19,21 @@ class CompleteScreen extends GetWidget<CompleteController> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            97,
-          ),
-          leadingWidth: 375,
-          leading: AppbarIconbutton(
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(
-              left: 30,
-              top: 4,
-              right: 297,
-              bottom: 4,
-            ),
-          ),
-        ),
+        // appBar: CustomAppBar(
+        //   height: getVerticalSize(
+        //     97,
+        //   ),
+        //   leadingWidth: 375,
+        //   leading: AppbarIconbutton(
+        //     svgPath: ImageConstant.imgInfo,
+        //     margin: getMargin(
+        //       left: 30,
+        //       top: 4,
+        //       right: 297,
+        //       bottom: 4,
+        //     ),
+        //   ),
+        // ),
         body: Container(
           width: double.maxFinite,
           padding: getPadding(
@@ -43,6 +43,25 @@ class CompleteScreen extends GetWidget<CompleteController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              Padding(
+                padding: getPadding(
+                  left: 24,
+                  top: 10,
+                ),
+                child: Row(
+                  children: [
+                    AppbarIconbutton(
+                      svgPath: ImageConstant.imgInfo,
+
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: getVerticalSize(
+                  20,
+                ),
+              ),
               Text(
                 "msg_my_first_affirmation".tr,
                 overflow: TextOverflow.ellipsis,
