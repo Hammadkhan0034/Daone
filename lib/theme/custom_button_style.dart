@@ -80,7 +80,7 @@ class CustomButtonStyles {
   // Gradientnamedeeporange button style
   static ButtonStyle get gradientnamedeeporangeA20006nameprimary =>
       ElevatedButton.styleFrom(
-        backgroundColor: Colors.transparent,
+        backgroundColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(
             28,
