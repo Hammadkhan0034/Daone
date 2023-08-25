@@ -52,8 +52,6 @@ import 'package:daone/presentation/blog_screen/blog_screen.dart';
 import 'package:daone/presentation/blog_screen/binding/blog_binding.dart';
 import 'package:daone/presentation/latest_blog_screen/latest_blog_screen.dart';
 import 'package:daone/presentation/latest_blog_screen/binding/latest_blog_binding.dart';
-import 'package:daone/presentation/latest_blog_one_screen/latest_blog_one_screen.dart';
-import 'package:daone/presentation/latest_blog_one_screen/binding/latest_blog_one_binding.dart';
 import 'package:daone/presentation/community_tab_container_screen/community_tab_container_screen.dart';
 import 'package:daone/presentation/community_tab_container_screen/binding/community_tab_container_binding.dart';
 import 'package:daone/presentation/comment_section_screen/comment_section_screen.dart';
@@ -363,9 +361,9 @@ class AppRoutes {
     ),
     GetPage(
       name: latestBlogOneScreen,
-      page: () => LatestBlogOneScreen(),
+      page: () => LatestBlogScreen(),
       bindings: [
-        LatestBlogOneBinding(),
+        LatestBlogBinding(),
       ],
     ),
     GetPage(
