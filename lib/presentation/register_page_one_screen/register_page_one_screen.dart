@@ -246,13 +246,17 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.centerLeft,
+                  alignment: Alignment.center,
                   child: Obx(
                     () => CustomCheckboxButton(
                       alignment: Alignment.centerLeft,
                       text: "msg_by_continuing_you".tr,
                       iconSize: getHorizontalSize(
                         16,
+                      ),
+                      padding: getPadding(
+                        right: 10,
+                        left: 10,
                       ),
                       value: controller.isCheckbox.value,
                       margin: getMargin(
