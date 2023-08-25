@@ -1,3 +1,4 @@
+import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';

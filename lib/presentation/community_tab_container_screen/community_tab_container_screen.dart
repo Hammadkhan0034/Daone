@@ -39,6 +39,9 @@ class CommunityTabContainerScreen
                     all: 11,
                   ),
                   child: CustomImageView(
+                    onTap: (){
+                      Get.back();
+                    },
                     svgPath: ImageConstant.imgInfo,
                   ),
                 ),

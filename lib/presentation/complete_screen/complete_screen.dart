@@ -163,6 +163,9 @@ class CompleteScreen extends GetWidget<CompleteController> {
                 buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
               ),
               CustomElevatedButton(
+                onTap: (){
+                  Get.toNamed(AppRoutes.homeScreen);
+                },
                 width: getHorizontalSize(
                   315,
                 ),

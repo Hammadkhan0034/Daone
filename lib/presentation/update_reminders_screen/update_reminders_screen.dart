@@ -325,6 +325,9 @@ class UpdateRemindersScreen extends GetWidget<UpdateRemindersController> {
                                 ),
                               ),
                               CustomElevatedButton(
+                                onTap: (){
+                                  Get.toNamed(AppRoutes.completeScreen);
+                                },
                                 width: getHorizontalSize(
                                   315,
                                 ),

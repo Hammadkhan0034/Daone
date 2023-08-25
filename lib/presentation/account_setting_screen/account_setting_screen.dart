@@ -30,6 +30,9 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
           ),
           leadingWidth: 77,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 29,
@@ -160,270 +163,300 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             style: theme.textTheme.titleMedium,
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 14,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightprofile,
-                                height: getSize(
-                                  20,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightprofile,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
                                 ),
-                                width: getSize(
-                                  20,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child: Text(
+                                    "lbl_personal_data".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  bottom: 1,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
                                 ),
-                                child: Text(
-                                  "lbl_personal_data".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 10,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightdocument,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  bottom: 1,
-                                ),
-                                child: Text(
-                                  "lbl_achievement".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(
-                            left: 7,
-                            top: 11,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                svgPath: ImageConstant.imgClock,
-                                height: getSize(
-                                  16,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.personalDataUpdateScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightdocument,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
                                 ),
-                                width: getSize(
-                                  16,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child: Text(
+                                    "lbl_achievement".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
                                 ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 11,
-                                  top: 1,
-                                ),
-                                child: Text(
-                                  "lbl_highlights".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 9,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightchart,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  bottom: 1,
-                                ),
-                                child: Text(
-                                  "lbl_notes".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(
-                            left: 6,
-                            top: 11,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                svgPath: ImageConstant.imgLocation,
-                                height: getSize(
-                                  18,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.personalDataUpdateOneScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 7,
+                              top: 11,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgClock,
+                                  height: getSize(
+                                    16,
+                                  ),
+                                  width: getSize(
+                                    16,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
                                 ),
-                                width: getSize(
-                                  18,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 11,
+                                    top: 1,
+                                  ),
+                                  child: Text(
+                                    "lbl_highlights".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 11,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    bottom: 1,
+                                  ),
                                 ),
-                                child: Text(
-                                  "lbl_community".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(
-                            left: 6,
-                            top: 10,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.blogScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 9,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightchart,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child: Text(
+                                    "lbl_notes".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                svgPath: ImageConstant.imgIconworkout,
-                                height: getVerticalSize(
-                                  16,
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.communityTabContainerScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 6,
+                              top: 11,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgLocation,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
                                 ),
-                                width: getHorizontalSize(
-                                  18,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 11,
+                                  ),
+                                  child: Text(
+                                    "lbl_community".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
                                 ),
-                                margin: getMargin(
-                                  top: 1,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 11,
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.viewFriendsTabContainerScreen);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 6,
+                              top: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgIconworkout,
+                                  height: getVerticalSize(
+                                    16,
+                                  ),
+                                  width: getHorizontalSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                  ),
                                 ),
-                                child: Text(
-                                  "lbl_friends".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 11,
+                                  ),
+                                  child: Text(
+                                    "lbl_friends".tr,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.bodySmallGray60005,
+                                  ),
                                 ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
                                 ),
-                                width: getSize(
-                                  18,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ],

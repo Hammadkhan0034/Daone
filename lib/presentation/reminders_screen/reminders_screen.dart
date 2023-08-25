@@ -320,6 +320,9 @@ class RemindersScreen extends GetWidget<RemindersController> {
                                 ),
                               ),
                               CustomElevatedButton(
+                                onTap: (){
+                                  Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
+                                },
                                 width: getHorizontalSize(
                                   315,
                                 ),

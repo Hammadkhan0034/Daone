@@ -66,57 +66,60 @@ class OnboardingOneScreen extends GetWidget<OnboardingOneController> {
                 ),
               ),
               Spacer(),
-              // Align(
-              //   alignment: Alignment.centerRight,
-              //   child: Card(
-              //     clipBehavior: Clip.antiAlias,
-              //     elevation: 0,
-              //     margin: getMargin(
-              //       right: 30,
-              //       bottom: 40,
-              //     ),
-              //     shape: RoundedRectangleBorder(
-              //       side: BorderSide(
-              //         color: appTheme.gray50,
-              //         width: getHorizontalSize(
-              //           1,
-              //         ),
-              //       ),
-              //       borderRadius: BorderRadiusStyle.circleBorder30,
-              //     ),
-              //     child: Container(
-              //       height: getSize(
-              //         60,
-              //       ),
-              //       width: getSize(
-              //         60,
-              //       ),
-              //       decoration: AppDecoration.outline.copyWith(
-              //         borderRadius: BorderRadiusStyle.circleBorder30,
-              //       ),
-              //       child: Stack(
-              //         children: [
-              //           CustomImageView(
-              //             imagePath: ImageConstant.imgEllipse31,
-              //             height: getSize(
-              //               30,
-              //             ),
-              //             width: getSize(
-              //               30,
-              //             ),
-              //             alignment: Alignment.topRight,
-              //           ),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
+              Align(
+                alignment: Alignment.centerRight,
+                child: Card(
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 0,
+                  margin: getMargin(
+                    right: 30,
+                    bottom: 40,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(
+                      color: appTheme.gray50,
+                      width: getHorizontalSize(
+                        1,
+                      ),
+                    ),
+                    borderRadius: BorderRadiusStyle.circleBorder30,
+                  ),
+                  child: Container(
+                    height: getSize(
+                      60,
+                    ),
+                    width: getSize(
+                      60,
+                    ),
+                    decoration: AppDecoration.outline.copyWith(
+                      borderRadius: BorderRadiusStyle.circleBorder30,
+                    ),
+                    child: Stack(
+                      children: [
+                        CustomImageView(
+                          imagePath: ImageConstant.imgEllipse31,
+                          height: getSize(
+                            30,
+                          ),
+                          width: getSize(
+                            30,
+                          ),
+                          alignment: Alignment.topRight,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),
         floatingActionButton: CustomFloatingButton(
-          height: 75,
-          width: 75,
+          onTap:(){
+            Get.toNamed(AppRoutes.onboardingTwoScreen);
+          } ,
+          height: 50,
+          width: 50,
 
           child: CustomImageView(
             svgPath: ImageConstant.imgArrowright,
