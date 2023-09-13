@@ -1,5 +1,6 @@
 import 'package:flutter/gestures.dart';
 
+import '../../widgets/custom_elevated_button.dart';
 import 'controller/login_page_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/validation_functions.dart';
@@ -232,6 +233,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                     ),
                   ],
                 ),
+                Spacer(),
                 Padding(
                   padding: getPadding(
                     top: 21,
@@ -290,6 +292,31 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                ),
+                Spacer(),
+                CustomElevatedButton(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.successRegistrationScreen);
+                  },
+                  width: getHorizontalSize(
+                    315,
+                  ),
+                  height: getVerticalSize(
+                    57,
+                  ),
+                  text: "lbl_login".tr,
+                  buttonStyle: CustomButtonStyles
+                      .gradientnamedeeporangeA20006nameprimary
+                      .copyWith(
+                      fixedSize: MaterialStateProperty.all<Size>(Size(
+                        double.maxFinite,
+                        getVerticalSize(
+                          57,
+                        ),
+                      ))),
+                  decoration: CustomButtonStyles
+                      .gradientnamedeeporangeA20006nameprimaryDecoration,
+                  buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
                 ),
               ],
             ),

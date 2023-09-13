@@ -10,6 +10,7 @@ class ImageConstant {
   static String img1OrangeA200 = 'assets/images/img_1_orange_a200.svg';
 
   static String imgEllipse262 = 'assets/images/img_ellipse262.png';
+  static String notificationIcon = 'assets/images/Notification-Icon.png';
 
   static String imgFacebook1 = 'assets/images/img_facebook1.svg';
 
