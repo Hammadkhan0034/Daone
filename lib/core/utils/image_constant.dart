@@ -405,4 +405,10 @@ class ImageConstant {
       'assets/images/img_iconlylightmessage_20x20.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+  static String vector9 = 'assets/images/Vector 9.png';
+  static String containerBackgroundImg = 'assets/images/container_background_img.png';
+  static String blackMoreButtonImg = 'assets/images/blackmore.png';
+  static String virtualizationImg = 'assets/images/virtualizationImg.png';
+  static String vector10 = 'assets/images/Vector 10.png';
+  static String ladyImg = 'assets/images/ladyimg.png';
 }
