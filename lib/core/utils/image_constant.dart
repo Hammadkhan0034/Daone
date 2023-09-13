@@ -411,4 +411,8 @@ class ImageConstant {
   static String virtualizationImg = 'assets/images/virtualizationImg.png';
   static String vector10 = 'assets/images/Vector 10.png';
   static String ladyImg = 'assets/images/ladyimg.png';
+  static String workout = 'assets/images/workoutIcon.png';
+  static String job = 'assets/images/job.png';
+  static String moon = 'assets/images/moon.png';
+  static String calender = 'assets/images/Calendar.png';
 }
