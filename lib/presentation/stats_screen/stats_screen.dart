@@ -33,9 +33,6 @@ class StatsScreen extends GetWidget<StatsController> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               CustomIconButton(
-                onTap: (){
-                  Get.back();
-                },
                 height: 45,
                 width: 48,
                 margin: getMargin(

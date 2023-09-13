@@ -1,3 +1,6 @@
+import 'package:daone/presentation/grade_yourself_dialog/controller/grade_yourself_controller.dart';
+import 'package:daone/presentation/grade_yourself_dialog/grade_yourself_dialog.dart';
+
 import 'controller/complete_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
@@ -51,6 +54,9 @@ class CompleteScreen extends GetWidget<CompleteController> {
                 child: Row(
                   children: [
                     AppbarIconbutton(
+                      onTap: (){
+                        Get.back();
+                      },
                       svgPath: ImageConstant.imgInfo,
 
                     ),
@@ -138,6 +144,9 @@ class CompleteScreen extends GetWidget<CompleteController> {
                 ),
               ),
               CustomElevatedButton(
+                onTap: (){
+                  Get.toNamed(AppRoutes.homeScreen);
+                },
                 width: getHorizontalSize(
                   315,
                 ),
@@ -164,7 +173,10 @@ class CompleteScreen extends GetWidget<CompleteController> {
               ),
               CustomElevatedButton(
                 onTap: (){
-                  Get.toNamed(AppRoutes.homeScreen);
+                  Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                    contentPadding: EdgeInsets.zero,
+                    insetPadding: const EdgeInsets.only(left: 0),
+                    content:GradeYourselfDialog(Get.put(GradeYourselfController(),),),));
                 },
                 width: getHorizontalSize(
                   315,

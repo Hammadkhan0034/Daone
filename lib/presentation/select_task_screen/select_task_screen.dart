@@ -1,3 +1,6 @@
+import 'package:daone/presentation/add_task_pop_up_calender_dialog/add_task_pop_up_calender_dialog.dart';
+import 'package:daone/presentation/add_task_pop_up_calender_dialog/controller/add_task_pop_up_calender_controller.dart';
+
 import '../select_task_screen/widgets/select_task_item_widget.dart';
 import 'controller/select_task_controller.dart';
 import 'models/select_task_item_model.dart';
@@ -111,7 +114,7 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                   ),
                   InkWell(
                     onTap: (){
-                        Get.toNamed(AppRoutes.addTaskScreen);
+                      Get.toNamed(AppRoutes.addTaskScreen);
                     },
                     child: Container(
                       margin: getMargin(

@@ -1,3 +1,8 @@
+import 'package:daone/presentation/affirmation_blast_effect_dialog/affirmation_blast_effect_dialog.dart';
+import 'package:daone/presentation/affirmation_blast_effect_dialog/controller/affirmation_blast_effect_controller.dart';
+import 'package:daone/presentation/edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
+import 'package:daone/presentation/edit_affirmation_dialog/edit_affirmation_dialog.dart';
+
 import 'controller/affirmation_blast_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -90,6 +95,10 @@ class AffirmationBlastDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomElevatedButton(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.selectAffirmationScreen);
+                    },
+
                     text: "lbl_select".tr,
                     margin: getMargin(
                       right: 4,
@@ -106,6 +115,12 @@ class AffirmationBlastDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomElevatedButton(
+                    onTap: (){
+                      Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: const EdgeInsets.only(left: 0),
+                        content:EditAffirmationDialog(Get.put(EditAffirmationController(),),),));
+                    },
                     text: "lbl_add_new".tr,
                     margin: getMargin(
                       left: 4,
@@ -124,6 +139,12 @@ class AffirmationBlastDialog extends StatelessWidget {
             ),
           ),
           CustomElevatedButton(
+            onTap: (){
+              Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                contentPadding: EdgeInsets.zero,
+                insetPadding: const EdgeInsets.only(left: 0),
+                content:AffirmationBlastEffectDialog(Get.put(AffirmationBlastEffectController(),),),));
+            },
             text: "msg_blast_affirmation".tr,
             margin: getMargin(
               top: 19,

@@ -28,9 +28,6 @@ class ViewFriendsTabContainerScreen
           ),
           leadingWidth: 77,
           leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 29,

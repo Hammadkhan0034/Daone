@@ -274,9 +274,9 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 ),
                 Spacer(),
                 CustomElevatedButton(
-                   onTap: (){
-        Get.toNamed(AppRoutes.successRegistrationScreen);
-        },
+                  onTap: (){
+                    Get.toNamed(AppRoutes.successRegistrationScreen);
+                  },
                   width: getHorizontalSize(
                     315,
                   ),
@@ -405,8 +405,8 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                           style: CustomTextStyles.titleSmallPoppinsGray90002,
                         ),
                         TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap=(){
-                              Get.toNamed(AppRoutes.loginPageScreen);
+                          recognizer: TapGestureRecognizer()..onTap= (){
+                            Get.toNamed(AppRoutes.loginPageScreen);
                           },
                           text: "lbl_login".tr,
                           style:

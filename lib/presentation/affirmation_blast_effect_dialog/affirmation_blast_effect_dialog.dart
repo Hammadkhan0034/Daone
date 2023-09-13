@@ -1,3 +1,5 @@
+import '../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
+import '../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 import 'controller/affirmation_blast_effect_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -158,6 +160,9 @@ class AffirmationBlastEffectDialog extends StatelessWidget {
               children: [
                 Expanded(
                   child: CustomElevatedButton(
+                    onTap: () {
+                      Get.toNamed(AppRoutes.selectAffirmationScreen);
+                    },
                     text: "lbl_select".tr,
                     margin: getMargin(
                       right: 4,
@@ -174,6 +179,12 @@ class AffirmationBlastEffectDialog extends StatelessWidget {
                 ),
                 Expanded(
                   child: CustomElevatedButton(
+                    onTap: (){
+                      Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: const EdgeInsets.only(left: 0),
+                        content:EditAffirmationDialog(Get.put(EditAffirmationController(),),),));
+                    },
                     text: "lbl_add_new".tr,
                     margin: getMargin(
                       left: 4,

@@ -26,6 +26,9 @@ class DailyIntensionRecordOneScreen
           ),
           leadingWidth: 375,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 30,
@@ -124,6 +127,9 @@ class DailyIntensionRecordOneScreen
                 buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
               ),
               CustomElevatedButton(
+                onTap: (){
+                  Get.toNamed(AppRoutes.homeScreen);
+                },
                 width: getHorizontalSize(
                   315,
                 ),

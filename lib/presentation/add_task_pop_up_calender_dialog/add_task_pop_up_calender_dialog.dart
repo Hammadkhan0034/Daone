@@ -507,6 +507,9 @@ class AddTaskPopUpCalenderDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomOutlinedButton(
+                  onTap: (){
+                    Get.back();
+                  },
                   text: "lbl_cancel".tr,
                   buttonStyle:
                       CustomButtonStyles.outlineDeeporangeA20005.copyWith(
@@ -522,6 +525,9 @@ class AddTaskPopUpCalenderDialog extends StatelessWidget {
                       CustomTextStyles.titleSmallDMSansDeeporangeA20005,
                 ),
                 CustomElevatedButton(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.congratulationsPageScreen);
+                  },
                   text: "lbl_save".tr,
                   margin: getMargin(
                     left: 20,

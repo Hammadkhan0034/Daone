@@ -1,4 +1,5 @@
-import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
+import 'package:daone/presentation/grade_yourself_dialog/controller/grade_yourself_controller.dart';
+import 'package:daone/presentation/grade_yourself_dialog/grade_yourself_dialog.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';
@@ -53,8 +54,6 @@ import 'package:daone/presentation/blog_screen/blog_screen.dart';
 import 'package:daone/presentation/blog_screen/binding/blog_binding.dart';
 import 'package:daone/presentation/latest_blog_screen/latest_blog_screen.dart';
 import 'package:daone/presentation/latest_blog_screen/binding/latest_blog_binding.dart';
-import 'package:daone/presentation/latest_blog_one_screen/latest_blog_one_screen.dart';
-import 'package:daone/presentation/latest_blog_one_screen/binding/latest_blog_one_binding.dart';
 import 'package:daone/presentation/community_tab_container_screen/community_tab_container_screen.dart';
 import 'package:daone/presentation/community_tab_container_screen/binding/community_tab_container_binding.dart';
 import 'package:daone/presentation/comment_section_screen/comment_section_screen.dart';
@@ -171,6 +170,8 @@ class AppRoutes {
   static const String appNavigationScreen = '/app_navigation_screen';
 
   static const String initialRoute = '/initialRoute';
+
+
 
   static List<GetPage> pages = [
     GetPage(
@@ -364,9 +365,9 @@ class AppRoutes {
     ),
     GetPage(
       name: latestBlogOneScreen,
-      page: () => LatestBlogOneScreen(),
+      page: () => LatestBlogScreen(),
       bindings: [
-        LatestBlogOneBinding(),
+        LatestBlogBinding(),
       ],
     ),
     GetPage(

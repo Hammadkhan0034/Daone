@@ -30,9 +30,6 @@ class ViewAllTaskTabContainerScreen
           ),
           leadingWidth: 72,
           leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 24,
@@ -88,85 +85,82 @@ class ViewAllTaskTabContainerScreen
                   ),
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.vertical,
-                child: Padding(
-                  padding: getPadding(
-                    left: 21,
-                    top: 30,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      SizedBox(
-                        height: getVerticalSize(
-                          35,
-                        ),
-                        width: getHorizontalSize(
-                          299,
-                        ),
-                        child: TabBar(
-                          controller: controller.tabviewController,
-                          labelColor: appTheme.whiteA700,
-                          labelStyle: TextStyle(),
-                          unselectedLabelColor: appTheme.deepOrangeA20002,
-                          unselectedLabelStyle: TextStyle(),
-                          indicator: BoxDecoration(
-                            color: appTheme.deepOrangeA20002,
-                            borderRadius: BorderRadius.circular(
-                              getHorizontalSize(
-                                14,
-                              ),
+              Padding(
+                padding: getPadding(
+                  left: 21,
+                  top: 30,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SizedBox(
+                      height: getVerticalSize(
+                        35,
+                      ),
+                      width: getHorizontalSize(
+                        299,
+                      ),
+                      child: TabBar(
+                        controller: controller.tabviewController,
+                        labelColor: appTheme.whiteA700,
+                        labelStyle: TextStyle(),
+                        unselectedLabelColor: appTheme.deepOrangeA20002,
+                        unselectedLabelStyle: TextStyle(),
+                        indicator: BoxDecoration(
+                          color: appTheme.deepOrangeA20002,
+                          borderRadius: BorderRadius.circular(
+                            getHorizontalSize(
+                              14,
                             ),
                           ),
-                          tabs: [
-                            Tab(
-                              child: Text(
-                                "lbl_all".tr,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "lbl_to_do".tr,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                            Tab(
-                              child: Text(
-                                "lbl_in_progress".tr,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
-                          ],
                         ),
+                        tabs: [
+                          Tab(
+                            child: Text(
+                              "lbl_all".tr,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              "lbl_to_do".tr,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Tab(
+                            child: Text(
+                              "lbl_in_progress".tr,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
-                      Container(
-                        width: getHorizontalSize(
-                          123,
-                        ),
-                        margin: getMargin(
-                          left: 10,
-                        ),
-                        padding: getPadding(
-                          left: 17,
-                          top: 4,
-                          right: 17,
-                          bottom: 4,
-                        ),
-                        decoration: AppDecoration.txtFill3.copyWith(
-                          borderRadius: BorderRadiusStyle.txtRoundedBorder16,
-                        ),
-                        child: Text(
-                          "lbl_completed".tr,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style:
-                              CustomTextStyles.titleSmallPoppinsDeeporangeA20002,
-                        ),
+                    ),
+                    Container(
+                      width: getHorizontalSize(
+                        123,
                       ),
-                    ],
-                  ),
+                      margin: getMargin(
+                        left: 10,
+                      ),
+                      padding: getPadding(
+                        left: 17,
+                        top: 4,
+                        right: 17,
+                        bottom: 4,
+                      ),
+                      decoration: AppDecoration.txtFill3.copyWith(
+                        borderRadius: BorderRadiusStyle.txtRoundedBorder16,
+                      ),
+                      child: Text(
+                        "lbl_completed".tr,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                        style:
+                            CustomTextStyles.titleSmallPoppinsDeeporangeA20002,
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(

@@ -419,6 +419,9 @@ class EditAffirmationDialog extends StatelessWidget {
             ),
           ),
           CustomElevatedButton(
+            onTap: (){
+              Get.toNamed(AppRoutes.homeScreen);
+            },
             width: getHorizontalSize(
               252,
             ),

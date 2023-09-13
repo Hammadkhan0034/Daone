@@ -1,4 +1,5 @@
-import 'package:daone/widgets/custom_bottom_bar.dart';
+import 'package:daone/presentation/add_task_pop_up_calender_dialog/add_task_pop_up_calender_dialog.dart';
+import 'package:daone/presentation/add_task_pop_up_calender_dialog/controller/add_task_pop_up_calender_controller.dart';
 
 import '../add_task_screen/widgets/chipviewgroupfo_item_widget.dart';
 import 'controller/add_task_controller.dart';
@@ -26,7 +27,6 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: CustomBottomBar(),
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
@@ -502,7 +502,10 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                   ),
                   CustomElevatedButton(
                     onTap: (){
-                      Get.toNamed(AppRoutes.viewAllTaskTabContainerScreen);
+                      Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                        contentPadding: EdgeInsets.zero,
+                        insetPadding: const EdgeInsets.only(left: 0),
+                        content:AddTaskPopUpCalenderDialog(Get.put(AddTaskPopUpCalenderController(),),),));
                     },
                     text: "lbl_create".tr,
                     margin: getMargin(

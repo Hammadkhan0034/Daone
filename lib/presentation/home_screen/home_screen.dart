@@ -1,6 +1,7 @@
 import 'package:daone/presentation/affirmation_blast_dialog/affirmation_blast_dialog.dart';
+import 'package:daone/presentation/affirmation_blast_dialog/controller/affirmation_blast_controller.dart';
+import 'package:daone/widgets/custom_bottom_bar.dart';
 
-import '../../widgets/custom_bottom_bar.dart';
 import '../home_screen/widgets/completedtask_item_widget.dart';
 import 'controller/home_controller.dart';
 import 'models/completedtask_item_model.dart';
@@ -28,7 +29,9 @@ class HomeScreen extends GetWidget<HomeController> {
 
     return SafeArea(
       child: Scaffold(
-        bottomNavigationBar: CustomBottomBar(),
+        bottomNavigationBar: CustomBottomBar(
+          onChanged: (BottomBarEnum type) {},
+        ),
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
           height: getVerticalSize(
@@ -219,6 +222,7 @@ class HomeScreen extends GetWidget<HomeController> {
                           ),
                         ),
                       ),
+                      //no work
                       Align(
                         alignment: Alignment.topLeft,
                         child: Container(
@@ -270,6 +274,7 @@ class HomeScreen extends GetWidget<HomeController> {
                           ),
                         ),
                       ),
+                      //end
                       Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
@@ -308,75 +313,149 @@ class HomeScreen extends GetWidget<HomeController> {
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Container(
-                          margin: getMargin(
-                            left: 29,
-                          ),
-                          padding: getPadding(
-                            left: 4,
-                            right: 4,
-                          ),
-                          decoration: AppDecoration
-                              .gradientnamedeeporange300namedeeporangeA200
-                              .copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder14,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: SizedBox(
+                      InkWell(
+                        onTap: (){
+                          Get.toNamed(AppRoutes.viewAllTaskTabContainerScreen);
+                        },
+                        child: Align(
+                          alignment: Alignment.topLeft,
+                          child: Container(
+                            width: MediaQuery.sizeOf(context).width*0.4,
+                            margin: getMargin(
+                              left: 29,
+                            ),
+                            padding: getPadding(
+                              left: 4,
+                              right: 4,
+                            ),
+                            decoration: AppDecoration
+                                .gradientnamedeeporange300namedeeporangeA200
+                                .copyWith(
+                              borderRadius: BorderRadiusStyle.roundedBorder14,
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Align(
+                                  alignment: Alignment.centerRight,
+                                  child: SizedBox(
+                                    height: getVerticalSize(
+                                      85,
+                                    ),
+                                    width: getHorizontalSize(
+                                      131,
+                                    ),
+                                    child: Stack(
+                                      alignment: Alignment.topRight,
+                                      children: [
+                                        Opacity(
+                                          opacity: 0.5,
+                                          child: CustomImageView(
+                                            imagePath: ImageConstant.imgVector8,
+                                            height: getVerticalSize(
+                                              75,
+                                            ),
+                                            width: getHorizontalSize(
+                                              58,
+                                            ),
+                                            alignment: Alignment.topLeft,
+                                            margin: getMargin(
+                                              left: 33,
+                                            ),
+                                          ),
+                                        ),
+                                        Opacity(
+                                          opacity: 0.5,
+                                          child: CustomImageView(
+                                            imagePath: ImageConstant.imgVector8,
+                                            height: getVerticalSize(
+                                              75,
+                                            ),
+                                            width: getHorizontalSize(
+                                              58,
+                                            ),
+                                            alignment: Alignment.topRight,
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.bottomLeft,
+                                          child: SizedBox(
+                                            height: getVerticalSize(
+                                              68,
+                                            ),
+                                            width: getHorizontalSize(
+                                              67,
+                                            ),
+                                            child: Stack(
+                                              alignment: Alignment.center,
+                                              children: [
+                                                Align(
+                                                  alignment: Alignment.center,
+                                                  child: Text(
+                                                    "lbl_60".tr,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    textAlign: TextAlign.left,
+                                                    style: CustomTextStyles
+                                                        .titleMediumWhiteA700Medium_2,
+                                                  ),
+                                                ),
+                                                CustomImageView(
+                                                  svgPath:
+                                                      ImageConstant.imgSearch,
+                                                  height: getSize(
+                                                    67,
+                                                  ),
+                                                  width: getSize(
+                                                    67,
+                                                  ),
+                                                  alignment: Alignment.center,
+                                                ),
+                                                CustomImageView(
+                                                  imagePath: ImageConstant
+                                                      .imgVector67x57,
+                                                  height: getVerticalSize(
+                                                    67,
+                                                  ),
+                                                  width: getHorizontalSize(
+                                                    57,
+                                                  ),
+                                                  alignment:
+                                                      Alignment.centerRight,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Container(
                                   height: getVerticalSize(
-                                    85,
+                                    35,
                                   ),
                                   width: getHorizontalSize(
-                                    131,
+                                    90,
+                                  ),
+                                  margin: getMargin(
+                                    left: 11,
+                                    top: 12,
+                                    bottom: 16,
                                   ),
                                   child: Stack(
-                                    alignment: Alignment.topRight,
+                                    alignment: Alignment.bottomLeft,
                                     children: [
-                                      Opacity(
-                                        opacity: 0.5,
-                                        child: CustomImageView(
-                                          imagePath: ImageConstant.imgVector8,
-                                          height: getVerticalSize(
-                                            75,
-                                          ),
-                                          width: getHorizontalSize(
-                                            58,
-                                          ),
-                                          alignment: Alignment.topLeft,
-                                          margin: getMargin(
-                                            left: 33,
-                                          ),
-                                        ),
-                                      ),
-                                      Opacity(
-                                        opacity: 0.5,
-                                        child: CustomImageView(
-                                          imagePath: ImageConstant.imgVector8,
-                                          height: getVerticalSize(
-                                            75,
-                                          ),
-                                          width: getHorizontalSize(
-                                            58,
-                                          ),
-                                          alignment: Alignment.topRight,
-                                        ),
-                                      ),
                                       Align(
-                                        alignment: Alignment.bottomLeft,
+                                        alignment: Alignment.topCenter,
                                         child: SizedBox(
                                           height: getVerticalSize(
-                                            68,
+                                            24,
                                           ),
                                           width: getHorizontalSize(
-                                            67,
+                                            90,
                                           ),
                                           child: Stack(
                                             alignment: Alignment.center,
@@ -384,129 +463,64 @@ class HomeScreen extends GetWidget<HomeController> {
                                               Align(
                                                 alignment: Alignment.center,
                                                 child: Text(
-                                                  "lbl_60".tr,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
+                                                  "lbl_completed".tr,
+                                                  overflow: TextOverflow.ellipsis,
                                                   textAlign: TextAlign.left,
                                                   style: CustomTextStyles
                                                       .titleMediumWhiteA700Medium_2,
                                                 ),
                                               ),
-                                              CustomImageView(
-                                                svgPath:
-                                                    ImageConstant.imgSearch,
-                                                height: getSize(
-                                                  67,
-                                                ),
-                                                width: getSize(
-                                                  67,
-                                                ),
+                                              Align(
                                                 alignment: Alignment.center,
-                                              ),
-                                              CustomImageView(
-                                                imagePath: ImageConstant
-                                                    .imgVector67x57,
-                                                height: getVerticalSize(
-                                                  67,
+                                                child: Text(
+                                                  "lbl_completed".tr,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  textAlign: TextAlign.left,
+                                                  style: CustomTextStyles
+                                                      .titleMediumWhiteA700Medium_2,
                                                 ),
-                                                width: getHorizontalSize(
-                                                  57,
-                                                ),
-                                                alignment:
-                                                    Alignment.centerRight,
                                               ),
                                             ],
                                           ),
                                         ),
                                       ),
+                                      Align(
+                                        alignment: Alignment.bottomLeft,
+                                        child: Text(
+                                          "lbl_80_tasks".tr,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyles
+                                              .labelMediumWhiteA700,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),
-                              ),
-                              Container(
-                                height: getVerticalSize(
-                                  35,
-                                ),
-                                width: getHorizontalSize(
-                                  90,
-                                ),
-                                margin: getMargin(
-                                  left: 11,
-                                  top: 12,
-                                  bottom: 16,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.bottomLeft,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: SizedBox(
-                                        height: getVerticalSize(
-                                          24,
-                                        ),
-                                        width: getHorizontalSize(
-                                          90,
-                                        ),
-                                        child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "lbl_completed".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: CustomTextStyles
-                                                    .titleMediumWhiteA700Medium_2,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: Text(
-                                                "lbl_completed".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: CustomTextStyles
-                                                    .titleMediumWhiteA700Medium_2,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        "lbl_80_tasks".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelMediumWhiteA700,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
                       Align(
                         alignment: Alignment.topRight,
-                        child: InkWell(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.selectAffirmationScreen);
-                          },
-                          child: Container(
-                            height: getVerticalSize(
-                              149,
-                            ),
-                            width: getHorizontalSize(
-                              151,
-                            ),
-                            margin: getMargin(
-                              right: 30,
-                            ),
+                        child: Container(
+                          height: getVerticalSize(
+                            149,
+                          ),
+                          width: getHorizontalSize(
+                            151,
+                          ),
+                          margin: getMargin(
+                            right: 30,
+                          ),
+                          child: InkWell(
+                            onTap: (){
+                              Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                                contentPadding: EdgeInsets.zero,
+                                insetPadding: const EdgeInsets.only(left: 0),
+                                content:AffirmationBlastDialog(Get.put(AffirmationBlastController(),),),));
+                            },
                             child: Stack(
                               alignment: Alignment.bottomCenter,
                               children: [
@@ -572,36 +586,6 @@ class HomeScreen extends GetWidget<HomeController> {
                           ),
                         ),
                       ),
-
-                      // navigation bar notworking
-                      // Align(
-                      //   alignment: Alignment.bottomCenter,
-                      //   child: Container(
-                      //     margin: getMargin(
-                      //       left: 30,
-                      //       right: 29,
-                      //       bottom: 95,
-                      //     ),
-                      //     padding: getPadding(
-                      //       left: 20,
-                      //       top: 12,
-                      //       right: 20,
-                      //       bottom: 12,
-                      //     ),
-                      //     decoration: AppDecoration.outline1.copyWith(
-                      //       borderRadius: BorderRadiusStyle.circleBorder37,
-                      //     ),
-                      //     child: CustomImageView(
-                      //       svgPath: ImageConstant.imgGroup681,
-                      //       height: getVerticalSize(
-                      //         50,
-                      //       ),
-                      //       width: getHorizontalSize(
-                      //         268,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       CustomElevatedButton(
                         onTap: (){
                           Get.toNamed(AppRoutes.dailyIntensionRecordScreen);

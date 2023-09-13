@@ -30,9 +30,6 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
           ),
           leadingWidth: 72,
           leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 24,

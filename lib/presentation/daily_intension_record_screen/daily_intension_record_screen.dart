@@ -175,7 +175,7 @@ class DailyIntensionRecordScreen
               ),
               CustomElevatedButton(
                 onTap: (){
-                  Get.toNamed(AppRoutes.recordingScreen);
+                  Get.toNamed(AppRoutes.remindersScreen);
                 },
                 width: getHorizontalSize(
                   315,
