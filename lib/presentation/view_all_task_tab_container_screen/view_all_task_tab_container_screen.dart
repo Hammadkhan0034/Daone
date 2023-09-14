@@ -1,3 +1,5 @@
+import 'package:daone/widgets/text_widget.dart';
+
 import '../view_all_task_tab_container_screen/widgets/listmonth_item_widget.dart';
 import 'controller/view_all_task_tab_container_controller.dart';
 import 'models/listmonth_item_model.dart';
@@ -44,139 +46,171 @@ class ViewAllTaskTabContainerScreen
         ),
         body: SizedBox(
           width: double.maxFinite,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: getVerticalSize(
-                  101,
-                ),
-                child: Obx(
-                  () => ListView.separated(
-                    padding: getPadding(
-                      left: 4,
-                      top: 16,
-                      right: 6,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: getVerticalSize(
+                    101,
+                  ),
+                  child: Obx(
+                    () => ListView.separated(
+                      padding: getPadding(
+                        left: 4,
+                        top: 16,
+                        right: 6,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      separatorBuilder: (
+                        context,
+                        index,
+                      ) {
+                        return SizedBox(
+                          width: getHorizontalSize(
+                            12,
+                          ),
+                        );
+                      },
+                      itemCount: controller.viewAllTaskTabContainerModelObj
+                          .value.listmonthItemList.value.length,
+                      itemBuilder: (context, index) {
+                        ListmonthItemModel model = controller
+                            .viewAllTaskTabContainerModelObj
+                            .value
+                            .listmonthItemList
+                            .value[index];
+                        return ListmonthItemWidget(
+                          model,
+                        );
+                      },
                     ),
-                    scrollDirection: Axis.horizontal,
-                    separatorBuilder: (
-                      context,
-                      index,
-                    ) {
-                      return SizedBox(
-                        width: getHorizontalSize(
-                          12,
-                        ),
-                      );
-                    },
-                    itemCount: controller.viewAllTaskTabContainerModelObj.value
-                        .listmonthItemList.value.length,
-                    itemBuilder: (context, index) {
-                      ListmonthItemModel model = controller
-                          .viewAllTaskTabContainerModelObj
-                          .value
-                          .listmonthItemList
-                          .value[index];
-                      return ListmonthItemWidget(
-                        model,
-                      );
-                    },
                   ),
                 ),
-              ),
-              Padding(
-                padding: getPadding(
-                  left: 21,
-                  top: 30,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: getVerticalSize(
-                        35,
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 18.0, horizontal: 2),
+                  child: SizedBox(
+                    height: Get.height * 0.04,
+                    width: Get.width,
+                    child: TabBar(
+                      controller: controller.tabviewController,
+                      labelColor: appTheme.whiteA700,
+                      labelStyle: TextStyle(),
+                      unselectedLabelColor: appTheme.deepOrangeA20002,
+                      unselectedLabelStyle: TextStyle(),
+                      indicator: BoxDecoration(
+                        color: appTheme.deepOrangeA20002,
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                      width: getHorizontalSize(
-                        299,
-                      ),
-                      child: TabBar(
-                        controller: controller.tabviewController,
-                        labelColor: appTheme.whiteA700,
-                        labelStyle: TextStyle(),
-                        unselectedLabelColor: appTheme.deepOrangeA20002,
-                        unselectedLabelStyle: TextStyle(),
-                        indicator: BoxDecoration(
-                          color: appTheme.deepOrangeA20002,
-                          borderRadius: BorderRadius.circular(
-                            getHorizontalSize(
-                              14,
-                            ),
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            "lbl_all".tr,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        tabs: [
-                          Tab(
-                            child: Text(
-                              "lbl_all".tr,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        Tab(
+                          child: Text(
+                            "lbl_to_do".tr,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          Tab(
-                            child: Text(
-                              "lbl_to_do".tr,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "lbl_in_progress".tr,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          Tab(
-                            child: Text(
-                              "lbl_in_progress".tr,
-                              overflow: TextOverflow.ellipsis,
-                            ),
+                        ),
+                        Tab(
+                          child: Text(
+                            "lbl_complete".tr,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: getHorizontalSize(
-                        123,
-                      ),
-                      margin: getMargin(
-                        left: 10,
-                      ),
-                      padding: getPadding(
-                        left: 17,
-                        top: 4,
-                        right: 17,
-                        bottom: 4,
-                      ),
-                      decoration: AppDecoration.txtFill3.copyWith(
-                        borderRadius: BorderRadiusStyle.txtRoundedBorder16,
-                      ),
-                      child: Text(
-                        "lbl_completed".tr,
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style:
-                            CustomTextStyles.titleSmallPoppinsDeeporangeA20002,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: getVerticalSize(
-                  448,
+                SizedBox(
+                  height: getVerticalSize(
+                    448,
+                  ),
+                  child: TabBarView(
+                    controller: controller.tabviewController,
+                    children: [
+                      Container(
+                        height: Get.height * 0.3,
+                        width: Get.width * 0.9,
+                        decoration: BoxDecoration(
+                            //  color: Colors.teal
+                            ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: Get.height * 0.08),
+                            Center(
+                                child: Image.asset(
+                              ImageConstant.vector21,
+                              scale: 4,
+                            )),
+                            SizedBox(height: Get.height * 0.04),
+                            TextWidget(
+                              text:
+                                  "You don't have any schedule today.\n Tap the plus button to create new task",
+                              color: Colors.black38,
+                              fsize: 14,
+                              font: FontWeight.w500,
+                            )
+                          ],
+                        ),
+                      ),
+                      Container(
+                        height: Get.height * 0.3,
+                        width: Get.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.teal,
+                        ),
+                        child: ListView.builder(
+                            itemCount: 2,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  height: Get.height * 0.1,
+                                  width: Get.width * 0.9,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child:
+                                        TextWidget(text:"10 min Cardio, Biceps", color:Color(0xff4F5753) , fsize: 15),
+                                      ),
+                                      Row(
+                                        children: [
+                                          TextWidget(text:"Work out", color:Color(0xffF46837) , fsize: 15),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+                      ),
+                      ViewAllTaskPage(),
+                      ViewAllTaskPage(),
+                    ],
+                  ),
                 ),
-                child: TabBarView(
-                  controller: controller.tabviewController,
-                  children: [
-                    ViewAllTaskPage(),
-                    ViewAllTaskPage(),
-                    ViewAllTaskPage(),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
         bottomNavigationBar: CustomBottomBar(

@@ -385,5 +385,7 @@ final Map<String, String> enUs = {
   "msg_you_have_completed": "You have completed all tasks today",
   "lbl_full_name": "Full Name",
   "lbl_4_july_2023": "4 July 2023",
-  "lbl_the_crixus": "The Crixus"
+  "lbl_the_crixus": "The Crixus",
+  "lbl_task_description": "Task Description",
+  "lbl_complete": "Complete",
 };

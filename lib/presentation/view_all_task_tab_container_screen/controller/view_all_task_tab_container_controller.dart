@@ -4,6 +4,6 @@ import 'package:daone/core/app_export.dart';import 'package:daone/presentation/v
 /// current viewAllTaskTabContainerModelObj
 class ViewAllTaskTabContainerController extends GetxController with  GetSingleTickerProviderStateMixin {Rx<ViewAllTaskTabContainerModel> viewAllTaskTabContainerModelObj = ViewAllTaskTabContainerModel().obs;
 
-late TabController tabviewController = Get.put(TabController(vsync: this, length: 3));
+late TabController tabviewController = Get.put(TabController(vsync: this, length: 4));
 
  }
