@@ -19,4 +19,12 @@ class StatsController extends GetxController {
     }
     statsModelObj.value.dropdownItemList.refresh();
   }
+   var dailyAffirmationsProgressList= [
+     ["20",ImageConstant.group10110,"Affirmation Complete"],
+     ["20",ImageConstant.group10110,"Affirmation Complete"],
+     ["20",ImageConstant.group10110,"Affirmation Complete"],
+     ["20",ImageConstant.group10110,"Affirmation Complete"],
+   ];
+
+
 }

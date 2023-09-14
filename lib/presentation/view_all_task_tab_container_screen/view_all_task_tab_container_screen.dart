@@ -25,7 +25,7 @@ class ViewAllTaskTabContainerScreen
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: appTheme.whiteA700,
+        backgroundColor: Colors.white,
         appBar: CustomAppBar(
           height: getVerticalSize(
             79,
@@ -170,35 +170,58 @@ class ViewAllTaskTabContainerScreen
                         height: Get.height * 0.3,
                         width: Get.width * 0.9,
                         decoration: BoxDecoration(
-                          color: Colors.teal,
                         ),
                         child: ListView.builder(
-                            itemCount: 2,
+                            itemCount: 5,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  height: Get.height * 0.1,
+                                  height: Get.height * 0.12,
                                   width: Get.width * 0.9,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child:
-                                        TextWidget(text:"10 min Cardio, Biceps", color:Color(0xff4F5753) , fsize: 15),
-                                      ),
-                                      Row(
-                                        children: [
-                                          TextWidget(text:"Work out", color:Color(0xffF46837) , fsize: 15),
-                                        ],
+                                    color: Colors.white24,
+                                    border: Border.all(
+                                     color: Colors.black12,
+                                      // color:Color(0xffF46837),// Border color
+                                      width: 2.0, // Border width
+                                    ),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.white, // Shadow color
+                                        offset: Offset(0, 2), // Specify the offset of the shadow
+                                        blurRadius: 6.0, // Specify the blur radius
+                                        spreadRadius: 2.0, // Specify the spread radius
                                       ),
                                     ],
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(11.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        TextWidget(text:"10 min Cardio, Biceps", color:Color(0xff4F5753) , fsize: 15),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            TextWidget(text:"Work out", color:Color(0xffF46837) , fsize: 15),
+                                            Container(
+                                                width: Get.width*0.2,
+                                                height:Get.height*0.04,
+                                                decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(31.000001907348633),
+                                                    color: Color(0xff048c44)),
+                                              child: Center(
+                                                child: TextWidget(text: "Done",color: Colors.white,fsize: 14,font: FontWeight.w500),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

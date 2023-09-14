@@ -418,4 +418,6 @@ class ImageConstant {
   static String  doubleQuotation  = 'assets/images/“.png';
   static String  doubleQuotation2  = 'assets/images/doublequotation2.png';
   static String  vector21 = 'assets/images/vector21.png';
+  static String  arrowDown2 = 'assets/images/ArrowDown2.png';
+  static String  group10110 = 'assets/images/Ground10110.png';
 }

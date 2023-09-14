@@ -388,4 +388,6 @@ final Map<String, String> enUs = {
   "lbl_the_crixus": "The Crixus",
   "lbl_task_description": "Task Description",
   "lbl_complete": "Complete",
+  "lbl_daily_affirmations_progress": "Daily Affirmations Progress",
+  "lbl_weekly_improvements_graph" :"Weekly Improvements Graph",
 };
