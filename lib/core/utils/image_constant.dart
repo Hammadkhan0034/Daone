@@ -419,5 +419,13 @@ class ImageConstant {
   static String  doubleQuotation2  = 'assets/images/doublequotation2.png';
   static String  vector21 = 'assets/images/vector21.png';
   static String  arrowDown2 = 'assets/images/ArrowDown2.png';
-  static String  group10110 = 'assets/images/Ground10110.png';
+  static String  group10110 = 'assets/images/Group10110.png';
+  static String  camIcon = 'assets/images/camicon.png';
+  static String  group10111 = 'assets/images/Group10111.png';
+  static String  msgIcon = 'assets/images/msg.png';
+  static String  imageBadges = 'assets/images/badges.png';
+  static String  imageBlog1 = 'assets/images/blog1.png';
+  static String  imageBlog2 = 'assets/images/blog2.png';
+  static String  imageBlog3 = 'assets/images/blog3.png';
+  static String  profile2 = 'assets/images/profile2.png';
 }

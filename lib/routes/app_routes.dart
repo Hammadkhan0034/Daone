@@ -1,5 +1,7 @@
 import 'package:daone/presentation/grade_yourself_dialog/controller/grade_yourself_controller.dart';
 import 'package:daone/presentation/grade_yourself_dialog/grade_yourself_dialog.dart';
+import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
+import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';
@@ -398,6 +400,14 @@ class AppRoutes {
         ViewFriendsTabContainerBinding(),
       ],
     ),
+  GetPage(
+      name: viewFriendFullProfilePage,
+      page: () =>ViewFriendFullProfilePage(),
+      bindings: [
+        ViewFriendsFullProfileBinding(),
+      ],
+    ),
+
     GetPage(
       name: accountSettingScreen,
       page: () => AccountSettingScreen(),

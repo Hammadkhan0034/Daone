@@ -1,3 +1,5 @@
+import '../comment_section_one_dialog/comment_section_one_dialog.dart';
+import '../comment_section_one_dialog/controller/comment_section_one_controller.dart';
 import 'controller/community_controller.dart';
 import 'models/community_model.dart';
 import 'package:daone/core/app_export.dart';
@@ -110,6 +112,9 @@ class CommunityPage extends StatelessWidget {
                             Opacity(
                               opacity: 0.1,
                               child: CustomIconButton(
+                                onTap: (){
+                                  Get.toNamed(AppRoutes.commentSectionScreen);
+                                },
                                 height: 40,
                                 width: 40,
                                 padding: getPadding(
@@ -139,6 +144,11 @@ class CommunityPage extends StatelessWidget {
                             Opacity(
                               opacity: 0.1,
                               child: CustomIconButton(
+                                onTap: (){
+                                  Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                                    contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+                                    content:CommentSectionOneDialog(Get.put(CommentSectionOneController(),),),));
+                                },
                                 height: 40,
                                 width: 40,
                                 margin: getMargin(

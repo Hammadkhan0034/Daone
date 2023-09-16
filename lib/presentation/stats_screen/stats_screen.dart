@@ -2,7 +2,6 @@ import 'package:daone/widgets/text_widget.dart';
 
 import 'controller/stats_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_bottom_bar.dart';
 import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
@@ -17,7 +16,6 @@ class StatsScreen extends GetWidget<StatsController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-    final statsController =Get.find<StatsController>();
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
@@ -36,7 +34,7 @@ class StatsScreen extends GetWidget<StatsController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CustomIconButton(
-                  onTap: (){
+                  onTap: () {
                     Get.back();
                   },
                   height: 45,
@@ -51,81 +49,304 @@ class StatsScreen extends GetWidget<StatsController> {
                     svgPath: ImageConstant.imgInfo,
                   ),
                 ),
-                SizedBox(height: Get.height*0.02),
+                SizedBox(height: Get.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TextWidget(text: "lbl_daily_affirmations_progress".tr, color: Colors.black, fsize:16,font: FontWeight.w600,),
+                    TextWidget(
+                      text: "lbl_daily_affirmations_progress".tr,
+                      color: Colors.black,
+                      fsize: 16,
+                      font: FontWeight.w600,
+                    ),
                     Container(
-                      width: Get.width*0.17,
-                      height: Get.height*0.044,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            gradient: LinearGradient(
-                              begin: Alignment.centerRight, end: Alignment.centerLeft,
-                              colors: [Color(0xfff36430), Color(0xffff7e67)], )),
+                      width: Get.width * 0.17,
+                      height: Get.height * 0.044,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          gradient: LinearGradient(
+                            begin: Alignment.centerRight,
+                            end: Alignment.centerLeft,
+                            colors: [Color(0xfff36430), Color(0xffff7e67)],
+                          )),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          TextWidget(text: "Daily", color: Colors.white, fsize:12),
-                          Image.asset(ImageConstant.arrowDown2,scale: 1.4,),
+                          TextWidget(
+                              text: "Daily", color: Colors.white, fsize: 12),
+                          Image.asset(
+                            ImageConstant.arrowDown2,
+                            scale: 1.4,
+                          ),
                         ],
                       ),
                     ),
                   ],
                 ),
-          Container(
-            color: Colors.deepOrange,
-            height: 300,
-            width: 300,
-            child: ListView.builder(
-              itemCount: 4, // Total 4 items, 2 in each row
-              itemBuilder: (context, index) {
-                if (index % 2 == 0) {
-                  // Create a row for even-indexed items
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      // Item 1 in the row
-                      Container(
-                          width: 136.51783752441406,
-                          height: 136.51783752441406,
-                          decoration:     BoxDecoration(
-                              borderRadius: BorderRadius.circular(25.921112060546875),
-                              color: Colors.white),
-                        child:Column(
+                SizedBox(height: Get.height*0.05),
+                Row(
+                  children: [
+                    Material(
+                      borderRadius: BorderRadius.circular(25.921112060546875),
+                      elevation: 5,
+                      child: Container(
+                        width: Get.width * 0.35,
+                        height: Get.height * 0.16,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25.921112060546875),
+                            color: Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            TextWidget(text: "20", color:Colors.black, fsize: 17),
+                            Container(
+                              width: Get.width * 0.4,
+                              height: Get.height * 0.08,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * 0.04,
+                                  ),
+                                  TextWidget(
+                                    text: "20",
+                                    color: Colors.black,
+                                    fsize: 50,
+                                    font: FontWeight.w600,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top:3.0),
+                                    child: Image.asset(
+                                      ImageConstant.group10110,
+                                      scale: 3.8,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.02,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Center(
+                                child: TextWidget(
+                              text: "lbl_affirmation_completed".tr,
+                              color: Colors.black54,
+                              fsize: 12,
+                              font: FontWeight.w500,
+                            )),
                           ],
-                        ) ,
-                      ),
-                      // Item 2 in the row
-                      Container(
-                        width: 150,
-                        height: 150,
-                        color: Colors.green,
-                        child: Center(
-                          child: Text('Item ${index + 2}'),
                         ),
                       ),
-                    ],
-                  );
-                } else {
-                  // For odd-indexed items, return an empty SizedBox
-                  return SizedBox.shrink();
-                }
-              },
-            ),
-          ),
+                    ),
+                    SizedBox(width: Get.width*0.13),
+                    Material(
+                      borderRadius: BorderRadius.circular(25.921112060546875),
+                      elevation: 5,
+                      child: Container(
+                        width: Get.width * 0.35,
+                        height: Get.height * 0.16,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25.921112060546875),
+                            color: Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: Get.width * 0.4,
+                              height: Get.height * 0.08,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * 0.03,
+                                  ),
+                                  TextWidget(
+                                    text: "13",
+                                    color: Colors.black,
+                                    fsize: 50,
+                                    font: FontWeight.w600,
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.01,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 10.0),
+                                    child: Image.asset(
+                                      ImageConstant.camIcon,
+                                      scale: 3.8,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.03,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Center(
+                                child: TextWidget(
+                                  text: "lbl_intentions_completed".tr,
+                                  color: Colors.black54,
+                                  fsize: 12,
+                                  font: FontWeight.w500,
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: Get.height*0.05),
+                Row(
+                  children: [
+                    Material(
+                      borderRadius: BorderRadius.circular(25.921112060546875),
+                      elevation: 5,
+                      child: Container(
+                        width: Get.width * 0.35,
+                        height: Get.height * 0.16,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25.921112060546875),
+                            color: Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: Get.width * 0.4,
+                              height: Get.height * 0.08,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * 0.04,
+                                  ),
+                                  TextWidget(
+                                    text: "29",
+                                    color: Colors.black,
+                                    fsize: 50,
+                                    font: FontWeight.w600,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left:3,top:8.0),
+                                    child: Image.asset(
+                                      ImageConstant.group10111,
+                                      scale: 3.8,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.02,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Center(
+                                child: TextWidget(
+                                  text: "lbl_tasks_completed".tr,
+                                  color: Colors.black54,
+                                  fsize: 12,
+                                  font: FontWeight.w500,
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(width: Get.width*0.13),
+                    Material(
+                      borderRadius: BorderRadius.circular(25.921112060546875),
+                      elevation: 5,
+                      child: Container(
+                        width: Get.width * 0.35,
+                        height: Get.height * 0.16,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25.921112060546875),
+                            color: Colors.white),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              width: Get.width * 0.4,
+                              height: Get.height * 0.08,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: Get.width * 0.03,
+                                  ),
+                                  TextWidget(
+                                    text: "10",
+                                    color: Colors.black,
+                                    fsize: 50,
+                                    font: FontWeight.w600,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 8,left: 5,right: 5),
+                                    child: Image.asset(
+                                      ImageConstant.msgIcon,
+                                      scale: 3.8,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Center(
+                                child: TextWidget(
+                                  text: "lbl_blog_read".tr,
+                                  color: Colors.black54,
+                                  fsize: 12,
+                                  font: FontWeight.w500,
+                                )),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 Padding(
-                  padding: getPadding(
-                    top: 45,
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: TextWidget(
+                    text: "lbl_week_badges".tr,
+                    color: Colors.black,
+                    fsize: 16,
+                    font: FontWeight.w600,
                   ),
-                  child: Text(
-                    "lbl_weekly_improvements_graph".tr,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: theme.textTheme.titleMedium,
+                ),
+                Container(
+                  height: Get.height*0.11,
+                  width: Get.width,
+                  child: ListView.builder(
+                       scrollDirection: Axis.horizontal,
+                      itemCount: 15,
+                      itemBuilder: (context,index){
+                    return Center(
+                      child: Image.asset(ImageConstant.imageBadges,fit: BoxFit.cover),
+                    );
+                  }),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: TextWidget(
+                    text:                     "lbl_weekly_improvements_graph".tr,
+                    color: Colors.black,
+                    fsize: 16,
+                    font: FontWeight.w600,
                   ),
                 ),
                 Padding(
@@ -147,7 +368,7 @@ class StatsScreen extends GetWidget<StatsController> {
                             children: [
                               SizedBox(
                                 height: getVerticalSize(
-                                  137,
+                                  160,
                                 ),
                                 width: getHorizontalSize(
                                   285,
@@ -222,7 +443,8 @@ class StatsScreen extends GetWidget<StatsController> {
                                       "lbl_sun".tr,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
-                                      style: CustomTextStyles.bodySmallGray60005,
+                                      style:
+                                          CustomTextStyles.bodySmallGray60005,
                                     ),
                                     Padding(
                                       padding: getPadding(
@@ -341,7 +563,8 @@ class StatsScreen extends GetWidget<StatsController> {
                                 "lbl_60".tr,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: CustomTextStyles.labelMediumErrorContainer,
+                                style:
+                                    CustomTextStyles.labelMediumErrorContainer,
                               ),
                             ),
                             Padding(
@@ -389,9 +612,6 @@ class StatsScreen extends GetWidget<StatsController> {
               ],
             ),
           ),
-        ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
         ),
       ),
     );

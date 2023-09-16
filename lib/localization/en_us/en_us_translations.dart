@@ -390,4 +390,9 @@ final Map<String, String> enUs = {
   "lbl_complete": "Complete",
   "lbl_daily_affirmations_progress": "Daily Affirmations Progress",
   "lbl_weekly_improvements_graph" :"Weekly Improvements Graph",
+  "lbl_affirmation_completed" :"Affirmation\nCompleted",
+  "lbl_intentions_completed" :"Intentions\nCompleted",
+  "lbl_tasks_completed" :"Tasks\nCompleted",
+  "lbl_blog_read" :"Blogs\nRead",
+  "lbl_week_badges" :"Last Week Badges",
 };

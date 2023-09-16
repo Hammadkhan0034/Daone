@@ -496,9 +496,6 @@ class BlogScreen extends GetWidget<BlogController> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

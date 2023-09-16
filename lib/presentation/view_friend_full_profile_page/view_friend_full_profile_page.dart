@@ -1,3 +1,8 @@
+import '../../widgets/app_bar/appbar_iconbutton.dart';
+import '../../widgets/app_bar/appbar_subtitle_2.dart';
+import '../../widgets/app_bar/custom_app_bar.dart';
+import '../add_new_friends_dialog/add_new_friends_dialog.dart';
+import '../add_new_friends_dialog/controller/add_new_friends_controller.dart';
 import 'controller/view_friend_full_profile_controller.dart';
 import 'models/view_friend_full_profile_model.dart';
 import 'package:daone/core/app_export.dart';
@@ -11,17 +16,35 @@ class ViewFriendFullProfilePage extends StatelessWidget {
       : super(
           key: key,
         );
-
-  ViewFriendFullProfileController controller = Get.put(
-      ViewFriendFullProfileController(ViewFriendFullProfileModel().obs));
-
-  @override
+  //
+  // ViewFriendFullProfileController controller = Get.put(
+  //     ViewFriendFullProfileController(ViewFriendFullProfileModel().obs));
+  //
+   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
+        appBar: CustomAppBar(
+          height: getVerticalSize(
+            97,
+          ),
+          leadingWidth: 77,
+          leading: AppbarIconbutton(
+            svgPath: ImageConstant.imgInfo,
+            margin: getMargin(
+              left: 29,
+              top: 4,
+              bottom: 4,
+            ),
+          ),
+          centerTitle: true,
+          title: AppbarSubtitle2(
+            text: "lbl_profile".tr,
+          ),
+        ),
         body: SizedBox(
           width: mediaQueryData.size.width,
           child: SingleChildScrollView(
@@ -628,6 +651,10 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                         ),
                       ),
                       CustomElevatedButton(
+                      onTap: (){
+                        Get.dialog(AlertDialog(backgroundColor: Colors.transparent, contentPadding: EdgeInsets.zero,
+                          insetPadding: const EdgeInsets.only(left: 0), content:AddNewFriendsDialog(Get.put(AddNewFriendsController(),),),));
+                      },
                         width: getHorizontalSize(
                           307,
                         ),

@@ -1,3 +1,5 @@
+import 'package:daone/widgets/text_widget.dart';
+
 import 'controller/sleep_tracker_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
@@ -21,7 +23,7 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
           height: getVerticalSize(
-            56,
+            69,
           ),
           leadingWidth: 78,
           leading: AppbarIconbutton(
@@ -32,17 +34,18 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 30,
-              top: 5,
+              top: 10,
               bottom: 5,
             ),
           ),
           centerTitle: true,
-          title: Text(
-            "lbl_sleep_tracker".tr,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.left,
-            style: CustomTextStyles.titleMediumBold,
-          ),
+          title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
+          // title: Text(
+          //   "lbl_sleep_tracker".tr,
+          //   overflow: TextOverflow.ellipsis,
+          //   textAlign: TextAlign.left,
+          //   style: CustomTextStyles.titleMediumBold,
+          // ),
         ),
         body: Container(
           width: double.maxFinite,
@@ -334,416 +337,419 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
                     ],
                   ),
                 ),
-                Container(
-                  height: getVerticalSize(
-                    388,
-                  ),
-                  width: getHorizontalSize(
-                    315,
-                  ),
-                  margin: getMargin(
-                    top: 26,
-                    bottom: 5,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.bottomCenter,
-                    children: [
-                      CustomImageView(
-                        svgPath: ImageConstant.imgSleepgraph,
-                        height: getVerticalSize(
-                          78,
-                        ),
-                        width: getHorizontalSize(
-                          315,
-                        ),
-                        alignment: Alignment.topCenter,
-                        margin: getMargin(
-                          top: 74,
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "lbl_today_schedule".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: theme.textTheme.titleMedium,
-                            ),
-                            Container(
-                              margin: getMargin(
-                                top: 12,
-                              ),
-                              padding: getPadding(
-                                all: 15,
-                              ),
-                              decoration: AppDecoration.outline2.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder22,
-                              ),
-                              child: Row(
-                                children: [
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgFolderDeepPurple50,
-                                    height: getSize(
-                                      30,
-                                    ),
-                                    width: getSize(
-                                      30,
-                                    ),
-                                    margin: getMargin(
-                                      top: 17,
-                                      bottom: 16,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: getPadding(
-                                      left: 15,
-                                      top: 7,
-                                      bottom: 6,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: "lbl_bedtime".tr,
-                                                style: CustomTextStyles
-                                                    .titleSmallPoppinsGray90002,
-                                              ),
-                                              TextSpan(
-                                                text: "lbl_09_00pm".tr,
-                                                style: theme.textTheme.bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 6,
-                                          ),
-                                          child: RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "lbl_in".tr,
-                                                  style:
-                                                      theme.textTheme.bodyMedium,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_6".tr,
-                                                  style: CustomTextStyles
-                                                      .titleMediumGray80005,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_hours".tr,
-                                                  style:
-                                                      theme.textTheme.bodyMedium,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_22minutes".tr,
-                                                  style: CustomTextStyles
-                                                      .titleMediumGray80005,
-                                                ),
-                                              ],
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: getPadding(
-                                      bottom: 5,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        CustomImageView(
-                                          svgPath: ImageConstant.imgOverflowmenu,
-                                          height: getSize(
-                                            14,
-                                          ),
-                                          width: getSize(
-                                            14,
-                                          ),
-                                        ),
-                                        Obx(
-                                          () => CustomSwitch(
-                                            margin: getMargin(
-                                              top: 20,
-                                            ),
-                                            value:
-                                                controller.isSelectedSwitch.value,
-                                            onChange: (value) {
-                                              controller.isSelectedSwitch.value =
-                                                  value;
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Container(
-                              margin: getMargin(
-                                top: 15,
-                              ),
-                              padding: getPadding(
-                                all: 15,
-                              ),
-                              decoration: AppDecoration.outline2.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder22,
-                              ),
-                              child: Row(
-                                children: [
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgIconalaarm,
-                                    height: getSize(
-                                      30,
-                                    ),
-                                    width: getSize(
-                                      30,
-                                    ),
-                                    margin: getMargin(
-                                      top: 17,
-                                      bottom: 16,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: getPadding(
-                                      left: 15,
-                                      top: 7,
-                                      bottom: 6,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: "lbl_alarm".tr,
-                                                style: CustomTextStyles
-                                                    .titleSmallPoppinsGray90002,
-                                              ),
-                                              TextSpan(
-                                                text: "lbl_05_10am".tr,
-                                                style: theme.textTheme.bodySmall,
-                                              ),
-                                            ],
-                                          ),
-                                          textAlign: TextAlign.left,
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 7,
-                                          ),
-                                          child: RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                  text: "lbl_in".tr,
-                                                  style:
-                                                      theme.textTheme.bodyMedium,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_14".tr,
-                                                  style: CustomTextStyles
-                                                      .titleMediumGray80005,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_hours".tr,
-                                                  style:
-                                                      theme.textTheme.bodyMedium,
-                                                ),
-                                                TextSpan(
-                                                  text: "lbl_30minutes".tr,
-                                                  style: CustomTextStyles
-                                                      .titleMediumGray80005,
-                                                ),
-                                              ],
-                                            ),
-                                            textAlign: TextAlign.left,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: getPadding(
-                                      left: 44,
-                                      bottom: 5,
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.end,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        CustomImageView(
-                                          svgPath: ImageConstant.imgOverflowmenu,
-                                          height: getSize(
-                                            14,
-                                          ),
-                                          width: getSize(
-                                            14,
-                                          ),
-                                        ),
-                                        Obx(
-                                          () => CustomSwitch(
-                                            margin: getMargin(
-                                              top: 20,
-                                            ),
-                                            value: controller
-                                                .isSelectedSwitch1.value,
-                                            onChange: (value) {
-                                              controller.isSelectedSwitch1.value =
-                                                  value;
-                                            },
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: SizedBox(
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 18.0),
+                  child: Container(
+                    height: getVerticalSize(
+                      410,
+                    ),
+                    width: getHorizontalSize(
+                      315,
+                    ),
+                    margin: getMargin(
+                      top: 26,
+                      bottom: 5,
+                    ),
+                    child: Stack(
+                      alignment: Alignment.bottomCenter,
+                      children: [
+                        CustomImageView(
+                          svgPath: ImageConstant.imgSleepgraph,
                           height: getVerticalSize(
-                            117,
+                            78,
                           ),
                           width: getHorizontalSize(
                             315,
                           ),
-                          child: Stack(
-                            alignment: Alignment.bottomCenter,
+                          alignment: Alignment.topCenter,
+                          margin: getMargin(
+                            top: 74,
+                          ),
+                        ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  height: getVerticalSize(
-                                    115,
-                                  ),
-                                  width: getHorizontalSize(
-                                    315,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(
-                                      getHorizontalSize(
-                                        22,
+                              Text(
+                                "lbl_today_schedule".tr,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.left,
+                                style: theme.textTheme.titleMedium,
+                              ),
+                              Container(
+                                margin: getMargin(
+                                  top: 12,
+                                ),
+                                padding: getPadding(
+                                  all: 15,
+                                ),
+                                decoration: AppDecoration.outline2.copyWith(
+                                  borderRadius: BorderRadiusStyle.roundedBorder22,
+                                ),
+                                child: Row(
+                                  children: [
+                                    CustomImageView(
+                                      svgPath: ImageConstant.imgFolderDeepPurple50,
+                                      height: getSize(
+                                        30,
+                                      ),
+                                      width: getSize(
+                                        30,
+                                      ),
+                                      margin: getMargin(
+                                        top: 17,
+                                        bottom: 16,
                                       ),
                                     ),
-                                    gradient: LinearGradient(
-                                      begin: Alignment(
-                                        1,
-                                        1,
+                                    Padding(
+                                      padding: getPadding(
+                                        left: 15,
+                                        top: 7,
+                                        bottom: 6,
                                       ),
-                                      end: Alignment(
-                                        -0.24,
-                                        -0.31,
-                                      ),
-                                      colors: [
-                                        appTheme.deepOrangeA20006,
-                                        theme.colorScheme.primary,
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgSleepgraph,
-                                height: getVerticalSize(
-                                  78,
-                                ),
-                                width: getHorizontalSize(
-                                  315,
-                                ),
-                                alignment: Alignment.bottomCenter,
-                              ),
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: Padding(
-                                  padding: getPadding(
-                                    left: 20,
-                                    top: 12,
-                                  ),
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.min,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        "msg_last_night_sleep".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .titleSmallPoppinsWhiteA700,
-                                      ),
-                                      Padding(
-                                        padding: getPadding(
-                                          top: 3,
-                                        ),
-                                        child: RichText(
-                                          text: TextSpan(
-                                            children: [
-                                              TextSpan(
-                                                text: "lbl_8".tr,
-                                                style: CustomTextStyles
-                                                    .titleMediumWhiteA700Medium_1,
-                                              ),
-                                              TextSpan(
-                                                text: "lbl_h".tr,
-                                                style: CustomTextStyles
-                                                    .bodyMediumWhiteA700_1,
-                                              ),
-                                              TextSpan(
-                                                text: " ",
-                                                style: CustomTextStyles
-                                                    .titleSmallPoppinsWhiteA700_1,
-                                              ),
-                                              TextSpan(
-                                                text: "lbl_202".tr,
-                                                style: CustomTextStyles
-                                                    .titleMediumWhiteA700Medium_1,
-                                              ),
-                                              TextSpan(
-                                                text: "lbl_m".tr,
-                                                style: CustomTextStyles
-                                                    .bodyMediumWhiteA700_1,
-                                              ),
-                                            ],
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: "lbl_bedtime".tr,
+                                                  style: CustomTextStyles
+                                                      .titleSmallPoppinsGray90002,
+                                                ),
+                                                TextSpan(
+                                                  text: "lbl_09_00pm".tr,
+                                                  style: theme.textTheme.bodySmall,
+                                                ),
+                                              ],
+                                            ),
+                                            textAlign: TextAlign.left,
                                           ),
-                                          textAlign: TextAlign.left,
-                                        ),
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 6,
+                                            ),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "lbl_in".tr,
+                                                    style:
+                                                        theme.textTheme.bodyMedium,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_6".tr,
+                                                    style: CustomTextStyles
+                                                        .titleMediumGray80005,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_hours".tr,
+                                                    style:
+                                                        theme.textTheme.bodyMedium,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_22minutes".tr,
+                                                    style: CustomTextStyles
+                                                        .titleMediumGray80005,
+                                                  ),
+                                                ],
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    Spacer(),
+                                    Padding(
+                                      padding: getPadding(
+                                        bottom: 5,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          CustomImageView(
+                                            svgPath: ImageConstant.imgOverflowmenu,
+                                            height: getSize(
+                                              14,
+                                            ),
+                                            width: getSize(
+                                              14,
+                                            ),
+                                          ),
+                                          Obx(
+                                            () => CustomSwitch(
+                                              margin: getMargin(
+                                                top: 20,
+                                              ),
+                                              value:
+                                                  controller.isSelectedSwitch.value,
+                                              onChange: (value) {
+                                                controller.isSelectedSwitch.value =
+                                                    value;
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Container(
+                                margin: getMargin(
+                                  top: 15,
+                                ),
+                                padding: getPadding(
+                                  all: 15,
+                                ),
+                                decoration: AppDecoration.outline2.copyWith(
+                                  borderRadius: BorderRadiusStyle.roundedBorder22,
+                                ),
+                                child: Row(
+                                  children: [
+                                    CustomImageView(
+                                      svgPath: ImageConstant.imgIconalaarm,
+                                      height: getSize(
+                                        15,
+                                      ),
+                                      width: getSize(
+                                        15,
+                                      ),
+                                      margin: getMargin(
+                                        top: 17,
+                                        bottom: 16,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: getPadding(
+                                        left: 15,
+                                        top: 7,
+                                        bottom: 6,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: "lbl_alarm".tr,
+                                                  style: CustomTextStyles
+                                                      .titleSmallPoppinsGray90002,
+                                                ),
+                                                TextSpan(
+                                                  text: "lbl_05_10am".tr,
+                                                  style: theme.textTheme.bodySmall,
+                                                ),
+                                              ],
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                          Padding(
+                                            padding: getPadding(
+                                              top: 7,
+                                            ),
+                                            child: RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                    text: "lbl_in".tr,
+                                                    style:
+                                                        theme.textTheme.bodyMedium,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_14".tr,
+                                                    style: CustomTextStyles
+                                                        .titleMediumGray80005,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_hours".tr,
+                                                    style:
+                                                        theme.textTheme.bodyMedium,
+                                                  ),
+                                                  TextSpan(
+                                                    text: "lbl_30minutes".tr,
+                                                    style: CustomTextStyles
+                                                        .titleMediumGray80005,
+                                                  ),
+                                                ],
+                                              ),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: getPadding(
+                                        left: 44,
+                                        bottom: 5,
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          CustomImageView(
+                                            svgPath: ImageConstant.imgOverflowmenu,
+                                            height: getSize(
+                                              14,
+                                            ),
+                                            width: getSize(
+                                              14,
+                                            ),
+                                          ),
+                                          Obx(
+                                            () => CustomSwitch(
+                                              margin: getMargin(
+                                                top: 20,
+                                              ),
+                                              value: controller
+                                                  .isSelectedSwitch1.value,
+                                              onChange: (value) {
+                                                controller.isSelectedSwitch1.value =
+                                                    value;
+                                              },
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                             ],
                           ),
                         ),
-                      ),
-                    ],
+                        Align(
+                          alignment: Alignment.topCenter,
+                          child: SizedBox(
+                            height: getVerticalSize(
+                              117,
+                            ),
+                            width: getHorizontalSize(
+                              315,
+                            ),
+                            child: Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: [
+                                Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    height: getVerticalSize(
+                                      115,
+                                    ),
+                                    width: getHorizontalSize(
+                                      315,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(
+                                        getHorizontalSize(
+                                          22,
+                                        ),
+                                      ),
+                                      gradient: LinearGradient(
+                                        begin: Alignment(
+                                          1,
+                                          1,
+                                        ),
+                                        end: Alignment(
+                                          -0.24,
+                                          -0.31,
+                                        ),
+                                        colors: [
+                                          appTheme.deepOrangeA20006,
+                                          theme.colorScheme.primary,
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgSleepgraph,
+                                  height: getVerticalSize(
+                                    78,
+                                  ),
+                                  width: getHorizontalSize(
+                                    315,
+                                  ),
+                                  alignment: Alignment.bottomCenter,
+                                ),
+                                Align(
+                                  alignment: Alignment.topLeft,
+                                  child: Padding(
+                                    padding: getPadding(
+                                      left: 20,
+                                      top: 12,
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "msg_last_night_sleep".tr,
+                                          overflow: TextOverflow.ellipsis,
+                                          textAlign: TextAlign.left,
+                                          style: CustomTextStyles
+                                              .titleSmallPoppinsWhiteA700,
+                                        ),
+                                        Padding(
+                                          padding: getPadding(
+                                            top: 3,
+                                          ),
+                                          child: RichText(
+                                            text: TextSpan(
+                                              children: [
+                                                TextSpan(
+                                                  text: "lbl_8".tr,
+                                                  style: CustomTextStyles
+                                                      .titleMediumWhiteA700Medium_1,
+                                                ),
+                                                TextSpan(
+                                                  text: "lbl_h".tr,
+                                                  style: CustomTextStyles
+                                                      .bodyMediumWhiteA700_1,
+                                                ),
+                                                TextSpan(
+                                                  text: " ",
+                                                  style: CustomTextStyles
+                                                      .titleSmallPoppinsWhiteA700_1,
+                                                ),
+                                                TextSpan(
+                                                  text: "lbl_202".tr,
+                                                  style: CustomTextStyles
+                                                      .titleMediumWhiteA700Medium_1,
+                                                ),
+                                                TextSpan(
+                                                  text: "lbl_m".tr,
+                                                  style: CustomTextStyles
+                                                      .bodyMediumWhiteA700_1,
+                                                ),
+                                              ],
+                                            ),
+                                            textAlign: TextAlign.left,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Container(
@@ -864,6 +870,7 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
                     ],
                   ),
                 ),
+                SizedBox(height: Get.height*0.02,)
               ],
             ),
           ),

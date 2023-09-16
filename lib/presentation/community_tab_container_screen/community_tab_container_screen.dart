@@ -5,8 +5,7 @@ import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
-class CommunityTabContainerScreen
-    extends GetWidget<CommunityTabContainerController> {
+class CommunityTabContainerScreen extends GetWidget<CommunityTabContainerController> {
   const CommunityTabContainerScreen({Key? key})
       : super(
           key: key,
@@ -39,6 +38,9 @@ class CommunityTabContainerScreen
                     all: 11,
                   ),
                   child: CustomImageView(
+                    onTap: (){
+                      Get.back();
+                    },
                     svgPath: ImageConstant.imgInfo,
                   ),
                 ),

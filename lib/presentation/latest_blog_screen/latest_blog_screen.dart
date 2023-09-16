@@ -1,3 +1,5 @@
+import '../save_or_edit_blog_dialog/controller/save_or_edit_blog_controller.dart';
+import '../save_or_edit_blog_dialog/save_or_edit_blog_dialog.dart';
 import 'controller/latest_blog_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
@@ -20,6 +22,61 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
 
     return SafeArea(
       child: Scaffold(
+        bottomNavigationBar: SizedBox(
+          height: Get.height*0.11,
+          width: Get.width*0.8,
+          child: Row(
+            children: [
+              SizedBox(width: Get.width*0.1),
+              Material(
+                borderRadius: BorderRadius.circular(50),
+                elevation: 3,
+                child: Container(
+                  height: Get.height*0.09,
+                  width: Get.width*0.8,
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50)
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Spacer(),
+                      InkWell(
+
+                          onTap: (){
+                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+                              content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
+                          },
+                          child: Image.asset(ImageConstant.imageBlog1,scale: 3.1)),
+                      Spacer(),
+                      InkWell(
+                          onTap: (){
+                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+                              content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
+                          },
+
+                          child: Image.asset(ImageConstant.imageBlog2,scale: 3.1)),
+                      Spacer(),
+                      InkWell(
+                          onTap: (){
+                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
+                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+                              content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
+                          },
+                          child: Image.asset(ImageConstant.imageBlog3,scale: 3.1)),
+                      Spacer(),
+
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(width: Get.width*0.02),
+            ],
+          ),
+        ),
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
           height: getVerticalSize(
@@ -115,55 +172,50 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: Alignment.bottomRight,
-                          child: Container(
-                            padding: getPadding(
-                              left: 21,
-                              top: 4,
-                              right: 21,
-                              bottom: 4,
-                            ),
-                            decoration: AppDecoration.outline9.copyWith(
-                              borderRadius: BorderRadiusStyle.circleBorder33,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgFile,
-                                  height: getVerticalSize(
-                                    26,
-                                  ),
-                                  width: getHorizontalSize(
-                                    23,
-                                  ),
-                                  margin: getMargin(
-                                    top: 14,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    top: 2,
-                                  ),
-                                  child: Text(
-                                    "lbl_10_2k".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.poppinsBlack900,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
                 ],
               ),
             ),
+          ),
+        ),
+        floatingActionButton: Container(
+          height: Get.height*0.09,
+          width: Get.width*0.18,
+          decoration: AppDecoration.outline9.copyWith(
+            borderRadius: BorderRadiusStyle.circleBorder33,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomImageView(
+                svgPath: ImageConstant.imgFile,
+                height: getVerticalSize(
+                  26,
+                ),
+                width: getHorizontalSize(
+                  23,
+                ),
+                margin: getMargin(
+                  top: 14,
+                ),
+              ),
+              Padding(
+                padding: getPadding(
+                  top: 2,
+                ),
+                child: Text(
+                  "lbl_10_2k".tr,
+                  overflow: TextOverflow.ellipsis,
+                  textAlign: TextAlign.left,
+                  style: CustomTextStyles.poppinsBlack900,
+                ),
+              ),
+            ],
           ),
         ),
       ),

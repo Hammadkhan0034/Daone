@@ -197,7 +197,8 @@ onTapLatestBlogOne() { Get.toNamed(AppRoutes.latestBlogOneScreen, ); }
 /// instance of the [SaveOrEditBlogController],
 /// which is obtained using the Get.put() method.
 onTapSaveorEditBlog() { Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
- contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0), content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),)); }
+ contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+ content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),)); }
 /// Navigates to the communityTabContainerScreen when the action is triggered.
 
 /// When the action is triggered, this function uses the `Get` package to

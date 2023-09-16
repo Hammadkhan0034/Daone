@@ -1,3 +1,5 @@
+import 'package:daone/widgets/text_widget.dart';
+
 import 'controller/comment_section_one_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -198,23 +200,36 @@ class CommentSectionOneDialog extends StatelessWidget {
                       style: CustomTextStyles.labelSmallGray700,
                     ),
                   ),
-                  CustomElevatedButton(
-                    text: "lbl_share".tr,
-                    margin: getMargin(
-                      left: 30,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    child: Container(
+                        height: Get.height*0.03,
+                        width:Get.width*0.14,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(4),
+                            color: Color(0xfff36430)),
+                      child: Center(
+                        child: TextWidget(text: "Share",color: Colors.white,fsize: 12),
+                      ),
                     ),
-                    buttonStyle:
-                        CustomButtonStyles.fillDeeporangeA20006TL4.copyWith(
-                            fixedSize: MaterialStateProperty.all<Size>(Size(
-                      getHorizontalSize(
-                        62,
-                      ),
-                      getVerticalSize(
-                        21,
-                      ),
-                    ))),
-                    buttonTextStyle: CustomTextStyles.labelSmallWhiteA7009,
                   ),
+                  // CustomElevatedButton(
+                  //   text: "lbl_share".tr,
+                  //   margin: getMargin(
+                  //     left: 30,
+                  //   ),
+                  //   buttonStyle:
+                  //       CustomButtonStyles.fillDeeporangeA20006TL4.copyWith(
+                  //           fixedSize: MaterialStateProperty.all<Size>(Size(
+                  //     getHorizontalSize(
+                  //       69,
+                  //     ),
+                  //     getVerticalSize(
+                  //       29,
+                  //     ),
+                  //   ))),
+                  //   buttonTextStyle: CustomTextStyles.labelSmallWhiteA7009,
+                  // ),
                 ],
               ),
             ),
