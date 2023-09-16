@@ -20,12 +20,6 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
     return SafeArea(
       child: Scaffold(
         extendBody: true,
-        bottomNavigationBar: Padding(
-         padding: EdgeInsets.only(bottom: getVerticalSize(10)),
-          child: CustomBottomBar(
-            onChanged: (BottomBarEnum type) {},
-          ),
-        ),
         backgroundColor: appTheme.whiteA700,
         body: SingleChildScrollView(
           scrollDirection: Axis.vertical,

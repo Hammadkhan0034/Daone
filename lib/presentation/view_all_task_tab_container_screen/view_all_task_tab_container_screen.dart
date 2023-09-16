@@ -236,9 +236,6 @@ class ViewAllTaskTabContainerScreen
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

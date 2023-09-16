@@ -415,9 +415,6 @@ class PersonalDataUpdateOneScreen
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

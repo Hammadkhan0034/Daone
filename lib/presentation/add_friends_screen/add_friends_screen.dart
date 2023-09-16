@@ -680,9 +680,6 @@ class AddFriendsScreen extends GetWidget<AddFriendsController> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

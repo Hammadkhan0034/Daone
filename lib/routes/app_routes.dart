@@ -1,3 +1,5 @@
+import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
+import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
 import 'package:daone/presentation/grade_yourself_dialog/controller/grade_yourself_controller.dart';
 import 'package:daone/presentation/grade_yourself_dialog/grade_yourself_dialog.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
@@ -173,10 +175,18 @@ class AppRoutes {
 
   static const String initialRoute = '/initialRoute';
 
+  static const String dashboardRoute = '/dashboardRoute';
+
 
 
   static List<GetPage> pages = [
     GetPage(
+      name: dashboardRoute,
+      page: () => MyDashBoard(),
+      bindings: [
+        DashBoardBinding(),
+      ],
+    ),GetPage(
       name: welcomeScreenOneScreen,
       page: () => WelcomeScreenOneScreen(),
       bindings: [

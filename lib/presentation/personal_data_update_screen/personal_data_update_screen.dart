@@ -110,9 +110,6 @@ class PersonalDataUpdateScreen extends GetWidget<PersonalDataUpdateController> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

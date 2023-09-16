@@ -28,8 +28,9 @@ class MyApp extends StatelessWidget {
       fallbackLocale: Locale('en', 'US'),
       title: 'daone',
       initialBinding: InitialBindings(),
-//      initialRoute: AppRoutes.initialRoute,
-      initialRoute: AppRoutes.appNavigationScreen,
+      //initialRoute: AppRoutes.initialRoute,
+      //initialRoute: AppRoutes.appNavigationScreen,
+      initialRoute: AppRoutes.dashboardRoute,
       getPages: AppRoutes.pages,
     );
   }

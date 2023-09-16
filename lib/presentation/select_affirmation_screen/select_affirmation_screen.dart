@@ -924,12 +924,6 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
             ],
           ),
         ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.only(bottom: getVerticalSize(20)),
-          child: CustomBottomBar(
-            onChanged: (BottomBarEnum type) {},
-          ),
-        ),
       ),
     );
   }

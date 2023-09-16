@@ -716,9 +716,6 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

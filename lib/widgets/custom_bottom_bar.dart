@@ -2,8 +2,7 @@ import 'package:daone/core/app_export.dart';
 import 'package:flutter/material.dart';
 
 class CustomBottomBar extends StatelessWidget {
-  CustomBottomBar({
-    Key? key,
+  CustomBottomBar({ Key? key,
     this.onChanged,
   }) : super(
           key: key,
