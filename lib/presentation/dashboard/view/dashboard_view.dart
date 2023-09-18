@@ -6,6 +6,8 @@ import 'package:daone/presentation/dashboard/view/widget/custom_animated_bottom_
 import 'package:daone/presentation/home_one_screen/home_one_screen.dart';
 import 'package:daone/presentation/home_screen/home_screen.dart';
 import 'package:daone/presentation/select_affirmation_screen/select_affirmation_screen.dart';
+import 'package:daone/presentation/select_task_screen/select_task_screen.dart';
+import 'package:daone/presentation/stats_screen/stats_screen.dart';
 import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/view_all_task_tab_container_screen.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
@@ -29,12 +31,13 @@ class _MyDashBoardState extends State<MyDashBoard> {
           child: IndexedStack(index: controller.tabIndex, children: [
             HomeOneScreen(),
             ViewAllTaskTabContainerScreen(),
-            SelectAffirmationScreen(),
+            SelectTaskScreen(),
+            StatsScreen(),
             AccountSettingScreen(),
           ]),
         ),
         bottomNavigationBar: CustomAnimatedBottomBar(
-          containerHeight: 70,
+          containerHeight:Get.height*0.086,
           backgroundColor: Colors.white,
           selectedIndex: controller.tabIndex,
           showElevation: true,
@@ -43,32 +46,39 @@ class _MyDashBoardState extends State<MyDashBoard> {
           onItemSelected: controller.changeTabIndex,
           items: <BottomNavyBarItem>[
             BottomNavyBarItem(
-              icon: Icon(Icons.apps),
+             image: Image.asset('assets/images/BIcon1.png',scale: 5),
               title: Text('Home'),
-              activeColor: Colors.green,
-              inactiveColor: _inactiveColor,
+              activeColor: Colors.deepOrange,
+             inactiveColor: _inactiveColor,
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.people),
+              image: Image.asset('assets/images/BIcon2.png',scale: 4),
               title: Text('Users'),
-              activeColor: Colors.purpleAccent,
+              activeColor: Colors.deepOrange,
               inactiveColor: _inactiveColor,
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.message),
+              image: Image.asset('assets/images/BIcon3.png',),
               title: Text(
                 'Messages ',
               ),
-              activeColor: Colors.pink,
+              activeColor: Colors.deepOrange,
               inactiveColor: _inactiveColor,
               textAlign: TextAlign.center,
             ),
             BottomNavyBarItem(
-              icon: Icon(Icons.settings),
+              image: Image.asset('assets/images/BIcon4.png',scale: 5),
               title: Text('Settings'),
-              activeColor: Colors.blue,
+              activeColor: Colors.deepOrange,
+              inactiveColor: _inactiveColor,
+              textAlign: TextAlign.center,
+            ),
+            BottomNavyBarItem(
+              image: Image.asset('assets/images/BIcon5.png',scale: 5,),
+              title: Text('Settings'),
+              activeColor:  Colors.deepOrange,
               inactiveColor: _inactiveColor,
               textAlign: TextAlign.center,
             ),

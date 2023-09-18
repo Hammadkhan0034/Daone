@@ -2,6 +2,8 @@
 
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/dashboard/controller/dashboard_controller.dart';
+import 'package:daone/presentation/select_task_screen/controller/select_task_controller.dart';
+import 'package:daone/presentation/stats_screen/controller/stats_controller.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/src/bindings_interface.dart';
 
@@ -15,6 +17,8 @@ class DashBoardBinding extends Bindings{
     // TODO: implement dependencies
     Get.lazyPut<DashBoardController>(()=>DashBoardController());
     Get.lazyPut(() => ViewAllTaskTabContainerController());
+    Get.lazyPut(() => SelectTaskController());
+    Get.lazyPut(() => StatsController());
     Get.lazyPut(() => SelectAffirmationController());
     Get.lazyPut(() => AccountSettingController());
 
