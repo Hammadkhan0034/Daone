@@ -29,6 +29,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusedBorderDecoration,
     this.disabledBorderDecoration,
     this.validator,
+    this.function,
   }) : super(
           key: key,
         );
@@ -83,6 +84,8 @@ class CustomTextFormField extends StatelessWidget {
 
   final FormFieldValidator<String>? validator;
 
+  var function;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
@@ -97,6 +100,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          onSaved: function,
           controller: controller,
           focusNode: focusNode ?? FocusNode(),
           autofocus: autofocus!,

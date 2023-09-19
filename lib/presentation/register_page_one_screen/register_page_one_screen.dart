@@ -16,7 +16,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
           key: key,
         );
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: _formKey,
+          key: controller.formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -91,12 +91,12 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                       48,
                     ),
                   ),
-                  validator: (value) {
-                    if (!isText(value)) {
-                      return "Please enter valid text";
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (!isText(value)) {
+                  //     return "Please enter valid text";
+                  //   }
+                  //   return null;
+                  // },
                   filled: true,
                   fillColor: appTheme.gray50,
                 ),
@@ -171,13 +171,13 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                       48,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        (!isValidEmail(value, isRequired: true))) {
-                      return "Please enter valid email";
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null ||
+                  //       (!isValidEmail(value, isRequired: true))) {
+                  //     return "Please enter valid email";
+                  //   }
+                  //   return null;
+                  // },
                   filled: true,
                   fillColor: appTheme.gray50,
                 ),
@@ -235,13 +235,13 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                         48,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null ||
-                          (!isValidPassword(value, isRequired: true))) {
-                        return "Please enter valid password";
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null ||
+                    //       (!isValidPassword(value, isRequired: true))) {
+                    //     return "Please enter valid password";
+                    //   }
+                    //   return null;
+                    // },
                     obscureText: controller.isShowPassword.value,
                     filled: true,
                     fillColor: appTheme.gray50,
@@ -275,7 +275,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                    Get.toNamed(AppRoutes.successRegistrationScreen);
+                    controller.signUp(controller.emailController.text,controller.passwordController.text, context);
                   },
                   width: getHorizontalSize(
                     315,

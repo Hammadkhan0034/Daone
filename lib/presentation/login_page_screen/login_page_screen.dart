@@ -15,7 +15,6 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
           key: key,
         );
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +25,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: _formKey,
+          key: controller.formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -61,6 +60,9 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                   ),
                 ),
                 CustomTextFormField(
+                  function: (value) {
+                    controller.emailController.text = value;
+                  },
                   controller: controller.emailController,
                   margin: getMargin(
                     top: 30,
@@ -104,6 +106,9 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 Obx(
                   () => CustomTextFormField(
                     controller: controller.passwordController,
+                    function: (value) {
+                      controller.emailController.text = value;
+                    },
                     margin: getMargin(
                       top: 15,
                     ),
@@ -155,13 +160,13 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                         48,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null ||
-                          (!isValidPassword(value, isRequired: true))) {
-                        return "Please enter valid password";
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null ||
+                    //       (!isValidPassword(value, isRequired: true))) {
+                    //     return "Please enter valid password";
+                    //   }
+                    //   return null;
+                    // },
                     obscureText: controller.isShowPassword.value,
                     filled: true,
                     fillColor: appTheme.gray50,
@@ -296,7 +301,8 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                    Get.toNamed(AppRoutes.successRegistrationScreen);
+                   controller.logIn(controller.emailController.text,controller.passwordController.text, context);
+                    //Get.toNamed(AppRoutes.successRegistrationScreen);
                   },
                   width: getHorizontalSize(
                     315,

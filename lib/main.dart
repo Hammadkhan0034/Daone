@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'core/app_export.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+Future main()async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((value) {
@@ -28,9 +30,8 @@ class MyApp extends StatelessWidget {
       fallbackLocale: Locale('en', 'US'),
       title: 'daone',
       initialBinding: InitialBindings(),
-      //initialRoute: AppRoutes.initialRoute,
+      initialRoute: AppRoutes.initialRoute,
       //initialRoute: AppRoutes.appNavigationScreen,
-      initialRoute: AppRoutes.dashboardRoute,
       getPages: AppRoutes.pages,
     );
   }
