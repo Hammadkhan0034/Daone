@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "1056216974066-ct0h8pstad945o9imkqphfs91gpertb4.apps.googleusercontent.com",
+          "client_id": "1056216974066-tnf79brvj08bp6ql3n6bj0ikd2ja1qc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "82a946200102fbee8467fede275cc53c787ced70"
+          }
+        },
+        {
+          "client_id": "1056216974066-jumslt4ehc1n9722i9tm91spoc0niqiv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],

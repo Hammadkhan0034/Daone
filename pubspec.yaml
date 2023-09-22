@@ -19,8 +19,11 @@ dependencies:
   firebase_core: ^2.16.0
   firebase_auth: ^4.10.0
   cloud_firestore: ^4.9.2
+  google_sign_in: ^6.1.5
+  firebase_auth_platform_interface: ^6.19.0
+  flutter_facebook_auth: ^6.0.2
 
-dev_dependencies: 
+dev_dependencies:
   flutter_test: 
     sdk: flutter
 flutter: 

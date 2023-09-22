@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">daone</string>
-    
+    <string name="facebook_app_id">1774003553070321</string>
+    <string name="fb_login_protocol_scheme">fb1774003553070321</string>
+    <string name="facebook_client_token">77b5e170b58886aab680b15f10177463</string>
 </resources>
