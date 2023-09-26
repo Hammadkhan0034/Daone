@@ -2,8 +2,9 @@ import 'package:daone/core/app_export.dart';import 'package:daone/presentation/v
 ///
 /// This class manages the state of the ViewAllTaskTabContainerScreen, including the
 /// current viewAllTaskTabContainerModelObj
-class ViewAllTaskTabContainerController extends GetxController with  GetSingleTickerProviderStateMixin {Rx<ViewAllTaskTabContainerModel> viewAllTaskTabContainerModelObj = ViewAllTaskTabContainerModel().obs;
+class ViewAllTaskTabContainerController extends GetxController with  GetSingleTickerProviderStateMixin {
+ Rx<ViewAllTaskTabContainerModel> viewAllTaskTabContainerModelObj = ViewAllTaskTabContainerModel().obs;
 
-late TabController tabviewController = Get.put(TabController(vsync: this, length: 4));
+late TabController tabviewController = Get.put(TabController(vsync: this, length: 3));
 
  }

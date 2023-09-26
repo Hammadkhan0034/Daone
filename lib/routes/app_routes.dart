@@ -1,7 +1,5 @@
 import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
 import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
-import 'package:daone/presentation/grade_yourself_dialog/controller/grade_yourself_controller.dart';
-import 'package:daone/presentation/grade_yourself_dialog/grade_yourself_dialog.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
@@ -42,8 +40,6 @@ import 'package:daone/presentation/home_no_task_screen/home_no_task_screen.dart'
 import 'package:daone/presentation/home_no_task_screen/binding/home_no_task_binding.dart';
 import 'package:daone/presentation/select_task_screen/select_task_screen.dart';
 import 'package:daone/presentation/select_task_screen/binding/select_task_binding.dart';
-import 'package:daone/presentation/add_task_screen/add_task_screen.dart';
-import 'package:daone/presentation/add_task_screen/binding/add_task_binding.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/view_all_task_tab_container_screen.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/binding/view_all_task_tab_container_binding.dart';
 import 'package:daone/presentation/task_empty_screen/task_empty_screen.dart';
@@ -77,6 +73,9 @@ import 'package:daone/presentation/personal_data_update_one_screen/binding/perso
 import 'package:daone/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:daone/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:get/get.dart';
+
+import '../presentation/add_task_screen/add_task_screen.dart';
+import '../presentation/add_task_screen/binding/add_task_binding.dart';
 
 class AppRoutes {
   static const String welcomeScreenOneScreen = '/welcome_screen_one_screen';

@@ -1,17 +1,16 @@
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/account_setting_screen/account_setting_screen.dart';
-import 'package:daone/presentation/add_task_screen/add_task_screen.dart';
 import 'package:daone/presentation/dashboard/controller/dashboard_controller.dart';
 import 'package:daone/presentation/dashboard/view/widget/custom_animated_bottom_bar.dart';
 import 'package:daone/presentation/home_one_screen/home_one_screen.dart';
 import 'package:daone/presentation/home_screen/home_screen.dart';
-import 'package:daone/presentation/select_affirmation_screen/select_affirmation_screen.dart';
 import 'package:daone/presentation/select_task_screen/select_task_screen.dart';
 import 'package:daone/presentation/stats_screen/stats_screen.dart';
 import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/view_all_task_tab_container_screen.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:flutter/material.dart';
+import '../../add_task_screen/add_task_screen.dart';
 
 class MyDashBoard extends StatefulWidget {
   @override

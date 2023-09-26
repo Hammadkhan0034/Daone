@@ -415,41 +415,9 @@ class CommunityPage extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                margin: getMargin(
-                                  left: 1,
-                                  bottom: 22,
-                                ),
-                                padding: getPadding(
-                                  left: 133,
-                                  top: 12,
-                                  right: 133,
-                                  bottom: 12,
-                                ),
-                                decoration: AppDecoration.outline9.copyWith(
-                                  borderRadius:
-                                      BorderRadiusStyle.circleBorder37,
-                                ),
-                                child: CustomIconButton(
-                                  height: 50,
-                                  width: 50,
-                                  padding: getPadding(
-                                    all: 11,
-                                  ),
-                                  decoration: IconButtonStyleHelper
-                                      .fillDeeporangeA20001,
-                                  child: CustomImageView(
-                                    svgPath: ImageConstant.imgBiplus,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ],
                         ),
                       ),
-
                     ],
                   ),
                 ),
