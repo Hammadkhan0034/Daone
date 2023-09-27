@@ -20,14 +20,14 @@ class AddTaskController extends GetxController {
   Rx<String> radioGroup = "".obs;
 
   final List<String> items = [
-    'Workout',
-    'Job',
-    'Sleep Tracker',
-    'Tracker',
+    'WORKOUT ',
+    'JOB',
+    'SLEEP',
+    'TRACK',
   ];
 
 // Define a controller to manage the selected item.
-  final selectedValue = 'Workout'.obs; // Using GetX's Rx variable
+  final selectedValue = 'WORKOUT '.obs; // Using GetX's Rx variable
   SelectionPopupModel? selectedDropDownValue;
 
   CollectionReference tasksCollection =
@@ -49,7 +49,8 @@ class AddTaskController extends GetxController {
       await userDocRef.collection('tasks').add({
         'taskType' :selectedValue.value,
         'taskTitle': taskTitle,
-        'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
+        'date': Timestamp.fromDate(DateTime.now()),
+        //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
         'description':taskDescription,
       });  // Data saved successfully
         print('Task saved to Firestore');
@@ -57,7 +58,7 @@ class AddTaskController extends GetxController {
 
         // Hide the progress indicator and navigate
         Navigator.of(context).pop();
-        Get.offAndToNamed(AppRoutes.selectTaskScreen);
+        Get.offAndToNamed(AppRoutes.dashboardRoute);
       } else {
         // Handle the case where the user is not authenticated
         print('User is not authenticated');
@@ -71,6 +72,19 @@ class AddTaskController extends GetxController {
       Navigator.of(context).pop(); // Hide the progress indicator
     }
   }
+
+
+
+
+
+
+  Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
+
+  void updateSelectedDate(DateTime? date){
+  selectedDate.value = date;
+  }
+
+
 
   @override
   void onClose() {

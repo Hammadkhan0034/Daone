@@ -78,8 +78,8 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                     padding: EdgeInsets.all(5),
                     hint: TextWidget(text: "Select", color:Colors.black, fsize: 12),
                     dropdownColor: Colors.white,
-                    icon: Icon(Icons.add_alarm_sharp,color: Colors.deepOrange),
-                    style: TextStyle(color: Colors.deepOrange),
+                    icon: Image.asset("assets/images/addtask.png",scale: 22,),
+                    style: TextStyle(color: Colors.deepOrange,fontWeight: FontWeight.w700,fontSize: 18),
                     borderRadius: BorderRadius.circular(12),
                     elevation: 2,
                     value: controller.selectedValue.value,
@@ -116,7 +116,7 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                     ),
                     textStyle:
                         CustomTextStyles.titleMediumHindSiliguriIndigo90001,
-                    hintText: "msg_plan_for_a_month".tr,
+                    hintText: "Title",
                     hintStyle:
                         CustomTextStyles.titleMediumHindSiliguriIndigo90001,
                     defaultBorderDecoration:
@@ -218,7 +218,7 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                     ),
                     textStyle:
                     CustomTextStyles.titleMediumHindSiliguriIndigo90001,
-                    hintText:"msg_creating_this_month_s".tr,
+                    hintText:"Write Description here",
                     hintStyle:
                     CustomTextStyles.titleMediumHindSiliguriIndigo90001,
                     defaultBorderDecoration:
@@ -256,10 +256,7 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                   CustomElevatedButton(
                     onTap: (){
                       controller.saveTaskToFirestore(context,controller.group216Controller.text.trim(),controller.descriptionController.text.trim());
-                      // Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
-                      //   contentPadding: EdgeInsets.zero,
-                      //   insetPadding: const EdgeInsets.only(left: 0),
-                      //   content:AddTaskPopUpCalenderDialog(Get.put(AddTaskPopUpCalenderController(),),),));
+
                     },
                     text: "lbl_create".tr,
                     margin: getMargin(

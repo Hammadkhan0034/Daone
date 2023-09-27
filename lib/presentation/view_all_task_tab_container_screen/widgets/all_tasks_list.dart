@@ -1,12 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:daone/presentation/add_task_screen/controller/add_task_controller.dart';
+import 'package:daone/presentation/view_all_task_tab_container_screen/controller/calender_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../widgets/text_widget.dart';
 
-Widget allTaskList() {
+Widget allTaskList(BuildContext context) {
   final user = FirebaseAuth.instance.currentUser;
+  final AddTaskController controller = Get.put(AddTaskController());
+  final CalendarController calendarController =Get.put(CalendarController());
+  String selectedDateString = calendarController.savedContainerInfo[0];
+  String selectedDate = calendarController.savedContainerInfo[0];
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
@@ -57,6 +64,9 @@ Widget allTaskList() {
             itemBuilder: (context, index) {
               // Get task data from Firestore document
               var taskData = snapshot.data.docs[index].data();
+              DateTime  taskDate =taskData['date'].toDate();
+              // Format the DateTime as a string
+              String formattedDate = DateFormat('dd-MM-yyyy').format(taskDate);
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -105,18 +115,12 @@ Widget allTaskList() {
                             ),
                           ],
                         ),
-                        TextWidget(text:taskData['date'], color:Color(0xff4F5753) , fsize: 10),
+                        TextWidget(text:formattedDate, color:Color(0xff4F5753) , fsize: 10),
                       ],
                     ),
                   ),
                 ),
               );
-              // Create a ListTile for each task
-              // return ListTile(
-              //   title: Text(taskData['taskTitle']),
-              //   subtitle: Text(taskData['description']),
-              //   // Add other task details here
-              // );
             });
       });
 }
