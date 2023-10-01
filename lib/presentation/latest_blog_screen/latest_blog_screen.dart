@@ -5,21 +5,16 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
 import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
 import 'package:daone/widgets/app_bar/custom_app_bar.dart';
-import 'package:daone/widgets/custom_drop_down.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 // ignore_for_file: must_be_immutable
 class LatestBlogScreen extends GetWidget<LatestBlogController> {
-  const LatestBlogScreen({Key? key})
-      : super(
-          key: key,
-        );
+  final Map<String, dynamic> blogData; // Pass the blog data to this widget
 
+  LatestBlogScreen({required this.blogData});
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: SizedBox(
@@ -43,13 +38,15 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                     children: [
                       Spacer(),
                       InkWell(
-
                           onTap: (){
-                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
-                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
+                            Get.dialog(
+                                AlertDialog(
+                                  backgroundColor: Colors.transparent,
+                                  contentPadding: EdgeInsets.zero,
+                                  insetPadding: const EdgeInsets.only(left: 0),
                               content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
                           },
-                          child: Image.asset(ImageConstant.imageBlog1,scale: 3.1)),
+                          child: Image.asset(ImageConstant.imageBlog1,scale: 3.1,)),
                       Spacer(),
                       InkWell(
                           onTap: (){
@@ -96,7 +93,7 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
           ),
           centerTitle: true,
           title: AppbarSubtitle2(
-            text: "lbl_today_s_blog".tr,
+            text: "latest Blogs",
           ),
         ),
         body: SizedBox(
@@ -114,17 +111,16 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.imgRectangle5915,
-                    height: getVerticalSize(
-                      211,
-                    ),
-                    width: getHorizontalSize(
-                      317,
-                    ),
-                    radius: BorderRadius.circular(
-                      getHorizontalSize(
-                        35,
+                  Container(
+                    height: Get.height*0.25,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                        color: Colors.deepOrange,
+                      borderRadius: BorderRadius.circular(12),
+                      image: DecorationImage(image: NetworkImage(
+                        blogData['imageUrl'] ??
+                            'https://images.pexels.com/photos/1337382/pexels-photo-1337382.jpeg?auto=compress&cs=tinysrgb&w=400',)
+                      ,fit: BoxFit.cover
                       ),
                     ),
                   ),
@@ -133,11 +129,11 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                       299,
                     ),
                     margin: getMargin(
-                      top: 22,
+                      top: 12,
                       right: 18,
                     ),
                     child: Text(
-                      "msg_the_power_of_se".tr,
+                      blogData['title'] ?? 'No title',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
@@ -151,9 +147,7 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                     width: getHorizontalSize(
                       311,
                     ),
-                    margin: getMargin(
-                      top: 12,
-                    ),
+
                     child: Stack(
                       alignment: Alignment.bottomRight,
                       children: [

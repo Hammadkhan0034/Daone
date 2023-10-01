@@ -106,6 +106,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 ),
                 Obx(
                   () => CustomTextFormField(
+
                     controller: controller.passwordController,
                     function: (value) {
                       controller.emailController.text = value;

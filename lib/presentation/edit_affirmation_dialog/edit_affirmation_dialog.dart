@@ -420,7 +420,7 @@ class EditAffirmationDialog extends StatelessWidget {
           ),
           CustomElevatedButton(
             onTap: (){
-              Get.toNamed(AppRoutes.homeScreen);
+              Get.toNamed(AppRoutes.homeOneScreen);
             },
             width: getHorizontalSize(
               252,

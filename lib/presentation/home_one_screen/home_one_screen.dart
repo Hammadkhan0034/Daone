@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../add_task_screen/controller/add_task_controller.dart';
 import 'controller/home_one_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -15,7 +18,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
+    final user = FirebaseAuth.instance.currentUser;
+    final AddTaskController controller = Get.put(AddTaskController());
     return SafeArea(
       child: Scaffold(
         extendBody: true,
@@ -29,23 +33,32 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: [
-                    Image.asset(ImageConstant.imgUntit11,scale: 2.8),
+                    Image.asset(ImageConstant.imgUntit11, scale: 2.8),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                      TextWidget(text:"lbl_welcome_back2".tr, color: Colors.black38, fsize: 12),
-                      TextWidget(text:"lbl_stefani".tr, color: Colors.black, fsize: 20,font: FontWeight.bold),
-                    ],),
-                    SizedBox(width: Get.width*0.36,),
-                    Image.asset(ImageConstant.notificationIcon,scale: 3.3),
-
+                        TextWidget(
+                            text: "lbl_welcome_back2".tr,
+                            color: Colors.black38,
+                            fsize: 12),
+                        TextWidget(
+                            text: "lbl_stefani".tr,
+                            color: Colors.black,
+                            fsize: 20,
+                            font: FontWeight.bold),
+                      ],
+                    ),
+                    SizedBox(
+                      width: Get.width * 0.36,
+                    ),
+                    Image.asset(ImageConstant.notificationIcon, scale: 3.3),
                   ],
                 ),
               ),
               InkWell(
-                onTap: (){
-                  Get.toNamed(AppRoutes.communityTabContainerScreen);
+                onTap: () {
+                  Get.toNamed(AppRoutes.blogScreen);
                 },
                 child: SizedBox(
                   height: getVerticalSize(
@@ -143,59 +156,216 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 19.0,right: 19,bottom: 7,top: 18),
+                padding: const EdgeInsets.only(
+                    left: 19.0, right: 19, bottom: 7, top: 18),
                 child: Row(
                   children: [
-                    InkWell(
-                      onTap: (){
-                        Get.toNamed(AppRoutes.viewAllTaskTabContainerScreen);
-                      },
-                      child: Container(
-                        height: Get.height*0.26,
-                        width: Get.width*0.43,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          gradient: LinearGradient(
-                            begin: Alignment.bottomLeft, end: Alignment.topRight,
-                            colors: [Color(0xfffd785a), Color(0xfff46735)], ),
-                        ),
-                        child: Stack(
-                          children: [
-                            Align(
-                              alignment: Alignment(0, -1),
-                            child:  Image.asset(ImageConstant.vector9,scale: 4),
-                            ),
-                            Align(
-                              alignment: Alignment.topRight,
-                            child:  Image.asset(ImageConstant.vector9,scale: 4),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Column(
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user?.uid)
+                          .collection('tasks')
+                          .snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<dynamic> alltaskSnapshot) {
+                        int decimalPlaces = 2;
+                        double percentage = 0.0; // Initialize percentage to 0
+
+                        return StreamBuilder(
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user?.uid)
+                              .collection('completeList')
+                              .snapshots(),
+                          builder: (BuildContext context, AsyncSnapshot<dynamic> completeTaskSnapshot) {
+                            if (alltaskSnapshot.hasData && alltaskSnapshot.data.docs.length > 0) {
+                              // Check if there's data and the length is greater than 0
+                              percentage = (completeTaskSnapshot.hasData
+                                  ? completeTaskSnapshot.data.docs.length
+                                  : 0) /
+                                  alltaskSnapshot.data.docs.length *
+                                  100.0;
+                            }
+
+                            int per = percentage.isNaN ? 0 : percentage.toInt();
+
+                            return Container(
+                              height: Get.height * 0.26,
+                              width: Get.width * 0.43,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                gradient: LinearGradient(
+                                  begin: Alignment.bottomLeft,
+                                  end: Alignment.topRight,
+                                  colors: [Color(0xfffd785a), Color(0xfff46735)],
+                                ),
+                              ),
+                              child: Stack(
                                 children: [
-                                  SizedBox(height: Get.height*0.02,),
-                                  CircularPercentIndicator(
-                                    radius: 53.0,
-                                    lineWidth: 15.0,
-                                    percent: 0.6,
-                                    center: TextWidget(text: "60%",color: Colors.white,fsize: 20),
-                                    progressColor: Colors.green,
-                                    backgroundColor: Colors.white,
-                                    circularStrokeCap: CircularStrokeCap.round,
+                                  Align(
+                                    alignment: Alignment(0, -1),
+                                    child: Image.asset(ImageConstant.vector9, scale: 4),
                                   ),
-                                  SizedBox(height: Get.height*0.005,),
-                                  TextWidget(text: "Completed",color: Colors.white,fsize: 20),
-                                  SizedBox(height: Get.height*0.001,),
-                                  TextWidget(text: "80 Task",color: Colors.white,fsize: 12),
+                                  Align(
+                                    alignment: Alignment.topRight,
+                                    child: Image.asset(ImageConstant.vector9, scale: 4),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.center,
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: Get.height * 0.02,
+                                        ),
+                                        CircularPercentIndicator(
+                                          radius: 53.0,
+                                          lineWidth: 15.0,
+                                          percent: percentage / 100.0,
+                                          center: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              TextWidget(
+                                                text: per.toString(),
+                                                color: Colors.white,
+                                                fsize: 20,
+                                              ),
+                                              TextWidget(
+                                                text: "%",
+                                                color: Colors.white,
+                                                fsize: 20,
+                                              ),
+                                            ],
+                                          ),
+                                          progressColor: Colors.green,
+                                          backgroundColor: Colors.white,
+                                          circularStrokeCap: CircularStrokeCap.round,
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.005,
+                                        ),
+                                        TextWidget(
+                                          text: "Completed",
+                                          color: Colors.white,
+                                          fsize: 20,
+                                        ),
+                                        SizedBox(
+                                          height: Get.height * 0.001,
+                                        ),
+                                        TextWidget(
+                                          text: completeTaskSnapshot.hasData
+                                              ? completeTaskSnapshot.data.docs.length.toString()
+                                              : "0",
+                                          color: Colors.white,
+                                          fsize: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
                                 ],
                               ),
-                            ),
-                          ],
-                        ),
-
-                      ),
+                            );
+                          },
+                        );
+                      },
                     ),
-                    SizedBox( width: Get.width*0.03,),
+                    // StreamBuilder(
+                    //     stream: FirebaseFirestore.instance
+                    //         .collection('users')
+                    //         .doc(user?.uid) // Replace with the user's UID
+                    //         .collection('tasks')
+                    //         .snapshots(),
+                    //     builder: (BuildContext context,
+                    //         AsyncSnapshot<dynamic> alltaskSnapshot) {
+                    //       return Container(
+                    //         height: Get.height * 0.26,
+                    //         width: Get.width * 0.43,
+                    //         decoration: BoxDecoration(
+                    //           borderRadius: BorderRadius.circular(15),
+                    //           gradient: LinearGradient(
+                    //             begin: Alignment.bottomLeft,
+                    //             end: Alignment.topRight,
+                    //             colors: [Color(0xfffd785a), Color(0xfff46735)],
+                    //           ),
+                    //         ),
+                    //         child:StreamBuilder(
+                    //           stream: FirebaseFirestore.instance
+                    //               .collection('users')
+                    //               .doc(user?.uid) // Replace with the user's UID
+                    //               .collection('completeList')
+                    //               .snapshots(),
+                    //           builder: (BuildContext context,
+                    //               AsyncSnapshot<dynamic> completeTaskSnapshot){
+                    //             int decimalPlaces = 2;
+                    //             double percentage = (completeTaskSnapshot.data.docs.length / alltaskSnapshot.data.docs.length) * 100.0;
+                    //             int per =percentage.toInt();
+                    //             return  Stack(
+                    //               children: [
+                    //                 Align(
+                    //                   alignment: Alignment(0, -1),
+                    //                   child: Image.asset(ImageConstant.vector9,
+                    //                       scale: 4),
+                    //                 ),
+                    //                 Align(
+                    //                   alignment: Alignment.topRight,
+                    //                   child: Image.asset(ImageConstant.vector9,
+                    //                       scale: 4),
+                    //                 ),
+                    //                 Align(
+                    //                   alignment: Alignment.center,
+                    //                   child: Column(
+                    //                     children: [
+                    //                       SizedBox(
+                    //                         height: Get.height * 0.02,
+                    //                       ),
+                    //                       CircularPercentIndicator(
+                    //                         radius: 53.0,
+                    //                         lineWidth: 15.0,
+                    //                         percent:percentage/100.0,
+                    //                         center: Row(
+                    //                           mainAxisAlignment: MainAxisAlignment.center,
+                    //                           children: [
+                    //                             TextWidget(
+                    //                               // text:percentage.toStringAsFixed(decimalPlaces),
+                    //                                 text:per.toString(),
+                    //                                 color: Colors.white,
+                    //                                 fsize: 20),
+                    //                             TextWidget(text:"%",
+                    //                                 color: Colors.white,
+                    //                                 fsize: 20),
+                    //                           ],
+                    //                         ),
+                    //                         progressColor: Colors.green,
+                    //                         backgroundColor: Colors.white,
+                    //                         circularStrokeCap:
+                    //                         CircularStrokeCap.round,
+                    //                       ),
+                    //                       SizedBox(
+                    //                         height: Get.height * 0.005,
+                    //                       ),
+                    //                       TextWidget(
+                    //                           text: "Completed",
+                    //                           color: Colors.white,
+                    //                           fsize: 20),
+                    //                       SizedBox(
+                    //                         height: Get.height * 0.001,
+                    //                       ),
+                    //                       TextWidget(
+                    //                           text:completeTaskSnapshot.data.docs.length.toString(),
+                    //                           color: Colors.white,
+                    //                           fsize: 15),
+                    //                     ],
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             );
+                    //           },
+                    //         ),
+                    //       );
+                    //     }),
+
+                    SizedBox(
+                      width: Get.width * 0.03,
+                    ),
+
                     InkWell(
                       onTap: (){
                         Get.toNamed(AppRoutes.selectAffirmationScreen);
@@ -222,37 +392,41 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           ],
                         ),
                       ),
-                    )
+                    ),
                   ],
-
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 18.0, vertical: 0),
                 child: Row(
                   children: [
                     InkWell(
-                    onTap: (){
-              Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
-              },
-                      child: Container(
-                        height: Get.height*0.26,
-                        width: Get.width*0.43,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(image: AssetImage(ImageConstant.virtualizationImg),fit: BoxFit.cover),
-                        ),
-
-                      ),
-                    ),
-                    SizedBox( width: Get.width*0.03,),
-                    InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
                       },
                       child: Container(
-                        height: Get.height*0.26,
-                        width: Get.width*0.43,
+                        height: Get.height * 0.26,
+                        width: Get.width * 0.43,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                              image:
+                                  AssetImage(ImageConstant.virtualizationImg),
+                              fit: BoxFit.cover),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: Get.width * 0.03,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
+                      },
+                      child: Container(
+                        height: Get.height * 0.26,
+                        width: Get.width * 0.43,
                         decoration: BoxDecoration(
                           color: Color(0xff048C44),
                           borderRadius: BorderRadius.circular(15),
@@ -261,20 +435,29 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           children: [
                             Align(
                               alignment: Alignment(0, -1),
-                              child:  Image.asset(ImageConstant.vector10,scale: 1),
+                              child:
+                                  Image.asset(ImageConstant.vector10, scale: 1),
                             ),
                             Align(
                               alignment: Alignment.topRight,
-                              child:  Image.asset(ImageConstant.vector10,scale: 1),
+                              child:
+                                  Image.asset(ImageConstant.vector10, scale: 1),
                             ),
                             Align(
                               alignment: Alignment.center,
                               child: Column(
                                 children: [
-                                  SizedBox(height: Get.height*0.02,),
-                                  Image.asset(ImageConstant.ladyImg,scale: 4),
-                                  SizedBox(height: Get.height*0.01,),
-                                  TextWidget(text: "Daily Intention",color: Colors.white,fsize: 16),
+                                  SizedBox(
+                                    height: Get.height * 0.02,
+                                  ),
+                                  Image.asset(ImageConstant.ladyImg, scale: 4),
+                                  SizedBox(
+                                    height: Get.height * 0.01,
+                                  ),
+                                  TextWidget(
+                                      text: "Daily Intention",
+                                      color: Colors.white,
+                                      fsize: 16),
                                 ],
                               ),
                             ),
@@ -283,10 +466,11 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       ),
                     )
                   ],
-
                 ),
               ),
-              SizedBox(height: Get.height*0.15,),
+              SizedBox(
+                height: Get.height * 0.15,
+              ),
             ],
           ),
         ),

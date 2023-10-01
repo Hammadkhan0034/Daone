@@ -128,7 +128,7 @@ class DailyIntensionRecordOneScreen
               ),
               CustomElevatedButton(
                 onTap: (){
-                  Get.toNamed(AppRoutes.homeScreen);
+                  Get.toNamed(AppRoutes.dashboardRoute);
                 },
                 width: getHorizontalSize(
                   315,

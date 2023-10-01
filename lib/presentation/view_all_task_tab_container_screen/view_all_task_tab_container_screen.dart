@@ -24,16 +24,11 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: CustomAppBar(
-          height: getVerticalSize(79),
-          leadingWidth: 72,
-          leading: AppbarIconbutton(
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(left: 24, top: 4, bottom: 4),
-          ),
+        appBar:AppBar(
+          elevation: 1.8,
+          backgroundColor: Colors.white,
           centerTitle: true,
-          title: AppbarSubtitle(
-            text: "lbl_tasks".tr,
+          title: TextWidget(text:"lbl_tasks".tr,color: Colors.black,fsize: 24,font: FontWeight.w600,
           ),
         ),
         body: SizedBox(
@@ -46,85 +41,70 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: calenderController.currentMonthList.length,
+                  itemCount: 6, // Limit the list to 5 items
                   itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.fromLTRB(8, 0, 0, 0),
-                      child: Obx(() {
-                        final DateTime date = calenderController.currentMonthList[index];
-                        final weekday = DateFormat.E().format(date);
+                    final DateTime currentDate = DateTime.now();
+                    final DateTime date = currentDate.add(Duration(days: index)); // Add days to get next dates
 
-                        return GestureDetector(
-                          onTap: () {
-                            calenderController.selectedContainerIndex.value = index;
-                            final DateTime date = calenderController.currentMonthList[index];
-
-                            // Save the selected date in the format DateTime(2023, 10, 5)
-                            final int selectedYear = date.year;
-                            final int selectedMonth = date.month;
-                            final int selectedDay = date.day;
-                            final formattedDate = DateFormat('yyyy-MM-dd').format(date);
-
-                            // Print the selected date in the desired format
-                            print(formattedDate);
-                          },
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Material(
-                              color: calenderController.selectedContainerIndex.value == index
-                                  ? Colors.deepOrange // Selected container color
+                    return GestureDetector(
+                      onTap: () {
+                        // Handle date selection here
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Material(
+                          color: date.day == currentDate.day
+                              ? Colors.deepOrange // Current date container color
+                              : Colors.white, // Default container color
+                          borderRadius: BorderRadius.circular(10.0),
+                          elevation: 2,
+                          child: Container(
+                            width: Get.width * 0.12,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: date.day == currentDate.day
+                                  ? Colors.deepOrange // Current date container color
                                   : Colors.white, // Default container color
-                              borderRadius: BorderRadius.circular(10.0),
-                              elevation: 2,
-                              child: Container(
-                                width: Get.width * 0.12,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: calenderController.selectedContainerIndex.value == index
-                                      ? Colors.deepOrange // Selected container color
-                                      : Colors.white, // Default container color
-                                ),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: <Widget>[
-                                      TextWidget(
-                                        text: date.year.toString(),
-                                        color:calenderController.selectedContainerIndex.value == index
-                                            ? Colors.white // Selected container color
-                                            : Colors.black,
-                                        fsize: 0.2,
-                                      ),
-                                      TextWidget(
-                                        text: date.month.toString(),
-                                        color:calenderController.selectedContainerIndex.value == index
-                                            ? Colors.white // Selected container color
-                                            : Colors.black,
-                                        fsize: 0.0008,
-                                        font: FontWeight.bold,
-                                      ),
-                                      TextWidget(
-                                        text: date.day.toString(),
-                                        color:calenderController.selectedContainerIndex.value == index
-                                            ? Colors.white // Selected container color
-                                            : Colors.black,
-                                        fsize: 16,
-                                      ),
-                                      TextWidget(
-                                        text: calenderController.getMonthName(date.month),
-                                        color:calenderController.selectedContainerIndex.value == index
-                                            ? Colors.white // Selected container color
-                                            : Colors.black,
-                                        fsize: 12,
-                                      ),
-                                    ],
+                            ),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  TextWidget(
+                                    text: date.year.toString(),
+                                    color: date.day == currentDate.day
+                                        ? Colors.white // Current date text color
+                                        : Colors.black, // Default container text color
+                                    fsize: 0.2,
                                   ),
-                                ),
+                                  TextWidget(
+                                    text: date.month.toString(),
+                                    color: date.day == currentDate.day
+                                        ? Colors.white // Current date text color
+                                        : Colors.black, // Default container text color
+                                    fsize: 0.0008,
+                                    font: FontWeight.bold,
+                                  ),
+                                  TextWidget(
+                                    text: date.day.toString(),
+                                    color: date.day == currentDate.day
+                                        ? Colors.white // Current date text color
+                                        : Colors.black, // Default container text color
+                                    fsize: 16,
+                                  ),
+                                  TextWidget(
+                                    text: calenderController.getMonthName(date.month),
+                                    color: date.day == currentDate.day
+                                        ? Colors.white // Current date text color
+                                        : Colors.black, // Default container text color
+                                    fsize: 12,
+                                  ),
+                                ],
                               ),
                             ),
                           ),
-                        );
-                      }),
+                        ),
+                      ),
                     );
                   },
                 ),
@@ -168,13 +148,13 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                 ),
               ),
               SizedBox(
-                height: getVerticalSize(440),
+                height: getVerticalSize(470),
                 child: TabBarView(
                   controller: controller1.tabviewController,
                   children: [
                     allTaskList(context),
-                    allTaskList(context),
-                    allTaskList(context),
+                    todoListWdiget(context),
+                   completeListWdiget(context),
                   ],
                 ),
               ),

@@ -145,7 +145,7 @@ class CompleteScreen extends GetWidget<CompleteController> {
               ),
               CustomElevatedButton(
                 onTap: (){
-                  Get.toNamed(AppRoutes.homeScreen);
+                  Get.toNamed(AppRoutes.dashboardRoute);
                 },
                 width: getHorizontalSize(
                   315,

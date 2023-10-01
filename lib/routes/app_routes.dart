@@ -369,14 +369,14 @@ class AppRoutes {
     ),
     GetPage(
       name: latestBlogScreen,
-      page: () => LatestBlogScreen(),
+      page: () => LatestBlogScreen(blogData: {},),
       bindings: [
         LatestBlogBinding(),
       ],
     ),
     GetPage(
       name: latestBlogOneScreen,
-      page: () => LatestBlogScreen(),
+      page: () => LatestBlogScreen(blogData: {},),
       bindings: [
         LatestBlogBinding(),
       ],
