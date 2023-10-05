@@ -253,7 +253,6 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
                     ),
                   ),
                    SizedBox(height: Get.height*0.03,),
-                  // TextWidget(text: "Task Type", color:Colors.black38, fsize: 12),
                   CustomElevatedButton(
                     onTap: (){
                       controller.saveTaskToFirestore(context,controller.group216Controller.text.trim(),controller.descriptionController.text.trim());

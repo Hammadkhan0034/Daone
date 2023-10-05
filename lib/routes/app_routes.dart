@@ -1,5 +1,6 @@
 import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
 import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
+import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_view.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
@@ -18,8 +19,6 @@ import 'package:daone/presentation/success_registration_screen/success_registrat
 import 'package:daone/presentation/success_registration_screen/binding/success_registration_binding.dart';
 import 'package:daone/presentation/login_page_screen/login_page_screen.dart';
 import 'package:daone/presentation/login_page_screen/binding/login_page_binding.dart';
-import 'package:daone/presentation/home_screen/home_screen.dart';
-import 'package:daone/presentation/home_screen/binding/home_binding.dart';
 import 'package:daone/presentation/daily_intension_record_screen/daily_intension_record_screen.dart';
 import 'package:daone/presentation/daily_intension_record_screen/binding/daily_intension_record_binding.dart';
 import 'package:daone/presentation/recording_screen/recording_screen.dart';
@@ -72,10 +71,12 @@ import 'package:daone/presentation/personal_data_update_one_screen/personal_data
 import 'package:daone/presentation/personal_data_update_one_screen/binding/personal_data_update_one_binding.dart';
 import 'package:daone/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:daone/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 import '../presentation/add_task_screen/add_task_screen.dart';
 import '../presentation/add_task_screen/binding/add_task_binding.dart';
+import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';
 
 class AppRoutes {
   static const String welcomeScreenOneScreen = '/welcome_screen_one_screen';
@@ -176,6 +177,8 @@ class AppRoutes {
 
   static const String dashboardRoute = '/dashboardRoute';
 
+  static const String ownAffirmationRoute ='/ownAffirmation';
+
 
 
   static List<GetPage> pages = [
@@ -185,11 +188,18 @@ class AppRoutes {
       bindings: [
         DashBoardBinding(),
       ],
-    ),GetPage(
+    ),
+    GetPage(
       name: welcomeScreenOneScreen,
       page: () => WelcomeScreenOneScreen(),
       bindings: [
         WelcomeScreenOneBinding(),
+      ],
+    ),GetPage(
+      name: ownAffirmationRoute,
+      page: () => OwnAffirmationView(),
+      bindings: [
+        OwnAffirmationBinding(),
       ],
     ),
     GetPage(
@@ -239,13 +249,6 @@ class AppRoutes {
       page: () => LoginPageScreen(),
       bindings: [
         LoginPageBinding(),
-      ],
-    ),
-    GetPage(
-      name: homeScreen,
-      page: () => HomeScreen(),
-      bindings: [
-        HomeBinding(),
       ],
     ),
     GetPage(
@@ -369,14 +372,7 @@ class AppRoutes {
     ),
     GetPage(
       name: latestBlogScreen,
-      page: () => LatestBlogScreen(blogData: {},),
-      bindings: [
-        LatestBlogBinding(),
-      ],
-    ),
-    GetPage(
-      name: latestBlogOneScreen,
-      page: () => LatestBlogScreen(blogData: {},),
+      page: () => LatestBlogScreen(blogId:FirebaseAuth.instance.currentUser!.uid, blogData: {},),
       bindings: [
         LatestBlogBinding(),
       ],

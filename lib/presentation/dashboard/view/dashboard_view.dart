@@ -3,7 +3,6 @@ import 'package:daone/presentation/account_setting_screen/account_setting_screen
 import 'package:daone/presentation/dashboard/controller/dashboard_controller.dart';
 import 'package:daone/presentation/dashboard/view/widget/custom_animated_bottom_bar.dart';
 import 'package:daone/presentation/home_one_screen/home_one_screen.dart';
-import 'package:daone/presentation/home_screen/home_screen.dart';
 import 'package:daone/presentation/select_task_screen/select_task_screen.dart';
 import 'package:daone/presentation/stats_screen/stats_screen.dart';
 import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
@@ -89,7 +88,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
 
   Widget getBody() {
     List<Widget> pages = [
-      HomeScreen(),
+      HomeOneScreen(),
       ViewAllTaskPage(),
       AddTaskScreen(),
       ViewFriendFullProfilePage(),

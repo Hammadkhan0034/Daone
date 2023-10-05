@@ -9,12 +9,15 @@ import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
 class LatestBlogScreen extends GetWidget<LatestBlogController> {
-  final Map<String, dynamic> blogData; // Pass the blog data to this widget
+  final Map<String, dynamic> blogData;
+  final String blogId;
 
-  LatestBlogScreen({required this.blogData});
+  LatestBlogScreen({required this.blogId,required this.blogData});
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    SaveOrEditBlogController controller2 =Get.put(SaveOrEditBlogController());
+
     return SafeArea(
       child: Scaffold(
         bottomNavigationBar: SizedBox(
@@ -47,23 +50,6 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                               content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
                           },
                           child: Image.asset(ImageConstant.imageBlog1,scale: 3.1,)),
-                      Spacer(),
-                      InkWell(
-                          onTap: (){
-                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
-                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
-                              content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
-                          },
-
-                          child: Image.asset(ImageConstant.imageBlog2,scale: 3.1)),
-                      Spacer(),
-                      InkWell(
-                          onTap: (){
-                            Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
-                              contentPadding: EdgeInsets.zero, insetPadding: const EdgeInsets.only(left: 0),
-                              content:SaveOrEditBlogDialog(Get.put(SaveOrEditBlogController(),),),));
-                          },
-                          child: Image.asset(ImageConstant.imageBlog3,scale: 3.1)),
                       Spacer(),
 
                     ],
@@ -152,21 +138,22 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
                       alignment: Alignment.bottomRight,
                       children: [
                         Align(
-                          alignment: Alignment.center,
+                          alignment: Alignment.topRight,
                           child: SizedBox(
                             width: getHorizontalSize(
                               311,
                             ),
-                            child: Text(
-                              "msg_life_can_be_a_rollercoaster".tr,
-                              maxLines: 17,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style: CustomTextStyles.bodySmallBlack900,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: SelectableText(
+                                blogData['description'],
+                                maxLines: 17,
+                                textAlign: TextAlign.left,
+                                style: CustomTextStyles.bodySmallBlack900,
+                              ),
                             ),
                           ),
                         ),
-
                       ],
                     ),
                   ),
@@ -175,44 +162,28 @@ class LatestBlogScreen extends GetWidget<LatestBlogController> {
             ),
           ),
         ),
-        floatingActionButton: Container(
-          height: Get.height*0.09,
-          width: Get.width*0.18,
-          decoration: AppDecoration.outline9.copyWith(
-            borderRadius: BorderRadiusStyle.circleBorder33,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CustomImageView(
-                svgPath: ImageConstant.imgFile,
-                height: getVerticalSize(
-                  26,
-                ),
-                width: getHorizontalSize(
-                  23,
-                ),
-                margin: getMargin(
-                  top: 14,
-                ),
+        floatingActionButton:
+          InkWell(
+            onTap: (){
+
+            },
+            child: Container(
+              height: Get.height*0.09,
+              width: Get.width*0.16,
+              decoration: BoxDecoration(
+                // color: Colors.deepOrange,
+                borderRadius: BorderRadius.circular(100),
+                image: DecorationImage(image: AssetImage(
+
+                "assets/images/unlike.png"
+                 )),
               ),
-              Padding(
-                padding: getPadding(
-                  top: 2,
-                ),
-                child: Text(
-                  "lbl_10_2k".tr,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.poppinsBlack900,
-                ),
-              ),
-            ],
-          ),
-        ),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Text("0"),
+            ),
+            ),
       ),
-    );
+      ));
   }
 }

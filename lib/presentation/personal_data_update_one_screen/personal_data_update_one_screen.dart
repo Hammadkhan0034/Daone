@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../widgets/text_widget.dart';
 import '../personal_data_update_one_screen/widgets/listn_item_widget.dart';
 import 'controller/personal_data_update_one_controller.dart';
 import 'models/listn_item_model.dart';
@@ -23,6 +27,7 @@ class PersonalDataUpdateOneScreen
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    final user = FirebaseAuth.instance.currentUser;
 
     return SafeArea(
       child: Scaffold(
@@ -44,376 +49,115 @@ class PersonalDataUpdateOneScreen
           title: AppbarSubtitle2(
             text: "lbl_highlights".tr,
           ),
-          actions: [
-            AppbarImage(
-              height: getSize(
-                40,
-              ),
-              width: getSize(
-                40,
-              ),
-              svgPath: ImageConstant.imgFolder,
-              margin: getMargin(
-                left: 30,
-                top: 4,
-                right: 30,
-                bottom: 12,
-              ),
-            ),
-          ],
+
         ),
-        body: SizedBox(
-          width: mediaQueryData.size.width,
-          child: SingleChildScrollView(
-            padding: getPadding(
-              top: 44,
-            ),
-            child: Padding(
-              padding: getPadding(
-                left: 29,
-                right: 29,
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+        body: Container(
+          height: Get.height*0.85,
+          width: double.infinity,
+          child:StreamBuilder(
+            stream: FirebaseFirestore.instance
+              .collection('users')
+              .doc(user?.uid) // Replace with the user's UID
+              .collection('highlightList')
+              .snapshots(),
+            builder: (context,AsyncSnapshot snapshot){
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                // Loading indicator while data is being fetched
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Colors.deepOrange,
+                  ),
+                );
+              }
+
+              if (snapshot.hasError) {
+                // Handle errors here
+                return Text('Error: ${snapshot.error}');
+              }
+
+              // Check if there are no tasks
+              if (snapshot.data.docs.isEmpty) {
+                return Container(
+                  height: Get.height * 0.3,
+                  width: Get.width * 0.9,
+                  decoration: BoxDecoration(
+                    //  color: Colors.teal
+                  ),
+                  child: Column(
                     children: [
-                      SizedBox(
-                        height: getVerticalSize(
-                          189,
-                        ),
-                        child: VerticalDivider(
-                          width: getHorizontalSize(
-                            2,
-                          ),
-                          thickness: getVerticalSize(
-                            2,
-                          ),
-                          color: appTheme.gray80003,
-                          indent: getHorizontalSize(
-                            55,
-                          ),
-                          endIndent: getHorizontalSize(
-                            39,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Obx(
-                          () => ListView.separated(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            separatorBuilder: (
-                              context,
-                              index,
-                            ) {
-                              return SizedBox(
-                                height: getVerticalSize(
-                                  18,
-                                ),
-                              );
-                            },
-                            itemCount: controller.personalDataUpdateOneModelObj
-                                .value.listnItemList.value.length,
-                            itemBuilder: (context, index) {
-                              ListnItemModel model = controller
-                                  .personalDataUpdateOneModelObj
-                                  .value
-                                  .listnItemList
-                                  .value[index];
-                              return ListnItemWidget(
-                                model,
-                              );
-                            },
-                          ),
-                        ),
-                      ),
+                      SizedBox(height: Get.height * 0.08),
+                      Center(
+                          child: Image.asset(
+                            ImageConstant.vector21,
+                            scale: 4,
+                          )),
+                      SizedBox(height: Get.height * 0.04),
+                      TextWidget(
+                        text:
+                        "You don't have any Higlights",
+                        color: Colors.black38,
+                        fsize: 14,
+                        font: FontWeight.w500,
+                      )
                     ],
                   ),
-                  Padding(
-                    padding: getPadding(
-                      top: 18,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          height: getVerticalSize(
-                            189,
-                          ),
-                          child: VerticalDivider(
-                            width: getHorizontalSize(
-                              2,
-                            ),
-                            thickness: getVerticalSize(
-                              2,
-                            ),
-                            color: appTheme.gray80003,
-                            indent: getHorizontalSize(
-                              55,
-                            ),
-                            endIndent: getHorizontalSize(
-                              39,
-                            ),
-                          ),
+                );
+              }
+              return ListView.builder(
+                  itemCount: snapshot.data.docs.length,
+                  itemBuilder: (context,index){
+                    var higlightData= snapshot.data.docs[index].data();
+                    return Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.green,
+image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
                         ),
-                        Expanded(
-                          child: Container(
-                            margin: getMargin(
-                              left: 12,
-                            ),
-                            padding: getPadding(
-                              left: 20,
-                              top: 17,
-                              right: 20,
-                              bottom: 17,
-                            ),
-                            decoration: AppDecoration.outline16.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder18,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: getPadding(
-                                    left: 2,
+                        width: Get.width*0.6,
+                        // height: Get.height*0.2,
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    child: Stack(
+                                      children: [
+                                        CircularProgressIndicator(
+                                        color: Colors.black,
+                                        value: 100,
+                                          strokeWidth: 1,
+                                      ),
+                                      ]
+                                    ),
                                   ),
-                                  child: Row(
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      CustomOutlinedButton(
-                                        text: "lbl_n2".tr,
-                                        buttonStyle: CustomButtonStyles
-                                            .outlineBlack900
-                                            .copyWith(
-                                                fixedSize: MaterialStateProperty
-                                                    .all<Size>(Size(
-                                          getHorizontalSize(
-                                            44,
-                                          ),
-                                          getVerticalSize(
-                                            44,
-                                          ),
-                                        ))),
-                                        buttonTextStyle: CustomTextStyles
-                                            .bodyLargePoppinsGray90003,
-                                      ),
-                                      Padding(
-                                        padding: getPadding(
-                                          left: 15,
-                                          top: 7,
-                                          bottom: 6,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "lbl_you_highlighted".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .labelMediumGray90003Medium,
-                                            ),
-                                            Text(
-                                              "msg_02_august_2023_at".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .poppinsOnError,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
+                                      TextWidget(text: "You Higlighted", color: Colors.black, fsize: 13,font: FontWeight.w600),
+                                      TextWidget(text: higlightData['date'], color: Colors.black, fsize: 13,font: FontWeight.w600),
                                     ],
                                   ),
-                                ),
-                                Container(
-                                  width: getHorizontalSize(
-                                    250,
-                                  ),
-                                  margin: getMargin(
-                                    left: 10,
-                                    top: 17,
-                                  ),
-                                  child: Text(
-                                    "msg_repeating_affirmations".tr,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style:
-                                        CustomTextStyles.bodyMediumBlack900_1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 12,
-                                    top: 9,
-                                    bottom: 9,
-                                  ),
-                                  child: Text(
-                                    "msg_posted_on_02_august".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.poppinsOnError,
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
+                            Center(child: Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: TextWidget(text: higlightData['selectedText'], color: Colors.black, fsize: 10),
+                            )),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      top: 18,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        SizedBox(
-                          height: getVerticalSize(
-                            174,
-                          ),
-                          child: VerticalDivider(
-                            width: getHorizontalSize(
-                              2,
-                            ),
-                            thickness: getVerticalSize(
-                              2,
-                            ),
-                            color: appTheme.gray80003,
-                            indent: getHorizontalSize(
-                              55,
-                            ),
-                            endIndent: getHorizontalSize(
-                              24,
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: getMargin(
-                              left: 12,
-                            ),
-                            padding: getPadding(
-                              left: 20,
-                              top: 17,
-                              right: 20,
-                              bottom: 17,
-                            ),
-                            decoration: AppDecoration.outline16.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder18,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: getPadding(
-                                    left: 2,
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      CustomOutlinedButton(
-                                        text: "lbl_n2".tr,
-                                        buttonStyle: CustomButtonStyles
-                                            .outlineBlack900
-                                            .copyWith(
-                                                fixedSize: MaterialStateProperty
-                                                    .all<Size>(Size(
-                                          getHorizontalSize(
-                                            44,
-                                          ),
-                                          getVerticalSize(
-                                            44,
-                                          ),
-                                        ))),
-                                        buttonTextStyle: CustomTextStyles
-                                            .bodyLargePoppinsGray90003,
-                                      ),
-                                      Padding(
-                                        padding: getPadding(
-                                          left: 15,
-                                          top: 7,
-                                          bottom: 6,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "lbl_you_highlighted".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .labelMediumGray90003Medium,
-                                            ),
-                                            Text(
-                                              "msg_02_august_2023_at".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .poppinsOnError,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: getHorizontalSize(
-                                    250,
-                                  ),
-                                  margin: getMargin(
-                                    left: 10,
-                                    top: 17,
-                                  ),
-                                  child: Text(
-                                    "msg_repeating_affirmations".tr,
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style:
-                                        CustomTextStyles.bodyMediumBlack900_1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 12,
-                                    top: 9,
-                                    bottom: 9,
-                                  ),
-                                  child: Text(
-                                    "msg_posted_on_02_august".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.poppinsOnError,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-                ],
-              ),
-            ),
+                      ),
+                    );
+                  });
+            },
           ),
+
         ),
       ),
     );

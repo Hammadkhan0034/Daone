@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
 
 import '../latest_blog_screen/latest_blog_screen.dart';
@@ -99,7 +100,8 @@ class BlogScreen extends GetWidget<BlogController> {
 
                       // Generate a random number between 1 and totalItems
                       Random random = Random();
-                      int itemCount = random.nextInt(totalItems) + 1;
+                      int itemCount = random.nextInt(totalItems);
+
 
                       return Container(
                         height:Get.height*0.26,width: double.infinity,
@@ -111,7 +113,7 @@ class BlogScreen extends GetWidget<BlogController> {
                             var blogData = snapshot.data?.docs[itemCount].data() as Map<String,dynamic>;
                           return InkWell(
                             onTap: (){
-                              Get.to(LatestBlogScreen(blogData: blogData));
+                              Get.to(LatestBlogScreen(blogData: blogData,blogId:""));
                             },
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -195,7 +197,7 @@ class BlogScreen extends GetWidget<BlogController> {
                               children: [
                                 InkWell(
                                   onTap:(){
-                                    Get.to(LatestBlogScreen(blogData: document));
+                                    Get.to(LatestBlogScreen(blogData: document, blogId:FirebaseAuth.instance.currentUser!.uid,));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8.0),
