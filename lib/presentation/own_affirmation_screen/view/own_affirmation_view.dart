@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:daone/core/app_export.dart';
@@ -9,15 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import '../../../core/utils/image_constant.dart';
 import '../../../core/utils/size_utils.dart';
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
 import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text_widget.dart';
-import '../../affirmation_blast_effect_dialog/affirmation_blast_effect_dialog.dart';
-import '../../affirmation_blast_effect_dialog/controller/affirmation_blast_effect_controller.dart';
 import '../../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
 import '../../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 
@@ -236,7 +232,8 @@ class OwnAffirmationView extends StatelessWidget {
                                   ),
                                   CustomElevatedButton(
                                     onTap: (){
-                                      controller.playConfetti();
+                                      controller.deleteAffirmation(snapshot.data.docs[index].id);
+                                      Get.back();
                                     },
                                     text: "Delete Affirmation".tr,
                                     margin: getMargin(
@@ -254,7 +251,7 @@ class OwnAffirmationView extends StatelessWidget {
                                   ),
 
                                   CustomElevatedButton(
-                                    onTap: (){
+                                    onTap: ()async{
                                       controller.playConfetti();
                                     },
                                     text: "msg_blast_affirmation".tr,
@@ -278,9 +275,11 @@ class OwnAffirmationView extends StatelessWidget {
                               confettiController: controller.confettiController,
                               blastDirection: -pi / 2,
                               emissionFrequency: 0.05,
+
                               numberOfParticles: 10,
                               gravity: 0.2,
                               shouldLoop: false,
+
                               colors: [Colors.red, Colors.green, Colors.blue],
                             ),
 

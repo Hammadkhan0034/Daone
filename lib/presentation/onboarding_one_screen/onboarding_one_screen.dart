@@ -71,7 +71,7 @@ class OnboardingOneScreen extends GetWidget<OnboardingOneController> {
         ),
         floatingActionButton: CustomFloatingButton(
           onTap: (){
-            Get.off(AppRoutes.onboardingTwoScreen);
+            Get.toNamed(AppRoutes.onboardingTwoScreen);
           },
           height: 75,
           width: 75,

@@ -153,48 +153,53 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                     ),
       ),
                   ),
-                  Container(
-                  padding: getPadding(
-                  all: 12,
-                  ),
-                  decoration: AppDecoration.outline4.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder14,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath:'assets/images/own.png',
-                        height: getSize(
-                          123,
-                        ),
-                        width: getSize(
-                          123,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            8,
+                  InkWell(
+                    onTap: (){
+
+                    },
+                    child: Container(
+                      padding: getPadding(
+                        all: 12,
+                      ),
+                      decoration: AppDecoration.outline4.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder14,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomImageView(
+                            imagePath: "assets/images/gradirude.png",
+                            height: getSize(
+                              123,
+                            ),
+                            width: getSize(
+                              123,
+                            ),
+                            radius: BorderRadius.circular(
+                              getHorizontalSize(
+                                8,
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: getPadding(
+                              top: 12,
+                              bottom: 2,
+                            ),
+                            child: Text(
+                              "Gratitude",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyles.labelLargeGray80001,
+                            ),
+                          ),
+                        ],
                       ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 2,
-                        ),
-                        child: Text(
-                          "My Favourite",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.labelLargeGray80001,
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-      ),
                 ],
               ),
             ),
@@ -245,48 +250,53 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                     ],
                   ),
       ),
-                  Container(
-                  padding: getPadding(
-                  all: 12,
-                  ),
-                  decoration: AppDecoration.outline4.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder14,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath:'assets/images/love.png',
-                        height: getSize(
-                          123,
-                        ),
-                        width: getSize(
-                          123,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            8,
+                  InkWell(
+                    onTap: (){
+                      Get.toNamed(AppRoutes.loveAffirmationRoute);
+                    },
+                    child: Container(
+                    padding: getPadding(
+                    all: 12,
+                    ),
+                    decoration: AppDecoration.outline4.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder14,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomImageView(
+                          imagePath:'assets/images/love.png',
+                          height: getSize(
+                            123,
+                          ),
+                          width: getSize(
+                            123,
+                          ),
+                          radius: BorderRadius.circular(
+                            getHorizontalSize(
+                              8,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 2,
+                        Padding(
+                          padding: getPadding(
+                            top: 12,
+                            bottom: 2,
+                          ),
+                          child: Text(
+                            "Love is relationship",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: CustomTextStyles.labelLargeGray80001,
+                          ),
                         ),
-                        child: Text(
-                          "Love is relationship",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.labelLargeGray80001,
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
       ),
+                  ),
               ],
             ),
                 ),
@@ -328,48 +338,6 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                         ),
                         child: Text(
                           "Self Confidence",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.labelLargeGray80001,
-                        ),
-                      ),
-                    ],
-                  ),
-      ),
-                  Container(
-                  padding: getPadding(
-                  all: 12,
-                  ),
-                  decoration: AppDecoration.outline4.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder14,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath: "assets/images/gradirude.png",
-                        height: getSize(
-                          123,
-                        ),
-                        width: getSize(
-                          123,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            8,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 2,
-                        ),
-                        child: Text(
-                          "Gratitude",
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,

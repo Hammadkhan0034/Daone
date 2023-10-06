@@ -76,6 +76,8 @@ import 'package:get/get.dart';
 
 import '../presentation/add_task_screen/add_task_screen.dart';
 import '../presentation/add_task_screen/binding/add_task_binding.dart';
+import '../presentation/love_affirmation/binding/love_affirmation_binding.dart';
+import '../presentation/love_affirmation/view/love_affirmation.dart';
 import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';
 
 class AppRoutes {
@@ -179,6 +181,8 @@ class AppRoutes {
 
   static const String ownAffirmationRoute ='/ownAffirmation';
 
+  static const String loveAffirmationRoute ='/loveAffirmation';
+
 
 
   static List<GetPage> pages = [
@@ -195,7 +199,15 @@ class AppRoutes {
       bindings: [
         WelcomeScreenOneBinding(),
       ],
-    ),GetPage(
+    ),
+    GetPage(
+      name: loveAffirmationRoute,
+      page: () => LoveAffirmationView(),
+      bindings: [
+        LoveAffirmationBinding(),
+      ],
+    ),
+    GetPage(
       name: ownAffirmationRoute,
       page: () => OwnAffirmationView(),
       bindings: [
