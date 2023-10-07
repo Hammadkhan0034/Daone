@@ -105,14 +105,16 @@ class GratitudeAffirmationView extends StatelessWidget {
                         AlertDialog(backgroundColor: Colors.transparent,
                           contentPadding: EdgeInsets.zero,
                           insetPadding: const EdgeInsets.only(left: 0),
-                          content: GratitudeAffirmationBlastEffectDialog(Get.put(GratitudeAffirmationController()),
+                          content:
+                          GratitudeAffirmationBlastEffectDialog(Get.put(GratitudeAffirmationController()),
                               documentId: documentId,
                               decorationImage: DecorationImage(
-                                  image: gratitudeAffirmationData['imageUrl'] == null
+                                  image: gratitudeAffirmationData['imageUrl'] == ""
                                       ? NetworkImage(
                                       "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
                                       : NetworkImage(gratitudeAffirmationData['imageUrl']),fit: BoxFit.cover
-                              ),prosperityAffirmationText: gratitudeAffirmationData['gratitudeAffirmation']),),
+                              ),graditudeAffirmationText: gratitudeAffirmationData['graditudeAffirmation']),
+                        ),
                       );
                     },
                     child: Container(
@@ -135,7 +137,7 @@ class GratitudeAffirmationView extends StatelessWidget {
                                 child: Container(
                                   height: Get.height*0.12,
                                   child: Text(
-                                    gratitudeaffirmationText!,
+                                    gratitudeaffirmationText??"",
                                     maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,

@@ -116,8 +116,8 @@ class SelfConfidenceAffirmationView extends StatelessWidget {
                                   image: selfAffirmationData['imageUrl'] == null
                                       ? NetworkImage(
                                       "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
-                                      : NetworkImage(selfAffirmationData['imageUrl']),fit: BoxFit.cover
-                              ),selfConfidenceaffirmationText: selfAffirmationData['confidenceAffirmation']),),
+                                      : NetworkImage(selfAffirmationData!['imageUrl']),fit: BoxFit.cover
+                              ),selfConfidenceaffirmationText: selfAffirmationData!['confidenceAffirmation']),),
                       );
                     },
                     child: Container(
@@ -140,7 +140,7 @@ class SelfConfidenceAffirmationView extends StatelessWidget {
                                 child: Container(
                                   height: Get.height*0.12,
                                   child: Text(
-                                    selfaffirmationText!,
+                                    selfaffirmationText ?? '',
                                     maxLines: 4,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.center,

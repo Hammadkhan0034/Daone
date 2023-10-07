@@ -98,7 +98,7 @@ class RegisterPageOneController extends GetxController {
         .set(userModel.toMap());
     SnackBar(content: Text("acount create successfully"));
     print('acount created');
-    Get.offAndToNamed(AppRoutes.selectAffirmationScreen);
+    Get.offAndToNamed(AppRoutes.dashboardRoute);
   }
   String? errorMessage;
 
