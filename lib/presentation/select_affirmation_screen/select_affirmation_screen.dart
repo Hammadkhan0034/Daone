@@ -155,7 +155,7 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                   ),
                   InkWell(
                     onTap: (){
-
+                      Get.toNamed(AppRoutes.gratitudeAffirmationRoute);
                     },
                     child: Container(
                       padding: getPadding(
@@ -203,58 +203,16 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                 ],
               ),
             ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
+                InkWell(
+                  onTap: (){
+                    Get.toNamed(AppRoutes.prosperityAffirmationRoute);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                  Container(
-                  padding: getPadding(
-                  all: 12,
-                  ),
-                  decoration: AppDecoration.outline4.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder14,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath:'assets/images/money.png',
-                        height: getSize(
-                          123,
-                        ),
-                        width: getSize(
-                          123,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            8,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 2,
-                        ),
-                        child: Text(
-                          "Prosperity and Money",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.labelLargeGray80001,
-                        ),
-                      ),
-                    ],
-                  ),
-      ),
-                  InkWell(
-                    onTap: (){
-                      Get.toNamed(AppRoutes.loveAffirmationRoute);
-                    },
-                    child: Container(
+                    Container(
                     padding: getPadding(
                     all: 12,
                     ),
@@ -267,7 +225,7 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CustomImageView(
-                          imagePath:'assets/images/love.png',
+                          imagePath:'assets/images/money.png',
                           height: getSize(
                             123,
                           ),
@@ -286,7 +244,7 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                             bottom: 2,
                           ),
                           child: Text(
-                            "Love is relationship",
+                            "Prosperity and Money",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
@@ -296,58 +254,110 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                       ],
                     ),
       ),
-                  ),
+                    InkWell(
+                      onTap: (){
+                        Get.toNamed(AppRoutes.loveAffirmationRoute);
+                      },
+                      child: Container(
+                      padding: getPadding(
+                      all: 12,
+                      ),
+                      decoration: AppDecoration.outline4.copyWith(
+                        borderRadius: BorderRadiusStyle.roundedBorder14,
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CustomImageView(
+                            imagePath:'assets/images/love.png',
+                            height: getSize(
+                              123,
+                            ),
+                            width: getSize(
+                              123,
+                            ),
+                            radius: BorderRadius.circular(
+                              getHorizontalSize(
+                                8,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: getPadding(
+                              top: 12,
+                              bottom: 2,
+                            ),
+                            child: Text(
+                              "Love is relationship",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style: CustomTextStyles.labelLargeGray80001,
+                            ),
+                          ),
+                        ],
+                      ),
+      ),
+                    ),
               ],
             ),
+                  ),
                 ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                  padding: getPadding(
-                  all: 12,
-                  ),
-                  decoration: AppDecoration.outline4.copyWith(
-                    borderRadius: BorderRadiusStyle.roundedBorder14,
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CustomImageView(
-                        imagePath:'assets/images/win.png',
-                        height: getSize(
-                          123,
-                        ),
-                        width: getSize(
-                          123,
-                        ),
-                        radius: BorderRadius.circular(
-                          getHorizontalSize(
-                            8,
+            InkWell(
+              onTap: (){
+                Get.toNamed(AppRoutes.selfAffirmationRoute);
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                    padding: getPadding(
+                    all: 12,
+                    ),
+                    decoration: AppDecoration.outline4.copyWith(
+                      borderRadius: BorderRadiusStyle.roundedBorder14,
+                    ),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CustomImageView(
+                          imagePath:'assets/images/win.png',
+                          height: getSize(
+                            123,
+                          ),
+                          width: getSize(
+                            123,
+                          ),
+                          radius: BorderRadius.circular(
+                            getHorizontalSize(
+                              8,
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 2,
+                        Padding(
+                          padding: getPadding(
+                            top: 12,
+                            bottom: 2,
+                          ),
+                          child: Text(
+                            "Self Confidence",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.left,
+                            style: CustomTextStyles.labelLargeGray80001,
+                          ),
                         ),
-                        child: Text(
-                          "Self Confidence",
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.labelLargeGray80001,
-                        ),
-                      ),
-                    ],
-                  ),
+                      ],
+                    ),
       ),
-                ],
+                  ],
+                ),
               ),
             ),
               ],

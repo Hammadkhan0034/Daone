@@ -1,6 +1,7 @@
 import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
 import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
 import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_view.dart';
+import 'package:daone/presentation/prosperity_affirmation/view/prosperity_affirmation_view.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
@@ -76,9 +77,14 @@ import 'package:get/get.dart';
 
 import '../presentation/add_task_screen/add_task_screen.dart';
 import '../presentation/add_task_screen/binding/add_task_binding.dart';
+import '../presentation/gratitude_affirmation/binding/gratitude_affirmation_binding.dart';
+import '../presentation/gratitude_affirmation/view/gratitude_affirmation_view.dart';
 import '../presentation/love_affirmation/binding/love_affirmation_binding.dart';
 import '../presentation/love_affirmation/view/love_affirmation.dart';
 import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';
+import '../presentation/prosperity_affirmation/binding/prosperityAffirmationBinding.dart';
+import '../presentation/self_confidence_affirmation/binding/self_confidence_binding.dart';
+import '../presentation/self_confidence_affirmation/view/self_confidence_view.dart';
 
 class AppRoutes {
   static const String welcomeScreenOneScreen = '/welcome_screen_one_screen';
@@ -183,6 +189,12 @@ class AppRoutes {
 
   static const String loveAffirmationRoute ='/loveAffirmation';
 
+  static const String prosperityAffirmationRoute ='/prosperityAffirmation';
+
+  static const String gratitudeAffirmationRoute ='/gratitudeAffirmation';
+
+  static const String selfAffirmationRoute ='/selfAffirmation';
+
 
 
   static List<GetPage> pages = [
@@ -198,6 +210,26 @@ class AppRoutes {
       page: () => WelcomeScreenOneScreen(),
       bindings: [
         WelcomeScreenOneBinding(),
+      ],
+    ),
+    GetPage(
+      name: prosperityAffirmationRoute,
+      page: () => ProsperityAffirmationView(),
+      bindings: [
+        ProsperityAffirmationBinding(),
+      ],
+    ),
+    GetPage(
+      name: gratitudeAffirmationRoute,
+      page: () => GratitudeAffirmationView(),
+      bindings: [
+        GratitudeAffirmationBinding(),
+      ],
+    ),GetPage(
+      name: selfAffirmationRoute,
+      page: () => SelfConfidenceAffirmationView() ,
+      bindings: [
+        SelfConfidenceBinding(),
       ],
     ),
     GetPage(

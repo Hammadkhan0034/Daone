@@ -1,26 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daone/presentation/love_affirmation/controller/love_affirmation_controller.dart';
-import 'package:google_fonts/google_fonts.dart';
-import '../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
-import '../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_elevated_button.dart';
+import 'package:daone/presentation/gratitude_affirmation/controller/gartitude_affirmation_controller.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../core/utils/size_utils.dart';
+import '../../../widgets/custom_elevated_button.dart';
+import '../../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
+import '../../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 
 
 
-class AffirmationBlastEffectDialog extends StatelessWidget {
+
+
+
+
+
+
+class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
   DecorationImage decorationImage;
-      var loveaffirmationText,documentId;
+  var prosperityAffirmationText,documentId;
 
-  AffirmationBlastEffectDialog(
-      this.controller, {required this.decorationImage,required this.loveaffirmationText,required this.documentId,
+  GratitudeAffirmationBlastEffectDialog(
+      this.controller, {required this.decorationImage,required this.prosperityAffirmationText,required this.documentId,
         Key? key,
       }) : super(
     key: key,
   );
-
-  LoveAffirmationController controller;
+GratitudeAffirmationController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +81,7 @@ class AffirmationBlastEffectDialog extends StatelessWidget {
                       top: 45,
                     ),
                     child: Text(
-                      loveaffirmationText,
+                      prosperityAffirmationText,
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -138,40 +147,40 @@ class AffirmationBlastEffectDialog extends StatelessWidget {
             ),
           ),
           Obx(()=>CustomElevatedButton(
-              onTap: (){
-                print("hello");
-                // Increment the affirmationCount
-                int currentCount = controller.affirmationCount.value;
-                int newCount = currentCount + 1;
+            onTap: (){
+              print("hello");
+              // Increment the affirmationCount
+              int currentCount = controller.affirmationCount.value;
+              int newCount = currentCount + 1;
 
-                controller.updateAffirmationCount(newCount);
-                // Update the Firestore document
-                FirebaseFirestore.instance
-                    .collection('loveAffirmations')
-                    .doc(documentId) // Use the document ID to reference the specific document
-                    .update({'affirmationCount': newCount})
-                    .then((_) {
-                  // Document updated successfully
-                  print('AffirmationCount updated successfully');
-                }).catchError((error) {
-                  // Handle errors if the update fails
-                  print('Error updating AffirmationCount: $error');
-                });
-              },
-              text: controller.affirmationCount.string,
-              margin: getMargin(
-                top: 19,
-                right: 6,
-              ),
-              buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
-                  fixedSize: MaterialStateProperty.all<Size>(Size(
-                    double.maxFinite,
-                    getVerticalSize(
-                      57,
-                    ),
-                  ))),
-              buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
+              controller.updateAffirmationCount(newCount);
+              // Update the Firestore document
+              FirebaseFirestore.instance
+                  .collection('loveAffirmations')
+                  .doc(documentId) // Use the document ID to reference the specific document
+                  .update({'affirmationCount': newCount})
+                  .then((_) {
+                // Document updated successfully
+                print('AffirmationCount updated successfully');
+              }).catchError((error) {
+                // Handle errors if the update fails
+                print('Error updating AffirmationCount: $error');
+              });
+            },
+            text: controller.affirmationCount.string,
+            margin: getMargin(
+              top: 19,
+              right: 6,
             ),
+            buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
+                fixedSize: MaterialStateProperty.all<Size>(Size(
+                  double.maxFinite,
+                  getVerticalSize(
+                    57,
+                  ),
+                ))),
+            buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
+          ),
           ),
         ],
       ),
