@@ -23,6 +23,7 @@ dependencies:
   firebase_auth_platform_interface: ^6.19.0
   flutter_facebook_auth: ^6.0.2
   confetti: ^0.7.0
+  audioplayers: ^5.2.0
 
 dev_dependencies:
   flutter_test: 
@@ -32,7 +33,9 @@ flutter:
   assets: 
     - assets/
     - assets/images/
-    - assets/audio/
+    - assets/1.mp3
+    - assets/relaxing-piano-and-ocean-waves-logo-165199.mp3
+
   fonts: 
     - family: Poppins
       fonts: 

@@ -1,4 +1,5 @@
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:daone/core/app_export.dart';
@@ -6,6 +7,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class OwnAffirmationController extends GetxController{
   final confettiController = ConfettiController(duration: const Duration(seconds: 5));
+  RxInt affirmationCount = 0.obs;
+  void updateAffirmationCount(int newCount) {
+    affirmationCount.value = newCount;
+  }
+  final player = AudioPlayer();
+
+  Future<void> playAudioFromAsset(String assetPath) async {
+    try {
+      await player.play(
+        AssetSource(
+          assetPath
+        ),
+      );
+    } catch (e) {
+      print('Error playing audio: $e');
+    }
+  }
 
   void playConfetti() {
     confettiController.play();

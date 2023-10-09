@@ -149,6 +149,8 @@ class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
             ),
             Obx(()=>CustomElevatedButton(
               onTap: (){
+                OwnAffirmationController controller3 = Get.put(OwnAffirmationController());
+                controller3.playAudioFromAsset('1.mp3');
                 controller2.playConfetti();
                 print("hello");
                 // Increment the affirmationCount

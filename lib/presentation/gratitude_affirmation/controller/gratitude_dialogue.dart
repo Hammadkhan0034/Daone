@@ -159,6 +159,8 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
               Obx(
                 () => CustomElevatedButton(
                   onTap: () {
+                    OwnAffirmationController controller2 = Get.put(OwnAffirmationController());
+                    controller2.playAudioFromAsset('1.mp3');
                     controller2.playConfetti();
                     print("hello");
                     // Increment the affirmationCount
