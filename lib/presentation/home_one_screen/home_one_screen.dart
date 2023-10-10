@@ -312,100 +312,6 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         );
                       },
                     ),
-                    // StreamBuilder(
-                    //     stream: FirebaseFirestore.instance
-                    //         .collection('users')
-                    //         .doc(user?.uid) // Replace with the user's UID
-                    //         .collection('tasks')
-                    //         .snapshots(),
-                    //     builder: (BuildContext context,
-                    //         AsyncSnapshot<dynamic> alltaskSnapshot) {
-                    //       return Container(
-                    //         height: Get.height * 0.26,
-                    //         width: Get.width * 0.43,
-                    //         decoration: BoxDecoration(
-                    //           borderRadius: BorderRadius.circular(15),
-                    //           gradient: LinearGradient(
-                    //             begin: Alignment.bottomLeft,
-                    //             end: Alignment.topRight,
-                    //             colors: [Color(0xfffd785a), Color(0xfff46735)],
-                    //           ),
-                    //         ),
-                    //         child:StreamBuilder(
-                    //           stream: FirebaseFirestore.instance
-                    //               .collection('users')
-                    //               .doc(user?.uid) // Replace with the user's UID
-                    //               .collection('completeList')
-                    //               .snapshots(),
-                    //           builder: (BuildContext context,
-                    //               AsyncSnapshot<dynamic> completeTaskSnapshot){
-                    //             int decimalPlaces = 2;
-                    //             double percentage = (completeTaskSnapshot.data.docs.length / alltaskSnapshot.data.docs.length) * 100.0;
-                    //             int per =percentage.toInt();
-                    //             return  Stack(
-                    //               children: [
-                    //                 Align(
-                    //                   alignment: Alignment(0, -1),
-                    //                   child: Image.asset(ImageConstant.vector9,
-                    //                       scale: 4),
-                    //                 ),
-                    //                 Align(
-                    //                   alignment: Alignment.topRight,
-                    //                   child: Image.asset(ImageConstant.vector9,
-                    //                       scale: 4),
-                    //                 ),
-                    //                 Align(
-                    //                   alignment: Alignment.center,
-                    //                   child: Column(
-                    //                     children: [
-                    //                       SizedBox(
-                    //                         height: Get.height * 0.02,
-                    //                       ),
-                    //                       CircularPercentIndicator(
-                    //                         radius: 53.0,
-                    //                         lineWidth: 15.0,
-                    //                         percent:percentage/100.0,
-                    //                         center: Row(
-                    //                           mainAxisAlignment: MainAxisAlignment.center,
-                    //                           children: [
-                    //                             TextWidget(
-                    //                               // text:percentage.toStringAsFixed(decimalPlaces),
-                    //                                 text:per.toString(),
-                    //                                 color: Colors.white,
-                    //                                 fsize: 20),
-                    //                             TextWidget(text:"%",
-                    //                                 color: Colors.white,
-                    //                                 fsize: 20),
-                    //                           ],
-                    //                         ),
-                    //                         progressColor: Colors.green,
-                    //                         backgroundColor: Colors.white,
-                    //                         circularStrokeCap:
-                    //                         CircularStrokeCap.round,
-                    //                       ),
-                    //                       SizedBox(
-                    //                         height: Get.height * 0.005,
-                    //                       ),
-                    //                       TextWidget(
-                    //                           text: "Completed",
-                    //                           color: Colors.white,
-                    //                           fsize: 20),
-                    //                       SizedBox(
-                    //                         height: Get.height * 0.001,
-                    //                       ),
-                    //                       TextWidget(
-                    //                           text:completeTaskSnapshot.data.docs.length.toString(),
-                    //                           color: Colors.white,
-                    //                           fsize: 15),
-                    //                     ],
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             );
-                    //           },
-                    //         ),
-                    //       );
-                    //     }),
 
                     SizedBox(
                       width: Get.width * 0.03,
@@ -418,35 +324,105 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       child: Container(
                         height: Get.height * 0.26,
                         width: Get.width * 0.43,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                              image: AssetImage(
-                                  ImageConstant.containerBackgroundImg),
-                              fit: BoxFit.cover),
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: TextWidget(
-                                  text:
-                                      "I deserve to experience joy and abundance in all aspects of my life.",
-                                  color: Color(0xff5E4646),
-                                  fsize: 14),
-                            ),
-                            SizedBox(
-                              height: Get.height * 0.02,
-                            ),
-                            Image.asset(
-                              ImageConstant.blackMoreButtonImg,
-                              scale: 3,
-                            ),
-                          ],
-                        ),
+                        child: StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection("users")
+                                .doc(user?.uid)
+                                .collection('OwnAffirmationList')
+                                .snapshots(),
+                            builder: (context,AsyncSnapshot snapshot){
+                              int totalItems = snapshot.data!.docs.length;
+
+                              // Generate a random number within the valid range
+                              Random random = Random();
+                              int itemCount = random.nextInt(totalItems);
+
+                              var document = snapshot.data!.docs[itemCount];
+
+
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                // Loading indicator while data is being fetched
+                                return Center(
+                                  child: Container(
+                                      height: 100,
+                                      width: 100,
+                                      child: CircularProgressIndicator(
+                                        color: Colors.deepOrangeAccent,
+                                      )),
+                                );
+                              }
+                              if (snapshot.hasError) {
+                                // Handle errors here
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              // Check if there are no tasks
+                              if (snapshot.data.docs.isEmpty) {
+                                return Container(
+                                  height: Get.height * 0.26,
+                                  width: Get.width * 0.43,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    image: DecorationImage(
+                                        image:NetworkImage("https://images.unsplash.com/photo-1621091211034-53136cc1eb32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhY2tncm91bmQlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60"),
+                                      fit: BoxFit.cover
+                                    ),
+                                  ),
+                                  child:  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      TextWidget(
+                                        text: "   NO AFFIRMATIONS",
+                                        color: Colors.black38,
+                                        fsize: 14,
+                                        font: FontWeight.w500,
+                                      ),
+                                    ],
+                                  ),
+
+                                );
+                              }
+                              
+                          return Expanded(
+                            child: ListView.builder(
+                                itemBuilder: (context,index){
+                              final   affirmationData =snapshot.data.docs[index].data();
+                              
+                              return Container(
+                                height: Get.height * 0.26,
+                                width: Get.width * 0.43,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  image: DecorationImage(
+                                      image:NetworkImage(
+                                          document['imageUrl']),fit:BoxFit.cover),
+                                ),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.symmetric(horizontal: 8.0),
+                                      child: TextWidget(
+                                          text:
+                                          document['affirmation']??"Please Add Affirmations",
+                                          color: Color(0xff5E4646),
+                                          fsize: 14),
+                                    ),
+                                    SizedBox(
+                                      height: Get.height * 0.02,
+                                    ),
+                                    Image.asset(
+                                      ImageConstant.blackMoreButtonImg,
+                                      scale: 3,
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }),
+                          );
+                        })
                       ),
                     ),
                   ],
