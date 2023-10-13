@@ -1,3 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../personal_data_update_two_screen/change_password.dart';
 import 'controller/account_setting_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
@@ -78,12 +84,39 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Text(
-                              "lbl_stefani".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style:
-                                  CustomTextStyles.titleSmallPoppinsGray90002_1,
+                            StreamBuilder(
+                              stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).snapshots(),
+                              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  // While the data is being fetched, you can return a loading indicator or an empty widget.
+                                  return CircularProgressIndicator(); // Replace with your loading indicator widget
+                                }
+
+                                if (snapshot.hasError) {
+                                  // Handle errors here
+                                  return Text('Error: ${snapshot.error}');
+                                }
+
+                                if (!snapshot.hasData || !snapshot.data!.exists) {
+                                  // Handle the case where the document doesn't exist
+                                  return Text('Document not found');
+                                }
+
+                                // Access the 'fullName' field from the document data
+                                String fullName = snapshot.data!['fullName'];
+
+                                return Padding(
+                                  padding: getPadding(
+                                    top: 1,
+                                  ),
+                                  child: Text(
+                                    fullName,
+                                    overflow: TextOverflow.ellipsis,
+                                    textAlign: TextAlign.left,
+                                    style: CustomTextStyles.titleSmallPoppinsGray90002_1,
+                                  ),
+                                );
+                              },
                             ),
                             Padding(
                               padding: getPadding(
@@ -144,9 +177,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                       right: 15,
                       bottom: 20,
                     ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
+
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,59 +191,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             "lbl_account".tr,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
+                            style: theme.textTheme.titleLarge,
                           ),
                         ),
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
-                          },
-                          child: Padding(
-                            padding: getPadding(
-                              left: 5,
-                              top: 14,
-                            ),
-                            child: Row(
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgIconlylightprofile,
-                                  height: getSize(
-                                    20,
-                                  ),
-                                  width: getSize(
-                                    20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 10,
-                                    bottom: 1,
-                                  ),
-                                  child: Text(
-                                    "lbl_personal_data".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
-                                ),
-                                Spacer(),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgArrowrightGray60005,
-                                  height: getSize(
-                                    18,
-                                  ),
-                                  width: getSize(
-                                    18,
-                                  ),
-                                  margin: getMargin(
-                                    top: 1,
-                                    bottom: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
                         InkWell(
                           onTap: (){
                             Get.toNamed(AppRoutes.personalDataUpdateScreen);
@@ -238,12 +220,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_achievement".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child: TextWidget(text:  "lbl_achievement".tr, color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -292,15 +269,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 11,
                                     top: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_highlights".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child: TextWidget(text:  "lbl_highlights".tr, color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
-                                CustomImageView(
+                               CustomImageView(
                                   svgPath: ImageConstant.imgArrowrightGray60005,
                                   height: getSize(
                                     18,
@@ -341,12 +313,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_notes".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child:TextWidget(text:  "lbl_notes".tr, color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -390,12 +357,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   padding: getPadding(
                                     left: 11,
                                   ),
-                                  child: Text(
-                                    "lbl_community".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child:TextWidget(text:  "lbl_community".tr, color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -438,12 +400,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   padding: getPadding(
                                     left: 11,
                                   ),
-                                  child: Text(
-                                    "lbl_friends".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child:TextWidget(text:  "lbl_friends".tr, color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -459,117 +416,6 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: getMargin(
-                      left: 8,
-                      top: 15,
-                    ),
-                    padding: getPadding(
-                      left: 15,
-                      top: 19,
-                      right: 15,
-                      bottom: 19,
-                    ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                          ),
-                          child: Text(
-                            "lbl_notification".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 15,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath:
-                                    ImageConstant.imgIconlylightnotification,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 1,
-                                ),
-                                child: Text(
-                                  "msg_pop_up_notification".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              Obx(
-                                () => CustomSwitch(
-                                  margin: getMargin(
-                                    top: 1,
-                                    bottom: 1,
-                                  ),
-                                  value: controller.isSelectedSwitch.value,
-                                  onChange: (value) {
-                                    controller.isSelectedSwitch.value = value;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: getMargin(
-                      left: 8,
-                      top: 15,
-                    ),
-                    padding: getPadding(
-                      left: 15,
-                      top: 19,
-                      right: 15,
-                      bottom: 19,
-                    ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                          ),
-                          child: Text(
-                            "lbl_other".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
                         Padding(
                           padding: getPadding(
                             left: 5,
@@ -579,7 +425,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             children: [
                               CustomImageView(
                                 imagePath:
-                                    ImageConstant.imgIconlylightmessage20x20,
+                                ImageConstant.imgIconlylightmessage20x20,
                                 height: getSize(
                                   20,
                                 ),
@@ -592,12 +438,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   left: 10,
                                   bottom: 1,
                                 ),
-                                child: Text(
-                                  "lbl_contact_us".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
+                                child:TextWidget(text:  "lbl_contact_us".tr, color:Colors.black54, fsize: 14),
                               ),
                               Spacer(),
                               CustomImageView(
@@ -637,12 +478,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   left: 10,
                                   top: 2,
                                 ),
-                                child: Text(
-                                  "lbl_privacy_policy".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
+                                child: TextWidget(text:  "lbl_privacy_policy".tr, color:Colors.black54, fsize: 14),
                               ),
                               Spacer(),
                               CustomImageView(
@@ -660,51 +496,133 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             ],
                           ),
                         ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 10,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightsetting,
-                                height: getSize(
-                                  20,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.changePasswordRoute);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightsetting,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
                                 ),
-                                width: getSize(
-                                  20,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    top: 2,
+                                  ),
+                                  child: TextWidget(text: "Change Password", color:Colors.black54, fsize: 14),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 2,
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
                                 ),
-                                child: Text(
-                                  "lbl_settings".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
+                        InkWell(
+                          onTap: (){
+                            Get.defaultDialog(title:"LOGOUT ?",
+                                content:Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap:(){
+                                     controller.signOut();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Center(child: TextWidget(color: Colors.white,text: "Yes",fsize: 12),),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    InkWell(
+                                      onTap: (){
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepOrangeAccent,
+                                            borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Center(child: TextWidget(color: Colors.white,text: "No",fsize: 12),)
+                                      ),
+                                    )
+                                  ],
+
+                                ), );
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightprofile,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child:  TextWidget(text:  "Logout", color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    25,
+                                  ),
+                                  width: getSize(
+                                    25,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),

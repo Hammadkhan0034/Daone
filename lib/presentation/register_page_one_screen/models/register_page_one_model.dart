@@ -2,8 +2,9 @@
 /// and is typically used to hold data that is passed between different parts of the application.
 class RegisterPageOneModel {
   var uid,fullName,phoneNumber,email;
+  String? imageUrl;
 
-  RegisterPageOneModel({this.uid,this.fullName,this.phoneNumber,this.email});
+  RegisterPageOneModel({this.uid,this.fullName,this.phoneNumber,this.email,this.imageUrl});
 
   //data from server
 factory RegisterPageOneModel.fromMap(map){
@@ -12,6 +13,8 @@ factory RegisterPageOneModel.fromMap(map){
    email: map['email'],
    fullName: map['fullName'],
    phoneNumber: map['phoneNumber'],
+   imageUrl: map['imageUrl']
+
  );
 }
 //sending data to server
@@ -21,6 +24,7 @@ return{
   'email' :email,
   'fullName' :fullName,
   'phoneNumber':phoneNumber,
+  'imageUrl' :imageUrl
   };
 }
 

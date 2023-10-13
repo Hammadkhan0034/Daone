@@ -1,5 +1,6 @@
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/account_setting_screen/models/account_setting_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 /// A controller class for the AccountSettingScreen.
 ///
@@ -8,7 +9,10 @@ import 'package:daone/presentation/account_setting_screen/models/account_setting
 class AccountSettingController extends GetxController {
   Rx<AccountSettingModel> accountSettingModelObj = AccountSettingModel().obs;
 
-  Rx<bool> isSelectedSwitch = false.obs;
+  Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    Get.toNamed(AppRoutes.loginPageScreen);
+  }
 
   SelectionPopupModel? selectedDropDownValue;
 

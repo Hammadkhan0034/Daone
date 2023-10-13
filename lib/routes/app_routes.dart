@@ -82,6 +82,7 @@ import '../presentation/gratitude_affirmation/view/gratitude_affirmation_view.da
 import '../presentation/love_affirmation/binding/love_affirmation_binding.dart';
 import '../presentation/love_affirmation/view/love_affirmation.dart';
 import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';
+import '../presentation/personal_data_update_two_screen/change_password.dart';
 import '../presentation/prosperity_affirmation/binding/prosperityAffirmationBinding.dart';
 import '../presentation/self_confidence_affirmation/binding/self_confidence_binding.dart';
 import '../presentation/self_confidence_affirmation/view/self_confidence_view.dart';
@@ -195,6 +196,8 @@ class AppRoutes {
 
   static const String selfAffirmationRoute ='/selfAffirmation';
 
+  static const String changePasswordRoute ='/changePass';
+
 
 
   static List<GetPage> pages = [
@@ -210,6 +213,12 @@ class AppRoutes {
       page: () => WelcomeScreenOneScreen(),
       bindings: [
         WelcomeScreenOneBinding(),
+      ],
+    ), GetPage(
+      name: changePasswordRoute,
+      page: () => PasswordUpdateScreen(),
+      bindings: [
+        PersonalDataUpdateTwoBinding(),
       ],
     ),
     GetPage(
@@ -449,13 +458,13 @@ class AppRoutes {
         ViewFriendsTabContainerBinding(),
       ],
     ),
-  GetPage(
-      name: viewFriendFullProfilePage,
-      page: () =>ViewFriendFullProfilePage(),
-      bindings: [
-        ViewFriendsFullProfileBinding(),
-      ],
-    ),
+  // GetPage(
+  //     name: viewFriendFullProfilePage,
+  //     page: () =>ViewFriendFullProfilePage(),
+  //     bindings: [
+  //       ViewFriendsFullProfileBinding(),
+  //     ],
+  //   ),
 
     GetPage(
       name: accountSettingScreen,

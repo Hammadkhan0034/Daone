@@ -1,3 +1,9 @@
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'controller/personal_data_update_two_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/validation_functions.dart';
@@ -47,23 +53,6 @@ class PersonalDataUpdateTwoScreen
           title: AppbarSubtitle2(
             text: "lbl_personal_data".tr,
           ),
-          actions: [
-            AppbarImage(
-              height: getSize(
-                40,
-              ),
-              width: getSize(
-                40,
-              ),
-              svgPath: ImageConstant.imgFolder,
-              margin: getMargin(
-                left: 30,
-                top: 4,
-                right: 30,
-                bottom: 12,
-              ),
-            ),
-          ],
         ),
         body: Form(
           key: _formKey,
@@ -79,27 +68,102 @@ class PersonalDataUpdateTwoScreen
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.imgUntit11,
-                    height: getSize(
-                      78,
-                    ),
-                    width: getSize(
-                      78,
-                    ),
+                  Obx(() =>
+                  Column(
+                    children: [
+                      Container(
+                        height: 120,
+                        width: 120,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100),
+                          color: Colors.deepOrange,
+                          image: controller.imagePath != null && controller.imagePath.isNotEmpty
+                              ? DecorationImage(
+                            image: FileImage(File(controller.imagePath.value)),
+                            fit: BoxFit.cover,
+                          )
+                              : DecorationImage(image: AssetImage('assets/images/profile (2).png'),fit: BoxFit.cover),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0),
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange), // Background color
+                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)), // Text color
+                                padding: MaterialStateProperty.all(EdgeInsets.all(12)), // Padding
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20), // Rounded corners
+                                )),
+                              ),
+                              onPressed: () {
+                                controller.getImage();
+                              },
+                              child: TextWidget(text: "Pick Image",color: Colors.white, fsize: 12),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10),
+                            child: TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange), // Background color
+                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)), // Text color
+                                padding: MaterialStateProperty.all(EdgeInsets.all(12)), // Padding
+                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20), // Rounded corners
+                                )),
+                              ),
+                              onPressed: () {
+                               controller.uploadImageToFirestore(File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid);
+                              },
+                              child: TextWidget(text: "Save Image",color: Colors.white, fsize: 12),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
                   ),
-                  Padding(
-                    padding: getPadding(
-                      top: 1,
-                    ),
-                    child: Text(
-                      "lbl_stefani".tr,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: CustomTextStyles.titleSmallPoppinsGray90002_1,
-                    ),
                   ),
-                  CustomTextFormField(
+                  //
+                  // StreamBuilder(
+                  //   stream: FirebaseFirestore.instance.collection('users').doc(controller.user?.uid).snapshots(),
+                  //   builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                  //     if (snapshot.connectionState == ConnectionState.waiting) {
+                  //       // While the data is being fetched, you can return a loading indicator or an empty widget.
+                  //       return CircularProgressIndicator(); // Replace with your loading indicator widget
+                  //     }
+                  //
+                  //     if (snapshot.hasError) {
+                  //       // Handle errors here
+                  //       return Text('Error: ${snapshot.error}');
+                  //     }
+                  //
+                  //     if (!snapshot.hasData || !snapshot.data!.exists) {
+                  //       // Handle the case where the document doesn't exist
+                  //       return Text('Document not found');
+                  //     }
+                  //
+                  //     // Access the 'fullName' field from the document data
+                  //     String fullName = snapshot.data!['fullName'];
+                  //
+                  //     return Padding(
+                  //       padding: getPadding(
+                  //         top: 1,
+                  //       ),
+                  //       child: Text(
+                  //         fullName,
+                  //         overflow: TextOverflow.ellipsis,
+                  //         textAlign: TextAlign.left,
+                  //         style: CustomTextStyles.titleSmallPoppinsGray90002_1,
+                  //       ),
+                  //     );
+                  //   },
+                  // ),
+                   CustomTextFormField(
                     controller: controller.lastnameController,
                     margin: getMargin(
                       top: 40,
@@ -166,183 +230,11 @@ class PersonalDataUpdateTwoScreen
                     filled: true,
                     fillColor: appTheme.gray50,
                   ),
-                  CustomTextFormField(
-                    controller: controller.emailController,
-                    margin: getMargin(
-                      top: 17,
-                    ),
-                    contentPadding: getPadding(
-                      top: 15,
-                      right: 30,
-                      bottom: 15,
-                    ),
-                    textStyle: CustomTextStyles.bodySmallGray50005,
-                    hintText: "msg_stefaniyes_gmail_com".tr,
-                    hintStyle: CustomTextStyles.bodySmallGray50005,
-                    textInputAction: TextInputAction.next,
-                    textInputType: TextInputType.emailAddress,
-                    prefix: Container(
-                      margin: getMargin(
-                        left: 15,
-                        top: 15,
-                        right: 10,
-                        bottom: 15,
-                      ),
-                      child: CustomImageView(
-                        svgPath: ImageConstant.imgIconlyLightMessage,
-                      ),
-                    ),
-                    prefixConstraints: BoxConstraints(
-                      maxHeight: getVerticalSize(
-                        48,
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null ||
-                          (!isValidEmail(value, isRequired: true))) {
-                        return "Please enter valid email";
-                      }
-                      return null;
-                    },
-                    filled: true,
-                    fillColor: appTheme.gray50,
-                  ),
-                  Obx(
-                    () => CustomTextFormField(
-                      controller: controller.passwordController,
-                      margin: getMargin(
-                        top: 17,
-                      ),
-                      contentPadding: getPadding(
-                        top: 15,
-                        bottom: 15,
-                      ),
-                      textStyle: CustomTextStyles.bodySmallGray50005,
-                      hintText: "msg_enter_your_current".tr,
-                      hintStyle: CustomTextStyles.bodySmallGray50005,
-                      textInputAction: TextInputAction.next,
-                      textInputType: TextInputType.visiblePassword,
-                      prefix: Container(
-                        margin: getMargin(
-                          left: 15,
-                          top: 15,
-                          right: 10,
-                          bottom: 15,
-                        ),
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgLock,
-                        ),
-                      ),
-                      prefixConstraints: BoxConstraints(
-                        maxHeight: getVerticalSize(
-                          48,
-                        ),
-                      ),
-                      suffix: InkWell(
-                        onTap: () {
-                          controller.isShowPassword.value =
-                              !controller.isShowPassword.value;
-                        },
-                        child: Container(
-                          margin: getMargin(
-                            left: 12,
-                            top: 15,
-                            right: 15,
-                            bottom: 15,
-                          ),
-                          child: CustomImageView(
-                            svgPath: controller.isShowPassword.value
-                                ? ImageConstant.imgArrowleft
-                                : ImageConstant.imgArrowleft,
-                          ),
-                        ),
-                      ),
-                      suffixConstraints: BoxConstraints(
-                        maxHeight: getVerticalSize(
-                          48,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null ||
-                            (!isValidPassword(value, isRequired: true))) {
-                          return "Please enter valid password";
-                        }
-                        return null;
-                      },
-                      obscureText: controller.isShowPassword.value,
-                      filled: true,
-                      fillColor: appTheme.gray50,
-                    ),
-                  ),
-                  Obx(
-                    () => CustomTextFormField(
-                      controller: controller.newpasswordController,
-                      margin: getMargin(
-                        top: 17,
-                      ),
-                      contentPadding: getPadding(
-                        top: 15,
-                        bottom: 15,
-                      ),
-                      textStyle: CustomTextStyles.bodySmallGray50005,
-                      hintText: "msg_enter_your_new_password".tr,
-                      hintStyle: CustomTextStyles.bodySmallGray50005,
-                      textInputType: TextInputType.visiblePassword,
-                      prefix: Container(
-                        margin: getMargin(
-                          left: 15,
-                          top: 15,
-                          right: 10,
-                          bottom: 15,
-                        ),
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgLock,
-                        ),
-                      ),
-                      prefixConstraints: BoxConstraints(
-                        maxHeight: getVerticalSize(
-                          48,
-                        ),
-                      ),
-                      suffix: InkWell(
-                        onTap: () {
-                          controller.isShowPassword1.value =
-                              !controller.isShowPassword1.value;
-                        },
-                        child: Container(
-                          margin: getMargin(
-                            left: 12,
-                            top: 15,
-                            right: 15,
-                            bottom: 15,
-                          ),
-                          child: CustomImageView(
-                            svgPath: controller.isShowPassword1.value
-                                ? ImageConstant.imgArrowleft
-                                : ImageConstant.imgArrowleft,
-                          ),
-                        ),
-                      ),
-                      suffixConstraints: BoxConstraints(
-                        maxHeight: getVerticalSize(
-                          48,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null ||
-                            (!isValidPassword(value, isRequired: true))) {
-                          return "Please enter valid password";
-                        }
-                        return null;
-                      },
-                      obscureText: controller.isShowPassword1.value,
-                      filled: true,
-                      fillColor: appTheme.gray50,
-                    ),
-                  ),
+
+
                   CustomElevatedButton(
                     onTap: (){
-                      Get.toNamed(AppRoutes.homeScreen);
+                      controller.updateDocumentFields(controller.phonenumberController.text,controller.lastnameController.text);
                     },
                     width: getHorizontalSize(
                       315,

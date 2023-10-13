@@ -91,7 +91,7 @@ class _MyDashBoardState extends State<MyDashBoard> {
       HomeOneScreen(),
       ViewAllTaskPage(),
       AddTaskScreen(),
-      ViewFriendFullProfilePage(),
+     AccountSettingScreen(),
     ];
     return IndexedStack(
       index: _currentIndex,

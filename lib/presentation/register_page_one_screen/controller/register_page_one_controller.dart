@@ -91,6 +91,7 @@ class RegisterPageOneController extends GetxController {
     userModel.email = user!.email;
     userModel.uid = user!.uid;
     userModel.phoneNumber =phonenumberController.text;
+    userModel.imageUrl ='https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png';
 
     await firebaseFirestore
         .collection('users')
@@ -98,7 +99,7 @@ class RegisterPageOneController extends GetxController {
         .set(userModel.toMap());
     SnackBar(content: Text("acount create successfully"));
     print('acount created');
-    Get.offAndToNamed(AppRoutes.dashboardRoute);
+    Get.offAndToNamed(AppRoutes.successRegistrationScreen);
   }
   String? errorMessage;
 
