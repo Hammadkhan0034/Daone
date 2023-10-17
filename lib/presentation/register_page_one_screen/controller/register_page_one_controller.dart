@@ -1,6 +1,5 @@
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/register_page_one_screen/models/register_page_one_model.dart';
-import 'package:daone/presentation/sleep_tracking_section/controller/sleep_tracking_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -26,8 +25,6 @@ class RegisterPageOneController extends GetxController {
   final auth = FirebaseAuth.instance;
 
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-  SleepTrackingController _sleepTrackingController =Get.put(SleepTrackingController());
 
   late BuildContext context;
   void signUp(String email,pass,var context)async{
@@ -102,11 +99,7 @@ class RegisterPageOneController extends GetxController {
         .set(userModel.toMap());
     SnackBar(content: Text("acount create successfully"));
     print('acount created');
-    _sleepTrackingController.saveSleepDatabase();
-    Get.off(AppRoutes.successRegistrationScreen);
-
-    
-
+    Get.offAndToNamed(AppRoutes.successRegistrationScreen);
   }
   String? errorMessage;
 

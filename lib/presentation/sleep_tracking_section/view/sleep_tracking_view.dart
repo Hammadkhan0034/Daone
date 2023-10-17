@@ -1,6 +1,7 @@
 
 
 import 'package:daone/core/app_export.dart';
+import 'package:daone/presentation/sleep_tracking_section/controller/sleep_tracking_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 
@@ -15,6 +16,8 @@ class SleepTrackingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    SleepTrackingController sleepTrackingController =Get.put(SleepTrackingController());
     return Scaffold(
       appBar: CustomAppBar(
         height: getVerticalSize(
@@ -36,19 +39,19 @@ class SleepTrackingView extends StatelessWidget {
         centerTitle: true,
         title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
       ),
-      floatingActionButton: InkWell(
+      floatingActionButton:InkWell(
           onTap: (){
-            Get.dialog(
-              AlertDialog(
-                backgroundColor: Colors.transparent,
-                contentPadding: EdgeInsets.zero,
-                insetPadding: const EdgeInsets.only(left: 0),
-                content:SleepDialogue(),
-              ),
-            );
+            sleepTrackingController.checkAndHandleSleepData();
+            // Get.dialog(
+            //   AlertDialog(
+            //     backgroundColor: Colors.transparent,
+            //     contentPadding: EdgeInsets.zero,
+            //     insetPadding: const EdgeInsets.only(left: 0),
+            //     content:SleepDialogue(),
+            //   ),
+            // );
           },
           child: sleepFloatingButton()),
-
     );
   }
 }

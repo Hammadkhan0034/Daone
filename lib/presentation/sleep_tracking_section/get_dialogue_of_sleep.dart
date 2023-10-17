@@ -171,6 +171,7 @@ class SleepDialogue extends StatelessWidget {
             onTap: (){
               Get.back();
             print("tapped");
+            controller.saveSleepDatabase();
             // controller.saveSleepDatabase();
               // controller.saveSleepData(SleepData(id: FirebaseAuth.instance.currentUser!.uid,
               //     sleepStartTime: controller.selectedTime1.value, sleepEndTime:controller.selectedTime2.value,
