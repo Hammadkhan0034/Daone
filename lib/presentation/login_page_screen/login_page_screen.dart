@@ -318,7 +318,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                   controller.logIn(controller.emailController.text,controller.passwordController.text);
+                   controller.logIn(controller.emailController.text,controller.passwordController.text,context);
                   },
                   width: getHorizontalSize(
                     315,

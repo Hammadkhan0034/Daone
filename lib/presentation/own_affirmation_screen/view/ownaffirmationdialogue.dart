@@ -20,11 +20,13 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
   var graditudeAffirmationText, documentId;
   var snapshotIndex;
   var affirmation;
+  var affirmationCountPresent;
 
 
   OwnAffirmationBlastEffectDialog(
       this.controller, {
 
+        required this.affirmationCountPresent,
         required this.affirmation,
         required this.snapshotIndex,
         required this.decorationImage,
@@ -233,6 +235,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                         'Error updating AffirmationCount: $error');
                   });
                 },
+                // text: affirmationCountPresent,
                 text:  controller.affirmationCount.string,
                 margin: getMargin(
                   top: 19,

@@ -212,65 +212,70 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical:20.0),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: Get.height*0.18,
-                          width: Get.width*0.35,
+                  InkWell(
+                    onTap: (){
+                      Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical:20.0),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: Get.height*0.18,
+                            width: Get.width*0.35,
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                              color: Color(0x3fffe4e4)
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                                color: Color(0x3fffe4e4)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    width: Get.width*0.15,
+                                    height: Get.height*0.067,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        color: Color(0xffe77d7d),
+                                    image: DecorationImage(image: AssetImage(ImageConstant.moon,),scale: 4),
+                                    ),
+                                ),
+                                SizedBox( height: Get.height*0.01,),
+                                TextWidget(text: "Sleep Tracker", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
+                              ],
+                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  width: Get.width*0.15,
-                                  height: Get.height*0.067,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Color(0xffe77d7d),
-                                  image: DecorationImage(image: AssetImage(ImageConstant.moon,),scale: 4),
-                                  ),
-                              ),
-                              SizedBox( height: Get.height*0.01,),
-                              TextWidget(text: "Sleep Tracker", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
-                            ],
-                          ),
-                        ),
-                        SizedBox( width: Get.width*0.13,),
-                        Container(
-                          height: Get.height*0.18,
-                          width: Get.width*0.35,
+                          SizedBox( width: Get.width*0.13,),
+                          Container(
+                            height: Get.height*0.18,
+                            width: Get.width*0.35,
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                              color: Color(0x3f858fe9)
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                                color: Color(0x3f858fe9)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    width: Get.width*0.15,
+                                    height: Get.height*0.067,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                      color: Color(0xff858fe9),
+                                    image: DecorationImage(image: AssetImage(ImageConstant.calender),scale: 4),
+                                    ),
+                                ),
+                                SizedBox( height: Get.height*0.01,),
+                                TextWidget(text: "Events", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
+                              ],
+                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  width: Get.width*0.15,
-                                  height: Get.height*0.067,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                    color: Color(0xff858fe9),
-                                  image: DecorationImage(image: AssetImage(ImageConstant.calender),scale: 4),
-                                  ),
-                              ),
-                              SizedBox( height: Get.height*0.01,),
-                              TextWidget(text: "Events", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
-                            ],
-                          ),
-                        ),
 
-                      ],
+                        ],
+                      ),
                     ),
                   ),
 

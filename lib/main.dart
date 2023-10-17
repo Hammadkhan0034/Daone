@@ -28,6 +28,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         visualDensity: VisualDensity.standard,
+        timePickerTheme: TimePickerThemeData(
+
+          dialBackgroundColor: Colors.black12,
+          backgroundColor: Colors.grey[200], // Background color
+          hourMinuteTextColor: Colors.black, // Hour and minute text color
+          dialHandColor: Colors.deepOrange, // Clock hand color
+          dialTextColor: Colors.black, // Clock dial text color
+        ),
       ),
       translations: AppLocalization(),
       locale: Get.deviceLocale, //for setting localization strings

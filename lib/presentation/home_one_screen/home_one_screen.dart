@@ -384,7 +384,36 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
                                     final affirmationData = snapshot.data.docs[index].data();
-                                    // Rest of your code for building items
+                                 return Container(
+                                   height: Get.height * 0.26,
+                                   width: Get.width * 0.43,
+                                   decoration: BoxDecoration(
+                                     borderRadius: BorderRadius.circular(15),
+                                     image: DecorationImage(
+                                       image: NetworkImage(affirmationData['imageUrl']),
+                                       fit: BoxFit.cover,
+                                     ),
+                                   ),
+                                   child: Stack(
+                                     children: [Center(child: TextWidget(text: affirmationData['affirmation'],fsize: 13,color: Colors.black,)),
+                                     Align(
+                                       alignment: Alignment.bottomCenter,
+                                         child: Padding(
+                                           padding: const EdgeInsets.all(8.0),
+                                           child: Container(
+                                               decoration: BoxDecoration(
+                                                 color: Colors.black12,
+                                                 borderRadius: BorderRadius.circular(15),
+                                               ),
+                                               child: Padding(
+                                                 padding: const EdgeInsets.all(8.0),
+                                                 child: TextWidget(text:"Click to see more Affirmations",fsize: 8,color: Colors.black,),
+                                               )),
+                                         )
+                                     ),
+                                     ],
+                                   ),
+                                 );
                                   },
                                 ),
                               );

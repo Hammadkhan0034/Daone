@@ -26,10 +26,19 @@ class LoginPageController extends GetxController {
   RxString errorMessage = ''.obs;
 
 
-  void logIn(String email, String password) async {
+  void logIn(String email, String password,BuildContext context) async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent user from dismissing the dialog
+      builder: (BuildContext context) {
+        return Center(
+          child: CircularProgressIndicator(color: Colors.deepOrange
+          ),
+        );
+      },
+    );
     try {
       if (formKey.currentState!.validate()) {
-        CircularProgressIndicator();
         await
         FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,

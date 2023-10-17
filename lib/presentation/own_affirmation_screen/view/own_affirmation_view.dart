@@ -107,6 +107,7 @@ class OwnAffirmationView extends StatelessWidget {
                   final affirmationText = affirmationData['affirmation'];
                   final imageUrl = affirmationData['imageUrl'];
                   final documentId = snapshot.data.docs[index].id;
+                  String affirmationCount =affirmationData['affirmationCount'].toString();
 
                   return InkWell(
                     onTap: () {
@@ -116,7 +117,7 @@ class OwnAffirmationView extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           insetPadding: const EdgeInsets.only(left: 0),
                           content:OwnAffirmationBlastEffectDialog(
-                            OwnAffirmationController(),
+                            OwnAffirmationController(),affirmationCountPresent: affirmationCount,
                             documentId: documentId,affirmation: affirmationText,decorationImage: affirmationData['imageUrl'],graditudeAffirmationText: affirmationText,
                               snapshotIndex:documentId,key: key, ),
                         ),

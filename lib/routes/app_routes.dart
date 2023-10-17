@@ -2,6 +2,8 @@ import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
 import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
 import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_view.dart';
 import 'package:daone/presentation/prosperity_affirmation/view/prosperity_affirmation_view.dart';
+import 'package:daone/presentation/sleep_tracking_section/binding/sleep_tracking_binding.dart';
+import 'package:daone/presentation/sleep_tracking_section/view/sleep_tracking_view.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
@@ -198,6 +200,8 @@ class AppRoutes {
 
   static const String changePasswordRoute ='/changePass';
 
+  static const String sleepTrackingRoute ='/sleepTracking';
+
 
 
   static List<GetPage> pages = [
@@ -226,6 +230,13 @@ class AppRoutes {
       page: () => ProsperityAffirmationView(),
       bindings: [
         ProsperityAffirmationBinding(),
+      ],
+    ),
+    GetPage(
+      name: sleepTrackingRoute,
+      page: () => SleepTrackingView(),
+      bindings: [
+        SleepTrackingBinding(),
       ],
     ),
     GetPage(

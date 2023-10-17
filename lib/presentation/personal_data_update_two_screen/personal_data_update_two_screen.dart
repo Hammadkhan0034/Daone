@@ -68,67 +68,88 @@ class PersonalDataUpdateTwoScreen
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Obx(() =>
-                  Column(
-                    children: [
-                      Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.deepOrange,
-                          image: controller.imagePath != null && controller.imagePath.isNotEmpty
-                              ? DecorationImage(
-                            image: FileImage(File(controller.imagePath.value)),
-                            fit: BoxFit.cover,
-                          )
-                              : DecorationImage(image: AssetImage('assets/images/profile (2).png'),fit: BoxFit.cover),
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange), // Background color
-                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)), // Text color
-                                padding: MaterialStateProperty.all(EdgeInsets.all(12)), // Padding
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20), // Rounded corners
-                                )),
-                              ),
-                              onPressed: () {
-                                controller.getImage();
-                              },
-                              child: TextWidget(text: "Pick Image",color: Colors.white, fsize: 12),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0,horizontal: 10),
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange), // Background color
-                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)), // Text color
-                                padding: MaterialStateProperty.all(EdgeInsets.all(12)), // Padding
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20), // Rounded corners
-                                )),
-                              ),
-                              onPressed: () {
-                               controller.uploadImageToFirestore(File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid);
-                              },
-                              child: TextWidget(text: "Save Image",color: Colors.white, fsize: 12),
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
+                  Obx(
+                  () => Column(
+            children: [
+              Container(
+                height: 120,
+                width: 120,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(100),
+                  color: Colors.black54,
+                  image: (controller.imagePath.isEmpty && controller.imageUrl.isEmpty)
+                      ? DecorationImage(
+                    image: AssetImage('assets/images/profile (2).png'),
+                    fit: BoxFit.cover,
+                  )
+                      : (controller.imagePath.isEmpty)
+                      ? DecorationImage(
+                    image: NetworkImage(controller.imageUrl.value),
+                    fit: BoxFit.cover,
+                  )
+                      : DecorationImage(
+                    image: FileImage(File(controller.imagePath.value)),
+                    fit: BoxFit.cover,
                   ),
+                ),
+                child: (controller.imagePath.isEmpty && controller.imageUrl.isEmpty)
+                    ? Center(child: TextWidget(text: "Add Photo", color: Colors.white, fsize: 14))
+                    : Center(child: TextWidget(text: "", color: Colors.white, fsize: 14)),
+              ),
+
+              Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
+                      textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )),
+                    ),
+                    onPressed: () {
+                      controller.getImage();
+                    },
+                    child: TextWidget(text: "Pick Image", color: Colors.white, fsize: 12),
                   ),
-                  //
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                  child: TextButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
+                      textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+                      padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      )),
+                    ),
+                    onPressed: () {
+                      controller.uploadImageToFirestore(File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid);
+                    },
+                    child: TextWidget(text: "Save Image", color: Colors.white, fsize: 12),
+                  ),
+                ),
+              ],
+            )
+            ],
+          ),
+        ),
+        // // //
+        //           Obx(() => Image.network(controller.imageUrl.value),
+        //             // Display the image using the URL stored in the controller
+        //           ),
+        //           ElevatedButton(
+        //             onPressed: () {
+        //               controller.getImageUrl();
+        //             },
+        //             child: Text('Get Image URL'),
+        //           ),
                   // StreamBuilder(
                   //   stream: FirebaseFirestore.instance.collection('users').doc(controller.user?.uid).snapshots(),
                   //   builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {

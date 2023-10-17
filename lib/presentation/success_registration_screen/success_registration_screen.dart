@@ -100,7 +100,7 @@ class SuccessRegistrationScreen
         ),
         bottomNavigationBar: CustomElevatedButton(
           onTap: (){
-            Get.toNamed(AppRoutes.dashboardRoute);
+            Get.offAndToNamed(AppRoutes.dashboardRoute);
           },
           width: getHorizontalSize(
             315,

@@ -35,6 +35,12 @@ class PersonalDataUpdateTwoController extends GetxController {
 
   SelectionPopupModel? selectedDropDownValue;
 
+  void onInit() {
+    super.onInit();
+    getImageUrl();
+    print("yeahhhhhh");
+  }
+
   @override
   void onClose() {
     super.onClose();
@@ -100,6 +106,7 @@ onSelected(dynamic value) {
   //image picking functions
 
   RxString imagePath= "".obs;
+  RxString imageUrl = ''.obs;
 
  Future getImage()async{
     final ImagePicker picker= ImagePicker();
@@ -107,29 +114,76 @@ onSelected(dynamic value) {
     if(image!= null){
       imagePath.value = image.path.toString();
     }
-
  }
 
+  Future<void> getImageUrl() async {
+    final ref = FirebaseStorage.instance.ref('userImages').child(user!.uid);
+    // download url
+    final url = await ref.getDownloadURL();
+    imageUrl.value = url;
+  }
+  //
+  // Future<void> uploadImageToFirestore(File imageFile, String userId) async {
+  //   User? user = FirebaseAuth.instance.currentUser;
+  //   if (user == null) {
+  //     // User is not authenticated, handle authentication as needed.
+  //     Get.snackbar("Error",'User is not authenticated. Handle authentication.');
+  //     print('User is not authenticated. Handle authentication.');
+  //     // You can display a message, show a login screen, or perform any other action required for authentication.
+  //     return ;
+  //   }
+  //   Center(
+  //     child: Container(width: 100,height: 100,
+  //       child:      CircularProgressIndicator(),
+  //     ),
+  //   );
+  //   try {
+  //
+  //     // Create a reference to the Firebase Storage location where you want to store the image.
+  //     final storageRef = FirebaseStorage.instance.ref().child('userImages/$userId');
+  //
+  //     // Upload the image to Firebase Storage.
+  //     await storageRef.putFile(imageFile);
+  //
+  //     // Get the download URL of the uploaded image.
+  //     final imageUrl = await storageRef.getDownloadURL();
+  //
+  //     // Save the image URL to Firestore in the "users" collection.
+  //     await FirebaseFirestore.instance.collection('users').doc(userId).update({
+  //       'imageUrl': imageUrl,
+  //     });
+  //
+  //     // The image has been successfully uploaded and the URL is saved in Firestore.
+  //   } catch (e) {
+  //     // Handle errors, e.g., file upload or Firestore update errors.
+  //     print('Error uploading image: $e');
+  //   }
+  // }
   Future<void> uploadImageToFirestore(File imageFile, String userId) async {
     User? user = FirebaseAuth.instance.currentUser;
+    RxDouble uploadProgress = 0.0.obs;
+
     if (user == null) {
-      // User is not authenticated, handle authentication as needed.
-      print('User is not authenticated. Handle authentication.');
-      // You can display a message, show a login screen, or perform any other action required for authentication.
+      // User is not authenticated, handle authentication.
+      Get.snackbar("Error", 'User is not authenticated. Handle authentication.');
       return;
     }
 
     try {
-      Center(
-        child: Container(width: 100,height: 100,
-        child:      CircularProgressIndicator(),
-        ),
-      );
       // Create a reference to the Firebase Storage location where you want to store the image.
       final storageRef = FirebaseStorage.instance.ref().child('userImages/$userId');
 
       // Upload the image to Firebase Storage.
-      await storageRef.putFile(imageFile);
+      final UploadTask uploadTask = storageRef.putFile(imageFile);
+
+      // Monitor the upload progress
+      uploadTask.snapshotEvents.listen((TaskSnapshot snapshot) {
+        double progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        uploadProgress.value = progress;
+      });
+
+      // Wait for the completion of the upload task
+      await uploadTask;
 
       // Get the download URL of the uploaded image.
       final imageUrl = await storageRef.getDownloadURL();
@@ -140,12 +194,12 @@ onSelected(dynamic value) {
       });
 
       // The image has been successfully uploaded and the URL is saved in Firestore.
+      Get.snackbar('Image Upload', 'Image uploaded successfully.');
     } catch (e) {
       // Handle errors, e.g., file upload or Firestore update errors.
-      print('Error uploading image: $e');
+      Get.snackbar('Error', 'Error uploading image: $e');
     }
   }
-
 
 
 

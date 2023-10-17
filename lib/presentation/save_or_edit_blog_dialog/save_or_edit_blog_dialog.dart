@@ -61,18 +61,19 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                         269,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.deepOrange,
+                        color: Colors.black12,
                         borderRadius: BorderRadius.circular(
                           getHorizontalSize(
                             15,
                           ),
                         ),
-                        image: DecorationImage(
-                          image:
-                              NetworkImage(controller.selectedBackground.value),
-                          fit: BoxFit.cover,
-                        ),
+                        image:controller.selectedBackground.value != '' ?
+                        DecorationImage(image: NetworkImage(controller.selectedBackground.value), fit: BoxFit.cover,)
+                            : null,
                       ),
+                      child: controller.selectedBackground.value == '' ?
+                      Center(child: TextWidget(text: "Add Background", color:Colors.white, fsize: 15)):
+                    null  // Center(child: TextWidget(text: "", color:Colors.white, fsize: 15))
                     ),
                   ),
                   Align(

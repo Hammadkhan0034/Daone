@@ -1,3 +1,4 @@
+import 'package:daone/presentation/sleep_tracking_section/controller/sleep_tracking_controller.dart';
 import 'package:flutter/gestures.dart';
 
 import 'controller/register_page_one_controller.dart';
@@ -21,7 +22,6 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -275,8 +275,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                    controller.signUp(controller.emailController.text,controller.passwordController.text, context);
-                  },
+                    controller.signUp(controller.emailController.text,controller.passwordController.text, context);},
                   width: getHorizontalSize(
                     315,
                   ),

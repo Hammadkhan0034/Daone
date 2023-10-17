@@ -50,7 +50,7 @@ class EditAffirmationDialog extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(12),
-                color: Colors.cyan,
+                color: Colors.black12,
                 image: DecorationImage(
                   image:
                   NetworkImage(controller.selectedBackground.value),
@@ -58,6 +58,7 @@ class EditAffirmationDialog extends StatelessWidget {
                 ),
               ),
               child: Stack(
+
                 alignment: Alignment.topCenter,
                 children: [
                   Align(
@@ -169,6 +170,7 @@ class EditAffirmationDialog extends StatelessWidget {
                                                 fit: BoxFit.cover),
                                                 
                                           ),
+
                                         ),
                                       ],
                                     ),
@@ -184,12 +186,15 @@ class EditAffirmationDialog extends StatelessWidget {
                       height:Get.height*0.027,
                       width: Get.width*0.4,
                       decoration: BoxDecoration(
-                        color: Colors.teal,
+                        color: Colors.black12,
                         borderRadius: BorderRadius.circular(12),
                         image: DecorationImage(
                           image:
                           NetworkImage(controller.selectedBackground.value),fit: BoxFit.cover),),
-                    ),)
+                   child: controller.selectedBackground.value == "" ?
+    Center(child: TextWidget(fsize: 10,color: Colors.white,text: "Add Background")): null,
+                    ),
+                    )
                   ),
                 ],
               ),
