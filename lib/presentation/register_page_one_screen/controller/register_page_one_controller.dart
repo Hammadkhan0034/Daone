@@ -97,8 +97,8 @@ class RegisterPageOneController extends GetxController {
         .collection('users')
         .doc(user.uid)
         .set(userModel.toMap());
-    SnackBar(content: Text("acount create successfully"));
-    print('acount created');
+    SnackBar(content: Text("account create successfully"));
+    print('account created');
     Get.offAndToNamed(AppRoutes.successRegistrationScreen);
   }
   String? errorMessage;
