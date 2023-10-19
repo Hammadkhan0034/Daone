@@ -20,13 +20,14 @@ class SleepTrackingView extends StatelessWidget {
   Widget build(BuildContext context) {
 
     SleepTrackingController sleepTrackingController =Get.put(SleepTrackingController());
+
     return FutureBuilder(
       future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.uid).collection('sleepData').get(),
         builder:(context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Scaffold(body: Center(
               child: Container(
-                  height: 100, width: 100,
+                  height: 50, width: 50,
                   child: CircularProgressIndicator(color: Colors.deepOrange,)),
             ));
           } else if (snapshot.hasError) {
@@ -64,157 +65,186 @@ class SleepTrackingView extends StatelessWidget {
            ),);
           }
           else {
-            return Scaffold(
-              appBar: CustomAppBar(
-                height: getVerticalSize(
-                  69,
-                ),
-                leadingWidth: 78,
-                leading: AppbarIconbutton(
-                  onTap: (){
-                    Get.back();
-                  },
+            return FutureBuilder(
+                future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.uid)
+                    .collection('sleepData').doc('week').get(),
+                builder: (context,AsyncSnapshot<DocumentSnapshot> snapshot2){
+                  if (snapshot2.connectionState == ConnectionState.waiting) {
+                    return Scaffold(body: Center(
+                      child: Container(
+                          height: 50, width: 50,
+                          child: CircularProgressIndicator(color: Colors.deepOrange,)),
+                    ));
+                  }
+                  final sleepData = snapshot2.data;
+                  if (sleepData == null) {
+                    // Handle the case where sleepData is null
+                    return Text('Sleep data is null');
+                  }else
+                 final sleepData=snapshot2.data!;
+                 final data = snapshot2.data!.data() as Map<String, dynamic>;
+                 final todayData = data[sleepTrackingController.currentDayOfWeek.value.toString()]; // Access data for Friday
+                 final startTime = todayData['start_time'];
+                 final duration = todayData['duration'];
 
-                  svgPath: ImageConstant.imgInfo,
-                  margin: getMargin(
-                    left: 30,
-                    top: 10,
-                    bottom: 5,
+
+                  return Scaffold(
+                appBar: CustomAppBar(
+                  height: getVerticalSize(
+                    69,
                   ),
+                  leadingWidth: 78,
+                  leading: AppbarIconbutton(
+                    onTap: (){
+                      Get.back();
+                    },
+
+                    svgPath: ImageConstant.imgInfo,
+                    margin: getMargin(
+                      left: 30,
+                      top: 10,
+                      bottom: 5,
+                    ),
+                  ),
+                  centerTitle: true,
+                  title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
                 ),
-                centerTitle: true,
-                title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
-              ),
-              floatingActionButton:InkWell(
-                  onTap: (){
-                    Get.dialog(
-                      AlertDialog(
-                        backgroundColor: Colors.transparent,
-                        contentPadding: EdgeInsets.zero,
-                        insetPadding: const EdgeInsets.only(left: 0),
-                        content:SleepDialogue(),
-                      ),
+                floatingActionButton:InkWell(
+                    onTap: (){
+                      Get.dialog(
+                        AlertDialog(
+                          backgroundColor: Colors.transparent,
+                          contentPadding: EdgeInsets.zero,
+                          insetPadding: const EdgeInsets.only(left: 0),
+                          content:SleepDialogue(),
+                        ),
+                      );
+                    },
+                    child: sleepFloatingButton()),
+                body: GetBuilder<SleepTrackingController>(
+                  init: SleepTrackingController(), // Initialize GetX controller
+                  builder: (controller) {
+                    return  Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: Get.height*0.025,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextWidget(text: "${sleepTrackingController.currentDayOfWeek} Analysis", color: Colors.black, fsize: 18),
+                        ),
+                        SizedBox(height: Get.height*0.025,),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              height: Get.height*0.09,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                                    child: Image.asset("assets/images/bed.png",scale: 1.5),
+                                  ),
+                                  SizedBox(width: Get.width*0.06,),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                    child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              TextWidget(text: "${sleepTrackingController.currentDayOfWeek} Bedtime, ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text:startTime.toString(), color:Colors.black, fsize:12),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              TextWidget(text: "Duration ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: '${duration.toString()} Hours', color:Colors.black, fsize:14),
+                                            ],
+                                          ),
+
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: Get.height*0.01,),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Material(
+                            elevation: 2,
+                            borderRadius: BorderRadius.circular(15),
+                            child: Container(
+                              height: Get.height*0.09,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
+                                    child: Image.asset("assets/images/alarm-clock.png",scale: 2.4),
+                                  ),
+                                  SizedBox(width: Get.width*0.06,),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 12.0),
+                                    child: Column(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              TextWidget(text: "Wake-up Time, ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: todayData['end_time'].toString(), color:Colors.black, fsize:12),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              TextWidget(text: "Sleep Quality: ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: todayData['quality'], color:Colors.black, fsize:12),
+                                            ],
+                                          ),
+
+                                        ]),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(height: Get.height*0.07,),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                          child: TextWidget(text: "Sleep Analysis", color: Colors.black, fsize: 18),
+                        ),
+                        SizedBox(height: Get.height*0.03,),
+                        Padding(
+                          padding: const EdgeInsets.all(18.0),
+                          child: Material(
+                            elevation: 5,
+                            borderRadius: BorderRadius.circular(13),
+                            child: Padding(
+                              padding: const EdgeInsets.all(18.0),
+                              child: AspectRatio(
+                                aspectRatio: 1.9,
+                                child: _BarChart(),
+                              ),
+                            ),
+                          ),
+                        ),
+
+                      ],
                     );
                   },
-                  child: sleepFloatingButton()),
-              body: GetBuilder<SleepTrackingController>(
-                init: SleepTrackingController(), // Initialize GetX controller
-                builder: (controller) {
-                  return  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: Get.height*0.025,),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Material(
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            height: Get.height*0.09,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
-                                  child: Image.asset("assets/images/bed.png",scale: 1.5),
-                                ),
-                                SizedBox(width: Get.width*0.06,),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                                  child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            TextWidget(text: "Bedtime, ", color:Colors.black, fsize:14,font: FontWeight.w600),
-                                            TextWidget(text: "9:00pm", color:Colors.black, fsize:14),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            TextWidget(text: "in ", color:Colors.black, fsize:14,font: FontWeight.w600),
-                                            TextWidget(text: "6 Hours, 22 Minutes ", color:Colors.black, fsize:14),
-                                          ],
-                                        ),
-
-                                      ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: Get.height*0.01,),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Material(
-                          elevation: 2,
-                          borderRadius: BorderRadius.circular(15),
-                          child: Container(
-                            height: Get.height*0.09,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0,horizontal: 15),
-                                  child: Image.asset("assets/images/alarm-clock.png",scale: 2.4),
-                                ),
-                                SizedBox(width: Get.width*0.06,),
-                                Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                                  child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            TextWidget(text: "Wake-up, ", color:Colors.black, fsize:14,font: FontWeight.w600),
-                                            TextWidget(text: "9:00pm", color:Colors.black, fsize:14),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            TextWidget(text: "in ", color:Colors.black, fsize:14,font: FontWeight.w600),
-                                            TextWidget(text: "6 Hours, 22 Minutes ", color:Colors.black, fsize:14),
-                                          ],
-                                        ),
-
-                                      ]),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: Get.height*0.07,),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        child: TextWidget(text: "Sleep Analysis", color: Colors.black, fsize: 18),
-                      ),
-                      SizedBox(height: Get.height*0.03,),
-                      Padding(
-                        padding: const EdgeInsets.all(18.0),
-                        child: Material(
-                          elevation: 5,
-                          borderRadius: BorderRadius.circular(13),
-                          child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: AspectRatio(
-                              aspectRatio: 1.9,
-                              child: _BarChart(),
-                            ),
-                          ),
-                        ),
-                      ),
-
-                    ],
-                  );
-             },
-             ),
-            );
+                ),
+              );
+            });
           }
         });}}
 
@@ -223,40 +253,60 @@ class _BarChart extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SleepTrackingController controller = Get.find<SleepTrackingController>();
     return BarChart(
       BarChartData(
-        barTouchData: barTouchData,
-        titlesData: titlesData,
-        borderData: borderData,
-        barGroups: barGroups,
+        barTouchData: BarTouchData(
+          enabled: false,
+          touchTooltipData: BarTouchTooltipData(
+            tooltipBgColor: Colors.transparent,
+            tooltipPadding: EdgeInsets.zero,
+            tooltipMargin: 8,
+            getTooltipItem: (
+                BarChartGroupData group,
+                int groupIndex,
+                BarChartRodData rod,
+                int rodIndex,) {
+              return BarTooltipItem(
+                rod.toY.round().toString() + "hr",
+                const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.w300,
+                ),
+              );
+            },
+          ),
+        ),
+        titlesData: FlTitlesData(
+          show: true,
+          bottomTitles: AxisTitles(
+            sideTitles: SideTitles(
+              showTitles: true,
+              reservedSize: 30,
+              getTitlesWidget: getTitles,
+            ),
+          ),
+          leftTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          topTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+          rightTitles: const AxisTitles(
+            sideTitles: SideTitles(showTitles: false),
+          ),
+        ),
+        borderData: FlBorderData(
+          show: false,
+        ),
+        barGroups: controller.barGroups,
         gridData: const FlGridData(show: false),
         alignment: BarChartAlignment.spaceAround,
         maxY: 20,
       ),
     );
   }
-  BarTouchData get barTouchData => BarTouchData(
-    enabled: false,
-    touchTooltipData: BarTouchTooltipData(
-      tooltipBgColor: Colors.transparent,
-      tooltipPadding: EdgeInsets.zero,
-      tooltipMargin: 8,
-      getTooltipItem: (
-          BarChartGroupData group,
-          int groupIndex,
-          BarChartRodData rod,
-          int rodIndex,
-          ) {
-        return BarTooltipItem(
-          rod.toY.round().toString()+"hr",
-          const TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w300,
-          ),
-        );
-      },
-    ),
-  );
+
 
   Widget getTitles(double value, TitleMeta meta) {
     final style = TextStyle(
@@ -297,107 +347,117 @@ class _BarChart extends StatelessWidget {
       child: Text(text, style: style),
     );
   }
-  FlTitlesData get titlesData => FlTitlesData(
-    show: true,
-    bottomTitles: AxisTitles(
-      sideTitles: SideTitles(
-        showTitles: true,
-        reservedSize: 30,
-        getTitlesWidget: getTitles,
-      ),
-    ),
-    leftTitles: const AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    topTitles: const AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-    rightTitles: const AxisTitles(
-      sideTitles: SideTitles(showTitles: false),
-    ),
-  );
-  FlBorderData get borderData => FlBorderData(
-    show: false,
-  );
 
-  LinearGradient get _barsGradient => LinearGradient(
-    colors: [
-      Colors.deepOrange,
-     Colors.deepOrange,
-    ],
-    begin: Alignment.bottomCenter,
-    end: Alignment.topCenter,
-  );
-  List<BarChartGroupData> get barGroups => [
-    BarChartGroupData(
-      x: 0,
-      barRods: [
-        BarChartRodData(
-          toY: 8,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 1,
-      barRods: [
-        BarChartRodData(
-          toY: 10,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 2,
-      barRods: [
-        BarChartRodData(
-          toY: 14,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 3,
-      barRods: [
-        BarChartRodData(
-          toY: 15,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 4,
-      barRods: [
-        BarChartRodData(
-          toY: 13,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 5,
-      barRods: [
-        BarChartRodData(
-          toY: 10,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-    BarChartGroupData(
-      x: 6,
-      barRods: [
-        BarChartRodData(
-          toY: 16,
-          gradient: _barsGradient,
-        )
-      ],
-      showingTooltipIndicators: [0],
-    ),
-  ];
+  // LinearGradient get _barsGradient => LinearGradient(
+  //   colors: [
+  //     Colors.deepOrange,
+  //    Colors.deepOrange,
+  //   ],
+  //   begin: Alignment.bottomCenter,
+  //   end: Alignment.topCenter,
+  // );
+  // Future<List<BarChartGroupData>> getBarGroupsData(SleepTrackingController controller) async {
+  //   final snapshot = await FirebaseFirestore.instance.collection('users').doc(controller.user!.uid).collection('sleepData').doc('week').get();
+  //
+  //   if (snapshot.exists) {
+  //     final data = snapshot.data() as Map<String, dynamic>;
+  //     final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+  //
+  //     final List<BarChartGroupData> barGroups = [];
+  //     for (int i = 0; i < days.length; i++) {
+  //       final dayData = data[days[i]];
+  //       final duration = dayData['duration'] as double;
+  //       barGroups.add(
+  //         BarChartGroupData(
+  //           x: i,
+  //           barRods: [
+  //             BarChartRodData(
+  //               toY: duration,
+  //               gradient: _barsGradient,
+  //             ),
+  //           ],
+  //           showingTooltipIndicators: [0],
+  //         ),
+  //       );
+  //     }
+  //     return barGroups;
+  //   } else {
+  //     // Handle the case where the document does not exist in Firestore
+  //     return [];
+  //   }
+  // }
+
+
+  // List<BarChartGroupData> get barGroups => [
+  //   BarChartGroupData(
+  //     x: 0,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 8,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 1,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 10,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 2,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 14,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 3,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 15,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 4,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 2,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 5,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 10,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  //   BarChartGroupData(
+  //     x: 9,
+  //     barRods: [
+  //       BarChartRodData(
+  //         toY: 16,
+  //         gradient: _barsGradient,
+  //       )
+  //     ],
+  //     showingTooltipIndicators: [0],
+  //   ),
+  // ];
 }

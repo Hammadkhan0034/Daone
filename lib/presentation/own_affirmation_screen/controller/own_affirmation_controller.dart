@@ -19,6 +19,7 @@ class OwnAffirmationController extends GetxController{
         AssetSource(
           assetPath
         ),
+
       );
     } catch (e) {
       print('Error playing audio: $e');

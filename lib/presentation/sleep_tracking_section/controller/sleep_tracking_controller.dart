@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 
 class SleepTrackingController extends GetxController {
@@ -17,7 +19,79 @@ class SleepTrackingController extends GetxController {
 
   Rx<TimeOfDay> selectedTime2 = TimeOfDay.now().obs;
 
-  final List<double> sleepData = [8, 10, 14, 15, 13, 10, 16];
+  RxList<double> sleepDataDuration = <double>[].obs;
+
+  final List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+ // final List<double> sleepData = [8, 10, 14, 15, 13, 10, 16];
+
+  RxString currentDayOfWeek = "".obs;
+  @override
+  void onInit() {
+    super.onInit();
+  getPreviousWeekdayValue();
+  getBarGroupsData();
+  print(barGroups);
+  }
+  List<BarChartGroupData> barGroups = [];
+
+  Future<void> fetchBarGroups() async {
+    barGroups = await getBarGroupsData();
+  }
+  Future<List<BarChartGroupData>> getBarGroupsData() async {
+    final snapshot = await FirebaseFirestore.instance.collection('users')
+        .doc(user!.uid).collection('sleepData').doc('week').get();
+
+    if (snapshot.exists) {
+      final data = snapshot.data() as Map<String, dynamic>;
+      final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+      final List<BarChartGroupData> barGroups = [];
+      for (int i = 0; i < days.length; i++) {
+        final dayData = data[days[i]];
+        var duration = dayData['duration'];
+        if (duration is int) {
+          duration = duration.toDouble(); // Convert int to double if needed
+        }
+        barGroups.add(
+          BarChartGroupData(
+            x: i,
+            barRods: [
+              BarChartRodData(
+                toY: duration,
+                gradient: _barsGradient,
+              ),
+            ],
+            showingTooltipIndicators: [0],
+          ),
+        );
+      }
+      return barGroups;
+    } else {
+      // Handle the case where the document does not exist in Firestore
+      return [];
+    }
+  }
+  LinearGradient get _barsGradient => LinearGradient(
+    colors: [
+      Colors.deepOrange,
+      Colors.deepOrange,
+    ],
+    begin: Alignment.bottomCenter,
+    end: Alignment.topCenter,
+  );
+
+  DateTime now = DateTime.now();
+
+// Define a function to get the previous weekday
+  RxString getPreviousWeekdayValue() {
+    int daysToSubtract = 1; // Change this value to adjust the number of days to subtract
+
+    DateTime previousDay = now.subtract(Duration(days: daysToSubtract));
+    RxString weekday = DateFormat('EEEE').format(previousDay).obs; // Create an RxString
+    currentDayOfWeek = weekday;
+    return weekday;
+  }
 
 
   void setSelectedWeekday(String weekday) {
@@ -55,6 +129,7 @@ class SleepTrackingController extends GetxController {
       selectedTime2.value = pickedTime;
     }
   }
+
 
 
   Future<void> saveSleepDatabase() async {
@@ -109,10 +184,5 @@ class SleepTrackingController extends GetxController {
     };
     await sleepDataCollection.set(sleepData);
   }
-
-
-
-
-
 
 }
