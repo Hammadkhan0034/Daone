@@ -22,19 +22,22 @@ class SleepTrackingView extends StatelessWidget {
     SleepTrackingController sleepTrackingController =Get.put(SleepTrackingController());
 
     return FutureBuilder(
-      future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.uid).collection('sleepData').get(),
+      future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.email).collection('sleepData').get(),
         builder:(context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Scaffold(body: Center(
+            return Scaffold(body:
+            Center(
               child: Container(
                   height: 50, width: 50,
                   child: CircularProgressIndicator(color: Colors.deepOrange,)),
-            ));
+            )
+            );
           } else if (snapshot.hasError) {
             return TextWidget(text: "Error", color: Colors.red, fsize: 17);
             return Text('Error: ${snapshot.error}');
           }else if (!snapshot.hasData || snapshot.data!.docs.isEmpty){
-           return Scaffold(body:Container(
+           return Scaffold(
+             body:Container(
              height: double.infinity,
              width: double.infinity,
              child: Column(
@@ -66,7 +69,7 @@ class SleepTrackingView extends StatelessWidget {
           }
           else {
             return FutureBuilder(
-                future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.uid)
+                future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.email)
                     .collection('sleepData').doc('week').get(),
                 builder: (context,AsyncSnapshot<DocumentSnapshot> snapshot2){
                   if (snapshot2.connectionState == ConnectionState.waiting) {
@@ -252,7 +255,6 @@ class _BarChart extends StatelessWidget {
   const _BarChart();
 
 
-
   @override
   Widget build(BuildContext context) {
     SleepTrackingController controller = Get.find<SleepTrackingController>();
@@ -264,8 +266,7 @@ class _BarChart extends StatelessWidget {
             tooltipBgColor: Colors.transparent,
             tooltipPadding: EdgeInsets.zero,
             tooltipMargin: 8,
-            getTooltipItem: (
-                BarChartGroupData group,
+            getTooltipItem: (BarChartGroupData group,
                 int groupIndex,
                 BarChartRodData rod,
                 int rodIndex,) {
@@ -350,116 +351,4 @@ class _BarChart extends StatelessWidget {
     );
   }
 
-  // LinearGradient get _barsGradient => LinearGradient(
-  //   colors: [
-  //     Colors.deepOrange,
-  //    Colors.deepOrange,
-  //   ],
-  //   begin: Alignment.bottomCenter,
-  //   end: Alignment.topCenter,
-  // );
-  // Future<List<BarChartGroupData>> getBarGroupsData(SleepTrackingController controller) async {
-  //   final snapshot = await FirebaseFirestore.instance.collection('users').doc(controller.user!.uid).collection('sleepData').doc('week').get();
-  //
-  //   if (snapshot.exists) {
-  //     final data = snapshot.data() as Map<String, dynamic>;
-  //     final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-  //
-  //     final List<BarChartGroupData> barGroups = [];
-  //     for (int i = 0; i < days.length; i++) {
-  //       final dayData = data[days[i]];
-  //       final duration = dayData['duration'] as double;
-  //       barGroups.add(
-  //         BarChartGroupData(
-  //           x: i,
-  //           barRods: [
-  //             BarChartRodData(
-  //               toY: duration,
-  //               gradient: _barsGradient,
-  //             ),
-  //           ],
-  //           showingTooltipIndicators: [0],
-  //         ),
-  //       );
-  //     }
-  //     return barGroups;
-  //   } else {
-  //     // Handle the case where the document does not exist in Firestore
-  //     return [];
-  //   }
-  // }
-
-
-  // List<BarChartGroupData> get barGroups => [
-  //   BarChartGroupData(
-  //     x: 0,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 8,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 1,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 10,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 2,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 14,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 3,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 15,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 4,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 2,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 5,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 10,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  //   BarChartGroupData(
-  //     x: 9,
-  //     barRods: [
-  //       BarChartRodData(
-  //         toY: 16,
-  //         gradient: _barsGradient,
-  //       )
-  //     ],
-  //     showingTooltipIndicators: [0],
-  //   ),
-  // ];
 }

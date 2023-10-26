@@ -35,7 +35,7 @@ class AlarmController extends GetxController{
       final user = FirebaseAuth.instance.currentUser;
       final collectionReference = FirebaseFirestore.instance
           .collection("users")
-          .doc(user?.uid)
+          .doc(user?.email)
           .collection('Alarm');
 
       await collectionReference.doc(documentId).delete();
@@ -65,7 +65,7 @@ class AlarmController extends GetxController{
 
   Future<void> saveAlarmToFirestore(String title, DateTime dateTime) async {
     final firestore = FirebaseFirestore.instance;
-    final user = FirebaseAuth.instance.currentUser?.uid;
+    final user = FirebaseAuth.instance.currentUser?.email;
     final collectionReference = firestore.collection("users").doc(user!).collection('Alarm');
 
     try {
