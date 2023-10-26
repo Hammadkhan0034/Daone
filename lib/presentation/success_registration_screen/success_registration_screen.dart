@@ -48,7 +48,7 @@ class SuccessRegistrationScreen
                   bottom: 21,
                 ),
                 child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.uid).snapshots(),
+                  stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
                   builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // While the data is being fetched, you can return a loading indicator or an empty widget.

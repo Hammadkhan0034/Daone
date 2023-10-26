@@ -12,6 +12,11 @@ class SleepTrackingController extends GetxController {
   RxDouble currentValue = 0.0.obs;
 
   RxString selectedWeekday = 'Monday'.obs;
+  RxString selectSleepQuality= 'Good'.obs;
+
+  void getSleepQuality(String sleepQuality ){
+    selectSleepQuality.value  =sleepQuality;
+  }
 
   final user = FirebaseAuth.instance.currentUser;
 
@@ -21,7 +26,7 @@ class SleepTrackingController extends GetxController {
 
   RxList<double> sleepDataDuration = <double>[].obs;
 
-  final List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+ // final List<String> weekdays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
  // final List<double> sleepData = [8, 10, 14, 15, 13, 10, 16];
 
@@ -31,6 +36,7 @@ class SleepTrackingController extends GetxController {
     super.onInit();
   getPreviousWeekdayValue();
   getBarGroupsData();
+  fetchBarGroups();
   print(barGroups);
   }
   List<BarChartGroupData> barGroups = [];
@@ -47,6 +53,7 @@ class SleepTrackingController extends GetxController {
       final days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
       final List<BarChartGroupData> barGroups = [];
+
       for (int i = 0; i < days.length; i++) {
         final dayData = data[days[i]];
         var duration = dayData['duration'];
@@ -65,6 +72,9 @@ class SleepTrackingController extends GetxController {
             showingTooltipIndicators: [0],
           ),
         );
+      print('duration: $duration');
+
+
       }
       return barGroups;
     } else {
@@ -72,6 +82,10 @@ class SleepTrackingController extends GetxController {
       return [];
     }
   }
+
+
+
+
   LinearGradient get _barsGradient => LinearGradient(
     colors: [
       Colors.deepOrange,
@@ -82,6 +96,7 @@ class SleepTrackingController extends GetxController {
   );
 
   DateTime now = DateTime.now();
+
 
 // Define a function to get the previous weekday
   RxString getPreviousWeekdayValue() {
@@ -98,7 +113,10 @@ class SleepTrackingController extends GetxController {
     selectedWeekday.value = weekday;
   }
 
+  late DateTime inputDuration;
+
   Duration calculateSleepingHours(DateTime sleepTime, DateTime wakeupTime) {
+    inputDuration =sleepTime;
     // Calculate the duration between sleep and wakeup times
     return wakeupTime.difference(sleepTime);
   }
@@ -184,5 +202,32 @@ class SleepTrackingController extends GetxController {
     };
     await sleepDataCollection.set(sleepData);
   }
+
+  Future<void> updateDayData(String day, Map<String, dynamic> newData) async {
+    final sleepDataCollection = FirebaseFirestore.instance.collection('users')
+        .doc(user!.uid)
+        .collection("sleepData")
+        .doc('week'); // 'week' is a document, not a subcollection
+
+    // Fetch the existing data
+    final snapshot = await sleepDataCollection.get();
+
+    if (snapshot.exists) {
+      final data = snapshot.data() as Map<String, dynamic>;
+
+      // Check if the specified day exists in the data
+      if (data.containsKey(day)) {
+        // Update the data for the specified day
+        data[day] = newData;
+
+        // Set the updated data back to Firestore
+        await sleepDataCollection.update({day: data[day]});
+      }
+    }
+  }
+
+
+
+
 
 }

@@ -1,3 +1,7 @@
+import 'dart:isolate';
+
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+import 'package:daone/presentation/select_task_screen/Alarm/AlarmController.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -7,16 +11,33 @@ import 'package:flutter/services.dart';
 import 'core/app_export.dart';
 import 'package:firebase_core/firebase_core.dart';
 
+import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
+
+// // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
+// @pragma('vm:entry-point')
+// void printHello() {
+// final DateTime now = DateTime.now();
+// final int isolateId = Isolate.current.hashCode;
+// print("[$now] Hello, world! isolate=${isolateId} function='$printHello'");
+// }
+//
+
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await FirebaseAppCheck.instance.activate();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((value) {
     Logger.init(kReleaseMode ? LogMode.live : LogMode.debug);
     runApp(MyApp());
+    final alarmcontroller =Get.find<AlarmController>();
+    //await FirebaseAppCheck.instance.activate();
+    alarmcontroller.registerAlarmPlugin();
   });
+  final int helloAlarmID = 0;
+ // await AndroidAlarmManager.periodic(const Duration(minutes: 1), helloAlarmID, printHello);
 }
 
 class MyApp extends StatelessWidget {
@@ -59,3 +80,4 @@ class MyApp extends StatelessWidget {
     }
   }
 }
+

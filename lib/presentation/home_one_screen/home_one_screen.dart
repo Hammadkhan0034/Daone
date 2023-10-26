@@ -6,7 +6,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../add_task_screen/controller/add_task_controller.dart';
 import 'controller/home_one_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
@@ -451,7 +450,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                     ),
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
+                        Get.toNamed(AppRoutes.dailyIntensionRecordScreen);
                       },
                       child: Container(
                         height: Get.height * 0.26,

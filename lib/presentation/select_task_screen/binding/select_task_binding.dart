@@ -1,3 +1,5 @@
+import 'package:daone/presentation/select_task_screen/Alarm/AlarmController.dart';
+
 import '../controller/select_task_controller.dart';
 import 'package:get/get.dart';
 
@@ -9,5 +11,6 @@ class SelectTaskBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => SelectTaskController());
+    Get.lazyPut(() => AlarmController());
   }
 }

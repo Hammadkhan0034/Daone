@@ -73,7 +73,7 @@ class PersonalDataUpdateTwoController extends GetxController {
 // Update fields in a Firestore document
   Future<void> updateDocumentFields(String newNumber,String newName) async {
     // Get a reference to the Firestore document you want to update
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc(user?.uid);
+    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc(user?.email);
 
     try {
 
@@ -122,43 +122,8 @@ onSelected(dynamic value) {
     final url = await ref.getDownloadURL();
     imageUrl.value = url;
   }
-  //
-  // Future<void> uploadImageToFirestore(File imageFile, String userId) async {
-  //   User? user = FirebaseAuth.instance.currentUser;
-  //   if (user == null) {
-  //     // User is not authenticated, handle authentication as needed.
-  //     Get.snackbar("Error",'User is not authenticated. Handle authentication.');
-  //     print('User is not authenticated. Handle authentication.');
-  //     // You can display a message, show a login screen, or perform any other action required for authentication.
-  //     return ;
-  //   }
-  //   Center(
-  //     child: Container(width: 100,height: 100,
-  //       child:      CircularProgressIndicator(),
-  //     ),
-  //   );
-  //   try {
-  //
-  //     // Create a reference to the Firebase Storage location where you want to store the image.
-  //     final storageRef = FirebaseStorage.instance.ref().child('userImages/$userId');
-  //
-  //     // Upload the image to Firebase Storage.
-  //     await storageRef.putFile(imageFile);
-  //
-  //     // Get the download URL of the uploaded image.
-  //     final imageUrl = await storageRef.getDownloadURL();
-  //
-  //     // Save the image URL to Firestore in the "users" collection.
-  //     await FirebaseFirestore.instance.collection('users').doc(userId).update({
-  //       'imageUrl': imageUrl,
-  //     });
-  //
-  //     // The image has been successfully uploaded and the URL is saved in Firestore.
-  //   } catch (e) {
-  //     // Handle errors, e.g., file upload or Firestore update errors.
-  //     print('Error uploading image: $e');
-  //   }
-  // }
+
+
   Future<void> uploadImageToFirestore(File imageFile, String userId) async {
     User? user = FirebaseAuth.instance.currentUser;
     RxDouble uploadProgress = 0.0.obs;
@@ -189,7 +154,7 @@ onSelected(dynamic value) {
       final imageUrl = await storageRef.getDownloadURL();
 
       // Save the image URL to Firestore in the "users" collection.
-      await FirebaseFirestore.instance.collection('users').doc(userId).update({
+      await FirebaseFirestore.instance.collection('users').doc(user.email).update({
         'imageUrl': imageUrl,
       });
 

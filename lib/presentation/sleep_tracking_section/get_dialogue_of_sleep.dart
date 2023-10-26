@@ -4,6 +4,7 @@
 import 'package:daone/presentation/sleep_tracking_section/controller/sleep_tracking_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/app_export.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -17,7 +18,7 @@ class SleepDialogue extends StatelessWidget {
   Widget build(BuildContext context) {
     SleepTrackingController controller =Get.put(SleepTrackingController());
     return Container(
-      height: Get.height*0.64,
+      height: Get.height*0.7,
       width: Get.width*0.8,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
@@ -150,6 +151,32 @@ class SleepDialogue extends StatelessWidget {
               ],
             );
           }),
+          Obx(() {
+            return Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 23.0),
+                  child: TextWidget(text:"Sleep Quality",color: Colors.black,fsize: 13,),
+                ),
+                DropdownButton<String>(
+                  value: controller.selectSleepQuality.value,
+                  onChanged: (String? sleepQuality) {
+                    controller.getSleepQuality(sleepQuality!);
+                  },
+                  items: [
+                    'Fair',
+                    'Good',
+                    'Excellent',
+                  ].map((String weekday) {
+                    return DropdownMenuItem<String>(
+                      value: weekday,
+                      child:TextWidget(text:weekday,color: Colors.black,fsize: 13,),
+                    );
+                  }).toList(),
+                ),
+              ],
+            );
+          }),
     SizedBox(height: Get.height*0.02,),
     Obx(() {
       final sleepTimeOfDay = controller.selectedTime1.value;
@@ -168,14 +195,41 @@ class SleepDialogue extends StatelessWidget {
     }),
           SizedBox(height: Get.height*0.02,),
           CustomElevatedButton(
-            onTap: (){
-              Get.back();
-            print("tapped");
-            controller.saveSleepDatabase();
-            // controller.saveSleepDatabase();
-              // controller.saveSleepData(SleepData(id: FirebaseAuth.instance.currentUser!.uid,
-              //     sleepStartTime: controller.selectedTime1.value, sleepEndTime:controller.selectedTime2.value,
-              //     selectedWeekday: controller.selectedWeekday.value));
+            onTap: () async {
+
+              final TimeOfDay sleepStartTime = controller.selectedTime1.value;
+              final TimeOfDay sleepEndTime = controller.selectedTime2.value;
+
+              String formattedSleepStartTime = DateFormat("h:mm a").format(DateTime(2023, 1, 1, sleepStartTime.hour, sleepStartTime.minute));
+              String formattedSleepEndTime = DateFormat("h:mm a").format(DateTime(2023, 1, 1, sleepEndTime.hour, sleepEndTime.minute));
+
+
+
+
+              final String selectedWeekday = controller.selectedWeekday.value;
+
+              final sleepTimeOfDay = controller.selectedTime1.value;
+              final wakeupTimeOfDay = controller.selectedTime2.value;
+
+              final sleepTime = controller.convertTimeOfDayToDateTime(sleepTimeOfDay);
+              final wakeupTime = controller.convertTimeOfDayToDateTime(wakeupTimeOfDay);
+
+              // Create a map with the updated data
+              final Map<String, dynamic> updatedData = {
+                'start_time': formattedSleepStartTime,
+                'end_time': formattedSleepEndTime,
+                'duration':controller.calculateSleepingHours(sleepTime, wakeupTime).inHours,
+                'quality':controller.selectSleepQuality.value,
+              };
+
+              await controller.updateDayData(selectedWeekday, updatedData);
+              Center(
+                child: Container(
+                    width: 50,height: 50,
+                    child: CircularProgressIndicator()),
+              );
+              // Close the dialog
+              Get.offAndToNamed(AppRoutes.dashboardRoute);
             },
             width: getHorizontalSize(
               252,

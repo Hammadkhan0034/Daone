@@ -3,6 +3,7 @@ import 'package:daone/presentation/add_task_pop_up_calender_dialog/controller/ad
 
 import '../../widgets/text_widget.dart';
 import '../select_task_screen/widgets/select_task_item_widget.dart';
+import 'Alarm/Alarm.dart';
 import 'controller/select_task_controller.dart';
 import 'models/select_task_item_model.dart';
 import 'package:daone/core/app_export.dart';
@@ -212,15 +213,15 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                       ],
                     ),
                   ),
-                  InkWell(
-                    onTap: (){
-                      Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical:20.0),
-                      child: Row(
-                        children: [
-                          Container(
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical:20.0),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          onTap: (){
+                            Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
+                          },
+                          child: Container(
                             height: Get.height*0.18,
                             width: Get.width*0.35,
 
@@ -246,8 +247,13 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                               ],
                             ),
                           ),
-                          SizedBox( width: Get.width*0.13,),
-                          Container(
+                        ),
+                        SizedBox( width: Get.width*0.13,),
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=> AlarmView());
+                          },
+                          child: Container(
                             height: Get.height*0.18,
                             width: Get.width*0.35,
 
@@ -269,13 +275,13 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                                     ),
                                 ),
                                 SizedBox( height: Get.height*0.01,),
-                                TextWidget(text: "Events", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
+                                TextWidget(text: "Alarm", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
                               ],
                             ),
                           ),
+                        ),
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
 

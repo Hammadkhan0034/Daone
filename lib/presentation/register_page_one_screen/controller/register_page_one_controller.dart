@@ -95,7 +95,7 @@ class RegisterPageOneController extends GetxController {
 
     await firebaseFirestore
         .collection('users')
-        .doc(user.uid)
+        .doc(user!.email)
         .set(userModel.toMap());
     SnackBar(content: Text("account create successfully"));
     print('account created');

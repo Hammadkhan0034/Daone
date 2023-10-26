@@ -251,6 +251,8 @@ class SleepTrackingView extends StatelessWidget {
 class _BarChart extends StatelessWidget {
   const _BarChart();
 
+
+
   @override
   Widget build(BuildContext context) {
     SleepTrackingController controller = Get.find<SleepTrackingController>();

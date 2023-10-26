@@ -58,7 +58,7 @@ class EditAffirmationController extends GetxController {
 
       if (user != null) {
         if (affirmation != null && imageUrl != null && dateStart != null && dateEnd != null) {
-          DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
           await userDocRef.collection('OwnAffirmationList').add({
             'affirmation': affirmation,
             'imageUrl': imageUrl,

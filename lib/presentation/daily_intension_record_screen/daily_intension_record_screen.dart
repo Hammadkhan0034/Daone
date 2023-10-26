@@ -1,3 +1,6 @@
+import 'package:image_picker/image_picker.dart';
+
+import '../../widgets/text_widget.dart';
 import 'controller/daily_intension_record_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -7,6 +10,9 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 // ignore_for_file: must_be_immutable
 class DailyIntensionRecordScreen
     extends GetWidget<DailyIntensionRecordController> {
+
+
+
   const DailyIntensionRecordScreen({Key? key})
       : super(
           key: key,
@@ -175,7 +181,108 @@ class DailyIntensionRecordScreen
               ),
               CustomElevatedButton(
                 onTap: (){
-                  Get.toNamed(AppRoutes.remindersScreen);
+                  // Get.toNamed(AppRoutes.remindersScreen);
+                  Get.dialog(
+                    AlertDialog(
+                      backgroundColor: Colors.transparent,
+                      contentPadding: EdgeInsets.zero,
+                      insetPadding: const EdgeInsets.only(left: 0),
+                      content: Container(
+                      width:Get.width*0.5,
+                        height: Get.height*0.4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(13),
+                          color: Colors.white,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            InkWell(
+                                onTap:(){
+                                  controller.getVideoFile(ImageSource.gallery);
+                                },
+                              child: Padding(
+                                padding: const EdgeInsets.only(right: 12.0,left: 12,top: 12),
+                                child: Container(
+                                  width: Get.width*0.6,
+                                  height: Get.height*0.08,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(13),
+                                      color: Colors.deepOrange),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(Icons.phone_android,size: 40,color: Colors.white),
+                                      SizedBox(width: Get.width*0.03,),
+                                      TextWidget(color: Colors.white, fsize: 15,
+                                        text: "Phone Gallery",),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                                onTap:(){
+                                  controller.getVideoFile(ImageSource.camera);
+                                },
+                              child: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: Container(
+                                  width: Get.width*0.6,
+                                  height: Get.height*0.08,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(13),
+                                      color: Colors.deepOrange),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(Icons.camera_alt,size: 40,color: Colors.white),
+                                        SizedBox(width: Get.width*0.02,),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                          child: TextWidget(color: Colors.white, fsize: 15,
+                                            text: "Camera     ",),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            InkWell(
+                                onTap:(){
+                                  Get.back();
+                                },
+                              child: Container(
+                                width: Get.width*0.6,
+                                height: Get.height*0.08,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(13),
+                                    color: Colors.deepOrange),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.cancel,size: 40,color: Colors.white),
+                                    SizedBox(width: Get.width*0.02,),
+                                    TextWidget(color: Colors.white, fsize: 15,
+                                      text: "  Cancel       ",),
+                                  ],
+                                ),
+                              ),
+                            ),
+
+                          ],
+                        ),
+                        
+                      ),
+                    ),
+                  );
                 },
                 width: getHorizontalSize(
                   315,
