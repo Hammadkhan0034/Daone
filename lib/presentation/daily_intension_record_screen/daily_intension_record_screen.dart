@@ -1,3 +1,4 @@
+
 import 'package:image_picker/image_picker.dart';
 
 import '../../widgets/text_widget.dart';
@@ -274,6 +275,7 @@ class DailyIntensionRecordScreen
                                       text: "  Cancel       ",),
                                   ],
                                 ),
+
                               ),
                             ),
 

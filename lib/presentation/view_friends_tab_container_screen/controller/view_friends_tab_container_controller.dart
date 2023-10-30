@@ -13,42 +13,9 @@ class ViewFriendsTabContainerController extends GetxController
   Rx<ViewFriendsTabContainerModel> viewFriendsTabContainerModelObj =
       ViewFriendsTabContainerModel().obs;
 
-  User? user = FirebaseAuth.instance.currentUser;
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  //
-  // RxList<String> friends = <String>[].obs;
-  //
-  // @override
-  // void onInit() {
-  //   super.onInit();
-  //   // Fetch the user's friends when the controller is initialized.
-  //   _getUserFriends();
-  // }
-  // Future<void> _getUserFriends() async {
-  //   final User? user = _auth.currentUser;
-  //   if (user != null) {
-  //     final DocumentSnapshot userDoc = await _firestore.collection('users').doc(user.uid).get();
-  //     final List<dynamic> friendIds = userDoc['friendIds'];
-  //
-  //     friends.value = friendIds.map((id) => id.toString()).toList();
-  //   }
-  // }
-  //
-  // Future<void> sendFriendRequest(String friendId) async {
-  //   final User? user = _auth.currentUser;
-  //   if (user != null) {
-  //     final DocumentReference userRef = _firestore.collection('users').doc(user.uid);
-  //
-  //     // Update the current user's friend list.
-  //     await userRef.update({
-  //       'friendIds': FieldValue.arrayUnion([friendId]),
-  //     });
-  //
-  //     // Re-fetch the friends to update the UI.
-  //     _getUserFriends();
-  //   }
-  // }
+  final user = FirebaseAuth.instance.currentUser;
+
+
 
   late TabController tabviewController =
       Get.put(TabController(vsync: this, length: 3));

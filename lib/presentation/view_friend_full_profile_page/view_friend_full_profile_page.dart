@@ -12,11 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 class ViewFriendFullProfilePage extends StatelessWidget {
-  String userName;
+  late String userName;
   int affirmationCount,taskCount,intenseCompleted,blogReadCount;
-  String userProfile;
-
+  late String userProfile;
+late String name,email;
   ViewFriendFullProfilePage(this.controller,{Key? key,
+    required this.email,required this.name,
     required this.affirmationCount,required this.blogReadCount,required this.userProfile,
     required this.intenseCompleted,required this.taskCount,required this.userName})
       : super(
@@ -333,7 +334,7 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                                             .roundedBorder11,
                                       ),
                                       child: Text(
-                                        affirmationCount.toString(),
+                                        affirmationCount.toString()??'0',
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: CustomTextStyles
@@ -495,7 +496,7 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                                             .roundedBorder11,
                                       ),
                                       child: Text(
-                                        blogReadCount.toString(),
+                                        blogReadCount.toString()??'0',
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: CustomTextStyles
@@ -522,7 +523,7 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                                             .roundedBorder11,
                                       ),
                                       child: Text(
-                                        taskCount.toString(), //correct
+                                        taskCount.toString()??'0', //correct
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: CustomTextStyles
@@ -592,7 +593,7 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                           ),
                         ),
                         CustomImageView(
-                          url: userProfile,fit: BoxFit.cover,
+                          url: userProfile??'https://img.icons8.com/?size=50&id=14736&format=png',fit: BoxFit.cover,
                           height: getSize(
                             81,
                           ),
@@ -627,7 +628,7 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                               top: 88,
                             ),
                             child: Text(
-                              userName,
+                              userName??'No Name',
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
                               style: CustomTextStyles.titleLargeBluegray700,
@@ -639,8 +640,8 @@ class ViewFriendFullProfilePage extends StatelessWidget {
                   ),
                   CustomElevatedButton(
                     onTap: (){
-                      /*   Get.dialog(AlertDialog(backgroundColor: Colors.transparent, contentPadding: EdgeInsets.zero,
-                          insetPadding: const EdgeInsets.only(left: 0), content:AddNewFriendsDialog(Get.put(AddNewFriendsController(),),),));*/
+                      controller.copyDataToFriendList(email??'', name??'');
+                      Get.back();
                     },
                     width: getHorizontalSize(
                       307,

@@ -47,7 +47,7 @@ class OwnAffirmationView extends StatelessWidget {
           child: StreamBuilder(
             stream: FirebaseFirestore.instance
                 .collection("users")
-                .doc(user?.uid)
+                .doc(user?.email)
                 .collection('OwnAffirmationList')
                 .snapshots(),
             builder: (context, AsyncSnapshot snapshot) {

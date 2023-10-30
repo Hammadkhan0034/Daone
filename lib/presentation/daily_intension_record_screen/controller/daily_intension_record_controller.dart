@@ -5,7 +5,6 @@ import 'package:daone/presentation/daily_intension_record_screen/models/daily_in
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
-
 import '../videos/upload_video.dart';
 
 /// A controller class for the DailyIntensionRecordScreen.
@@ -27,9 +26,9 @@ class DailyIntensionRecordController extends GetxController {
     if(videoFile!= null){
       Get.to(()=>
           UploadVideo(
-        videoFile:File(videoFile.path),
-        videoPath:videoFile.path,
-      ));
+            videoFile:File(videoFile.path),
+            videoPath:videoFile.path,
+          ));
     }
   }
 
@@ -58,8 +57,8 @@ class DailyIntensionRecordController extends GetxController {
         // Navigator.of(context).pushReplacement(
         //   MaterialPageRoute(
         //     builder: (context) => DashboardScreen(downloadUrl: downloadUrl),
-       //   ),
-       // );
+        //   ),
+        // );
       });
     } catch (e) {
       print('Error uploading video: $e');

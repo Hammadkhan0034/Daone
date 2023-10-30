@@ -1,6 +1,7 @@
 import 'package:daone/presentation/add_task_pop_up_calender_dialog/add_task_pop_up_calender_dialog.dart';
 import 'package:daone/presentation/add_task_pop_up_calender_dialog/controller/add_task_pop_up_calender_controller.dart';
 
+import '../../alarm_noti/noti_screen.dart';
 import '../../widgets/text_widget.dart';
 import '../select_task_screen/widgets/select_task_item_widget.dart';
 import 'Alarm/Alarm.dart';
@@ -251,7 +252,8 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                         SizedBox( width: Get.width*0.13,),
                         InkWell(
                           onTap: (){
-                            Get.to(()=> AlarmView());
+                            // Get.to(()=> AlarmView());
+                            Get.to(()=>NotiScreen());
                           },
                           child: Container(
                             height: Get.height*0.18,
