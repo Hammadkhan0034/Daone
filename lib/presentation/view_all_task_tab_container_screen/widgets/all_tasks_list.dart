@@ -212,10 +212,13 @@ Widget allTaskList(BuildContext context) {
                             decoration: BoxDecoration(
                                 borderRadius:
                                     BorderRadius.circular(31.000001907348633),
-                                color: Color(0xff048c44)),
+                               color: snapshot.data.docs[index]['status']=='todo'?
+                                  Color(0xffF46837)
+                               :Color(0xff048c44)),
                             child: Center(
                               child: TextWidget(
-                                  text: "Task Status",
+                                  text:snapshot.data.docs[index]['status']==null||snapshot.data.docs[index]['status'].isEmpty?"Task Status":snapshot.data.docs[index]['status'],
+                                  //snapshot.data.docs[index]['taskType'],
                                   color: Colors.white,
                                   fsize: 12,
                                   font: FontWeight.w500),
