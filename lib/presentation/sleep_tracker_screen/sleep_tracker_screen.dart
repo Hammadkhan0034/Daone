@@ -57,7 +57,7 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
               SizedBox(height: Get.height*0.06,),
               InkWell(
                 onTap: (){
-                  Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
+
                   controller.saveSleepDatabase();
                 },
                 child: Container(

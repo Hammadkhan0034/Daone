@@ -70,13 +70,13 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  TextWidget(
-                                    text: date.year.toString(),
-                                    color: date.day == currentDate.day
-                                        ? Colors.white // Current date text color
-                                        : Colors.black, // Default container text color
-                                    fsize: 0.2,
-                                  ),
+                                  // TextWidget(
+                                  //   text: date.year.toString(),
+                                  //   color: date.day == currentDate.day
+                                  //       ? Colors.white // Current date text color
+                                  //       : Colors.black, // Default container text color
+                                  //   fsize: 0.2,
+                                  // ),
                                   TextWidget(
                                     text: date.month.toString(),
                                     color: date.day == currentDate.day

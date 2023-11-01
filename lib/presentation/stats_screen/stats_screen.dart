@@ -1,4 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:fl_chart/fl_chart.dart';
 
 import 'controller/stats_controller.dart';
 import 'package:daone/core/app_export.dart';
@@ -8,7 +11,7 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 // ignore_for_file: must_be_immutable
 class StatsScreen extends GetWidget<StatsController> {
-  const StatsScreen({Key? key})
+   StatsScreen({Key? key})
       : super(
           key: key,
         );
@@ -16,6 +19,9 @@ class StatsScreen extends GetWidget<StatsController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    final user =FirebaseAuth.instance.currentUser!.email;
+    CollectionReference weeklyProgressCollection = FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList');
+
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
@@ -33,23 +39,23 @@ class StatsScreen extends GetWidget<StatsController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CustomIconButton(
-                  onTap: () {
-                    Get.back();
-                  },
-                  height: 45,
-                  width: 48,
-                  margin: getMargin(
-                    left: 1,
-                  ),
-                  padding: getPadding(
-                    all: 11,
-                  ),
-                  child: CustomImageView(
-                    svgPath: ImageConstant.imgInfo,
-                  ),
-                ),
-                SizedBox(height: Get.height * 0.02),
+                // CustomIconButton(
+                //   onTap: () {
+                //     Get.offAndToNamed(AppRoutes.dashboardRoute);
+                //   },
+                //   height: 45,
+                //   width: 48,
+                //   margin: getMargin(
+                //     left: 1,
+                //   ),
+                //   padding: getPadding(
+                //     all: 11,
+                //   ),
+                //   child: CustomImageView(
+                //     svgPath: ImageConstant.imgInfo,
+                //   ),
+                // ),
+                // SizedBox(height: Get.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -328,287 +334,59 @@ class StatsScreen extends GetWidget<StatsController> {
                     font: FontWeight.w600,
                   ),
                 ),
-                Container(
-                  height: Get.height*0.11,
-                  width: Get.width,
-                  child: ListView.builder(
-                       scrollDirection: Axis.horizontal,
-                      itemCount: 15,
-                      itemBuilder: (context,index){
-                    return Center(
-                      child: Image.asset(ImageConstant.imageBadges,fit: BoxFit.cover),
-                    );
-                  }),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 18.0),
-                  child: TextWidget(
-                    text:                     "lbl_weekly_improvements_graph".tr,
-                    color: Colors.black,
-                    fsize: 16,
-                    font: FontWeight.w600,
-                  ),
-                ),
-                Padding(
-                  padding: getPadding(
-                    left: 2,
-                    top: 16,
-                    bottom: 3,
-                  ),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: getPadding(
-                            top: 7,
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: getVerticalSize(
-                                  160,
-                                ),
-                                width: getHorizontalSize(
-                                  285,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.center,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.center,
-                                      child: Container(
-                                        height: getVerticalSize(
-                                          137,
-                                        ),
-                                        width: getHorizontalSize(
-                                          283,
-                                        ),
-                                        padding: getPadding(
-                                          top: 28,
-                                          bottom: 28,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: fs.Svg(
-                                              ImageConstant.imgGroup194,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            CustomImageView(
-                                              imagePath: ImageConstant.imgLine1,
-                                              height: getVerticalSize(
-                                                79,
-                                              ),
-                                              width: getHorizontalSize(
-                                                282,
-                                              ),
-                                              radius: BorderRadius.circular(
-                                                getHorizontalSize(
-                                                  39,
-                                                ),
-                                              ),
-                                              alignment: Alignment.center,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    CustomImageView(
-                                      imagePath: ImageConstant.imgEllipse,
-                                      height: getVerticalSize(
-                                        85,
-                                      ),
-                                      width: getHorizontalSize(
-                                        285,
-                                      ),
-                                      alignment: Alignment.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 4,
-                                  top: 8,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "lbl_sun".tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          CustomTextStyles.bodySmallGray60005,
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 20,
-                                      ),
-                                      child: Text(
-                                        "lbl_mon".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60005,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 20,
-                                      ),
-                                      child: Text(
-                                        "lbl_tue".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60005,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 20,
-                                      ),
-                                      child: Text(
-                                        "lbl_wed".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60005,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 20,
-                                      ),
-                                      child: Text(
-                                        "lbl_thu".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style: CustomTextStyles
-                                            .labelLargeErrorContainer,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 18,
-                                      ),
-                                      child: Text(
-                                        "lbl_fri".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60005,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 20,
-                                      ),
-                                      child: Text(
-                                        "lbl_sat".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGray60005,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList').snapshots(),
+                  builder: (context, AsyncSnapshot snapshot) {
+                    final data = snapshot.data?.docs.length ?? 0;
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          child: CircularProgressIndicator(
+                            color: Colors.deepOrangeAccent,
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          left: 2,
-                          bottom: 17,
+                      );
+                    } else {
+                      int itemCount = (data / 100).ceil(); // Calculate the number of items to display
+
+                      return Material(
+                        color: Colors.white,
+                        elevation: 2,
+                        borderRadius: BorderRadius.circular(12),
+                        child: Container(
+                          width: double.infinity,
+                          height: Get.height*0.13,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+//                            color: Colors.teal,
+
+                          ),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal, // Set the scroll direction to horizontal
+                            itemCount: itemCount,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Container(
+                                  width: Get.width * 0.23,
+                                  height: Get.height * 0.2,
+
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(image: AssetImage(badges[index % badges.length])),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: Text(
-                                "lbl_100".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray6000510,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                left: 1,
-                                top: 12,
-                              ),
-                              child: Text(
-                                "lbl_80".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray6000510,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                top: 10,
-                              ),
-                              child: Text(
-                                "lbl_60".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style:
-                                    CustomTextStyles.labelMediumErrorContainer,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                left: 1,
-                                top: 12,
-                              ),
-                              child: Text(
-                                "lbl_40".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray6000510,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                left: 2,
-                                top: 10,
-                              ),
-                              child: Text(
-                                "lbl_20".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray6000510,
-                              ),
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                left: 2,
-                                top: 12,
-                              ),
-                              child: Text(
-                                "lbl_0".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray6000510,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                      );
+                    }
+                  },
                 ),
+
               ],
             ),
           ),
@@ -616,4 +394,37 @@ class StatsScreen extends GetWidget<StatsController> {
       ),
     );
   }
+  List<String> badges=[
+    'assets/badges/1.png',
+    'assets/badges/2.png',
+    'assets/badges/3.png',
+    'assets/badges/4.png',
+    'assets/badges/5.png',
+    'assets/badges/6.png',
+    'assets/badges/7.png',
+    'assets/badges/8.png',
+    'assets/badges/9.png',
+    'assets/badges/10.png',
+    'assets/badges/11.png',
+    'assets/badges/12.png',
+    'assets/badges/13.png',
+    'assets/badges/14.png',
+    'assets/badges/15.png',
+    'assets/badges/16.png',
+    'assets/badges/17.png',
+    'assets/badges/17.png',
+    'assets/badges/18.png',
+    'assets/badges/19.png',
+    'assets/badges/20.png',
+    'assets/badges/21.png',
+    'assets/badges/22.png',
+    'assets/badges/23.png',
+    'assets/badges/24.png',
+    'assets/badges/25.png',
+    'assets/badges/26.png',
+    'assets/badges/27.png',
+    'assets/badges/28.png',
+    'assets/badges/29.png',
+  ];
+
 }

@@ -28,18 +28,6 @@ import 'package:android_alarm_manager_plus/android_alarm_manager_plus.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // // Load time zone data
-  // tzdata.initializeTimeZones();
-  //
-  // // Initialize time zones
-  // tzdata.initializeTimeZones();
-  //
-  // final String timeZoneName = DateTime.now().timeZoneName;
-  // print('Current Time Zone: $timeZoneName');
-  // // Get the IANA time zone identifier
-  // final String timeZoneIdentifier = tz.local.name;
-  // print('Time Zone Identifier: $timeZoneIdentifier');
-  //
 
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,

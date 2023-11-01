@@ -27,6 +27,9 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
           height: getVerticalSize(81),
           leadingWidth: 77,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 29,
@@ -50,30 +53,32 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                 children: [
                   Obx(() => Column(
                     children: [
-                      Container(
-                        height: 120,
-                        width: 120,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(100),
-                          color: Colors.black54,
-                          image: (controller.imagePath.isEmpty && controller.imageUrl.isEmpty)
-                              ? DecorationImage(
-                            image: AssetImage('assets/images/profile (2).png'),
-                            fit: BoxFit.cover,
-                          )
-                              : (controller.imagePath.isEmpty)
-                              ? DecorationImage(
-                            image: NetworkImage(controller.imageUrl.value),
-                            fit: BoxFit.cover,
-                          )
-                              : DecorationImage(
-                            image: FileImage(File(controller.imagePath.value)),
-                            fit: BoxFit.cover,
+                      InkWell(
+                        onTap: (){
+                          controller.getImage();
+                        },
+                        child: Container(
+                          height: 120,
+                          width: 120,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100),
+                            color: Colors.black54,
+                            image: (controller.imagePath.isEmpty && controller.imageUrl.isEmpty)
+                                ? DecorationImage(
+                              image: AssetImage('assets/images/profile (2).png'),
+                              fit: BoxFit.cover,
+                            )
+                                : (controller.imagePath.isEmpty)
+                                ? DecorationImage(
+                              image: NetworkImage(controller.imageUrl.value),
+                              fit: BoxFit.cover,
+                            )
+                                : DecorationImage(
+                              image: FileImage(File(controller.imagePath.value)),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
-                        child: (controller.imagePath.isEmpty && controller.imageUrl.isEmpty)
-                            ? Center(child: TextWidget(text: "Add Photo", color: Colors.white, fsize: 14))
-                            : Center(child: TextWidget(text: "", color: Colors.white, fsize: 14)),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

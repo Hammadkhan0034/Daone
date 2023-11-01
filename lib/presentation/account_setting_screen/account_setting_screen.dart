@@ -29,23 +29,14 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
         backgroundColor: appTheme.whiteA700,
         appBar: CustomAppBar(
           height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
-          leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
-            ),
+            40,
           ),
           centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "lbl_profile".tr,
+          title: Padding(
+            padding: const EdgeInsets.only(top: 18.0),
+            child: AppbarSubtitle2(
+              text: "lbl_profile".tr,
+            ),
           ),
         ),
         body: SizedBox(

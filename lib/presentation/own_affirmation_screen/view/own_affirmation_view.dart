@@ -1,7 +1,4 @@
-import 'dart:math';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:confetti/confetti.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/own_affirmation_screen/controller/own_affirmation_controller.dart';
 import 'package:daone/presentation/own_affirmation_screen/view/ownaffirmationdialogue.dart';
@@ -14,10 +11,7 @@ import '../../../core/utils/image_constant.dart';
 import '../../../core/utils/size_utils.dart';
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
-import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text_widget.dart';
-import '../../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
-import '../../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 
 class OwnAffirmationView extends StatelessWidget {
   const OwnAffirmationView({Key? key}) : super(key: key);

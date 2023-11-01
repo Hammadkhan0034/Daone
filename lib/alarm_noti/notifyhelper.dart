@@ -9,16 +9,18 @@ class NotifyHelper{
   FlutterLocalNotificationsPlugin(); //
 
   initializeNotification() async {
-    // Initialize the "Asia/Karachi" time zone (PKT)
-    final String karachiTimeZoneId = 'Asia/Karachi';
-    final tz.Location karachiLocation = tz.getLocation(karachiTimeZoneId);
+   tz.initializeTimeZones();
 
-    // Load time zone data
-    tz.initializeTimeZones();
-
-    // Initialize time zones
-    tz.initializeTimeZones();
-    // this is for latest iOS settings
+    // // Initialize the "Asia/Karachi" time zone (PKT)
+    // final String karachiTimeZoneId = 'Asia/Karachi';
+    // final tz.Location karachiLocation = tz.getLocation(karachiTimeZoneId);
+    //
+    // // Load time zone data
+    // tz.initializeTimeZones();
+    //
+    // // Initialize time zones
+    // tz.initializeTimeZones();
+    // // this is for latest iOS settings
     final DarwinInitializationSettings initializationSettingsIOS =
     DarwinInitializationSettings(
         requestSoundPermission: false,
@@ -61,6 +63,7 @@ class NotifyHelper{
         uiLocalNotificationDateInterpretation:
         UILocalNotificationDateInterpretation.absoluteTime );
       print(  tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)));
+      print(  tz.TZDateTime.now(tz.local).hour);
   }
 
 

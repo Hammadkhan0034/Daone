@@ -25,8 +25,8 @@ class SleepTrackingView extends StatelessWidget {
       future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.email).collection('sleepData').get(),
         builder:(context,snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Scaffold(body:
-            Center(
+            return Scaffold(
+                body:  Center(
               child: Container(
                   height: 50, width: 50,
                   child: CircularProgressIndicator(color: Colors.deepOrange,)),
@@ -99,7 +99,7 @@ class SleepTrackingView extends StatelessWidget {
                   leadingWidth: 78,
                   leading: AppbarIconbutton(
                     onTap: (){
-                      Get.back();
+                      Get.offAndToNamed(AppRoutes.dashboardRoute);
                     },
 
                     svgPath: ImageConstant.imgInfo,

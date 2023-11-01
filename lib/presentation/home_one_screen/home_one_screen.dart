@@ -71,7 +71,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       return Text('Error: ${snapshot.error}');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator();
+                      return CircularProgressIndicator(color: Colors.deepOrange,);
                     }
                     // Ensure there are documents in the collection
                     if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
@@ -195,7 +195,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                     StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('users')
-                          .doc(user?.uid)
+                          .doc(user?.email)
                           .collection('tasks')
                           .snapshots(),
                       builder: (BuildContext context,
@@ -206,8 +206,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         return StreamBuilder(
                           stream: FirebaseFirestore.instance
                               .collection('users')
-                              .doc(user?.uid)
-                              .collection('completeList')
+                              .doc(user?.email) // Replace with the user's UID
+                              .collection('tasks').where('status',isEqualTo:'compelete')
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> completeTaskSnapshot) {

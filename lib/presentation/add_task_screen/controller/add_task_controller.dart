@@ -15,6 +15,8 @@ class AddTaskController extends GetxController {
 
   Rx<AddTaskModel> addTaskModelObj = AddTaskModel().obs;
 
+  final user = FirebaseAuth.instance.currentUser!.email;
+
   Rx<String> radioGroup = "".obs;
 
   final List<String> items = [
@@ -45,10 +47,11 @@ class AddTaskController extends GetxController {
         },
       );
       if (user!=null){
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
       await userDocRef.collection('tasks').add({
         'taskType' :selectedValue.value,
         'taskTitle': taskTitle,
+        'status' : '',
         'date': Timestamp.fromDate(DateTime.now()),
         //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
         'description':taskDescription,
@@ -78,7 +81,7 @@ class AddTaskController extends GetxController {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+        FirebaseFirestore.instance.collection('users').doc(user.email);
 
         // Specify the path to the document you want to delete
         DocumentReference taskDocRef =
@@ -86,7 +89,7 @@ class AddTaskController extends GetxController {
 
         // Delete the task
         await taskDocRef.delete();
-
+        Get.back();
         print('Task deleted from Firestore');
         Get.snackbar("Task Deleted", "Task Deleted Successfully");
       } else {
@@ -130,147 +133,50 @@ class AddTaskController extends GetxController {
     addTaskModelObj.value.dropdownItemList.refresh();
   }
   //To Do List
+    void updateToTodo(var documentId,){
+      DocumentReference documentReference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(user)
+          .collection('tasks')
+          .doc(documentId); // Replace with the ID of the document you want to update
 
-  Future<void> todoList(BuildContext context,taskTitle,String taskDescription,String taskType,Timestamp date) async {
-    try {
-      User? user =FirebaseAuth.instance.currentUser;
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
-      if (user!=null){
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-        await userDocRef.collection('todoList').add({
-          'taskType' : taskType,
-          'taskTitle': taskTitle,
-          'date': date,
-          //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
-          'description':taskDescription,
-        });  // Data saved successfully
-        print('Task saved to Firestore');
+      String newStatus = 'todo';
+
+
+      documentReference.update({
+        'status': newStatus,
+      }).then((value) {
+        Get.back();
         Get.snackbar("Task Add to Todo List", "Task Saved Successfully");
-
-        // Hide the progress indicator and navigate
-        Navigator.of(context).pop();
-        Get.offAndToNamed(AppRoutes.dashboardRoute);
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User is not authenticated');
+      }).catchError((error) {
         Get.snackbar('Error', 'User is not authenticated');
-        Navigator.of(context).pop(); // Hide the progress indicator
-      }
-    } catch (e) {
-      // Handle errors here
-      print('Error saving task: $e');
-      Get.snackbar('Error saving task:', '$e');
-      Navigator.of(context).pop(); // Hide the progress indicator
+      });
     }
-  }
-// Create a function to delete the task by its document ID
-  void deleteTask(String documentId) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+    //completeTask
+  void updateToComplete(var documentId,){
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user)
+        .collection('tasks')
+        .doc(documentId); // Replace with the ID of the document you want to update
 
-        // Specify the path to the document you want to delete
-        DocumentReference taskDocRef =
-        userDocRef.collection('todoList').doc(documentId);
+    String newStatus = 'compelete';
 
-        // Delete the task
-        await taskDocRef.delete();
 
-        print('Task deleted from Firestore');
-        Get.snackbar("Task Deleted", "Task Deleted Successfully");
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User is not authenticated');
-        Get.snackbar('Error', 'User is not authenticated');
-      }
-    } catch (e) {
-      // Handle errors here
-      print('Error deleting task: $e');
-      Get.snackbar('Error deleting task:', '$e');
-    }
+    documentReference.update({
+      'status': newStatus,
+    }).then((value) {
+      Get.back();
+      Get.snackbar("Task Add to Complete List", "Task Saved Successfully");
+    }).catchError((error) {
+      Get.snackbar('Error', 'User is not authenticated');
+    });
   }
 
 
-  Future<void> completeList(BuildContext context,taskTitle,String taskDescription,String taskType,Timestamp date) async {
-    try {
-      User? user =FirebaseAuth.instance.currentUser;
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
-      if (user!=null){
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
-        await userDocRef.collection('completeList').add({
-          'taskType' : taskType,
-          'taskTitle': taskTitle,
-          'date': date,
-          //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
-          'description':taskDescription,
-        });  // Data saved successfully
-        print('Task saved to Firestore');
-        Get.snackbar("Task Add to Todo List", "Task Saved Successfully");
 
-        // Hide the progress indicator and navigate
-        Navigator.of(context).pop();
-        Get.offAndToNamed(AppRoutes.dashboardRoute);
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User is not authenticated');
-        Get.snackbar('Error', 'User is not authenticated');
-        Navigator.of(context).pop(); // Hide the progress indicator
-      }
-    } catch (e) {
-      // Handle errors here
-      print('Error saving task: $e');
-      Get.snackbar('Error saving task:', '$e');
-      Navigator.of(context).pop(); // Hide the progress indicator
-    }
-  }
 
-  void deleteCompleteTask(String documentId) async {
-    try {
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
 
-        // Specify the path to the document you want to delete
-        DocumentReference taskDocRef =
-        userDocRef.collection('completeList').doc(documentId);
-
-        // Delete the task
-        await taskDocRef.delete();
-
-        print('Task deleted from Firestore');
-        Get.snackbar("Task Deleted", "Task Deleted Successfully");
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User is not authenticated');
-        Get.snackbar('Error', 'User is not authenticated');
-      }
-    } catch (e) {
-      // Handle errors here
-      print('Error deleting task: $e');
-      Get.snackbar('Error deleting task:', '$e');
-    }
-  }
 
 
 

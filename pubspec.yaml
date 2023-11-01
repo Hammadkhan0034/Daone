@@ -48,6 +48,7 @@ flutter:
   assets: 
     - assets/
     - assets/images/
+    - assets/badges/
     - assets/1.mp3
     - assets/relaxing-piano-and-ocean-waves-logo-165199.mp3
 

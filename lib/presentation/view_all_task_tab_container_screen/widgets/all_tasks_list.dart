@@ -13,13 +13,20 @@ Widget allTaskList(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc(user?.uid) // Replace with the user's UID
+          .doc(user?.email) // Replace with the user's UID
           .collection('tasks')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading indicator while data is being fetched
-          return CircularProgressIndicator();
+          return Center(
+            child: Container(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                  color: Colors.deepOrangeAccent,
+                )),
+          );
         }
 
         if (snapshot.hasError) {
@@ -127,12 +134,13 @@ Widget allTaskList(BuildContext context) {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            controller.todoList(
-                                                context,
-                                                taskData['taskTitle'],
-                                                taskData['description'],
-                                                taskData['taskType'],
-                                                taskData['date']);
+                                            controller.updateToTodo(documentId);
+                                            // controller.todoList(
+                                            //     context,
+                                            //     taskData['taskTitle'],
+                                            //     taskData['description'],
+                                            //     taskData['taskType'],
+                                            //     taskData['date']);
                                           },
                                           child: Container(
                                             width: Get.width * 0.2,
@@ -153,11 +161,7 @@ Widget allTaskList(BuildContext context) {
                                         ),
                                         InkWell(
                                           onTap: (){
-                                            controller.completeList(context,
-                                                taskData['taskTitle'],
-                                                taskData['description'],
-                                                taskData['taskType'],
-                                                taskData['date']);
+                                          controller.updateToComplete(documentId);
                                           },
                                           child: Container(
                                             width: Get.width * 0.26,
@@ -234,13 +238,20 @@ Widget todoListWdiget(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc(user?.uid) // Replace with the user's UID
-          .collection('todoList')
+          .doc(user?.email) // Replace with the user's UID
+          .collection('tasks').where('status',isEqualTo:'todo')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading indicator while data is being fetched
-          return CircularProgressIndicator();
+          return Center(
+            child: Container(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                  color: Colors.deepOrangeAccent,
+                )),
+          );
         }
 
         if (snapshot.hasError) {
@@ -346,12 +357,7 @@ Widget todoListWdiget(BuildContext context) {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            controller.completeList(
-                                                context,
-                                                taskTodoData['taskTitle'],
-                                                taskTodoData['description'],
-                                                taskTodoData['taskType'],
-                                                taskTodoData['date']);
+                                         controller.updateToComplete(documentId);
                                           },
                                           child: Container(
                                             width: Get.width * 0.26,
@@ -372,7 +378,8 @@ Widget todoListWdiget(BuildContext context) {
                                         ),
                                         InkWell(
                                           onTap: () {
-                                            controller.deleteTask(documentId);
+                                            controller.deleteMainTask(documentId);
+
                                           },
                                           child: Container(
                                             width: Get.width * 0.26,
@@ -428,13 +435,20 @@ Widget completeListWdiget(BuildContext context) {
   return StreamBuilder(
       stream: FirebaseFirestore.instance
           .collection('users')
-          .doc(user?.uid) // Replace with the user's UID
-          .collection('completeList')
+          .doc(user?.email) // Replace with the user's UID
+          .collection('tasks').where('status',isEqualTo:'compelete')
           .snapshots(),
       builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading indicator while data is being fetched
-          return CircularProgressIndicator();
+          return Center(
+            child: Container(
+                height: 100,
+                width: 100,
+                child: CircularProgressIndicator(
+                  color: Colors.deepOrangeAccent,
+                )),
+          );
         }
 
         if (snapshot.hasError) {
@@ -544,7 +558,7 @@ Widget completeListWdiget(BuildContext context) {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            controller.deleteCompleteTask(documentId);
+                                            controller.deleteMainTask(documentId);
                                           },
                                           child: Container(
                                             width: Get.width * 0.26,

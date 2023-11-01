@@ -55,9 +55,9 @@ class CalendarController extends GetxController {
       case 10:
         return 'Oct';
       case 11:
-        return 'November';
+        return 'Nov';
       case 12:
-        return 'December';
+        return 'Dec';
       default:
         return '';
     }

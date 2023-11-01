@@ -1,4 +1,7 @@
-import 'package:daone/core/app_export.dart';import 'package:daone/presentation/personal_data_update_screen/models/personal_data_update_model.dart';/// A controller class for the PersonalDataUpdateScreen.
+import 'package:daone/core/app_export.dart';
+
+import '../models/personal_data_update_model.dart';
+/// A controller class for the PersonalDataUpdateScreen.
 ///
 /// This class manages the state of the PersonalDataUpdateScreen, including the
 /// current personalDataUpdateModelObj

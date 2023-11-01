@@ -2,21 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../widgets/text_widget.dart';
-import '../personal_data_update_one_screen/widgets/listn_item_widget.dart';
 import 'controller/personal_data_update_one_controller.dart';
-import 'models/listn_item_model.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
-import 'package:daone/widgets/app_bar/appbar_image.dart';
 import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
 import 'package:daone/widgets/app_bar/custom_app_bar.dart';
-import 'package:daone/widgets/custom_bottom_bar.dart';
-import 'package:daone/widgets/custom_drop_down.dart';
-import 'package:daone/widgets/custom_outlined_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
-// ignore_for_file: must_be_immutable
 class PersonalDataUpdateOneScreen
     extends GetWidget<PersonalDataUpdateOneController> {
   const PersonalDataUpdateOneScreen({Key? key})
@@ -38,6 +30,9 @@ class PersonalDataUpdateOneScreen
           ),
           leadingWidth: 77,
           leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 29,
