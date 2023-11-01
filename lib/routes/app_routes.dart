@@ -68,19 +68,18 @@ import 'package:daone/presentation/account_setting_screen/account_setting_screen
 import 'package:daone/presentation/account_setting_screen/binding/account_setting_binding.dart';
 import 'package:daone/presentation/personal_data_update_two_screen/personal_data_update_two_screen.dart';
 import 'package:daone/presentation/personal_data_update_two_screen/binding/personal_data_update_two_binding.dart';
-import 'package:daone/presentation/personal_data_update_screen/personal_data_update_screen.dart';
-import 'package:daone/presentation/personal_data_update_screen/binding/personal_data_update_binding.dart';
-import 'package:daone/presentation/personal_data_update_one_screen/personal_data_update_one_screen.dart';
-import 'package:daone/presentation/personal_data_update_one_screen/binding/personal_data_update_one_binding.dart';
 import 'package:daone/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:daone/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-
 import '../presentation/add_task_screen/add_task_screen.dart';
 import '../presentation/add_task_screen/binding/add_task_binding.dart';
+import '../presentation/badges/binding/personal_data_update_binding.dart';
+import '../presentation/badges/personal_data_update_screen.dart';
 import '../presentation/gratitude_affirmation/binding/gratitude_affirmation_binding.dart';
 import '../presentation/gratitude_affirmation/view/gratitude_affirmation_view.dart';
+import '../presentation/highlights/binding/personal_data_update_one_binding.dart';
+import '../presentation/highlights/personal_data_update_one_screen.dart';
 import '../presentation/love_affirmation/binding/love_affirmation_binding.dart';
 import '../presentation/love_affirmation/view/love_affirmation.dart';
 import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';

@@ -1,7 +1,7 @@
-import 'package:daone/core/app_export.dart';import 'package:daone/presentation/personal_data_update_one_screen/models/personal_data_update_one_model.dart';/// A controller class for the PersonalDataUpdateOneScreen.
-///
-/// This class manages the state of the PersonalDataUpdateOneScreen, including the
-/// current personalDataUpdateOneModelObj
+import 'package:daone/core/app_export.dart';
+
+import '../models/personal_data_update_one_model.dart';
+
 class PersonalDataUpdateOneController extends GetxController {Rx<PersonalDataUpdateOneModel> personalDataUpdateOneModelObj = PersonalDataUpdateOneModel().obs;
 
 SelectionPopupModel? selectedDropDownValue;

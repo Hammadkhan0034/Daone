@@ -152,7 +152,7 @@ class SleepTrackingController extends GetxController {
 
   Future<void> saveSleepDatabase() async {
     final sleepDataCollection = FirebaseFirestore.instance.collection('users')
-        .doc(user!.uid)
+        .doc(user!.email)
         .collection("sleepData")
         .doc('week'); // 'week' is a document, not a subcollection
 
@@ -201,6 +201,7 @@ class SleepTrackingController extends GetxController {
       },
     };
     await sleepDataCollection.set(sleepData);
+    Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
   }
 
   Future<void> updateDayData(String day, Map<String, dynamic> newData) async {

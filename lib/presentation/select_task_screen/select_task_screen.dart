@@ -1,18 +1,9 @@
-import 'package:daone/presentation/add_task_pop_up_calender_dialog/add_task_pop_up_calender_dialog.dart';
-import 'package:daone/presentation/add_task_pop_up_calender_dialog/controller/add_task_pop_up_calender_controller.dart';
-
 import '../../alarm_noti/noti_screen.dart';
 import '../../widgets/text_widget.dart';
-import '../select_task_screen/widgets/select_task_item_widget.dart';
-import 'Alarm/Alarm.dart';
 import 'controller/select_task_controller.dart';
-import 'models/select_task_item_model.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_bottom_bar.dart';
-import 'package:daone/widgets/custom_drop_down.dart';
 import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 // ignore_for_file: must_be_immutable
 class SelectTaskScreen extends GetWidget<SelectTaskController> {
@@ -46,22 +37,22 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomIconButton(
-                        onTap: (){
-                          Get.back();
-                        },
-                        height: 48,
-                        width: 48,
-                        margin: getMargin(
-                          bottom: 82,
-                        ),
-                        padding: getPadding(
-                          all: 12,
-                        ),
-                        child: CustomImageView(
-                          svgPath: ImageConstant.imgInfo,
-                        ),
-                      ),
+                      // CustomIconButton(
+                      //   onTap: (){
+                      //     Get.toNamed(AppRoutes.dashboardRoute);
+                      //   },
+                      //   height: 48,
+                      //   width: 48,
+                      //   margin: getMargin(
+                      //     bottom: 82,
+                      //   ),
+                      //   padding: getPadding(
+                      //     all: 12,
+                      //   ),
+                      //   child: CustomImageView(
+                      //     svgPath: ImageConstant.imgInfo,
+                      //   ),
+                      // ),
                       Spacer(
                         flex: 46,
                       ),
@@ -101,8 +92,6 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                       Spacer(
                         flex: 53,
                       ),
-                      Image.asset(ImageConstant.notificationIcon,scale: 3.3),
-
                     ],
                   ),
                   InkWell(
@@ -157,57 +146,67 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                     padding: const EdgeInsets.symmetric(vertical:20.0),
                     child: Row(
                       children: [
-                        Container(
-                          height: Get.height*0.18,
-                          width: Get.width*0.35,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.addTaskScreen);
+                          },
+                          child: Container(
+                            height: Get.height*0.18,
+                            width: Get.width*0.35,
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                              color: Color(0x3f858fe9)
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  width: Get.width*0.15,
-                                  height: Get.height*0.067,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Color(0xff858fe9),
-                                  image: DecorationImage(image: AssetImage(ImageConstant.workout,),scale: 2),
-                                  ),
-                              ),
-                              SizedBox( height: Get.height*0.01,),
-                              TextWidget(text: "Workout", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
-                            ],
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                                color: Color(0x3f858fe9)
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    width: Get.width*0.15,
+                                    height: Get.height*0.067,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        color: Color(0xff858fe9),
+                                    image: DecorationImage(image: AssetImage(ImageConstant.workout,),scale: 2),
+                                    ),
+                                ),
+                                SizedBox( height: Get.height*0.01,),
+                                TextWidget(text: "Workout", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
+                              ],
+                            ),
                           ),
                         ),
                         SizedBox( width: Get.width*0.13,),
-                        Container(
-                          height: Get.height*0.18,
-                          width: Get.width*0.35,
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.addTaskScreen);
+                          },
+                          child: Container(
+                            height: Get.height*0.18,
+                            width: Get.width*0.35,
 
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            color: Color(0x3f7fc9e7),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                  width: Get.width*0.15,
-                                  height: Get.height*0.067,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(14),
-                                      color: Color(0xff7FC9E7),
-                                  image: DecorationImage(image: AssetImage(ImageConstant.job,),scale: 4),
-                                  ),
-                              ),
-                              SizedBox( height: Get.height*0.01,),
-                              TextWidget(text: "Job", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
-                            ],
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(15),
+                              color: Color(0x3f7fc9e7),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                    width: Get.width*0.15,
+                                    height: Get.height*0.067,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        color: Color(0xff7FC9E7),
+                                    image: DecorationImage(image: AssetImage(ImageConstant.job,),scale: 4),
+                                    ),
+                                ),
+                                SizedBox( height: Get.height*0.01,),
+                                TextWidget(text: "Job", color: Color(0xff10275A), fsize: 12,font: FontWeight.w600),
+                              ],
+                            ),
                           ),
                         ),
 

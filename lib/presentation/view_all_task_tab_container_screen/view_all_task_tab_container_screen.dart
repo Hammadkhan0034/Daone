@@ -79,14 +79,8 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                                   //       : Colors.black, // Default container text color
                                   //   fsize: 0.2,
                                   // ),
-                                  // TextWidget(
-                                  //   text: date.month.toString(),
-                                  //   color: date.day == currentDate.day
-                                  //       ? Colors.white // Current date text color
-                                  //       : Colors.black, // Default container text color
-                                  //   fsize:12,
-                                  //   font: FontWeight.bold,
-                                  // ),
+
+
                                   TextWidget(
                                     text: date.day.toString(),
                                     color: date.day == currentDate.day
