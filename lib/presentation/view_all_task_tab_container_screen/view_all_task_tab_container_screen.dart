@@ -37,11 +37,12 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Expanded(
+              SizedBox(
+                height: Get.height*0.11,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: 6, // Limit the list to 5 items
+                  itemCount: 6,
                   itemBuilder: (BuildContext context, int index) {
                     final DateTime currentDate = DateTime.now();
                     final DateTime date = currentDate.add(Duration(days: index)); // Add days to get next dates
@@ -51,7 +52,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                         // Handle date selection here
                       },
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.only(top: 10, right: 5.0,left: 5,bottom: 5),
                         child: Material(
                           color: date.day == currentDate.day
                               ? Colors.deepOrange // Current date container color
@@ -59,7 +60,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                           borderRadius: BorderRadius.circular(10.0),
                           elevation: 2,
                           child: Container(
-                            width: Get.width * 0.12,
+                            width: Get.width * 0.15,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               color: date.day == currentDate.day
@@ -69,35 +70,36 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                             child: Center(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: <Widget>[
-                                  TextWidget(
-                                    text: date.year.toString(),
-                                    color: date.day == currentDate.day
-                                        ? Colors.white // Current date text color
-                                        : Colors.black, // Default container text color
-                                    fsize: 0.2,
-                                  ),
-                                  TextWidget(
-                                    text: date.month.toString(),
-                                    color: date.day == currentDate.day
-                                        ? Colors.white // Current date text color
-                                        : Colors.black, // Default container text color
-                                    fsize: 0.0008,
-                                    font: FontWeight.bold,
-                                  ),
+                                  // TextWidget(
+                                  //   text: date.year.toString(),
+                                  //   color: date.day == currentDate.day
+                                  //       ? Colors.white // Current date text color
+                                  //       : Colors.black, // Default container text color
+                                  //   fsize: 0.2,
+                                  // ),
+                                  // TextWidget(
+                                  //   text: date.month.toString(),
+                                  //   color: date.day == currentDate.day
+                                  //       ? Colors.white // Current date text color
+                                  //       : Colors.black, // Default container text color
+                                  //   fsize:12,
+                                  //   font: FontWeight.bold,
+                                  // ),
                                   TextWidget(
                                     text: date.day.toString(),
                                     color: date.day == currentDate.day
                                         ? Colors.white // Current date text color
                                         : Colors.black, // Default container text color
-                                    fsize: 16,
+                                    fsize: 20,
                                   ),
                                   TextWidget(
                                     text: calenderController.getMonthName(date.month),
                                     color: date.day == currentDate.day
                                         ? Colors.white // Current date text color
                                         : Colors.black, // Default container text color
-                                    fsize: 12,
+                                    fsize: 10,
                                   ),
                                 ],
                               ),
