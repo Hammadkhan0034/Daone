@@ -1,4 +1,6 @@
+import '../controller/group_controller.dart';
 import '../controller/view_friends_controller.dart';
+import '../models/group_model.dart';
 import '../models/view_friends1_item_model.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_icon_button.dart';
@@ -7,16 +9,19 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class ViewFriends1ItemWidget extends StatelessWidget {
   ViewFriends1ItemWidget(
-    this.viewFriends1ItemModelObj, {
+    this.model, {
     Key? key,
+        required this.index,
   }) : super(
           key: key,
         );
 
-  ViewFriends1ItemModel viewFriends1ItemModelObj;
+  GroupModel model;
+
+  int index;
 
   var controller = Get.find<ViewFriendsController>();
-
+  final GroupController groupController = Get.put(GroupController());
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -55,51 +60,67 @@ class ViewFriends1ItemWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+
+
                   Padding(
                     padding: getPadding(
                       left: 9,
                       top: 16,
                       bottom: 5,
                     ),
-                    child: Column(
+                    child:
+
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Obx(
-                          () => Text(
-                            viewFriends1ItemModelObj.typeTxt.value,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: CustomTextStyles.titleSmallPoppinsBlack900,
-                          ),
-                        ),
+
+
+
+
+
                         Align(
                           alignment: Alignment.center,
                           child: Padding(
                             padding: getPadding(
                               top: 23,
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  "lbl_affirmations".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles
-                                      .labelMediumGray90003Medium_1,
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 72,
-                                  ),
+                                SizedBox(
+                                  width: getHorizontalSize(100),
+                                  height: getVerticalSize(20),
                                   child: Text(
-                                    "lbl_1000".tr,
+                                    controller.groups[index].name,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
-                                    style:
-                                        CustomTextStyles.labelMediumGray70003,
+                                    style: CustomTextStyles.titleSmallPoppinsBlack900,
                                   ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "lbl_affirmations".tr,
+                                      overflow: TextOverflow.ellipsis,
+                                      textAlign: TextAlign.left,
+                                      style: CustomTextStyles
+                                          .labelMediumGray90003Medium_1,
+                                    ),
+                                    Padding(
+                                      padding: getPadding(
+                                        left: 72,
+                                      ),
+                                      child: Text(
+                                        "lbl_1000".tr,
+                                        overflow: TextOverflow.ellipsis,
+                                        textAlign: TextAlign.left,
+                                        style:
+                                            CustomTextStyles.labelMediumGray70003,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -159,16 +180,14 @@ class ViewFriends1ItemWidget extends StatelessWidget {
                                   padding: getPadding(
                                     left: 19,
                                   ),
-                                  child: Obx(
-                                    () => Text(
-                                      viewFriends1ItemModelObj
-                                          .rejectionsTxt.value,
+                                  child: Text(
+                                      model.name,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
                                       style: CustomTextStyles
                                           .labelSmallWhiteA7009_1,
                                     ),
-                                  ),
+
                                 ),
                               ),
                             ],
