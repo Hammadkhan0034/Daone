@@ -63,6 +63,7 @@ class EditAffirmationController extends GetxController {
             'affirmation': affirmation,
             'imageUrl': imageUrl,
             'dateStart': dateStart,
+            'date': Timestamp.fromDate(DateTime.now()),
             'dateEnd': dateEnd,
             'affirmationCount': affirmationCount,
           });  // Data saved successfully

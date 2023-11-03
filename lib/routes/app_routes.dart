@@ -433,13 +433,17 @@ class AppRoutes {
         BlogBinding(),
       ],
     ),
-    GetPage(
-      name: latestBlogScreen,
-      page: () => LatestBlogScreen(blogId:FirebaseAuth.instance.currentUser!.uid, blogData: {},),
-      bindings: [
-        LatestBlogBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: latestBlogScreen,
+    //   page: () => LatestBlogScreen(blogId:FirebaseAuth.instance.currentUser!.uid, blogData: {},
+    //   updateBlogRead: (documentID)async{
+    //     return null;
+    //   },
+    //   ),
+    //   bindings: [
+    //     LatestBlogBinding(),
+    //   ],
+    // ),
     GetPage(
       name: communityTabContainerScreen,
       page: () => CommunityTabContainerScreen(),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../add_task_screen/controller/add_task_controller.dart';
+import '../badges/badgeslist.dart';
 import 'controller/home_one_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,61 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                 padding: const EdgeInsets.all(12.0),
                 child: Row(
                   children: [
-                    Image.asset(ImageConstant.imgUntit11, scale: 2.8),
+                    SizedBox(
+                      width: Get.width * 0.03,
+                    ),
+                    StreamBuilder(
+                      stream: FirebaseFirestore.instance.collection('users').doc(user!.email).collection('OwnAffirmationList').snapshots(),
+                      builder: (context, AsyncSnapshot snapshot) {
+                        final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: Container(
+                              height: 50,
+                              width: 50,
+                              child: CircularProgressIndicator(
+                                color: Colors.deepOrangeAccent,
+                              ),
+                            ),
+                          );
+                        } else {
+                          List<int> createNumberList(int n) {
+                            List<int> result = List<int>.generate(n, (index) => index + 1);
+                            return result;
+                          }
+                          int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+                          List<int> numberList = createNumberList(itemCount);
+                          final newNum =numberList.last;
+
+                          return Container(
+                            //color: Colors.deepOrange,
+                            width: Get.width*0.2,
+                            height:Get.height*0.09,
+                            child: ListView.builder(
+                              itemCount:1,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Center(
+                                    child: Container(
+                                      width: Get.width*0.2,
+                                      height:Get.height*0.08,
+                                      decoration: BoxDecoration(
+                                        image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1 ]),fit: BoxFit.cover),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      width: Get.width * 0.02,
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -43,17 +98,43 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                             text: "lbl_welcome_back2".tr,
                             color: Colors.black38,
                             fsize: 12),
-                        TextWidget(
-                            text: "lbl_stefani".tr,
-                            color: Colors.black,
-                            fsize: 20,
-                            font: FontWeight.bold),
+                        StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              // While the data is being fetched, you can return a loading indicator or an empty widget.
+                              return CircularProgressIndicator(); // Replace with your loading indicator widget
+                            }
+
+                            if (snapshot.hasError) {
+                              // Handle errors here
+                              return Text('Error: ${snapshot.error}');
+                            }
+
+                            if (!snapshot.hasData || !snapshot.data!.exists) {
+                              // Handle the case where the document doesn't exist
+                              return Text('Document not found');
+                            }
+
+                            // Access the 'fullName' field from the document data
+                            String fullName = snapshot.data!['fullName'];
+
+                            return Padding(
+                              padding: getPadding(
+                                top: 1,
+                              ),
+                              child:TextWidget(text: fullName,color: Colors.black,
+                                  fsize: 20,
+                                  font: FontWeight.bold),
+                            );
+                          },
+                        ),
                       ],
                     ),
                     SizedBox(
                       width: Get.width * 0.36,
                     ),
-                    Image.asset(ImageConstant.notificationIcon, scale: 3.3),
+               //     Image.asset(ImageConstant.notificationIcon, scale: 3.3),
                   ],
                 ),
               ),
@@ -497,7 +578,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                 ),
               ),
               SizedBox(
-                height: Get.height * 0.15,
+                height: Get.height * 0.04,
               ),
             ],
           ),

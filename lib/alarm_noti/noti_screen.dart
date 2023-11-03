@@ -16,14 +16,14 @@ class NotiScreen extends StatefulWidget {
 class _NotiScreenState extends State<NotiScreen> {
  var notifyHelper;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    notifyHelper=NotifyHelper();
-    notifyHelper.initializeNotification();
-    notifyHelper.requestIOSPermissions();
-  }
+ @override
+ void initState() {
+   super.initState();
+   notifyHelper = NotifyHelper();
+   notifyHelper.initializeNotification();
+   notifyHelper.scheduleNotification(); // Schedule a notification
+   notifyHelper.requestIOSPermissions();
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class _NotiScreenState extends State<NotiScreen> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  notifyHelper.scheduledNotification();
+                  notifyHelper.scheduleNotification();
 
                 },
                 child: Text("Schedule Noti"),

@@ -1,16 +1,14 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/daily_intension_record_screen/models/daily_intension_record_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 import '../videos/upload_video.dart';
 
-/// A controller class for the DailyIntensionRecordScreen.
-///
-/// This class manages the state of the DailyIntensionRecordScreen, including the
-/// current dailyIntensionRecordModelObj
 class DailyIntensionRecordController extends GetxController {
 
 
@@ -34,9 +32,10 @@ class DailyIntensionRecordController extends GetxController {
 
   Future<void> uploadVideoToFirebaseStorage(
       File videoFile, BuildContext context) async {
+    final user =FirebaseAuth.instance.currentUser!.uid;
     final storage = FirebaseStorage.instance;
     final Reference storageReference =
-    storage.ref().child('videos/${videoFile.path.split('/').last}');
+    storage.ref().child('${user}videos/${videoFile.path.split('/').last}');
 
     try {
       UploadTask uploadTask = storageReference.putFile(videoFile);
@@ -53,6 +52,7 @@ class DailyIntensionRecordController extends GetxController {
         // You can now save `downloadUrl` to a database or use it in your app.
 
         Get.offAndToNamed(AppRoutes.dashboardRoute);
+        updateVideoUrl(downloadUrl);
         // // Navigate to the dashboard screen
         // Navigator.of(context).pushReplacement(
         //   MaterialPageRoute(
@@ -65,4 +65,15 @@ class DailyIntensionRecordController extends GetxController {
     }
   }
 
+  void updateVideoUrl(downloadUrl)async {
+
+
+    DocumentReference documentReference = FirebaseFirestore.instance.collection(
+        'users').doc(
+        FirebaseAuth.instance.currentUser!.email);
+    await documentReference.collection('VideosUrl').add({
+      'videoUrl': downloadUrl,
+      'date':Timestamp.fromDate(DateTime.now()),
+    });
+  }
 }

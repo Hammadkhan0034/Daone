@@ -12,13 +12,26 @@ import '../../../widgets/custom_elevated_button.dart';
 import '../../../widgets/text_widget.dart';
 import '../models/select_task_model.dart';
 
-class AlarmView extends StatelessWidget {
+class AlarmView extends StatefulWidget {
   const AlarmView({Key? key}) : super(key: key);
+
+  @override
+  State<AlarmView> createState() => _AlarmViewState();
+}
+
+class _AlarmViewState extends State<AlarmView> {
+  AlarmController controller =Get.put(AlarmController());
+
+
+  @override
+  initState(){
+    super.initState();
+    controller.registerAlarmPlugin();
+  }
 
   @override
   Widget build(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    AlarmController controller =Get.put(AlarmController());
     final user =FirebaseAuth.instance.currentUser;
     return Scaffold(
       appBar: CustomAppBar(
@@ -181,7 +194,7 @@ class AlarmView extends StatelessWidget {
             StreamBuilder<QuerySnapshot>(
                 stream:FirebaseFirestore.instance
                     .collection("users")
-                    .doc(user?.uid)
+                    .doc(user?.email)
                     .collection('Alarm')
                     .snapshots(),
                 builder: (context,AsyncSnapshot<QuerySnapshot> snapshot){

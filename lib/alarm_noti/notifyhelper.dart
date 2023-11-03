@@ -1,80 +1,84 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
-class NotifyHelper{
-  FlutterLocalNotificationsPlugin
-  flutterLocalNotificationsPlugin =
-  FlutterLocalNotificationsPlugin(); //
+
+class NotifyHelper {
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
 
   initializeNotification() async {
-   tz.initializeTimeZones();
+    tz.initializeTimeZones();
 
-    // // Initialize the "Asia/Karachi" time zone (PKT)
-    // final String karachiTimeZoneId = 'Asia/Karachi';
-    // final tz.Location karachiLocation = tz.getLocation(karachiTimeZoneId);
-    //
-    // // Load time zone data
-    // tz.initializeTimeZones();
-    //
-    // // Initialize time zones
-    // tz.initializeTimeZones();
-    // // this is for latest iOS settings
+    final tz.TZDateTime now = tz.TZDateTime.now(tz.getLocation('Asia/Karachi'));
+
     final DarwinInitializationSettings initializationSettingsIOS =
     DarwinInitializationSettings(
-        requestSoundPermission: false,
-        requestBadgePermission: false,
-        requestAlertPermission: false,
-        onDidReceiveLocalNotification: onDidReceiveLocalNotification
+      requestSoundPermission: false,
+      requestBadgePermission: false,
+      requestAlertPermission: false,
+      onDidReceiveLocalNotification: onDidReceiveLocalNotification,
     );
 
     final AndroidInitializationSettings initializationSettingsAndroid =
-        AndroidInitializationSettings('logo');
+    AndroidInitializationSettings('logo');
 
-      final InitializationSettings initializationSettings =
-      InitializationSettings(
+    final InitializationSettings initializationSettings = InitializationSettings(
       iOS: initializationSettingsIOS,
-      android:initializationSettingsAndroid,
+      android: initializationSettingsAndroid,
     );
-    await flutterLocalNotificationsPlugin.initialize(
-        initializationSettings,
-    );}
-  scheduledNotification() async {
-    final tz.TZDateTime scheduledTime = tz.TZDateTime(
-      tz.local,
-      DateTime.now().year,
-      DateTime.now().month,
-      DateTime.now().day,
-      DateTime.now().hour,
-      DateTime.now().minute,
-    ).add(const Duration(seconds: 5));
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'scheduled title',
-        'theme changes 5 seconds ago',
-        scheduledTime,
-        const NotificationDetails(
-            android: AndroidNotificationDetails('your channel id',
-                'your channel name',
-            )),
 
-        androidAllowWhileIdle: true,
-        uiLocalNotificationDateInterpretation:
-        UILocalNotificationDateInterpretation.absoluteTime );
-      print(  tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)));
-      print(  tz.TZDateTime.now(tz.local).hour);
+    await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+  }
+
+  Future<void> scheduleNotification() async {
+    // Initialize time zones (if not already done)
+    tz.initializeTimeZones();
+
+    // Calculate the scheduled time, e.g., 5 seconds from now
+    final scheduledTime = tz.TZDateTime.now(tz.getLocation('Asia/Karachi'))
+        .add(const Duration(seconds: 5));
+
+    // Define the notification details
+    final notificationDetails = const NotificationDetails(
+      android: AndroidNotificationDetails(
+        'your_channel_id', // Replace with your channel ID
+        'your_channel_name', // Replace with your channel name
+      ),
+    );
+
+    // Schedule the notification
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      0, // Notification ID (can be any unique integer)
+      'Scheduled Title', // Notification title
+      'This is a scheduled notification', // Notification body
+      scheduledTime,
+      notificationDetails,
+      payload: 'Default sound',
+      uiLocalNotificationDateInterpretation:
+      UILocalNotificationDateInterpretation.absoluteTime,
+    );
+
+    print('Scheduled notification for: $scheduledTime');
   }
 
 
   displayNotification({required String title, required String body}) async {
-    print("doing test");
-    var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-        'your channel id', 'your channel name',
-        importance: Importance.max, priority: Priority.high);
-    var iOSPlatformChannelSpecifics = new DarwinNotificationDetails();
-    var platformChannelSpecifics = new NotificationDetails(
-        android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+      'your channel id',
+      'your channel name',
+      importance: Importance.max,
+      priority: Priority.high,
+    );
+
+    var iOSPlatformChannelSpecifics = DarwinNotificationDetails();
+    var platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
+
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
@@ -86,8 +90,7 @@ class NotifyHelper{
 
   void requestIOSPermissions() {
     flutterLocalNotificationsPlugin
-        .resolvePlatformSpecificImplementation<
-        IOSFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
       alert: true,
       badge: true,
@@ -97,7 +100,6 @@ class NotifyHelper{
 
   Future onDidReceiveLocalNotification(
       int? id, String? title, String? body, String? payload) async {
-  Get.dialog(Text('hello'));
+    Get.dialog(Text('Hello'));
   }
-
 }

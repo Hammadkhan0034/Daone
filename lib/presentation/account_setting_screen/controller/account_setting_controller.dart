@@ -14,6 +14,8 @@ class AccountSettingController extends GetxController {
     Get.toNamed(AppRoutes.loginPageScreen);
   }
 
+
+
   SelectionPopupModel? selectedDropDownValue;
 
   onSelected(dynamic value) {

@@ -3,6 +3,7 @@ import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../badges/badgeslist.dart';
 import '../personal_data_update_two_screen/change_password.dart';
 import 'controller/account_setting_controller.dart';
 import 'package:daone/core/app_export.dart';
@@ -23,6 +24,8 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    final user =FirebaseAuth.instance.currentUser!.email;
+
 
     return SafeArea(
       child: Scaffold(
@@ -57,70 +60,88 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgUntit11,
-                        height: getSize(
-                          78,
-                        ),
-                        width: getSize(
-                          78,
-                        ),
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList').snapshots(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                         final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(
+                              child: Container(
+                                height: 50,
+                                width: 50,
+                                child: CircularProgressIndicator(
+                                  color: Colors.deepOrangeAccent,
+                                ),
+                              ),
+                            );
+                          } else {
+                            List<int> createNumberList(int n) {
+                              List<int> result = List<int>.generate(n, (index) => index + 1);
+                              return result;
+                            }
+                            int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+                           List<int> numberList = createNumberList(itemCount);
+                           final newNum =numberList.last;
+
+                            return Container(
+                              //color: Colors.deepOrange,
+                              width: Get.width*0.2,
+                              height:Get.height*0.09,
+                              child: ListView.builder(
+                                itemCount:1,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Center(
+                                      child: Container(
+                                        width: Get.width*0.2,
+                                        height:Get.height*0.08,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1]),fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                        },
                       ),
                       Padding(
                         padding: getPadding(
                           top: 12,
                           bottom: 21,
                         ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            StreamBuilder(
-                              stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
-                              builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                if (snapshot.connectionState == ConnectionState.waiting) {
-                                  // While the data is being fetched, you can return a loading indicator or an empty widget.
-                                  return CircularProgressIndicator(); // Replace with your loading indicator widget
-                                }
+                        child: StreamBuilder(
+                          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              // While the data is being fetched, you can return a loading indicator or an empty widget.
+                              return CircularProgressIndicator(); // Replace with your loading indicator widget
+                            }
 
-                                if (snapshot.hasError) {
-                                  // Handle errors here
-                                  return Text('Error: ${snapshot.error}');
-                                }
+                            if (snapshot.hasError) {
+                              // Handle errors here
+                              return Text('Error: ${snapshot.error}');
+                            }
 
-                                if (!snapshot.hasData || !snapshot.data!.exists) {
-                                  // Handle the case where the document doesn't exist
-                                  return Text('Document not found');
-                                }
+                            if (!snapshot.hasData || !snapshot.data!.exists) {
+                              // Handle the case where the document doesn't exist
+                              return Text('Document not found');
+                            }
 
-                                // Access the 'fullName' field from the document data
-                                String fullName = snapshot.data!['fullName'];
+                            // Access the 'fullName' field from the document data
+                            String fullName = snapshot.data!['fullName'];
 
-                                return Padding(
-                                  padding: getPadding(
-                                    top: 1,
-                                  ),
-                                  child: Text(
-                                    fullName,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.titleSmallPoppinsGray90002_1,
-                                  ),
-                                );
-                              },
-                            ),
-                            Padding(
+                            return Padding(
                               padding: getPadding(
-                                top: 5,
+                                top: 1,
                               ),
-                              child: Text(
-                                "lbl_the_crixus".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray60005,
-                              ),
-                            ),
-                          ],
+                              child:TextWidget(text: fullName,color: Colors.black,fsize: 20),
+                            );
+                          },
                         ),
                       ),
                       Spacer(),
