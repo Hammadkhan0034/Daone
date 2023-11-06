@@ -1,3 +1,4 @@
+import 'package:alarm/alarm.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/select_task_screen/Alarm/AlarmController.dart';
@@ -26,7 +27,7 @@ class _AlarmViewState extends State<AlarmView> {
   @override
   initState(){
     super.initState();
-    controller.registerAlarmPlugin();
+
   }
 
   @override
@@ -52,7 +53,7 @@ class _AlarmViewState extends State<AlarmView> {
         onPressed: () {
           Get.defaultDialog(
             title: "Alarm",
-                content: Container(
+                content:   Container(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -60,7 +61,7 @@ class _AlarmViewState extends State<AlarmView> {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 18.0),
                         child: Container(
-                        width:Get.width*0.5,
+                          width:Get.width*0.5,
                           height: 30,
                           padding: getPadding(
                             left: 6,
@@ -139,7 +140,24 @@ class _AlarmViewState extends State<AlarmView> {
                       ),
                       SizedBox(height: Get.height*0.02,),
                       CustomElevatedButton(
-                        onTap: () {
+                        onTap: ()async {
+                          TimeOfDay timeOfDay = controller.selectedTime1.value;
+                          DateTime now = DateTime.now();
+                          DateTime dateTime = DateTime(now.year, now.month, now.day, timeOfDay.hour, timeOfDay.minute);
+                          final id =controller.selectRandomNumber(controller.numbers);
+
+                          await Alarm.set(alarmSettings: AlarmSettings(
+                              id: id, dateTime:dateTime,
+                              assetAudioPath: 'assets/sugar.mp3',
+                              notificationBody: "Click here to Stop Alarm",
+                              notificationTitle: controller.alarmController.text,
+                              enableNotificationOnKill: true,
+                              vibrate: true,
+                              volumeMax: true,
+                              stopOnNotificationOpen:true,
+                              androidFullScreenIntent: true
+                          ));
+
                           if (_formKey.currentState != null && _formKey.currentState!.validate()) {
                             // Form is valid, proceed to save the alarm
                             TimeOfDay timeOfDay = controller.selectedTime1.value;
@@ -148,11 +166,10 @@ class _AlarmViewState extends State<AlarmView> {
                             AlarmModel alarm = AlarmModel(
                               title: controller.alarmController.text,
                               dateTime: dateTime,
-                              // Other alarm properties as needed
                             );
 
-                            controller.saveAlarmToFirestore(controller.alarmController.text, dateTime);
-                            controller.setAlarm(alarm);
+                            controller.saveAlarmToFirestore(controller.alarmController.text, dateTime,id);
+
                             Get.back();
                           }
                         },
@@ -164,10 +181,10 @@ class _AlarmViewState extends State<AlarmView> {
                         ),
                         text: "lbl_save".tr,
                         margin: getMargin(
-                          left: 10,
-                          top: 10,
-                          right: 10,
-                          bottom: 10
+                            left: 10,
+                            top: 10,
+                            right: 10,
+                            bottom: 10
                         ),
                         buttonStyle: CustomButtonStyles.outlineIndigoA1004cTL22.copyWith(
                             fixedSize: MaterialStateProperty.all<Size>(Size(
@@ -220,7 +237,8 @@ class _AlarmViewState extends State<AlarmView> {
                     return Container(
                       height: Get.height * 0.8,
                       width: Get.width * 0.9,
-                      decoration: BoxDecoration(),
+                      decoration: BoxDecoration(
+                      ),
                       child: Column(
                         children: [
                           SizedBox(height: Get.height * 0.08),
@@ -242,7 +260,7 @@ class _AlarmViewState extends State<AlarmView> {
                     );
                   }
               return Container(
-                height: Get.height*0.6,
+                height: Get.height*0.76,
                 width: double.infinity,
                 child: ListView.builder(
                   itemCount: snapshot.data?.docs.length,
@@ -250,6 +268,7 @@ class _AlarmViewState extends State<AlarmView> {
                       final alarmData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
                       final alarmTitle = alarmData['title'].toString();
                       final alarmTime = alarmData['dateTime'].toDate();
+                      final alarmid = alarmData['id'];
                       final formattedTime = DateFormat.jm().format(alarmTime);
                       final documentId = snapshot.data!.docs[index].id; // Get the document ID here
 
@@ -301,6 +320,7 @@ class _AlarmViewState extends State<AlarmView> {
                                                     InkWell(
                                                       onTap:(){
                                                         controller.deleteAlarm(documentId);
+                                                        Alarm.stop(alarmid);
                                                         Get.back();
                                                       },
                                                       child: Container(
@@ -345,8 +365,20 @@ class _AlarmViewState extends State<AlarmView> {
                       );
                     } ),
               );
-
-            })
+            }),
+            // InkWell(
+            //   onTap: ()async{
+            //     await Alarm.stop(42);
+            //   },
+            //   child: Container(
+            //     width: Get.width*0.16,height:Get.height*0.08,
+            //     decoration: BoxDecoration(
+            //       color: Colors.deepOrange,
+            //          borderRadius: BorderRadius.circular(100),
+            //     ),
+            //     child: Center(child:TextWidget(text: "Stop",fsize: 14,color: Colors.white,)),
+            //   ),
+            // ),
 
 
           ],

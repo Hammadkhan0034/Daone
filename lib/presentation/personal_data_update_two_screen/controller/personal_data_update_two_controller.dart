@@ -157,7 +157,7 @@ onSelected(dynamic value) {
       await FirebaseFirestore.instance.collection('users').doc(user.email).update({
         'imageUrl': imageUrl,
       });
-
+      Get.back();
       // The image has been successfully uploaded and the URL is saved in Firestore.
       Get.snackbar('Image Upload', 'Image uploaded successfully.');
     } catch (e) {

@@ -9,12 +9,25 @@ import 'controller/stats_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:flutter/material.dart';
 
+class StatsScreen extends StatefulWidget {
+  const StatsScreen({Key? key}) : super(key: key);
 
-class StatsScreen extends GetWidget<StatsController> {
-   StatsScreen({Key? key})
-      : super(
-          key: key,
-        );
+  @override
+  State<StatsScreen> createState() => _StatsScreenState();
+}
+
+class _StatsScreenState extends State<StatsScreen> {
+  StatsController  statsController = Get.put(StatsController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    statsController.fetchOwnAffirmationsForWeek();
+    statsController.fetchBlogReadForWeek();
+    statsController.fetchDailyIntentionsVideosForWeek();
+    statsController.fetchTasksCompleteForWeek();
+    print('init stats');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,23 +114,23 @@ class StatsScreen extends GetWidget<StatsController> {
                                     width: Get.width * 0.04,
                                   ),
 
-                                      StreamBuilder(
-                                          stream: FirebaseFirestore.instance
-                                              .collection('users')
-                                              .doc(user)
-                                              .collection('OwnAffirmationList')
-                                              .snapshots(),
-                                           builder:(context,AsyncSnapshot snapshot){
-                                            return  TextWidget(
-                                              text: snapshot.hasData
-                                                  ? snapshot
-                                                  .data.docs.length
-                                                  .toString()
-                                                  : "0",
-                                              color: Colors.black,
-                                              fsize: 50,
-                                              font: FontWeight.w600,
-                                            );}),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user)
+                                          .collection('OwnAffirmationList')
+                                          .snapshots(),
+                                      builder:(context,AsyncSnapshot snapshot){
+                                        return  TextWidget(
+                                          text: snapshot.hasData
+                                              ? snapshot
+                                              .data.docs.length
+                                              .toString()
+                                              : "0",
+                                          color: Colors.black,
+                                          fsize: 50,
+                                          font: FontWeight.w600,
+                                        );}),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5,top:3.0),
                                     child: Image.asset(
@@ -136,11 +149,11 @@ class StatsScreen extends GetWidget<StatsController> {
                             ),
                             Center(
                                 child: TextWidget(
-                              text: "lbl_affirmation_completed".tr,
-                              color: Colors.black54,
-                              fsize: 12,
-                              font: FontWeight.w500,
-                            )),
+                                  text: "lbl_affirmation_completed".tr,
+                                  color: Colors.black54,
+                                  fsize: 12,
+                                  font: FontWeight.w500,
+                                )),
                           ],
                         ),
                       ),
@@ -435,9 +448,8 @@ class StatsScreen extends GetWidget<StatsController> {
       ),
     );
   }
-
-
 }
+
 
 
 class ChartWidget extends GetView<StatsController> {
@@ -558,17 +570,36 @@ class ChartWidget extends GetView<StatsController> {
     Widget text;
     switch (value.toInt()) {
       case 1:
-        text = const Text('10%', style: style);
+        text = const Text('1%', style: style);
         break;
       case 2:
-        text = const Text('20%', style: style);
+        text = const Text('2%', style: style);
         break;
       case 3:
-        text = const Text('30%', style: style);
+        text = const Text('3%', style: style);
         break;
       case 4:
+        text = const Text('4%', style: style);
+        break;
+        case 5:
+        text = const Text('5%', style: style);
+        break;
+        case 10:
+        text = const Text('10%', style: style);
+        break;
+        case 20:
+        text = const Text('20%', style: style);
+        break;
+        case 30:
+        text = const Text('30%', style: style);
+        break;
+        case 40:
         text = const Text('40%', style: style);
         break;
+        case 50:
+        text = const Text('50%', style: style);
+        break;
+
       default:
         text = const Text('', style: style);
         break;

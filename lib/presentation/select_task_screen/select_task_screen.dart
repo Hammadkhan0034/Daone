@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/select_task_screen/Alarm/Alarm.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-import '../../alarm_noti/noti_screen.dart';
 import '../../widgets/text_widget.dart';
 import '../badges/badgeslist.dart';
 import 'controller/select_task_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
@@ -304,8 +301,8 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                         SizedBox( width: Get.width*0.13,),
                         InkWell(
                           onTap: (){
-                            // Get.to(()=> AlarmView());
                             Get.to(()=>AlarmView());
+                             // Get.to(()=>AlarmScreen());
                           },
                           child: Container(
                             height: Get.height*0.18,

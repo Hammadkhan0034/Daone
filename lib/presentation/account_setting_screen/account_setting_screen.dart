@@ -1,17 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/presentation/community_page/community_page.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:google_fonts/google_fonts.dart';
-
 import '../badges/badgeslist.dart';
-import '../personal_data_update_two_screen/change_password.dart';
 import 'controller/account_setting_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
 import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
 import 'package:daone/widgets/app_bar/custom_app_bar.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
-import 'package:daone/widgets/custom_switch.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: must_be_immutable
@@ -347,7 +343,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.toNamed(AppRoutes.communityTabContainerScreen);
+                            Get.to(()=>CommunityPage());
                           },
                           child: Padding(
                             padding: getPadding(

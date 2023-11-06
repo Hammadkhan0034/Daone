@@ -640,7 +640,10 @@ late String name,email;
                   ),
                   CustomElevatedButton(
                     onTap: (){
-                      controller.copyDataToFriendList(email??'', name??'');
+                      controller.addFriendList(context, name, email, userProfile);
+
+                      // controller.copyDataToFriendList(email??'', name??'');
+                      // print(email+ name );
                       Get.back();
                     },
                     width: getHorizontalSize(

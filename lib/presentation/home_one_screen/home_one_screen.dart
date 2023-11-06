@@ -39,7 +39,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       width: Get.width * 0.03,
                     ),
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection('users').doc(user!.email).collection('OwnAffirmationList').snapshots(),
+                      stream: FirebaseFirestore.instance.collection('users').doc(user!.email).
+                      collection('OwnAffirmationList').snapshots(),
                       builder: (context, AsyncSnapshot snapshot) {
                         final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
 

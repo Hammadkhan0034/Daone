@@ -249,7 +249,7 @@ class ViewFriendsTabContainerScreen
                                                     stream: FirebaseFirestore
                                                         .instance
                                                         .collection("users")
-                                                        .doc(uid)
+                                                        .doc(user!.email)
                                                         .collection(
                                                             'OwnAffirmationList')
                                                         .snapshots(),
@@ -347,7 +347,7 @@ class ViewFriendsTabContainerScreen
                     //  Friends Tab   //
                     StreamBuilder(
                       stream: FirebaseFirestore.instance
-                          .collection('users').doc(user?.email).collection('friendList')
+                          .collection('users').doc(user?.email).collection('FriendList')
                           .snapshots(),
                       builder:
                           (context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -489,7 +489,7 @@ class ViewFriendsTabContainerScreen
                                                   Colors.black26,
                                                   radius: 26,
                                                   backgroundImage: NetworkImage(
-                                                      (userData)['imageUrl']?? 'https://img.icons8.com/?size=50&id=14736&format=png'),
+                                                      userData['imageUrl']?? 'https://img.icons8.com/?size=50&id=14736&format=png'),
                                                 ),
                                               );
                                             },
@@ -497,7 +497,7 @@ class ViewFriendsTabContainerScreen
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 12.0, vertical: 10),
-                                            child: TextWidget(text: (userData)['fullName'] ??
+                                            child: TextWidget(text: userData['fullName'] ??
                                                 'No Name',color: Colors.black,fsize: 18),
                                           ),
                                           // Add the rest of your user data widgets here.
@@ -525,17 +525,28 @@ class ViewFriendsTabContainerScreen
                                                         snapshot2) {
                                                       return InkWell(
                                                         onTap: () {
-                                                          Get.defaultDialog(title: "Profile",
-                                                              content:profileView(
-                                                                name: (userData)['fullName'],
-                                                                unfollowEmail: userData['email'],
-                                                                affirmation:  snapshot2.data.docs.length,
-                                                                 blogReads: 15,
-                                                                 intention: 12,
-                                                                 task:snapshotTask.data.docs.length,
-                                                                 imageUrl:  userData['imageUrl'],
-                                                                  fullName: (userData)['fullName']),
+                                                          Get.defaultDialog(
+                                                            title: 'Profile',
+                                                            content: userProfile(name:
+                                                                userData['fullName'],
+                                                             email:  userData['email'],
+                                                             phone:  userData['phoneNumber'], imgUrl:userData['imageUrl'],
+                                                            ),
                                                           );
+
+
+
+                                                          // Get.defaultDialog(title: "Profile",
+                                                          //     content:profileView(
+                                                          //       name: (userData)['fullName'],
+                                                          //       unfollowEmail: userData['email'],
+                                                          //       affirmation:  snapshot2.data.docs.length,
+                                                          //        blogReads: 15,
+                                                          //        intention: 12,
+                                                          //        task:snapshotTask.data.docs.length,
+                                                          //        imageUrl:  userData['imageUrl'],
+                                                          //         fullName: (userData)['fullName']),
+                                                          // );
                                                         },
                                                         child: Container(
                                                           width:
@@ -592,31 +603,24 @@ class ViewFriendsTabContainerScreen
       ),
     );
   }
-Widget profileView({var imageUrl,fullName,required int affirmation,required String name,
-  required int intention,required int task,required int blogReads,required String unfollowEmail}){
-
-  ViewFriendFullProfileController friendFullProfileController = Get.put(ViewFriendFullProfileController());
-
-  return Container(
+  Widget userProfile({required String imgUrl,name,email,phone}){
+    return Container(
+      height: Get.height*0.164,
+      width: Get.width*0.6,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 18.0),
-            child: Row(
+        Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CustomImageView(
-                  url: imageUrl??
+                  url: imgUrl??
                       'https://img.icons8.com/?size=50&id=14736&format=png',fit: BoxFit.cover,
                   height: getSize(
-                    70,
+                    120,
                   ),
                   width: getSize(
-                    70,
+                    120,
                   ),
                   radius: BorderRadius.circular(
                     getHorizontalSize(
@@ -625,318 +629,384 @@ Widget profileView({var imageUrl,fullName,required int affirmation,required Stri
                   ),
                   alignment: Alignment.topCenter,
                 ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: TextWidget(text: fullName??'', color: Colors.black, fsize: 15,font:FontWeight.w600,),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                      child: InkWell(
-                        onTap: (){
-                          Get.defaultDialog(title:'Do you want to unfollow?',
-                            content:Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                InkWell(
-                                  onTap:(){
-                                    friendFullProfileController.unFollowedFriend(unfollowEmail,name);
-                                    Get.offAllNamed(AppRoutes.accountSettingScreen);
-                                  },
-                                  child: Container(
-                                    height: 30,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: Center(child: TextWidget(color: Colors.white,text: "Yes",fsize: 12),),
-                                  ),
-                                ),
-                                SizedBox(width: 10),
-                                InkWell(
-                                  onTap: (){
-                                    Get.back();
-                                  },
-                                  child: Container(
-                                      height: 30,
-                                      width: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Center(child: TextWidget(color: Colors.white,text: "No",fsize: 12),)
-                                  ),
-                                )
-                              ],
-
-                            ), );
-                        },
-                        child: Container(
-                          height: Get.height*0.04,
-                          width: Get.width*0.24,
-                          decoration: BoxDecoration(
-                            color: Colors.blue,borderRadius: BorderRadius.circular(12),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 15.0),
+                  child: Column(
+                    children: [
+                      Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: TextWidget(text: name??'No name', color: Colors.black, fsize: 20,font:FontWeight.w600,),
                           ),
-                          child: Center(child: TextWidget(text: "Followed",fsize: 12,color: Colors.white)),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Container(child: TextWidget(
+                          text: email??'xxx@gmail.com', color: Colors.black, fsize: 10,font:FontWeight.w600,)),
                       ),
-                    ),
-                  ],
-                ),
-                Spacer(),
-              ],
-            ),
-          ),
-          SizedBox(height: Get.height*0.03),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Material(
-                borderRadius: BorderRadius.circular(25.921112060546875),
-                elevation: 5,
-                child: Container(
-                  width: Get.width * 0.28,
-                  height: Get.height * 0.12,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.921112060546875),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.04,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            TextWidget(
-                              text: affirmation.toString(),
-                              color: Colors.black,
-                              fsize: 20,
-                              font: FontWeight.w600,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top:3.0,left: 3),
-                              child: Image.asset(
-                                ImageConstant.group10110,
-                                scale: 5,
-                              ),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                          ],
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 4.0),
+                        child: Container(child: TextWidget(
+                          text: phone??'No Number', color: Colors.black, fsize: 10,font:FontWeight.w600,)),
                       ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Center(
-                          child: TextWidget(
-                            text: "lbl_affirmation_completed".tr,
-                            color: Colors.black54,
-                            fsize: 9,
-                            font: FontWeight.w500,
-                          )),
                     ],
                   ),
                 ),
-              ),
-              SizedBox(width: Get.width*0.05),
-              Material(
-                borderRadius: BorderRadius.circular(25.921112060546875),
-                elevation: 5,
-                child: Container(
-                  width: Get.width * 0.28,
-                  height: Get.height * 0.12,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.921112060546875),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.04,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top:3.0,left: 3),
-                              child: TextWidget(
-                                text: intention.toString(),
-                                color: Colors.black,
-                                fsize: 20,
-                                font: FontWeight.w600,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top:3.0),
-                              child:Image.asset(
-                                ImageConstant.camIcon,
-                                                   scale: 5,
-                                                 ),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Center(
-                          child: TextWidget(
-                            text: "lbl_intentions_completed".tr,
-                            color: Colors.black54,
-                            fsize: 9,
-                            font: FontWeight.w500,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: Get.height*0.02),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Material(
-                borderRadius: BorderRadius.circular(25.921112060546875),
-                elevation: 5,
-                child: Container(
-                  width: Get.width * 0.28,
-                  height: Get.height * 0.12,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.921112060546875),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.04,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            TextWidget(
-                              text: task.toString(),
-                              color: Colors.black,
-                              fsize: 20,
-                              font: FontWeight.w600,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top:3.0,left: 3),
-                              child:Image.asset(
-                                                      ImageConstant.group10111,
-                                                      scale: 3.8,
-                                               ),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Center(
-                          child: TextWidget(
-                            text: "lbl_tasks_completed".tr,
-                            color: Colors.black54,
-                            fsize: 9,
-                            font: FontWeight.w500,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: Get.width*0.05),
-              Material(
-                borderRadius: BorderRadius.circular(25.921112060546875),
-                elevation: 5,
-                child: Container(
-                  width: Get.width * 0.28,
-                  height: Get.height * 0.12,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25.921112060546875),
-                      color: Colors.white),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: Get.width * 0.2,
-                        height: Get.height * 0.04,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                            TextWidget(
-                              text: blogReads.toString(),
-                              color: Colors.black,
-                              fsize: 20,
-                              font: FontWeight.w600,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top:3.0,left: 3),
-                              child: Image.asset(
-                                                      ImageConstant.msgIcon,
-                                                      scale: 3.8,
-                                                    ),
-                            ),
-                            SizedBox(
-                              width: Get.width * 0.01,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: Get.height * 0.01,
-                      ),
-                      Center(
-                          child: TextWidget(
-                            text: "lbl_blog_read".tr,
-                            color: Colors.black54,
-                            fsize: 9,
-                            font: FontWeight.w500,
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+
         ],
       ),
-    );
-}
+
+    ],));
+
+  }
+
+
+
+
+
+// Widget profileView({var imageUrl,fullName,required int affirmation,required String name,
+//   required int intention,required int task,required int blogReads,required String unfollowEmail}){
+//
+//   ViewFriendFullProfileController friendFullProfileController = Get.put(ViewFriendFullProfileController());
+//
+//   return Container(
+//       child: Column(
+//         mainAxisAlignment: MainAxisAlignment.center,
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//
+//         children: [
+//           Padding(
+//             padding: const EdgeInsets.symmetric(horizontal: 18.0),
+//             child: Row(
+//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//               crossAxisAlignment: CrossAxisAlignment.start,
+//               children: [
+//                 CustomImageView(
+//                   url: imageUrl??
+//                       'https://img.icons8.com/?size=50&id=14736&format=png',fit: BoxFit.cover,
+//                   height: getSize(
+//                     70,
+//                   ),
+//                   width: getSize(
+//                     70,
+//                   ),
+//                   radius: BorderRadius.circular(
+//                     getHorizontalSize(
+//                       40,
+//                     ),
+//                   ),
+//                   alignment: Alignment.topCenter,
+//                 ),
+//                 Column(
+//                   mainAxisAlignment: MainAxisAlignment.start,
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Padding(
+//                       padding: const EdgeInsets.all(8.0),
+//                       child: TextWidget(text: fullName??'', color: Colors.black, fsize: 15,font:FontWeight.w600,),
+//                     ),
+//                     Padding(
+//                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
+//                       child: InkWell(
+//                         onTap: (){
+//                           Get.defaultDialog(title:'Do you want to unfollow?',
+//                             content:Row(
+//                               crossAxisAlignment: CrossAxisAlignment.center,
+//                               mainAxisAlignment: MainAxisAlignment.center,
+//                               children: [
+//                                 InkWell(
+//                                   onTap:(){
+//                                     friendFullProfileController.unFollowedFriend(unfollowEmail,name);
+//                                     Get.offAllNamed(AppRoutes.accountSettingScreen);
+//                                   },
+//                                   child: Container(
+//                                     height: 30,
+//                                     width: 50,
+//                                     decoration: BoxDecoration(
+//                                       color: Colors.red,
+//                                       borderRadius: BorderRadius.circular(12),
+//                                     ),
+//                                     child: Center(child: TextWidget(color: Colors.white,text: "Yes",fsize: 12),),
+//                                   ),
+//                                 ),
+//                                 SizedBox(width: 10),
+//                                 InkWell(
+//                                   onTap: (){
+//                                     Get.back();
+//                                   },
+//                                   child: Container(
+//                                       height: 30,
+//                                       width: 50,
+//                                       decoration: BoxDecoration(
+//                                         color: Colors.blue,
+//                                         borderRadius: BorderRadius.circular(12),
+//                                       ),
+//                                       child: Center(child: TextWidget(color: Colors.white,text: "No",fsize: 12),)
+//                                   ),
+//                                 )
+//                               ],
+//
+//                             ), );
+//                         },
+//                         child: Container(
+//                           height: Get.height*0.04,
+//                           width: Get.width*0.24,
+//                           decoration: BoxDecoration(
+//                             color: Colors.blue,borderRadius: BorderRadius.circular(12),
+//                           ),
+//                           child: Center(child: TextWidget(text: "Followed",fsize: 12,color: Colors.white)),
+//                         ),
+//                       ),
+//                     ),
+//                   ],
+//                 ),
+//                 Spacer(),
+//               ],
+//             ),
+//           ),
+//           SizedBox(height: Get.height*0.03),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Material(
+//                 borderRadius: BorderRadius.circular(25.921112060546875),
+//                 elevation: 5,
+//                 child: Container(
+//                   width: Get.width * 0.28,
+//                   height: Get.height * 0.12,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(25.921112060546875),
+//                       color: Colors.white),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       Container(
+//                         width: Get.width * 0.2,
+//                         height: Get.height * 0.04,
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                             TextWidget(
+//                               text: affirmation.toString(),
+//                               color: Colors.black,
+//                               fsize: 20,
+//                               font: FontWeight.w600,
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.only(top:3.0,left: 3),
+//                               child: Image.asset(
+//                                 ImageConstant.group10110,
+//                                 scale: 5,
+//                               ),
+//                             ),
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: Get.height * 0.01,
+//                       ),
+//                       Center(
+//                           child: TextWidget(
+//                             text: "lbl_affirmation_completed".tr,
+//                             color: Colors.black54,
+//                             fsize: 9,
+//                             font: FontWeight.w500,
+//                           )),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(width: Get.width*0.05),
+//               Material(
+//                 borderRadius: BorderRadius.circular(25.921112060546875),
+//                 elevation: 5,
+//                 child: Container(
+//                   width: Get.width * 0.28,
+//                   height: Get.height * 0.12,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(25.921112060546875),
+//                       color: Colors.white),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       Container(
+//                         width: Get.width * 0.2,
+//                         height: Get.height * 0.04,
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.only(top:3.0,left: 3),
+//                               child: TextWidget(
+//                                 text: intention.toString(),
+//                                 color: Colors.black,
+//                                 fsize: 20,
+//                                 font: FontWeight.w600,
+//                               ),
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.only(top:3.0),
+//                               child:Image.asset(
+//                                 ImageConstant.camIcon,
+//                                                    scale: 5,
+//                                                  ),
+//                             ),
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: Get.height * 0.01,
+//                       ),
+//                       Center(
+//                           child: TextWidget(
+//                             text: "lbl_intentions_completed".tr,
+//                             color: Colors.black54,
+//                             fsize: 9,
+//                             font: FontWeight.w500,
+//                           )),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//           SizedBox(height: Get.height*0.02),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: [
+//               Material(
+//                 borderRadius: BorderRadius.circular(25.921112060546875),
+//                 elevation: 5,
+//                 child: Container(
+//                   width: Get.width * 0.28,
+//                   height: Get.height * 0.12,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(25.921112060546875),
+//                       color: Colors.white),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       Container(
+//                         width: Get.width * 0.2,
+//                         height: Get.height * 0.04,
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                             TextWidget(
+//                               text: task.toString(),
+//                               color: Colors.black,
+//                               fsize: 20,
+//                               font: FontWeight.w600,
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.only(top:3.0,left: 3),
+//                               child:Image.asset(
+//                                                       ImageConstant.group10111,
+//                                                       scale: 3.8,
+//                                                ),
+//                             ),
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: Get.height * 0.01,
+//                       ),
+//                       Center(
+//                           child: TextWidget(
+//                             text: "lbl_tasks_completed".tr,
+//                             color: Colors.black54,
+//                             fsize: 9,
+//                             font: FontWeight.w500,
+//                           )),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//               SizedBox(width: Get.width*0.05),
+//               Material(
+//                 borderRadius: BorderRadius.circular(25.921112060546875),
+//                 elevation: 5,
+//                 child: Container(
+//                   width: Get.width * 0.28,
+//                   height: Get.height * 0.12,
+//                   decoration: BoxDecoration(
+//                       borderRadius: BorderRadius.circular(25.921112060546875),
+//                       color: Colors.white),
+//                   child: Column(
+//                     mainAxisAlignment: MainAxisAlignment.center,
+//                     crossAxisAlignment: CrossAxisAlignment.center,
+//                     children: [
+//                       Container(
+//                         width: Get.width * 0.2,
+//                         height: Get.height * 0.04,
+//                         child: Row(
+//                           crossAxisAlignment: CrossAxisAlignment.center,
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                             TextWidget(
+//                               text: blogReads.toString(),
+//                               color: Colors.black,
+//                               fsize: 20,
+//                               font: FontWeight.w600,
+//                             ),
+//                             Padding(
+//                               padding: const EdgeInsets.only(top:3.0,left: 3),
+//                               child: Image.asset(
+//                                                       ImageConstant.msgIcon,
+//                                                       scale: 3.8,
+//                                                     ),
+//                             ),
+//                             SizedBox(
+//                               width: Get.width * 0.01,
+//                             ),
+//                           ],
+//                         ),
+//                       ),
+//                       SizedBox(
+//                         height: Get.height * 0.01,
+//                       ),
+//                       Center(
+//                           child: TextWidget(
+//                             text: "lbl_blog_read".tr,
+//                             color: Colors.black54,
+//                             fsize: 9,
+//                             font: FontWeight.w500,
+//                           )),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+// }
 
 
 

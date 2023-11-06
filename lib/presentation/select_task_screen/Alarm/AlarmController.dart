@@ -8,11 +8,19 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/select_task_model.dart';
 
 class AlarmController extends GetxController{
 
+  List<int> numbers = List<int>.generate(100, (index) => index + 1);
+
+  int selectRandomNumber(List<int> numbers) {
+    final random = Random();
+    final randomIndex = random.nextInt(numbers.length);
+    return numbers[randomIndex];
+  }
 
   Rx<TimeOfDay> selectedTime1 = TimeOfDay.now().obs;
   TextEditingController alarmController = TextEditingController();
@@ -63,7 +71,7 @@ class AlarmController extends GetxController{
     }
   }
 
-  Future<void> saveAlarmToFirestore(String title, DateTime dateTime) async {
+  Future<void> saveAlarmToFirestore(String title, DateTime dateTime,int id) async {
     final firestore = FirebaseFirestore.instance;
     final user = FirebaseAuth.instance.currentUser?.email;
     final collectionReference = firestore.collection("users").doc(user!).collection('Alarm');
@@ -72,6 +80,7 @@ class AlarmController extends GetxController{
       await collectionReference.add({
         'title': title,
         'dateTime': dateTime,
+        'id': id
       });
 
       // Show a success message to the user using a snackbar
@@ -94,31 +103,5 @@ class AlarmController extends GetxController{
       print('Error saving alarm: $error');
     }
   }
-  Future<void> registerAlarmPlugin() async {
-    await AndroidAlarmManager.initialize();
-  }
 
-  void setAlarm(AlarmModel alarm) {
-    final Random random = Random();
-    final int alarmId = random.nextInt(1000000);
-    final DateTime alarmTime = alarm.dateTime;
-
-    AndroidAlarmManager.oneShotAt(
-      alarmTime,
-      alarmId,
-      handleAlarmCallback,
-      exact: true, // You may want to set this to true for precise timing.
-      allowWhileIdle: true, // Allow the alarm to run while the device is idle.
-    );
-  }
-  void handleAlarmCallback(int? alarmId) {
-
-    Get.snackbar('$alarmId','Uthoo');
-    // This is the function that will be called when the alarm triggers.
-    // You can handle what should happen when the alarm goes off here.
-    // For example, you can show a notification or play a sound.
-    print('Alarm $alarmId triggered at ${DateTime.now()}');
-    // Add your logic for handling the alarm here.
-
-  }
 }

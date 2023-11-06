@@ -1,13 +1,10 @@
-import 'package:daone/presentation/select_task_screen/Alarm/AlarmController.dart';
 import 'package:daone/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:timezone/timezone.dart' as tz;
-import 'package:timezone/data/latest.dart' as tzdata;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-
+import 'package:alarm/alarm.dart';
 import 'core/utils/initial_bindings.dart';
 import 'localization/app_localization.dart';
 
@@ -15,22 +12,12 @@ import 'localization/app_localization.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  // tzdata.initializeTimeZones();
-  // // Set the local time zone to 'Asia/Karachi'
-  // final location = tz.getLocation('Asia/Karachi');
-  // tz.setLocalLocation(location);
-  //
-  // // Now you can work with time zones using the 'Asia/Karachi' time zone.
-  // // For example, you can create a TZDateTime in the 'Asia/Karachi' time zone:
-  // final karachiTime = tz.TZDateTime.now(location);
-  //
-  // print('Current time in Karachi: $karachiTime');
+  await Alarm.init();
+
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((value) {
     runApp(MyApp());
-    final alarmcontroller = Get.put(AlarmController());
-    alarmcontroller.registerAlarmPlugin();
   });
 }
 

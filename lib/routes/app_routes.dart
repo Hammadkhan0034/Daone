@@ -4,8 +4,6 @@ import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_v
 import 'package:daone/presentation/prosperity_affirmation/view/prosperity_affirmation_view.dart';
 import 'package:daone/presentation/sleep_tracking_section/binding/sleep_tracking_binding.dart';
 import 'package:daone/presentation/sleep_tracking_section/view/sleep_tracking_view.dart';
-import 'package:daone/presentation/view_friend_full_profile_page/binding/view_friend_full_profile_binding.dart';
-import 'package:daone/presentation/view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';
@@ -54,10 +52,6 @@ import 'package:daone/presentation/sleep_tracker_screen/sleep_tracker_screen.dar
 import 'package:daone/presentation/sleep_tracker_screen/binding/sleep_tracker_binding.dart';
 import 'package:daone/presentation/blog_screen/blog_screen.dart';
 import 'package:daone/presentation/blog_screen/binding/blog_binding.dart';
-import 'package:daone/presentation/latest_blog_screen/latest_blog_screen.dart';
-import 'package:daone/presentation/latest_blog_screen/binding/latest_blog_binding.dart';
-import 'package:daone/presentation/community_tab_container_screen/community_tab_container_screen.dart';
-import 'package:daone/presentation/community_tab_container_screen/binding/community_tab_container_binding.dart';
 import 'package:daone/presentation/comment_section_screen/comment_section_screen.dart';
 import 'package:daone/presentation/comment_section_screen/binding/comment_section_binding.dart';
 import 'package:daone/presentation/add_friends_screen/add_friends_screen.dart';
@@ -70,7 +64,6 @@ import 'package:daone/presentation/personal_data_update_two_screen/personal_data
 import 'package:daone/presentation/personal_data_update_two_screen/binding/personal_data_update_two_binding.dart';
 import 'package:daone/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:daone/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import '../presentation/add_task_screen/add_task_screen.dart';
 import '../presentation/add_task_screen/binding/add_task_binding.dart';
@@ -444,13 +437,13 @@ class AppRoutes {
     //     LatestBlogBinding(),
     //   ],
     // ),
-    GetPage(
-      name: communityTabContainerScreen,
-      page: () => CommunityTabContainerScreen(),
-      bindings: [
-        CommunityTabContainerBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: communityTabContainerScreen,
+    //   page: () => CommunityTabContainerScreen(),
+    //   bindings: [
+    //     CommunityTabContainerBinding(),
+    //   ],
+    // ),
     GetPage(
       name: commentSectionScreen,
       page: () => CommentSectionScreen(),

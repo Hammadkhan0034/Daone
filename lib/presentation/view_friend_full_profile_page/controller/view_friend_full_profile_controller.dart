@@ -11,47 +11,115 @@ import 'package:flutter/material.dart';
 /// current viewFriendFullProfileModelObj
 class ViewFriendFullProfileController extends GetxController {
 
-  final user =FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser!.email;
 
-  Future<void> copyDataToFriendList(String email,String name) async {
+  Future<void> addFriendList(
+      BuildContext context,
+      String? name,
+      String? gmail,
+      String? profile,
+
+      ) async {
     try {
-      // Reference to the Firestore instance
-      final FirebaseFirestore firestore = FirebaseFirestore.instance;
+      User? user = FirebaseAuth.instance.currentUser;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.deepOrange,
+            ),
+          );
+        },
+      );
 
-      // Reference to the source collection "users"
-      final CollectionReference usersCollection = firestore.collection('users');
+      if (user != null) {
+        if (name != null && gmail != null && profile != null ) {
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
+          await userDocRef.collection('FriendList').add({
+            'email': gmail,
+            'imageUrl': profile,
+            'name': name,
 
-      // Reference to the destination collection "FriendList"
-      final CollectionReference friendListCollection = firestore.collection('users').doc(user?.email).collection('friendList');
+          });  // Data saved successfully
 
-      // Query the specific documents you want to copy (e.g., 'dev@gmail.com')
-      final QuerySnapshot querySnapshot = await usersCollection.where(FieldPath([email])).get();
+          Get.snackbar("Info", "$name Add in your friend list Successfully");
 
-      // Iterate through the documents in the query result
-      querySnapshot.docs.forEach((QueryDocumentSnapshot document) async {
-        // Get the data from the source document
-        final Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-
-        // Get the email as the document ID
-        final String email = document.id;
-
-        // Create a new document in the destination collection with the same data
-        await friendListCollection.doc(email).set(data);
-      });
-      Get.snackbar('Info','$name  Add in your friendlist');
-      print('Data copied to FriendList successfully');
-
-    } catch (error) {
-      print('Error copying data: $error');
-      Get.snackbar('Error copying data','$error');
+          // Hide the progress indicator and navigate
+          Navigator.of(context).pop();
+          Get.offAndToNamed(AppRoutes.accountSettingScreen);
+        } else {
+          // Handle the case where any of the required values is null
+          print('One or more values are null');
+          Get.snackbar('Error', 'One or more values are null');
+          Navigator.of(context).pop(); // Hide the progress indicator
+        }
+      } else {
+        // Handle the case where the user is not authenticated
+        print('User is not authenticated');
+        Get.snackbar('Error', 'User is not authenticated');
+        Navigator.of(context).pop(); // Hide the progress indicator
+      }
+    } catch (e) {
+      // Handle errors here
+      print('Error saving task: $e');
+      Get.snackbar('Error saving task:', '$e');
+      Navigator.of(context).pop(); // Hide the progress indicator
     }
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+  //
+  // Future<void> copyDataToFriendList(String email,String name) async {
+  //   try {
+  //     // Reference to the Firestore instance
+  //     final FirebaseFirestore firestore = FirebaseFirestore.instance;
+  //
+  //     // Reference to the source collection "users"
+  //     final CollectionReference usersCollection = firestore.collection('users');
+  //
+  //     // Reference to the destination collection "FriendList"
+  //     final CollectionReference friendListCollection = firestore.collection('users').doc(user?.email).collection('friendList');
+  //
+  //     // Query the specific documents you want to copy (e.g., 'dev@gmail.com')
+  //     final QuerySnapshot querySnapshot = await usersCollection.where(FieldPath([email])).get();
+  //
+  //     // Iterate through the documents in the query result
+  //     querySnapshot.docs.forEach((QueryDocumentSnapshot document) async {
+  //       // Get the data from the source document
+  //       final Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+  //
+  //       // Get the email as the document ID
+  //       final String email = document.id;
+  //
+  //       // Create a new document in the destination collection with the same data
+  //       await friendListCollection.doc(email).set(data);
+  //     });
+  //     Get.snackbar('Info','$name  Add in your friendlist');
+  //     print('Data copied to FriendList successfully');
+  //
+  //   } catch (error) {
+  //     print('Error copying data: $error');
+  //     Get.snackbar('Error copying data','$error');
+  //   }
+  // }
   
   Future<void> unFollowedFriend(String documentId,name)async{
     try{
       final collectionRefrence = FirebaseFirestore.instance
           .collection('users')
-          .doc(user?.email)
+          .doc(user)
           .collection('friendList');
       await collectionRefrence.doc(documentId).delete();
       Get.snackbar(
