@@ -9,5 +9,7 @@ class PersonalDataUpdateController extends GetxController {Rx<PersonalDataUpdate
 
 SelectionPopupModel? selectedDropDownValue;
 
-onSelected(dynamic value) { for (var element in personalDataUpdateModelObj.value.dropdownItemList.value) {element.isSelected = false; if (element.id == value.id) {element.isSelected = true;}} personalDataUpdateModelObj.value.dropdownItemList.refresh(); } 
+onSelected(dynamic value) { for (var element in personalDataUpdateModelObj.value.dropdownItemList.value) {element.isSelected = false; if (element.id == value.id) {element.isSelected = true;}} personalDataUpdateModelObj.value.dropdownItemList.refresh(); }
+
+
  }

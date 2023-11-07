@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/add_task_model.dart';
 
@@ -47,6 +48,8 @@ class AddTaskController extends GetxController {
         },
       );
       if (user!=null){
+        final dateTime=DateTime.now();
+        String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
         DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
       await userDocRef.collection('tasks').add({
         'taskType' :selectedValue.value,

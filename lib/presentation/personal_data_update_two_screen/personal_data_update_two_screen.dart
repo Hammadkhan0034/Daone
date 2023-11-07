@@ -58,8 +58,8 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                           controller.getImage();
                         },
                         child: Container(
-                          height: 120,
-                          width: 120,
+                          height: Get.height*0.2,
+                          width: Get.width*0.4,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.black54,

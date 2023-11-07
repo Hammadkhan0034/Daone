@@ -11,7 +11,6 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
 
-// ignore_for_file: must_be_immutable
 class BlogScreen extends GetWidget<BlogController> {
   const BlogScreen({Key? key})
       : super(
@@ -196,8 +195,11 @@ class BlogScreen extends GetWidget<BlogController> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 InkWell(
-                                  onTap:(){
-                                    Get.to(LatestBlogScreen(blogData: document, blogId:FirebaseAuth.instance.currentUser!.uid,));
+                                  onTap: (){
+                                    Get.to(LatestBlogScreen(
+                                      blogData: document,
+                                      blogId: FirebaseAuth.instance.currentUser!.uid,
+                                    ));
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(vertical: 8.0),

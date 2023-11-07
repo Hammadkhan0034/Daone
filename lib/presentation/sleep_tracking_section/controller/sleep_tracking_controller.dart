@@ -46,7 +46,7 @@ class SleepTrackingController extends GetxController {
   }
   Future<List<BarChartGroupData>> getBarGroupsData() async {
     final snapshot = await FirebaseFirestore.instance.collection('users')
-        .doc(user!.uid).collection('sleepData').doc('week').get();
+        .doc(user!.email).collection('sleepData').doc('week').get();
 
     if (snapshot.exists) {
       final data = snapshot.data() as Map<String, dynamic>;
@@ -172,7 +172,7 @@ class SleepTrackingController extends GetxController {
       'Wednesday': {
         'start_time': '00:00',
         'end_time': '00:00',
-        'duration': 8.25,
+        'duration': 0,
         'quality': '',
       },
       'Thursday': {
@@ -206,7 +206,7 @@ class SleepTrackingController extends GetxController {
 
   Future<void> updateDayData(String day, Map<String, dynamic> newData) async {
     final sleepDataCollection = FirebaseFirestore.instance.collection('users')
-        .doc(user!.uid)
+        .doc(user!.email)
         .collection("sleepData")
         .doc('week'); // 'week' is a document, not a subcollection
 

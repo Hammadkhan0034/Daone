@@ -1,26 +1,41 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:fl_chart/fl_chart.dart';
-
+import '../badges/badgeslist.dart';
 import 'controller/stats_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
-// ignore_for_file: must_be_immutable
-class StatsScreen extends GetWidget<StatsController> {
-   StatsScreen({Key? key})
-      : super(
-          key: key,
-        );
+class StatsScreen extends StatefulWidget {
+  const StatsScreen({Key? key}) : super(key: key);
+
+  @override
+  State<StatsScreen> createState() => _StatsScreenState();
+}
+
+class _StatsScreenState extends State<StatsScreen> {
+  StatsController  statsController = Get.put(StatsController());
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    statsController.fetchOwnAffirmationsForWeek();
+    statsController.fetchBlogReadForWeek();
+    statsController.fetchDailyIntentionsVideosForWeek();
+    statsController.fetchTasksCompleteForWeek();
+    print('init stats');
+  }
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
     final user =FirebaseAuth.instance.currentUser!.email;
-    CollectionReference weeklyProgressCollection = FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList');
+    CollectionReference weeklyProgressCollection = FirebaseFirestore.instance.collection('users').doc(user).
+    collection('OwnAffirmationList');
+    StatsController statsController =Get.put(StatsController());
 
     return SafeArea(
       child: Scaffold(
@@ -39,23 +54,6 @@ class StatsScreen extends GetWidget<StatsController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // CustomIconButton(
-                //   onTap: () {
-                //     Get.offAndToNamed(AppRoutes.dashboardRoute);
-                //   },
-                //   height: 45,
-                //   width: 48,
-                //   margin: getMargin(
-                //     left: 1,
-                //   ),
-                //   padding: getPadding(
-                //     all: 11,
-                //   ),
-                //   child: CustomImageView(
-                //     svgPath: ImageConstant.imgInfo,
-                //   ),
-                // ),
-                // SizedBox(height: Get.height * 0.02),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -115,14 +113,26 @@ class StatsScreen extends GetWidget<StatsController> {
                                   SizedBox(
                                     width: Get.width * 0.04,
                                   ),
-                                  TextWidget(
-                                    text: "20",
-                                    color: Colors.black,
-                                    fsize: 50,
-                                    font: FontWeight.w600,
-                                  ),
+
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user)
+                                          .collection('OwnAffirmationList')
+                                          .snapshots(),
+                                      builder:(context,AsyncSnapshot snapshot){
+                                        return  TextWidget(
+                                          text: snapshot.hasData
+                                              ? snapshot
+                                              .data.docs.length
+                                              .toString()
+                                              : "0",
+                                          color: Colors.black,
+                                          fsize: 50,
+                                          font: FontWeight.w600,
+                                        );}),
                                   Padding(
-                                    padding: const EdgeInsets.only(top:3.0),
+                                    padding: const EdgeInsets.only(left: 5,top:3.0),
                                     child: Image.asset(
                                       ImageConstant.group10110,
                                       scale: 3.8,
@@ -139,11 +149,11 @@ class StatsScreen extends GetWidget<StatsController> {
                             ),
                             Center(
                                 child: TextWidget(
-                              text: "lbl_affirmation_completed".tr,
-                              color: Colors.black54,
-                              fsize: 12,
-                              font: FontWeight.w500,
-                            )),
+                                  text: "lbl_affirmation_completed".tr,
+                                  color: Colors.black54,
+                                  fsize: 12,
+                                  font: FontWeight.w500,
+                                )),
                           ],
                         ),
                       ),
@@ -172,12 +182,24 @@ class StatsScreen extends GetWidget<StatsController> {
                                   SizedBox(
                                     width: Get.width * 0.03,
                                   ),
-                                  TextWidget(
-                                    text: "13",
-                                    color: Colors.black,
-                                    fsize: 50,
-                                    font: FontWeight.w600,
-                                  ),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user)
+                                          .collection('VideosUrl')
+                                          .snapshots(),
+                                      builder:(context,AsyncSnapshot snapshot){
+                                        return  TextWidget(
+                                          text: snapshot.hasData
+                                              ? snapshot
+                                              .data.docs.length
+                                              .toString()
+                                              : "0",
+                                          color: Colors.black,
+                                          fsize: 50,
+                                          font: FontWeight.w600,
+                                        );}),
+
                                   SizedBox(
                                     width: Get.width * 0.01,
                                   ),
@@ -236,12 +258,23 @@ class StatsScreen extends GetWidget<StatsController> {
                                   SizedBox(
                                     width: Get.width * 0.04,
                                   ),
-                                  TextWidget(
-                                    text: "29",
-                                    color: Colors.black,
-                                    fsize: 50,
-                                    font: FontWeight.w600,
-                                  ),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user)
+                                          .collection('tasks')
+                                          .snapshots(),
+                                      builder:(context,AsyncSnapshot snapshot){
+                                        return  TextWidget(
+                                          text: snapshot.hasData
+                                              ? snapshot
+                                              .data.docs.length
+                                              .toString()
+                                              : "0",
+                                          color: Colors.black,
+                                          fsize: 50,
+                                          font: FontWeight.w600,
+                                        );}),
                                   Padding(
                                     padding: const EdgeInsets.only(left:3,top:8.0),
                                     child: Image.asset(
@@ -293,12 +326,23 @@ class StatsScreen extends GetWidget<StatsController> {
                                   SizedBox(
                                     width: Get.width * 0.03,
                                   ),
-                                  TextWidget(
-                                    text: "10",
-                                    color: Colors.black,
-                                    fsize: 50,
-                                    font: FontWeight.w600,
-                                  ),
+                                  StreamBuilder(
+                                      stream: FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user)
+                                          .collection('blogReadList')
+                                          .snapshots(),
+                                      builder:(context,AsyncSnapshot snapshot){
+                                        return  TextWidget(
+                                          text: snapshot.hasData
+                                              ? snapshot
+                                              .data.docs.length
+                                              .toString()
+                                              : "0",
+                                          color: Colors.black,
+                                          fsize: 50,
+                                          font: FontWeight.w600,
+                                        );}),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8,left: 5,right: 5),
                                     child: Image.asset(
@@ -337,7 +381,7 @@ class StatsScreen extends GetWidget<StatsController> {
                 StreamBuilder(
                   stream: FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList').snapshots(),
                   builder: (context, AsyncSnapshot snapshot) {
-                    final data = snapshot.data?.docs.length ?? 0;
+                    final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
 
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
@@ -386,7 +430,17 @@ class StatsScreen extends GetWidget<StatsController> {
                     }
                   },
                 ),
-
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
+                  child: TextWidget(text: 'Weekly Improvement Graph', color: Colors.black, fsize: 17,
+                      font: FontWeight.w600),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: AspectRatio(
+                      aspectRatio: 1.9,
+                      child: ChartWidget()),
+                ),
               ],
             ),
           ),
@@ -394,37 +448,166 @@ class StatsScreen extends GetWidget<StatsController> {
       ),
     );
   }
-  List<String> badges=[
-    'assets/badges/1.png',
-    'assets/badges/2.png',
-    'assets/badges/3.png',
-    'assets/badges/4.png',
-    'assets/badges/5.png',
-    'assets/badges/6.png',
-    'assets/badges/7.png',
-    'assets/badges/8.png',
-    'assets/badges/9.png',
-    'assets/badges/10.png',
-    'assets/badges/11.png',
-    'assets/badges/12.png',
-    'assets/badges/13.png',
-    'assets/badges/14.png',
-    'assets/badges/15.png',
-    'assets/badges/16.png',
-    'assets/badges/17.png',
-    'assets/badges/17.png',
-    'assets/badges/18.png',
-    'assets/badges/19.png',
-    'assets/badges/20.png',
-    'assets/badges/21.png',
-    'assets/badges/22.png',
-    'assets/badges/23.png',
-    'assets/badges/24.png',
-    'assets/badges/25.png',
-    'assets/badges/26.png',
-    'assets/badges/27.png',
-    'assets/badges/28.png',
-    'assets/badges/29.png',
-  ];
+}
 
+
+
+class ChartWidget extends GetView<StatsController> {
+  @override
+  Widget build(BuildContext context) {
+    StatsController statsController = Get.put(StatsController());
+    return Obx(() {
+      return LineChart(
+        LineChartData(
+          gridData: FlGridData(
+            horizontalInterval: 1,
+            getDrawingHorizontalLine: (value) {
+              return FlLine(
+                color: Colors.black12,
+                strokeWidth: 1,
+              );
+            },
+            drawHorizontalLine: true,
+            drawVerticalLine: false,
+          ),
+          lineTouchData: LineTouchData(
+            touchTooltipData: LineTouchTooltipData(
+              tooltipBgColor: Colors.deepOrange,
+              getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                List<LineTooltipItem> items = [];
+
+                touchedSpots.forEach((LineBarSpot touchedSpot) {
+                  items.add(LineTooltipItem(
+                    'Value: ${touchedSpot.y.toStringAsFixed(2)}',
+                    TextStyle(color: Colors.white),
+                  ));
+                });
+
+                return items;
+              },
+            ),
+          ),
+          titlesData: FlTitlesData(
+            bottomTitles: AxisTitles(),
+            topTitles: AxisTitles(),
+            leftTitles: AxisTitles(),
+            rightTitles: AxisTitles(
+              sideTitles: SideTitles(
+                showTitles: true,
+                reservedSize: 30,
+                interval: 1,
+                getTitlesWidget: rightTitleWidgets,
+              ),
+            ),
+          ),
+          borderData: FlBorderData(
+            border: Border(bottom: BorderSide(color: Colors.black12), right: BorderSide(color: Colors.black12)),
+          ),
+          minX: 0,
+          maxX: 6,
+          minY: 0,
+          maxY: statsController.weeklyData.reduce((value, element) => value > element ? value : element) + 3.0,
+          lineBarsData: [
+            LineChartBarData(
+              spots: statsController.intentionWeeklyData
+                  .asMap()
+                  .entries
+                  .map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble()))
+                  .toList(),
+              isCurved: true,
+              color: Colors.blue, // Set the color for the 'intentionWeeklyData' line
+              dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(show: false),
+              barWidth: 3,
+            ),
+            LineChartBarData(
+              spots: statsController.taskWeeklyData
+                  .asMap()
+                  .entries
+                  .map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble()))
+                  .toList(),
+              isCurved: true,
+              color: Colors.purple, // Set the color for the 'taskWeeklyData' line
+              dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(show: false),
+              barWidth: 3,
+            ),
+            LineChartBarData(
+              spots: statsController.blogsWeeklyData
+                  .asMap()
+                  .entries
+                  .map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble()))
+                  .toList(),
+              isCurved: true,
+              color: Colors.pink,
+              dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(show: false),
+              barWidth: 3,
+            ),
+            LineChartBarData(
+              spots: statsController.weeklyData
+                  .asMap()
+                  .entries
+                  .map((entry) => FlSpot(entry.key.toDouble(), entry.value.toDouble()))
+                  .toList(),
+              isCurved: true,
+              color: Colors.deepOrange,
+              dotData: FlDotData(show: false),
+              belowBarData: BarAreaData(show: false),
+              barWidth: 3,
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  Widget rightTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 10,
+    );
+    Widget text;
+    switch (value.toInt()) {
+      case 1:
+        text = const Text('1%', style: style);
+        break;
+      case 2:
+        text = const Text('2%', style: style);
+        break;
+      case 3:
+        text = const Text('3%', style: style);
+        break;
+      case 4:
+        text = const Text('4%', style: style);
+        break;
+        case 5:
+        text = const Text('5%', style: style);
+        break;
+        case 10:
+        text = const Text('10%', style: style);
+        break;
+        case 20:
+        text = const Text('20%', style: style);
+        break;
+        case 30:
+        text = const Text('30%', style: style);
+        break;
+        case 40:
+        text = const Text('40%', style: style);
+        break;
+        case 50:
+        text = const Text('50%', style: style);
+        break;
+
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
+  }
 }

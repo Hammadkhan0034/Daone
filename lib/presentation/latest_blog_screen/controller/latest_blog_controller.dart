@@ -11,9 +11,17 @@ import 'package:intl/intl.dart';
 /// This class manages the state of the LatestBlogScreen, including the
 /// current latestBlogModelObj
 class LatestBlogController extends GetxController {
+
+  final user = FirebaseAuth.instance.currentUser!.email;
+
+
+
   Rx<LatestBlogModel> latestBlogModelObj = LatestBlogModel().obs;
 
   SelectionPopupModel? selectedDropDownValue;
+
+
+
 
   onSelected(dynamic value) {
     for (var element in latestBlogModelObj.value.dropdownItemList.value) {
