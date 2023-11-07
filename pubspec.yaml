@@ -35,6 +35,7 @@ dependencies:
   timezone: any
   pull_to_refresh_flutter3: ^2.0.2
   alarm: ^2.1.1
+  flutter_markdown: ^0.6.18+2
 
 
 
@@ -44,7 +45,7 @@ dev_dependencies:
     sdk: flutter
 flutter: 
   uses-material-design: true
-  assets: 
+  assets:
     - assets/
     - assets/images/
     - assets/badges/
