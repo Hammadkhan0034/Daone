@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/view_friend_full_profile_page/controller/view_friend_full_profile_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import '../../widgets/text_widget.dart';
 import 'controller/view_friends_tab_container_controller.dart';
 import 'package:daone/core/app_export.dart';
@@ -256,82 +255,72 @@ class ViewFriendsTabContainerScreen
                                                     builder: (context,
                                                         AsyncSnapshot
                                                             snapshot2) {
+                                                     final videos= FirebaseFirestore.instance
+                                                          .collection('users')
+                                                          .doc(user!.email)
+                                                          .collection('VideosUrl')
+                                                          .get();
+
                                                       return InkWell(
                                                         onTap: () {
-                                                          Get.dialog(
-                                                              AlertDialog(
-                                                                  backgroundColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  contentPadding:
-                                                                      EdgeInsets
-                                                                          .all(
-                                                                              10),
-                                                                  insetPadding:
-                                                                      const EdgeInsets
-                                                                              .only(
-                                                                          left:
-                                                                              0),
+                                                          final blogRead = FirebaseFirestore.instance
+                                                              .collection('users')
+                                                              .doc(user.email)
+                                                              .collection('blogReadList')
+                                                              .get();
+                                                          blogRead.then((QuerySnapshot snapshotBlog) {
+                                                            int blogLength = snapshotBlog.docs.length;
+                                                            final videos = FirebaseFirestore.instance
+                                                                .collection('users')
+                                                                .doc(user!.email)
+                                                                .collection('VideosUrl')
+                                                                .get();
+                                                            videos.then((QuerySnapshot snapshot) {
+                                                              int length = snapshot.docs.length;
+                                                              Get.dialog(
+                                                                AlertDialog(
+                                                                  backgroundColor: Colors.white,
+                                                                  contentPadding: EdgeInsets.all(10),
+                                                                  insetPadding: const EdgeInsets.only(left: 0),
                                                                   content: ViewFriendFullProfilePage(
-                                                                    Get.put(
-                                                                        ViewFriendFullProfileController()),
-                                                                    affirmationCount:
-                                                                        snapshot2
-                                                                            .data
-                                                                            .docs
-                                                                            .length??0,
-                                                                    blogReadCount:
-                                                                        3??0,
-                                                                    intenseCompleted:
-                                                                        13??0,
-                                                                    taskCount:
-                                                                        snapshotTask
-                                                                            .data
-                                                                            .docs
-                                                                            .length??0,
-                                                                    userName:
-                                                                        userData[
-                                                                            'fullName']??0,
+                                                                    Get.put(ViewFriendFullProfileController()),
+                                                                    affirmationCount: snapshot2.data.docs.length ?? 0,
+                                                                    blogReadCount:blogLength.toString()??'0',
+                                                                    intenseCompleted: length ?? '0',
+                                                                    taskCount: snapshotTask.data.docs.length ?? 0,
+                                                                    userName: userData['fullName'] ?? '0',
+                                                                    number: userData['phoneNumber'] ?? '0',
                                                                     key: key,
-                                                                    userProfile:
-                                                                        userData[
-                                                                            'imageUrl']??'',
-                                                                    email: userData['email']??'',
-                                                                    name:  userData[
-                                                                    'fullName']??'',
-                                                                  )));
-
+                                                                    userProfile: userData['imageUrl'] ?? '',
+                                                                    email: userData['email'] ?? '',
+                                                                    name: userData['fullName'] ?? '',
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            });
+                                                          });
                                                         },
                                                         child: Container(
-                                                          width:
-                                                              Get.width * 0.21,
-                                                          height:
-                                                              Get.height * 0.04,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        31.0),
-                                                            color: Color(
-                                                                0xff048c44),
+                                                          width: Get.width * 0.21,
+                                                          height: Get.height * 0.04,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(31.0),
+                                                            color: Color(0xff048c44),
                                                           ),
                                                           child: Center(
                                                             child: Text(
                                                               "View More",
                                                               style: TextStyle(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 11,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500),
+                                                                color: Colors.white,
+                                                                fontSize: 11,
+                                                                fontWeight: FontWeight.w500,
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),   //ViewMore Button
+                                                        ),
                                                       );
-                                                    });
-                                              }),
+
+                                                    });}),
                                         ],
                                       ),
                                     ],
@@ -415,7 +404,11 @@ class ViewFriendsTabContainerScreen
 
                             final uid = snapshot
                                 .data?.docs[index].id; // Retrieve the UID
-                            final imageUrl =(userData as Map<String,dynamic>)['imageUrl'];
+                            final imageUrl = (userData as Map<String,dynamic>)['imageUrl'];
+                            final friendName =(userData as Map<String,dynamic>)['name'];
+                            final number =(userData as Map<String,dynamic>)['number'];
+
+
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -479,6 +472,7 @@ class ViewFriendsTabContainerScreen
                                               String imageUrl =
                                               snapshot.data!['imageUrl'];
 
+
                                               return Padding(
                                                 padding:
                                                 const EdgeInsets.symmetric(
@@ -497,8 +491,7 @@ class ViewFriendsTabContainerScreen
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
                                                 horizontal: 12.0, vertical: 10),
-                                            child: TextWidget(text: userData['fullName'] ??
-                                                'No Name',color: Colors.black,fsize: 18),
+                                            child: TextWidget(text: friendName??'N/A' ,color: Colors.black,fsize: 18),
                                           ),
                                           // Add the rest of your user data widgets here.
 
@@ -527,10 +520,9 @@ class ViewFriendsTabContainerScreen
                                                         onTap: () {
                                                           Get.defaultDialog(
                                                             title: 'Profile',
-                                                            content: userProfile(name:
-                                                                userData['fullName'],
+                                                            content: userProfile(name:friendName,
                                                              email:  userData['email'],
-                                                             phone:  userData['phoneNumber'], imgUrl:userData['imageUrl'],
+                                                             phone:  number??'N/A', imgUrl:userData['imageUrl'],
                                                             ),
                                                           );
 
@@ -635,7 +627,7 @@ class ViewFriendsTabContainerScreen
                     children: [
                       Padding(
                             padding: const EdgeInsets.only(top: 8.0),
-                            child: TextWidget(text: name??'No name', color: Colors.black, fsize: 20,font:FontWeight.w600,),
+                            child: TextWidget(text: name??'No name', color: Colors.black, fsize: 14,font:FontWeight.w600,),
                           ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),

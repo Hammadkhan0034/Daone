@@ -104,7 +104,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
                             if (snapshot.connectionState == ConnectionState.waiting) {
                               // While the data is being fetched, you can return a loading indicator or an empty widget.
-                              return CircularProgressIndicator(); // Replace with your loading indicator widget
+                              return CircularProgressIndicator(color: Colors.deepOrange,); // Replace with your loading indicator widget
                             }
 
                             if (snapshot.hasError) {

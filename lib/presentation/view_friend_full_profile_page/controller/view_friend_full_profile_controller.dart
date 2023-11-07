@@ -18,7 +18,7 @@ class ViewFriendFullProfileController extends GetxController {
       String? name,
       String? gmail,
       String? profile,
-
+      String? number
       ) async {
     try {
       User? user = FirebaseAuth.instance.currentUser;
@@ -40,6 +40,7 @@ class ViewFriendFullProfileController extends GetxController {
             'email': gmail,
             'imageUrl': profile,
             'name': name,
+            'number': number
 
           });  // Data saved successfully
 

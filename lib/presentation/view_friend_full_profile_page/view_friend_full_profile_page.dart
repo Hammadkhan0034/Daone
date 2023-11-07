@@ -13,11 +13,11 @@ import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 class ViewFriendFullProfilePage extends StatelessWidget {
   late String userName;
-  int affirmationCount,taskCount,intenseCompleted,blogReadCount;
+  var affirmationCount,taskCount,intenseCompleted,blogReadCount,number;
   late String userProfile;
 late String name,email;
   ViewFriendFullProfilePage(this.controller,{Key? key,
-    required this.email,required this.name,
+    required this.email,required this.name,required this.number,
     required this.affirmationCount,required this.blogReadCount,required this.userProfile,
     required this.intenseCompleted,required this.taskCount,required this.userName})
       : super(
@@ -205,80 +205,7 @@ late String name,email;
                                       ),
                                     ),
                                   ),
-                                  Align(
-                                    alignment: Alignment.bottomCenter,
-                                    child: Card(
-                                      clipBehavior: Clip.antiAlias,
-                                      elevation: 0,
-                                      margin: getMargin(
-                                        bottom: 87,
-                                      ),
-                                      color: appTheme.whiteA700,
-                                      shape: RoundedRectangleBorder(
-                                        side: BorderSide(
-                                          color: appTheme.deepOrangeA20006,
-                                          width: getHorizontalSize(
-                                            1,
-                                          ),
-                                        ),
-                                        borderRadius: BorderRadiusStyle
-                                            .circleBorder60,
-                                      ),
-                                      child: Container(
-                                        height: getSize(
-                                          120,
-                                        ),
-                                        width: getSize(
-                                          120,
-                                        ),
-                                        padding: getPadding(
-                                          left: 21,
-                                          top: 24,
-                                          right: 21,
-                                          bottom: 24,
-                                        ),
-                                        decoration: AppDecoration.outline14
-                                            .copyWith(
-                                          borderRadius: BorderRadiusStyle
-                                              .circleBorder60,
-                                        ),
-                                        child: Stack(
-                                          alignment: Alignment.topCenter,
-                                          children: [
-                                            Align(
-                                              alignment:
-                                              Alignment.bottomCenter,
-                                              child: Text(
-                                                "lbl_90".tr,
-                                                overflow:
-                                                TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: theme
-                                                    .textTheme.displaySmall,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment:
-                                              Alignment.topCenter,
-                                              child: Padding(
-                                                padding: getPadding(
-                                                  top: 9,
-                                                ),
-                                                child: Text(
-                                                  "lbl_average".tr,
-                                                  overflow:
-                                                  TextOverflow.ellipsis,
-                                                  textAlign: TextAlign.left,
-                                                  style: CustomTextStyles
-                                                      .titleSmallPoppinsGray80002,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Container(
@@ -640,7 +567,7 @@ late String name,email;
                   ),
                   CustomElevatedButton(
                     onTap: (){
-                      controller.addFriendList(context, name, email, userProfile);
+                      controller.addFriendList(context, name, email, userProfile,number as String?);
 
                       // controller.copyDataToFriendList(email??'', name??'');
                       // print(email+ name );
