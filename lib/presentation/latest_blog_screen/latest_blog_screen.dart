@@ -193,25 +193,25 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
             ),
           ),
         ),
-        floatingActionButton: InkWell(
-          onTap: () {
-            // Handle FAB tap action here
-          },
-          child: Container(
-            height: Get.height * 0.09,
-            width: Get.width * 0.16,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              image: DecorationImage(
-                image: AssetImage("assets/images/unlike.png"),
-              ),
-            ),
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Text("0"),
-            ),
-          ),
-        ),
+        // floatingActionButton: InkWell(
+        //   onTap: () {
+        //     // Handle FAB tap action here
+        //   },
+        //   child: Container(
+        //     height: Get.height * 0.09,
+        //     width: Get.width * 0.16,
+        //     decoration: BoxDecoration(
+        //       borderRadius: BorderRadius.circular(100),
+        //       image: DecorationImage(
+        //         image: AssetImage("assets/images/unlike.png"),
+        //       ),
+        //     ),
+        //     child: Align(
+        //       alignment: Alignment.bottomCenter,
+        //       child: Text("0"),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
