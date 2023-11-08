@@ -46,7 +46,7 @@ class LoginPageController extends GetxController {
         );
 
         // If sign-in is successful, navigate to the dashboard using GetX
-        Get.offAndToNamed(AppRoutes.dashboardRoute);
+        Get.offAllNamed(AppRoutes.dashboardRoute);
       }
     } on FirebaseAuthException catch (e) {
       switch (e.code) {

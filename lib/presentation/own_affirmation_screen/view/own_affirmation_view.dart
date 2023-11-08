@@ -101,7 +101,7 @@ class OwnAffirmationView extends StatelessWidget {
                   final affirmationText = affirmationData['affirmation'];
                   final imageUrl = affirmationData['imageUrl'];
                   final documentId = snapshot.data.docs[index].id;
-                  String affirmationCount =affirmationData['affirmationCount'].toString();
+                  int affirmationCount =affirmationData['affirmationCount'];
 
                   return InkWell(
                     onTap: () {
@@ -112,6 +112,7 @@ class OwnAffirmationView extends StatelessWidget {
                           insetPadding: const EdgeInsets.only(left: 0),
                           content:OwnAffirmationBlastEffectDialog(
                             OwnAffirmationController(),affirmationCountPresent: affirmationCount,
+                            currentAffirmationCount: affirmationCount,
                             documentId: documentId,affirmation: affirmationText,decorationImage: affirmationData['imageUrl'],graditudeAffirmationText: affirmationText,
                               snapshotIndex:documentId,key: key, ),
                         ),
@@ -147,9 +148,16 @@ class OwnAffirmationView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Image.asset("assets/images/affir.png",scale: 4),
+                              Container(
+                                height: Get.height*0.03,
+                                width: Get.width*0.1,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: TextWidget(text:affirmationCount.toString(),color: Colors.white,fsize: 10),
+                                ),
                               ),
                             ],
                           ),

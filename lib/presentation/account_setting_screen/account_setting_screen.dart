@@ -300,51 +300,6 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.toNamed(AppRoutes.blogScreen);
-                          },
-                          child: Padding(
-                            padding: getPadding(
-                              left: 5,
-                              top: 9,
-                            ),
-                            child: Row(
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgIconlylightchart,
-                                  height: getSize(
-                                    20,
-                                  ),
-                                  width: getSize(
-                                    20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 10,
-                                    bottom: 1,
-                                  ),
-                                  child:TextWidget(text:  "lbl_notes".tr, color:Colors.black54, fsize: 14),
-                                ),
-                                Spacer(),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgArrowrightGray60005,
-                                  height: getSize(
-                                    18,
-                                  ),
-                                  width: getSize(
-                                    18,
-                                  ),
-                                  margin: getMargin(
-                                    top: 1,
-                                    bottom: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: (){
                             Get.to(()=>CommunityPage());
                           },
                           child: Padding(

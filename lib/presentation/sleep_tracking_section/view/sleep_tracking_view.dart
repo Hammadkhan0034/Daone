@@ -13,13 +13,29 @@ import '../../../widgets/text_widget.dart';
 import '../get_dialogue_of_sleep.dart';
 import '../sleep_widget.dart';
 
-class SleepTrackingView extends StatelessWidget {
+class SleepTrackingView extends StatefulWidget {
   const SleepTrackingView({Key? key}) : super(key: key);
+
+  @override
+  State<SleepTrackingView> createState() => _SleepTrackingViewState();
+}
+
+class _SleepTrackingViewState extends State<SleepTrackingView> {
+  SleepTrackingController sleepTrackingController =Get.put(SleepTrackingController());
+
+  @override
+  void initState() {
+    super.initState();
+    sleepTrackingController.getPreviousWeekdayValue();
+    sleepTrackingController.getBarGroupsData();
+    sleepTrackingController.fetchBarGroups();
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
 
-    SleepTrackingController sleepTrackingController =Get.put(SleepTrackingController());
 
     return FutureBuilder(
       future: FirebaseFirestore.instance.collection('users').doc(sleepTrackingController.user!.email).collection('sleepData').get(),

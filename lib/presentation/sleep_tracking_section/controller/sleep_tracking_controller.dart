@@ -37,7 +37,6 @@ class SleepTrackingController extends GetxController {
   getPreviousWeekdayValue();
   getBarGroupsData();
   fetchBarGroups();
-  print(barGroups);
   }
   List<BarChartGroupData> barGroups = [];
 

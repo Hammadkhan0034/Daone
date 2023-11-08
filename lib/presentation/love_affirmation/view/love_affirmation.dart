@@ -114,6 +114,7 @@ class LoveAffirmationView extends StatelessWidget {
                   final loveaffirmationText = loveAffirmationData['loveAffirmation'];
                   final documentId = snapshot.data.docs[index].id;
                   final imageUrl = loveAffirmationData['imageUrl'];
+                  final affirmationCount = loveAffirmationData['affirmationCount'];
 
                   return InkWell(
                     onTap: (){
@@ -121,9 +122,11 @@ class LoveAffirmationView extends StatelessWidget {
                         AlertDialog(backgroundColor: Colors.transparent,
                         contentPadding: EdgeInsets.zero,
                         insetPadding: const EdgeInsets.only(left: 0),
-                        content: AffirmationBlastEffectDialog(Get.put(LoveAffirmationController()),
-                          documentId: documentId,
-                          decorationImage: DecorationImage(
+                        content: AffirmationBlastEffectDialog(
+                            Get.put(LoveAffirmationController()),
+                            currentAffirmationCount: affirmationCount,
+                            documentId: documentId,
+                             decorationImage: DecorationImage(
                             image: loveAffirmationData['imageUrl'] == null
                                 ? NetworkImage(
                                 "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
@@ -160,10 +163,21 @@ class LoveAffirmationView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Image.asset("assets/images/affir.png",scale: 4),
+                              Container(
+                                height: Get.height*0.03,
+                                width: Get.width*0.1,
+decoration: BoxDecoration(
+  color: Colors.deepOrange,
+  borderRadius: BorderRadius.circular(12),
+),
+                                child: Center(
+                                  child: TextWidget(text:affirmationCount.toString(),color: Colors.white,fsize: 10),
+                                ),
                               ),
+                              // Padding(
+                              //   padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              //   child: Image.asset("assets/images/affir.png",scale: 4),
+                              // ),
                             ],
                           ),
                         ),

@@ -534,20 +534,6 @@ late String name,email;
                           ),
                           alignment: Alignment.topCenter,
                         ),
-                        CustomImageView(
-                          imagePath: ImageConstant.imgUntit11,
-                          height: getSize(
-                            47,
-                          ),
-                          width: getSize(
-                            47,
-                          ),
-                          alignment: Alignment.topRight,
-                          margin: getMargin(
-                            top: 42,
-                            right: 94,
-                          ),
-                        ),
                         Align(
                           alignment: Alignment.topCenter,
                           child: Padding(

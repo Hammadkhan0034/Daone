@@ -18,10 +18,11 @@ import '../../own_affirmation_screen/controller/own_affirmation_controller.dart'
 
 class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
   DecorationImage decorationImage;
-  var selfConfidenceaffirmationText,documentId;
+  var selfConfidenceaffirmationText,documentId,currentAffirmationCount;
 
   SelfConfidenceAffirmationBlastEffectDialog(
       this.controller, {required this.decorationImage,required this.selfConfidenceaffirmationText,required this.documentId,
+        required this.currentAffirmationCount,
         Key? key,
       }) : super(
     key: key,
@@ -147,14 +148,13 @@ class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
                 ],
               ),
             ),
-            Obx(()=>CustomElevatedButton(
+            CustomElevatedButton(
               onTap: (){
                 OwnAffirmationController controller3 = Get.put(OwnAffirmationController());
                 controller3.playAudioFromAsset('1.mp3');
                 controller2.playConfetti();
-                print("hello");
-                // Increment the affirmationCount
-                int currentCount = controller.affirmationCount.value;
+
+                int currentCount = currentAffirmationCount;
                 int newCount = currentCount + 1;
 
                 controller.updateAffirmationCount(newCount);
@@ -171,7 +171,7 @@ class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
                   print('Error updating AffirmationCount: $error');
                 });
               },
-              text: controller.affirmationCount.string,
+              text:"Blast Affirmation",
               margin: getMargin(
                 top: 19,
                 right: 6,
@@ -185,7 +185,7 @@ class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
                   ))),
               buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
             ),
-            ),
+
           ],
         ),
       ),

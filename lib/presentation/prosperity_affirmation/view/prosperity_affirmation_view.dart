@@ -99,6 +99,8 @@ class ProsperityAffirmationView extends StatelessWidget {
                   final prosperityaffirmationText = prosperityAffirmationData['prosperityAffirmation'];
                   final documentId = snapshot.data.docs[index].id;
                   final imageUrl = prosperityAffirmationData['imageUrl'];
+                  final affirmationCount = prosperityAffirmationData['affirmationCount'];
+
 
                   return InkWell(
                     onTap: (){
@@ -107,6 +109,7 @@ class ProsperityAffirmationView extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           insetPadding: const EdgeInsets.only(left: 0),
                           content: ProsperityAffirmationBlastEffectDialog(Get.put(ProsperityController()),
+                              currentAffirmationCount: affirmationCount,
                               documentId: documentId,
                               decorationImage: DecorationImage(
                                   image: prosperityAffirmationData['imageUrl'] == null
@@ -145,9 +148,16 @@ class ProsperityAffirmationView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Image.asset("assets/images/affir.png",scale: 4),
+                              Container(
+                                height: Get.height*0.03,
+                                width: Get.width*0.1,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: TextWidget(text:affirmationCount.toString(),color: Colors.white,fsize: 10),
+                                ),
                               ),
                             ],
                           ),

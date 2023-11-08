@@ -16,10 +16,11 @@ import '../own_affirmation_screen/controller/own_affirmation_controller.dart';
 
 class AffirmationBlastEffectDialog extends StatelessWidget {
   DecorationImage decorationImage;
-      var loveaffirmationText,documentId;
+      var loveaffirmationText,documentId,currentAffirmationCount;
 
   AffirmationBlastEffectDialog(
       this.controller, {required this.decorationImage,required this.loveaffirmationText,required this.documentId,
+        required this.currentAffirmationCount,
         Key? key,
       }) : super(
     key: key,
@@ -145,45 +146,44 @@ class AffirmationBlastEffectDialog extends StatelessWidget {
     ],
     ),
     ),
-    Obx(()=>CustomElevatedButton(
-    onTap: (){
-      OwnAffirmationController controller3 = Get.put(OwnAffirmationController());
-      controller3.playAudioFromAsset('1.mp3');
-      controller2.playConfetti();
-    print("hello");
+      CustomElevatedButton(
+        onTap: (){
+          OwnAffirmationController controller3 = Get.put(OwnAffirmationController());
+          controller3.playAudioFromAsset('1.mp3');
+          controller2.playConfetti();
+          print("hello");
 // Increment the affirmationCount
-    int currentCount = controller.affirmationCount.value;
-    int newCount = currentCount + 1;
+          int currentCount = currentAffirmationCount;
+          int newCount = currentCount + 1;
 
-    controller.updateAffirmationCount(newCount);
+          controller.updateAffirmationCount(newCount);
 // Update the Firestore document
-    FirebaseFirestore.instance
-        .collection('loveAffirmations')
-        .doc(documentId) // Use the document ID to reference the specific document
-        .update({'affirmationCount': newCount})
-        .then((_) {
+          FirebaseFirestore.instance
+              .collection('loveAffirmations')
+              .doc(documentId) // Use the document ID to reference the specific document
+              .update({'affirmationCount': newCount})
+              .then((_) {
 // Document updated successfully
-    print('AffirmationCount updated successfully');
-    }).catchError((error) {
+            print('AffirmationCount updated successfully');
+          }).catchError((error) {
 // Handle errors if the update fails
-    print('Error updating AffirmationCount: $error');
-    });
-    },
-    text: controller.affirmationCount.string,
-    margin: getMargin(
-    top: 19,
-    right: 6,
-    ),
-    buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
-    fixedSize: MaterialStateProperty.all<Size>(Size(
-    double.maxFinite,
-    getVerticalSize(
-    57,
-    ),
-    ))),
-    buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
-    ),
-    ),
+            print('Error updating AffirmationCount: $error');
+          });
+        },
+        text: 'Blast Affirmation',
+        margin: getMargin(
+          top: 19,
+          right: 6,
+        ),
+        buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
+            fixedSize: MaterialStateProperty.all<Size>(Size(
+              double.maxFinite,
+              getVerticalSize(
+                57,
+              ),
+            ))),
+        buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
+      ),
     ],
     ),
     ),

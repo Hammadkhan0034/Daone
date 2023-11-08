@@ -12,7 +12,6 @@ import '../../../core/utils/size_utils.dart';
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
 import '../../../widgets/app_bar/custom_app_bar.dart';
 import '../../../widgets/text_widget.dart';
-import '../../prosperity_affirmation/controller/prosperity_affirmation_controller.dart';
 
 class SelfConfidenceAffirmationView extends StatelessWidget {
   const SelfConfidenceAffirmationView({Key? key}) : super(key: key);
@@ -103,6 +102,8 @@ class SelfConfidenceAffirmationView extends StatelessWidget {
                   final selfaffirmationText = selfAffirmationData['confidenceAffirmation'];
                   final documentId = snapshot.data.docs[index].id;
                   final imageUrl = selfAffirmationData['imageUrl'];
+                  final affirmationCount = selfAffirmationData['affirmationCount'];
+
 
                   return InkWell(
                     onTap: (){
@@ -111,6 +112,7 @@ class SelfConfidenceAffirmationView extends StatelessWidget {
                           contentPadding: EdgeInsets.zero,
                           insetPadding: const EdgeInsets.only(left: 0),
                           content: SelfConfidenceAffirmationBlastEffectDialog(Get.put(SelfConfidenceController()),
+                              currentAffirmationCount: affirmationCount,
                               documentId: documentId,
                               decorationImage: DecorationImage(
                                   image: selfAffirmationData['imageUrl'] == null
@@ -149,10 +151,18 @@ class SelfConfidenceAffirmationView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Image.asset("assets/images/affir.png",scale: 4),
+                              Container(
+                                height: Get.height*0.03,
+                                width: Get.width*0.1,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: TextWidget(text:affirmationCount.toString(),color: Colors.white,fsize: 10),
+                                ),
                               ),
+
                             ],
                           ),
                         ),

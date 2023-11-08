@@ -20,7 +20,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
   var graditudeAffirmationText, documentId;
   var snapshotIndex;
   var affirmation;
-  var affirmationCountPresent;
+  var affirmationCountPresent,currentAffirmationCount;
 
 
   OwnAffirmationBlastEffectDialog(
@@ -32,6 +32,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
         required this.decorationImage,
         required this.graditudeAffirmationText,
         required this.documentId,
+        required this.currentAffirmationCount,
         Key? key,
       }) : super(
     key: key,
@@ -209,20 +210,19 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                 buttonTextStyle: CustomTextStyles
                     .titleMediumWhiteA700Medium_2,
               ),
-              Obx(() => CustomElevatedButton(
+           CustomElevatedButton(
                 onTap:() async {
                   final user= FirebaseAuth.instance.currentUser;
                   controller.playAudioFromAsset('1.mp3');
                   controller.playConfetti();
-                  int currentCount =
-                      controller.affirmationCount.value;
+                  int currentCount = currentAffirmationCount;
                   int newCount = currentCount + 1;
 
-                  controller
-                      .updateAffirmationCount(newCount);
                   FirebaseFirestore.instance
-                      .collection('users')
-                      .doc(user?.uid).collection('OwnAffirmationList').doc(documentId) // Use the document ID to reference the specific document
+                      .collection("users")
+                      .doc(user?.email)
+                      .collection('OwnAffirmationList')
+                      .doc(documentId) // Use the document ID to reference the specific document
                       .update({
                     'affirmationCount': newCount
                   }).then((_) {
@@ -235,8 +235,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                         'Error updating AffirmationCount: $error');
                   });
                 },
-                // text: affirmationCountPresent,
-                text:  controller.affirmationCount.string,
+                text:  'Blast Affirmation',
                 margin: getMargin(
                   top: 19,
                   right: 6,
@@ -252,7 +251,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                     ))),
                 buttonTextStyle: CustomTextStyles
                     .titleMediumWhiteA700Medium_2,
-              ),),
+              ),
             ],
           ),
         ),

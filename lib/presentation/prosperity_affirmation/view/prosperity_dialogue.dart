@@ -15,13 +15,14 @@ import '../controller/prosperity_affirmation_controller.dart';
 
 class ProsperityAffirmationBlastEffectDialog extends StatelessWidget {
   DecorationImage decorationImage;
-  var loveaffirmationText, documentId;
+  var loveaffirmationText, documentId,currentAffirmationCount;
 
   ProsperityAffirmationBlastEffectDialog(
     this.controller, {
     required this.decorationImage,
     required this.loveaffirmationText,
     required this.documentId,
+        required this.currentAffirmationCount,
     Key? key,
   }) : super(
           key: key,
@@ -156,21 +157,18 @@ class ProsperityAffirmationBlastEffectDialog extends StatelessWidget {
                   ],
                 ),
               ),
-              Obx(
-                () => CustomElevatedButton(
+            CustomElevatedButton(
                   onTap: () {
                     OwnAffirmationController controller3 = Get.put(OwnAffirmationController());
                     controller3.playAudioFromAsset('1.mp3');
                     controller2.playConfetti();
-                    print("hello");
-                    // Increment the affirmationCount
-                    int currentCount = controller.affirmationCount.value;
+                    int currentCount = currentAffirmationCount;
                     int newCount = currentCount + 1;
 
                     controller.updateAffirmationCount(newCount);
                     // Update the Firestore document
                     FirebaseFirestore.instance
-                        .collection('loveAffirmations')
+                        .collection('prosperityAffirmations')
                         .doc(
                             documentId) // Use the document ID to reference the specific document
                         .update({'affirmationCount': newCount}).then((_) {
@@ -181,7 +179,7 @@ class ProsperityAffirmationBlastEffectDialog extends StatelessWidget {
                       print('Error updating AffirmationCount: $error');
                     });
                   },
-                  text: controller.affirmationCount.string,
+                  text: 'Blast Affirmation',
                   margin: getMargin(
                     top: 19,
                     right: 6,
@@ -196,7 +194,7 @@ class ProsperityAffirmationBlastEffectDialog extends StatelessWidget {
                   buttonTextStyle:
                       CustomTextStyles.titleMediumWhiteA700Medium_2,
                 ),
-              ),
+
             ],
           ),
         ),

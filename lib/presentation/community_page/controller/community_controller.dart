@@ -2,10 +2,8 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/presentation/community_page/community_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,7 +15,8 @@ class CommunityController extends GetxController {
   Rx<CommunityModel> communityModelObj;
 
   SelectionPopupModel? selectedDropDownValue;
-
+  RxInt commentLength =0.obs;
+  RxInt  commentId= 0.obs;
 
   var isLiked = false.obs;
 

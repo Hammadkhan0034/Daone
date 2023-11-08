@@ -51,8 +51,18 @@ class PersonalDataUpdateTwoController extends GetxController {
     newpasswordController.dispose();
   }
 
-  Future<void> updatePassword(String? currentPassword, String? newPassword) async {
+  Future<void> updatePassword(String? currentPassword, String? newPassword,BuildContext context) async {
     try {
+      showDialog(
+        context: context,
+        barrierDismissible: false, // Prevent user from dismissing the dialog
+        builder: (BuildContext context) {
+          return Center(
+            child: CircularProgressIndicator(color: Colors.deepOrange
+            ),
+          );
+        },
+      );
       User? user = FirebaseAuth.instance.currentUser;
 
       // Reauthenticate the user with their current password
@@ -124,7 +134,7 @@ onSelected(dynamic value) {
   }
 
 
-  Future<void> uploadImageToFirestore(File imageFile, String userId) async {
+  Future<void> uploadImageToFirestore(File imageFile, String userId,context) async {
     User? user = FirebaseAuth.instance.currentUser;
     RxDouble uploadProgress = 0.0.obs;
 
@@ -135,6 +145,16 @@ onSelected(dynamic value) {
     }
 
     try {
+      showDialog(
+      context: context,
+      builder: (context) {
+        return Center(
+          child: CircularProgressIndicator(
+            color: Colors.deepOrange,
+          ),
+        );
+      },
+    );
       // Create a reference to the Firebase Storage location where you want to store the image.
       final storageRef = FirebaseStorage.instance.ref().child('userImages/$userId');
 

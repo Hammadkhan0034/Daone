@@ -506,7 +506,7 @@ class ChartWidget extends GetView<StatsController> {
           minX: 0,
           maxX: 6,
           minY: 0,
-          maxY: statsController.weeklyData.reduce((value, element) => value > element ? value : element) + 3.0,
+          maxY: statsController.weeklyData.reduce((value, element) => value > element ? value : element) + 7.0,
           lineBarsData: [
             LineChartBarData(
               spots: statsController.intentionWeeklyData
@@ -572,17 +572,16 @@ class ChartWidget extends GetView<StatsController> {
       case 1:
         text = const Text('1%', style: style);
         break;
-      case 2:
-        text = const Text('2%', style: style);
-        break;
+
       case 3:
         text = const Text('3%', style: style);
         break;
-      case 4:
-        text = const Text('4%', style: style);
-        break;
+
         case 5:
         text = const Text('5%', style: style);
+        break;
+        case 8:
+        text = const Text('8%', style: style);
         break;
         case 10:
         text = const Text('10%', style: style);

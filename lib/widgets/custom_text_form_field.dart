@@ -100,6 +100,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         margin: margin,
         child: TextFormField(
+          showCursor: false,
           onSaved: function,
           controller: controller,
           focusNode: focusNode ?? FocusNode(),

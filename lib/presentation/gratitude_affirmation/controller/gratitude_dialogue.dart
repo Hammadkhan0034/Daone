@@ -17,13 +17,14 @@ import '../../own_affirmation_screen/controller/own_affirmation_controller.dart'
 
 class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
   DecorationImage decorationImage;
-  var graditudeAffirmationText, documentId;
+  var graditudeAffirmationText, documentId,currentAffirmationCount;
 
   GratitudeAffirmationBlastEffectDialog(
     this.controller, {
     required this.decorationImage,
     required this.graditudeAffirmationText,
     required this.documentId,
+        required this.currentAffirmationCount,
     Key? key,
   }) : super(
           key: key,
@@ -156,24 +157,23 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
                   ],
                 ),
               ),
-              Obx(
-                () => CustomElevatedButton(
+              CustomElevatedButton(
                   onTap: () {
                     OwnAffirmationController controller2 = Get.put(OwnAffirmationController());
                     controller2.playAudioFromAsset('1.mp3');
                     controller2.playConfetti();
                     print("hello");
                     // Increment the affirmationCount
-                    int currentCount = controller.affirmationCount.value;
+                    int currentCount = currentAffirmationCount;
                     int newCount = currentCount + 1;
 
                     controller.updateAffirmationCount(newCount);
                     // Update the Firestore document
                     FirebaseFirestore.instance
-                        .collection('loveAffirmations')
+                        .collection('GraditudeAffirmations')
                         .doc(
                             documentId) // Use the document ID to reference the specific document
-                        .update({'affirmationCount': newCount}).then((_) {
+                        .update({'AffirmationCount': newCount}).then((_) {
                       // Document updated successfully
                       print('AffirmationCount updated successfully');
                     }).catchError((error) {
@@ -181,7 +181,7 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
                       print('Error updating AffirmationCount: $error');
                     });
                   },
-                  text: controller.affirmationCount.string,
+                  text: 'Blast Affirmation',
                   margin: getMargin(
                     top: 19,
                     right: 6,
@@ -196,7 +196,7 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
                   buttonTextStyle:
                       CustomTextStyles.titleMediumWhiteA700Medium_2,
                 ),
-              ),
+
             ],
           ),
         ),

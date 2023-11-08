@@ -98,6 +98,8 @@ class GratitudeAffirmationView extends StatelessWidget {
                   final gratitudeaffirmationText = gratitudeAffirmationData['graditudeAffirmation'];
                   final documentId = snapshot.data.docs[index].id;
                   final imageUrl = gratitudeAffirmationData['imageUrl'];
+                  final affirmationCount = gratitudeAffirmationData['AffirmationCount'];
+
 
                   return InkWell(
                     onTap: (){
@@ -107,6 +109,7 @@ class GratitudeAffirmationView extends StatelessWidget {
                           insetPadding: const EdgeInsets.only(left: 0),
                           content:
                           GratitudeAffirmationBlastEffectDialog(Get.put(GratitudeAffirmationController()),
+                              currentAffirmationCount: affirmationCount,
                               documentId: documentId,
                               decorationImage: DecorationImage(
                                   image: gratitudeAffirmationData['imageUrl'] == ""
@@ -146,10 +149,19 @@ class GratitudeAffirmationView extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 5.0),
-                                child: Image.asset("assets/images/affir.png",scale: 4),
+                              Container(
+                                height: Get.height*0.03,
+                                width: Get.width*0.1,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Center(
+                                  child: TextWidget(text:affirmationCount.toString(),color: Colors.white,fsize: 10),
+                                ),
                               ),
+
+
                             ],
                           ),
                         ),

@@ -269,7 +269,7 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                       children: [
                         InkWell(
                           onTap: (){
-                            Get.offAndToNamed(AppRoutes.sleepTrackingRoute);
+                            Get.toNamed(AppRoutes.sleepTrackingRoute);
                           },
                           child: Container(
                             height: Get.height*0.18,

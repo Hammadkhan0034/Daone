@@ -113,7 +113,9 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                                 )),
                               ),
                               onPressed: () {
-                                controller.uploadImageToFirestore(File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid);
+                                controller.uploadImageToFirestore(
+
+                                    File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid,context);
                               },
                               child: TextWidget(text: "Save Image", color: Colors.white, fsize: 12),
                             ),

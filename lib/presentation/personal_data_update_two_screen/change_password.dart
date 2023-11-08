@@ -6,6 +6,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_view.dart';
@@ -20,6 +21,7 @@ import '../../widgets/app_bar/appbar_subtitle_2.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
+import '../badges/badgeslist.dart';
 import 'controller/personal_data_update_two_controller.dart';
 
 class PasswordUpdateScreen
@@ -75,14 +77,55 @@ class PasswordUpdateScreen
                   SizedBox(
                     height: Get.height*0.03,
                   ),
-                  CustomImageView(
-                    imagePath: ImageConstant.imgUntit11,
-                    height: getSize(
-                      78,
-                    ),
-                    width: getSize(
-                      78,
-                    ),
+                  StreamBuilder(
+                    stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.email).
+                    collection('OwnAffirmationList').snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            child: CircularProgressIndicator(
+                              color: Colors.deepOrangeAccent,
+                            ),
+                          ),
+                        );
+                      } else {
+                        List<int> createNumberList(int n) {
+                          List<int> result = List<int>.generate(n, (index) => index + 1);
+                          return result;
+                        }
+                        int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+                        List<int> numberList = createNumberList(itemCount);
+                        final newNum =numberList.last;
+
+                        return Container(
+                          //color: Colors.deepOrange,
+                          width: Get.width*0.2,
+                          height:Get.height*0.09,
+                          child: ListView.builder(
+                            itemCount:1,
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Center(
+                                  child: Container(
+                                    width: Get.width*0.2,
+                                    height:Get.height*0.08,
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1 ]),fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      }
+                    },
                   ),
                   StreamBuilder(
                     stream: FirebaseFirestore.instance.collection('users').doc(controller.user?.email).snapshots(),
@@ -177,14 +220,14 @@ class PasswordUpdateScreen
                           48,
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null ||
-                            (!isValidPassword(value, isRequired: true))) {
-                          return "Please enter valid password";
-                        }
-                        return null;
-                      },
-                      obscureText: controller.isShowPassword.value,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your current password";
+                            }
+                            return null;
+                          },
+
+                          obscureText: controller.isShowPassword.value,
                       filled: true,
                       fillColor: appTheme.gray50,
                     ),
@@ -244,14 +287,14 @@ class PasswordUpdateScreen
                           48,
                         ),
                       ),
-                      validator: (value) {
-                        if (value == null ||
-                            (!isValidPassword(value, isRequired: true))) {
-                          return "Please enter valid password";
-                        }
-                        return null;
-                      },
-                      obscureText: controller.isShowPassword1.value,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return "Please enter your new password";
+                            }
+                            return null;
+                          },
+
+                          obscureText: controller.isShowPassword1.value,
                       filled: true,
                       fillColor: appTheme.gray50,
                     ),
@@ -263,6 +306,7 @@ class PasswordUpdateScreen
                         controller.updatePassword(
                           controller.passwordController.text,
                           controller.newpasswordController.text,
+                          context
                         );
                       }
                     },

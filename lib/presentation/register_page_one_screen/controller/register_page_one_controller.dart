@@ -27,26 +27,31 @@ class RegisterPageOneController extends GetxController {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   late BuildContext context;
-  void signUp(String email,pass,var context)async{
-    if(formKey.currentState!.validate()){
+
+  void signUp(String email, String pass, var context) async {
+    if (formKey.currentState!.validate()) {
       showDialog(
         context: context,
-        barrierDismissible: false, // Prevent user from dismissing the dialog
+        barrierDismissible: false,
         builder: (BuildContext context) {
           return Center(
-            child: CircularProgressIndicator(color: Colors.deepOrange
-            ),
+            child: CircularProgressIndicator(color: Colors.deepOrange),
           );
         },
       );
-      try{
+      try {
         await auth
             .createUserWithEmailAndPassword(email: email, password: pass)
-            .then((value) => {postDetailsToFirestore()})
-            .catchError((e){
-          SnackBar(content:Text(e));
+            .then((value) {
+          postDetailsToFirestore();
+        })
+            .catchError((e) {
+          final errorMessage = "An error occurred during sign-up.";
+          final snackBar = SnackBar(content: Text(errorMessage));
+          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         });
-      }on FirebaseAuthException catch(error){
+      } on FirebaseAuthException catch (error) {
+        String errorMessage = ""; // Initialize an empty string
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
@@ -68,15 +73,19 @@ class RegisterPageOneController extends GetxController {
             break;
           default:
             errorMessage = "An undefined Error happened.";
-        }  final snackBar = SnackBar(content: Text(errorMessage!));
+        }
+        final snackBar = SnackBar(content: Text(errorMessage));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         print(errorMessage);
-
-
+      } finally{
+        Get.back();
       }
     }
-
   }
+
+
+
+
   postDetailsToFirestore()async{
     //calling our firestore
     //calling our user Model
