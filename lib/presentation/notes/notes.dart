@@ -1,21 +1,23 @@
+
+
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../core/utils/image_constant.dart';
+import '../../core/utils/size_utils.dart';
+import '../../theme/theme_helper.dart';
+import '../../widgets/app_bar/appbar_iconbutton.dart';
+import '../../widgets/app_bar/appbar_subtitle_2.dart';
+import '../../widgets/app_bar/custom_app_bar.dart';
 import '../../widgets/text_widget.dart';
-import 'controller/personal_data_update_one_controller.dart';
-import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
-import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
-import 'package:daone/widgets/app_bar/custom_app_bar.dart';
-import 'package:flutter/material.dart';
 
-class PersonalDataUpdateOneScreen
-    extends GetWidget<PersonalDataUpdateOneController> {
-  const PersonalDataUpdateOneScreen({Key? key})
-      : super(
-          key: key,
-        );
+class NotesPage extends StatelessWidget {
+  const NotesPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +45,7 @@ class PersonalDataUpdateOneScreen
           ),
           centerTitle: true,
           title: AppbarSubtitle2(
-            text: "lbl_highlights".tr,
+            text: "lbl_notes".tr,
           ),
 
         ),
@@ -52,10 +54,10 @@ class PersonalDataUpdateOneScreen
           width: double.infinity,
           child:StreamBuilder(
             stream: FirebaseFirestore.instance
-              .collection('users')
-              .doc(user?.email) // Replace with the user's UID
-              .collection('highlightList')
-              .snapshots(),
+                .collection('users')
+                .doc(user?.email) // Replace with the user's UID
+                .collection('NoteList')
+                .snapshots(),
             builder: (context,AsyncSnapshot snapshot){
               if (snapshot.connectionState == ConnectionState.waiting) {
                 // Loading indicator while data is being fetched
@@ -90,7 +92,7 @@ class PersonalDataUpdateOneScreen
                       SizedBox(height: Get.height * 0.04),
                       TextWidget(
                         text:
-                        "You don't have any Higlights",
+                        "You don't have any Notes",
                         color: Colors.black38,
                         fsize: 14,
                         font: FontWeight.w500,
@@ -102,7 +104,7 @@ class PersonalDataUpdateOneScreen
               return ListView.builder(
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context,index){
-                    var higlightData= snapshot.data.docs[index].data();
+                    var notesData= snapshot.data.docs[index].data();
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Container(
@@ -112,9 +114,6 @@ class PersonalDataUpdateOneScreen
                             color: Colors.black,
                             width: 1, // Adjust the width as needed
                           ),
-
-  //                        color: Colors.green,
-//image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
                         ),
                         width: Get.width*0.6,
                         // height: Get.height*0.2,
@@ -127,23 +126,23 @@ class PersonalDataUpdateOneScreen
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                     child: Stack(
-                                      children: [
-                                      Container(
-                                        width: Get.width*0.1,
-                                        height: Get.height*0.05,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(100),
-                                          border: Border.all(
-                                            color: Colors.black,
-                                            width: 1, // Adjust the width as needed
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: TextWidget(text: "N",color: Colors.black,fsize: 10),
-                                        ),
+                                        children: [
+                                          Container(
+                                            width: Get.width*0.1,
+                                            height: Get.height*0.05,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(100),
+                                              border: Border.all(
+                                                color: Colors.black,
+                                                width: 1, // Adjust the width as needed
+                                              ),
+                                            ),
+                                            child: Center(
+                                              child: TextWidget(text: "N",color: Colors.black,fsize: 10),
+                                            ),
 
-                                      ),
-                                      ]
+                                          ),
+                                        ]
                                     ),
                                   ),
                                   Column(
@@ -152,11 +151,11 @@ class PersonalDataUpdateOneScreen
                                     children: [
                                       Row(
                                         children: [
-                                          TextWidget(text: "You Higlighted", color: Colors.black, fsize: 10),
-                                          TextWidget(text:' ${higlightData['title']}', color: Colors.black, fsize: 11,font: FontWeight.w600),
+                                          TextWidget(text: "You added a note on", color: Colors.black, fsize: 10),
                                         ],
                                       ),
-                                      TextWidget(text: higlightData['date'], color: Colors.black, fsize: 11,font: FontWeight.w600),
+                                      Container(child: TextWidget(text:' ${notesData['title']}', color: Colors.black, fsize: 10,font: FontWeight.w600, softWrap: true,)),
+                                      TextWidget(text: notesData['date'], color: Colors.black, fsize: 11,font: FontWeight.w600),
                                     ],
                                   ),
 
@@ -181,10 +180,10 @@ class PersonalDataUpdateOneScreen
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                         child:Text(
-                                          higlightData['selectedText'],
+                                          notesData['selectedText'],
                                           style: GoogleFonts.getFont(
                                             'Roboto',
-                                            fontSize: higlightData['fontSize'],
+                                            fontSize: 12,
                                             color: Colors.black,
                                           ),
                                         ),
@@ -195,10 +194,19 @@ class PersonalDataUpdateOneScreen
                                 ],
                               ),
                             ),
-                            // Center(child: Padding(
-                            //   padding: const EdgeInsets.all(12.0),
-                            //   child: TextWidget(text: higlightData['selectedText'], color: Colors.black, fsize: 10),
-                            // )),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                color: Colors.black12,
+                                // height: Get.height*0.1,
+                                width: Get.width*0.8,
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Center(child: TextWidget(text: notesData['noteComment'], color: Colors.black, fsize: 12)),
+                              ),
+                              ),
+                            ),
+
                           ],
                         ),
                       ),
@@ -212,3 +220,4 @@ class PersonalDataUpdateOneScreen
     );
   }
 }
+

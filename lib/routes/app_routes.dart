@@ -502,13 +502,6 @@ class AppRoutes {
       ],
     ),
     GetPage(
-      name: appNavigationScreen,
-      page: () => AppNavigationScreen(),
-      bindings: [
-        AppNavigationBinding(),
-      ],
-    ),
-    GetPage(
       name: initialRoute,
       page: () => WelcomeScreenOneScreen(),
       bindings: [

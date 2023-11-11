@@ -78,7 +78,8 @@ class SaveOrEditBlogController extends GetxController {
   // Observable for the SaveOrEditBlogModel
   Rx<SaveOrEditBlogModel> saveOrEditBlogModelObj = SaveOrEditBlogModel().obs;
 
-  Future<void> higlightslist(BuildContext context,String selectedText,imageUrl) async {
+  Future<void> higlightslist({required BuildContext context,
+    required String selectedText,imageUrl,color,fontFamily,required double fontSize,required String title}) async {
     try {
       User? user =FirebaseAuth.instance.currentUser;
       showDialog(
@@ -92,11 +93,17 @@ class SaveOrEditBlogController extends GetxController {
         },
       );
       if (user!=null){
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.uid);
+        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
         await userDocRef.collection('highlightList').add({
           'selectedText' : selectedText,
           'imageUrl': imageUrl,
           'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
+          'textColor': color,
+          'fontFamily': fontFamily,
+          'fontSize': fontSize,
+          'title': title
+
+
         });  // Data saved successfully
         print('highlights saved to Firestore');
         Get.snackbar("Highlights","Selected Text Add to Highlights");
@@ -117,6 +124,53 @@ class SaveOrEditBlogController extends GetxController {
       Navigator.of(context).pop(); // Hide the progress indicator
     }
   }
+
+
+
+  RxString selectedFontFamily = 'Roboto'.obs;
+  RxDouble selectedFontSize = 12.0.obs;
+  RxString selectedTextColor = '#000000'.obs; // Initial text color: Black
+
+  List<String> fontFamilies = [
+    'Roboto',
+    'Open Sans',
+    'Montserrat',
+    'Lato',
+    'Ubuntu',
+    'Poppins',
+    'Noto Sans',
+    'Raleway',
+    'Dancing Script',
+    'Quicksand',
+    'Pacifico',
+    'Playfair Display',
+    'Source Sans Pro',
+    'Oswald',
+    'Merriweather',
+    'Josefin Sans',
+
+  ];
+
+  void updateSelectedFontFamily(String fontFamily) {
+    selectedFontFamily.value = fontFamily;
+  }
+
+  void updateSelectedFontSize(double fontSize) {
+    selectedFontSize.value = fontSize;
+  }
+
+
+
+  void updateSelectedTextColor(Color textColor) {
+    selectedTextColor.value = colorToHex(textColor);
+  }
+
+  String colorToHex(Color color) {
+    // Ensure that the color value is in the correct format (8 digits)
+    String hexColor = color.value.toRadixString(16).padLeft(8, '0');
+    return '#${hexColor.substring(2)}'; // Exclude the alpha channel (first two digits)
+  }
+
 
 
 

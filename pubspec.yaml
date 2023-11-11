@@ -36,6 +36,10 @@ dependencies:
   pull_to_refresh_flutter3: ^2.0.2
   alarm: ^2.1.1
   flutter_markdown: ^0.6.18+2
+  selectable: ^0.3.0
+  share_plus: ^7.2.1
+  flutter_colorpicker: ^1.0.3
+
 
 
 
