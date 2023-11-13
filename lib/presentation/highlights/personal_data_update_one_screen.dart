@@ -114,7 +114,7 @@ class PersonalDataUpdateOneScreen
                           ),
 
   //                        color: Colors.green,
-//image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
+image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
                         ),
                         width: Get.width*0.6,
                         // height: Get.height*0.2,
