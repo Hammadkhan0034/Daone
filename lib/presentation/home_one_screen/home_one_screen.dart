@@ -39,12 +39,18 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       width: Get.width * 0.03,
                     ),
                     StreamBuilder(
-                      stream: FirebaseFirestore.instance.collection('users').doc(user!.email).
-                      collection('OwnAffirmationList').snapshots(),
+                      stream: FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.email)
+                          .collection('OwnAffirmationList')
+                          .snapshots(),
                       builder: (context, AsyncSnapshot snapshot) {
-                        final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+                        final data = snapshot.data?.docs.length == 0
+                            ? 1
+                            : snapshot.data?.docs.length;
 
-                        if (snapshot.connectionState == ConnectionState.waiting) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
                           return Center(
                             child: Container(
                               height: 50,
@@ -56,28 +62,34 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           );
                         } else {
                           List<int> createNumberList(int n) {
-                            List<int> result = List<int>.generate(n, (index) => index + 1);
+                            List<int> result =
+                                List<int>.generate(n, (index) => index + 1);
                             return result;
                           }
-                          int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+
+                          int itemCount = (data / 100)
+                              .ceil(); // Calculate the number of grid items
                           List<int> numberList = createNumberList(itemCount);
-                          final newNum =numberList.last;
+                          final newNum = numberList.last;
 
                           return Container(
                             //color: Colors.deepOrange,
-                            width: Get.width*0.2,
-                            height:Get.height*0.09,
+                            width: Get.width * 0.2,
+                            height: Get.height * 0.09,
                             child: ListView.builder(
-                              itemCount:1,
+                              itemCount: 1,
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(5.0),
                                   child: Center(
                                     child: Container(
-                                      width: Get.width*0.2,
-                                      height:Get.height*0.08,
+                                      width: Get.width * 0.2,
+                                      height: Get.height * 0.08,
                                       decoration: BoxDecoration(
-                                        image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1 ]),fit: BoxFit.cover),
+                                        image: DecorationImage(
+                                            image: AssetImage(badges[
+                                                newNum % badges.length - 1]),
+                                            fit: BoxFit.cover),
                                       ),
                                     ),
                                   ),
@@ -100,11 +112,18 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                             color: Colors.black38,
                             fsize: 12),
                         StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
-                          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
+                          stream: FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(FirebaseAuth.instance.currentUser?.email)
+                              .snapshots(),
+                          builder: (context,
+                              AsyncSnapshot<DocumentSnapshot> snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
                               // While the data is being fetched, you can return a loading indicator or an empty widget.
-                              return CircularProgressIndicator(color: Colors.deepOrange,); // Replace with your loading indicator widget
+                              return CircularProgressIndicator(
+                                color: Colors.deepOrange,
+                              ); // Replace with your loading indicator widget
                             }
 
                             if (snapshot.hasError) {
@@ -124,7 +143,9 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                               padding: getPadding(
                                 top: 1,
                               ),
-                              child:TextWidget(text: fullName,color: Colors.black,
+                              child: TextWidget(
+                                  text: fullName,
+                                  color: Colors.black,
                                   fsize: 20,
                                   font: FontWeight.bold),
                             );
@@ -132,10 +153,11 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: Get.width * 0.36,
-                    ),
-               //     Image.asset(ImageConstant.notificationIcon, scale: 3.3),
+                    // SizedBox(
+                    //   width: Get.width * 0.36,
+                    // ),
+                    Spacer(),
+                    Image.asset(ImageConstant.notificationIcon, scale: 3.3),
                   ],
                 ),
               ),
@@ -153,7 +175,9 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                       return Text('Error: ${snapshot.error}');
                     }
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return CircularProgressIndicator(color: Colors.deepOrange,);
+                      return CircularProgressIndicator(
+                        color: Colors.deepOrange,
+                      );
                     }
                     // Ensure there are documents in the collection
                     if (snapshot.data == null || snapshot.data!.docs.isEmpty) {
@@ -225,8 +249,9 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                                 Colors.white.withOpacity(0.2),
                                             boxShadow: [
                                               BoxShadow(
-                                                color: Colors.deepOrange.withOpacity(
-                                                    0.3), // Adjust shadow color and opacity
+                                                color: Colors.deepOrange
+                                                    .withOpacity(
+                                                        0.3), // Adjust shadow color and opacity
                                                 spreadRadius:
                                                     5, // Spread radius
                                                 blurRadius: 7, // Blur radius
@@ -289,7 +314,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           stream: FirebaseFirestore.instance
                               .collection('users')
                               .doc(user?.email) // Replace with the user's UID
-                              .collection('tasks').where('status',isEqualTo:'compelete')
+                              .collection('tasks')
+                              .where('status', isEqualTo: 'compelete')
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<dynamic> completeTaskSnapshot) {
@@ -393,18 +419,16 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         );
                       },
                     ),
-
                     SizedBox(
                       width: Get.width * 0.03,
                     ),
-
                     InkWell(
                       onTap: () {
                         Get.toNamed(AppRoutes.selectAffirmationScreen);
                       },
                       child: Container(
-                        height: Get.height * 0.26,
-                        width: Get.width * 0.43,
+                          height: Get.height * 0.26,
+                          width: Get.width * 0.43,
                           child: StreamBuilder(
                             stream: FirebaseFirestore.instance
                                 .collection("users")
@@ -412,7 +436,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                 .collection('OwnAffirmationList')
                                 .snapshots(),
                             builder: (context, AsyncSnapshot snapshot) {
-                              if (snapshot.connectionState == ConnectionState.waiting) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
                                 // Loading indicator while data is being fetched
                                 return Center(
                                   child: Container(
@@ -429,20 +454,23 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                 return Text('Error: ${snapshot.error}');
                               }
 
-                              if (!snapshot.hasData || snapshot.data.docs.isEmpty) {
+                              if (!snapshot.hasData ||
+                                  snapshot.data.docs.isEmpty) {
                                 return Container(
                                   height: Get.height * 0.26,
                                   width: Get.width * 0.43,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
-                                      image: NetworkImage("https://images.unsplash.com/photo-1621091211034-53136cc1eb32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhY2tncm91bmQlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60"),
+                                      image: NetworkImage(
+                                          "https://images.unsplash.com/photo-1621091211034-53136cc1eb32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhY2tncm91bmQlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60"),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
                                       TextWidget(
                                         text: "NO AFFIRMATIONS",
@@ -464,44 +492,60 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                               return Expanded(
                                 child: ListView.builder(
                                   itemBuilder: (context, index) {
-                                    final affirmationData = snapshot.data.docs[index].data();
-                                 return Container(
-                                   height: Get.height * 0.26,
-                                   width: Get.width * 0.43,
-                                   decoration: BoxDecoration(
-                                     borderRadius: BorderRadius.circular(15),
-                                     image: DecorationImage(
-                                       image: NetworkImage(affirmationData['imageUrl']),
-                                       fit: BoxFit.cover,
-                                     ),
-                                   ),
-                                   child: Stack(
-                                     children: [Center(child: TextWidget(text: affirmationData['affirmation'],fsize: 13,color: Colors.black,)),
-                                     Align(
-                                       alignment: Alignment.bottomCenter,
-                                         child: Padding(
-                                           padding: const EdgeInsets.all(8.0),
-                                           child: Container(
-                                               decoration: BoxDecoration(
-                                                 color: Colors.black12,
-                                                 borderRadius: BorderRadius.circular(15),
-                                               ),
-                                               child: Padding(
-                                                 padding: const EdgeInsets.all(8.0),
-                                                 child: TextWidget(text:"Click to see more Affirmations",fsize: 8,color: Colors.black,),
-                                               )),
-                                         )
-                                     ),
-                                     ],
-                                   ),
-                                 );
+                                    final affirmationData =
+                                        snapshot.data.docs[index].data();
+                                    return Container(
+                                      height: Get.height * 0.26,
+                                      width: Get.width * 0.43,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                              affirmationData['imageUrl']),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      child: Stack(
+                                        children: [
+                                          Center(
+                                              child: TextWidget(
+                                            text:
+                                                affirmationData['affirmation'],
+                                            fsize: 13,
+                                            color: Colors.black,
+                                          )),
+                                          Align(
+                                              alignment: Alignment.bottomCenter,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black12,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          const EdgeInsets.all(
+                                                              8.0),
+                                                      child: TextWidget(
+                                                        text:
+                                                            "Click to see more Affirmations",
+                                                        fsize: 8,
+                                                        color: Colors.black,
+                                                      ),
+                                                    )),
+                                              )),
+                                        ],
+                                      ),
+                                    );
                                   },
                                 ),
                               );
                             },
-                          )
-
-                      ),
+                          )),
                     ),
                   ],
                 ),
