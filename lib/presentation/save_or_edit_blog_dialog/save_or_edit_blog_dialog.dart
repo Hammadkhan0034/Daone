@@ -54,27 +54,35 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                 children: [
                   Obx(
                     () => Container(
-                      height: getVerticalSize(
-                        209,
-                      ),
-                      width: getHorizontalSize(
-                        269,
-                      ),
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(
-                          getHorizontalSize(
-                            15,
-                          ),
+                        height: getVerticalSize(
+                          209,
                         ),
-                        image:controller.selectedBackground.value != '' ?
-                        DecorationImage(image: NetworkImage(controller.selectedBackground.value), fit: BoxFit.cover,)
-                            : null,
-                      ),
-                      child: controller.selectedBackground.value == '' ?
-                      Center(child: TextWidget(text: "Add Background", color:Colors.white, fsize: 15)):
-                    null  // Center(child: TextWidget(text: "", color:Colors.white, fsize: 15))
-                    ),
+                        width: getHorizontalSize(
+                          269,
+                        ),
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(
+                            getHorizontalSize(
+                              15,
+                            ),
+                          ),
+                          image: controller.selectedBackground.value != ''
+                              ? DecorationImage(
+                                  image: NetworkImage(
+                                      controller.selectedBackground.value),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
+                        ),
+                        child: controller.selectedBackground.value == ''
+                            ? Center(
+                                child: TextWidget(
+                                    text: "Add Background",
+                                    color: Colors.white,
+                                    fsize: 15))
+                            : null // Center(child: TextWidget(text: "", color:Colors.white, fsize: 15))
+                        ),
                   ),
                   Align(
                     alignment: Alignment.topCenter,
@@ -142,43 +150,45 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                     ),
                   ),
                   InkWell(
-                      onTap: (){
+                      onTap: () {
                         Get.dialog(
-
                           AlertDialog(
                             title: Text("Choose a Background"),
                             content: Obx(
-                                  () => Expanded(
+                              () => SizedBox(
+                                height: Get.height * 0.6,
+                                width: Get.width * 0.7,
                                 child: ListView.builder(
                                   itemCount:
-                                  controller.availableBackgrounds.length,
+                                      controller.availableBackgrounds.length,
                                   itemBuilder: (context, index) {
                                     final background =
-                                    controller.availableBackgrounds[index];
+                                        controller.availableBackgrounds[index];
                                     return InkWell(
                                       onTap: () {
-                                        controller.setSelectedBackground(
-                                            background);
+                                        controller
+                                            .setSelectedBackground(background);
                                         Get.back();
                                       },
                                       child: Column(
                                         children: [
                                           ListTile(
-                                            title: Text("Background ${index + 1}"),
-
+                                            title:
+                                                Text("Background ${index + 1}"),
                                           ),
                                           Container(
                                             height: Get.height * 0.05,
                                             width: Get.width * 0.5,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
                                               image: DecorationImage(
                                                   image: NetworkImage(
-                                                    controller.availableBackgrounds[
-                                                    index],
+                                                    controller
+                                                            .availableBackgrounds[
+                                                        index],
                                                   ),
                                                   fit: BoxFit.cover),
-
                                             ),
                                           ),
                                         ],
@@ -191,23 +201,27 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                           ),
                         );
                       },
-                      child:Obx(() => Container(
-                        height:Get.height*0.027,
-                        width: Get.width*0.4,
-                        decoration: BoxDecoration(
-                          color: Colors.teal,
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                              image:
-                              NetworkImage(controller.selectedBackground.value),fit: BoxFit.cover),),
-                      ),)
-                  ),
+                      child: Obx(
+                        () => Container(
+                          height: Get.height * 0.027,
+                          width: Get.width * 0.4,
+                          decoration: BoxDecoration(
+                            color: Colors.teal,
+                            borderRadius: BorderRadius.circular(12),
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    controller.selectedBackground.value),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                      )),
                 ],
               ),
             ),
             CustomElevatedButton(
-              onTap: (){
-                controller.higlightslist(context,controller.displayText.value,controller.selectedBackground.value);
+              onTap: () {
+                controller.higlightslist(context, controller.displayText.value,
+                    controller.selectedBackground.value);
               },
               text: "lbl_save_to_profile".tr,
               margin: getMargin(
