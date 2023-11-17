@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../add_task_screen/controller/add_task_controller.dart';
 import '../badges/badgeslist.dart';
 import 'controller/home_one_controller.dart';
@@ -462,8 +463,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
-                                      image: NetworkImage(
-                                          "https://images.unsplash.com/photo-1621091211034-53136cc1eb32?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTZ8fGJhY2tncm91bmQlMjBpbWFnZXxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=400&q=60"),
+                                      image: AssetImage('assets/images/noaffir.jpg'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -472,11 +472,13 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      TextWidget(
-                                        text: "NO AFFIRMATIONS",
-                                        color: Colors.black38,
-                                        fsize: 14,
-                                        font: FontWeight.w500,
+                                      Center(
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                                          child: Text('Create Your Affirmation',style: GoogleFonts.glassAntiqua(
+                                              fontSize: 28,color: Colors.white,fontWeight: FontWeight.w700
+                                          )),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -557,7 +559,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                   children: [
                     InkWell(
                       onTap: () {
-                        Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
+                        Get.toNamed(AppRoutes.visualizationRoute);
+                       // Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
                       },
                       child: Container(
                         height: Get.height * 0.26,
@@ -566,9 +569,10 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
                               image:
-                                  AssetImage(ImageConstant.virtualizationImg),
+                                  AssetImage('assets/images/vid.jpg'),
                               fit: BoxFit.cover),
                         ),
+                        child: Image.asset('assets/images/play.png',scale: 2,),
                       ),
                     ),
                     SizedBox(

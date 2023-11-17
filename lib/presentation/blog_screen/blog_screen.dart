@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../latest_blog_screen/latest_blog_screen.dart';
@@ -224,14 +225,22 @@ class BlogScreen extends GetWidget<BlogController> {
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             children: [
                                               Padding(
-                                                padding:EdgeInsets.symmetric(horizontal: 2.0),
-                                                child: TextWidget(
-                                                  text: title,
-                                                  color: Colors.black,
-                                                  fsize: 11,
-                                                  font: FontWeight.w600,
+                                                padding: EdgeInsets.symmetric(horizontal: 2.0),
+                                                child: Container(
+                                                  child: Text(
+                                                    title,
+                                                    overflow: TextOverflow.fade,
+                                                    maxLines: 2,
+                                                    textAlign: TextAlign.left,
+                                                    style: GoogleFonts.poppins(
+                                                      fontSize: 10,
+                                                      color: Colors.black,
+                                                      fontWeight: FontWeight.bold,
+                                                    ),
+                                                  ),
                                                 ),
                                               ),
+
                                               Container(
                                                 height: 40,
                                                 width: 200,

@@ -4,6 +4,8 @@ import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_v
 import 'package:daone/presentation/prosperity_affirmation/view/prosperity_affirmation_view.dart';
 import 'package:daone/presentation/sleep_tracking_section/binding/sleep_tracking_binding.dart';
 import 'package:daone/presentation/sleep_tracking_section/view/sleep_tracking_view.dart';
+import 'package:daone/presentation/visualization/visualization_binding/visualization_binding.dart';
+import 'package:daone/presentation/visualization/visualization_view/visualization_view.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';
@@ -194,6 +196,8 @@ class AppRoutes {
 
   static const String sleepTrackingRoute ='/sleepTracking';
 
+  static const String visualizationRoute ='/visualization';
+
 
 
   static List<GetPage> pages = [
@@ -202,6 +206,13 @@ class AppRoutes {
       page: () => MyDashBoard(),
       bindings: [
         DashBoardBinding(),
+      ],
+    ),
+    GetPage(
+      name: visualizationRoute,
+      page: () => VisualizationView(),
+      bindings: [
+        VisualizationBindings(),
       ],
     ),
     GetPage(

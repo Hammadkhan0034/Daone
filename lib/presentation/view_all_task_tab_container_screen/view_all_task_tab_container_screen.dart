@@ -38,7 +38,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
-                height: Get.height*0.11,
+                height: Get.height*0.1,
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -108,7 +108,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 18.0, horizontal: 2),
                 child: SizedBox(
-                  height: Get.height * 0.04,
+                  height: Get.height * 0.035,
                   width: Get.width,
                   child: TabBar(
                     controller: controller1.tabviewController,
@@ -122,21 +122,30 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                     ),
                     tabs: [
                       Tab(
-                        child: Text(
-                          "lbl_all".tr,
-                          overflow: TextOverflow.ellipsis,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            "lbl_all".tr,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                       Tab(
-                        child: Text(
-                          "lbl_to_do".tr,
-                          overflow: TextOverflow.ellipsis,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            "lbl_to_do".tr,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                       Tab(
-                        child: Text(
-                          "lbl_complete".tr,
-                          overflow: TextOverflow.ellipsis,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                          child: Text(
+                            "lbl_complete".tr,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                     ],
