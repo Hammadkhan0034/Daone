@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -212,12 +213,23 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                   height: getVerticalSize(124),
                                   width: getHorizontalSize(317),
                                   decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(image),
-                                        fit: BoxFit.cover),
                                     borderRadius: BorderRadius.circular(
                                         getHorizontalSize(22)),
                                   ),
+                                 child: ClipRRect(
+                                   borderRadius: BorderRadius.circular(
+                                       getHorizontalSize(22)),
+                                   child: CachedNetworkImage(
+                                      imageUrl: image,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator(
+                                          color: Colors.deepOrange,
+                                        ),
+                                      ),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    ),
+                                 ),
                                 ),
                                 Align(
                                   alignment: Alignment.bottomCenter,
