@@ -28,8 +28,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
        double aspectRatio = _videoPlayerController.value.aspectRatio;
         _chewieController = ChewieController(
           customControls: CupertinoControls(backgroundColor: Colors.grey, iconColor: Colors.white,),
-          autoPlay: false,
-
+          autoPlay: true,
           materialProgressColors: ChewieProgressColors(
             playedColor: Colors.deepOrange,
             handleColor: Colors.deepOrange,
