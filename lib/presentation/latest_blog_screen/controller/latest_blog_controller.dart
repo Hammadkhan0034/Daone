@@ -6,20 +6,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-
-
 class LatestBlogController extends GetxController {
+  final RxBool _shouldShowBottomMenu = false.obs;
+  final Rx<Color> _selectedColor = Colors.grey.obs;
+  final  RxString _selectedText = "".obs;
 
+  List<Color> colorsList = [
+    Colors.grey,
+    Colors.red,
+    Colors.yellow,
+    Colors.blue,
+    Colors.green
+  ];
   final user = FirebaseAuth.instance.currentUser!.email;
   TextEditingController noteTextController = TextEditingController();
-
 
   Rx<LatestBlogModel> latestBlogModelObj = LatestBlogModel().obs;
 
   SelectionPopupModel? selectedDropDownValue;
-
-
-
 
   onSelected(dynamic value) {
     for (var element in latestBlogModelObj.value.dropdownItemList.value) {
@@ -31,10 +35,13 @@ class LatestBlogController extends GetxController {
     latestBlogModelObj.value.dropdownItemList.refresh();
   }
 
-  Future<void> notesList({required BuildContext context,
-    required String selectedText,required String noteComment,required String title}) async {
+  Future<void> notesList(
+      {required BuildContext context,
+        required String selectedText,
+        required String noteComment,
+        required String title}) async {
     try {
-      User? user =FirebaseAuth.instance.currentUser;
+      User? user = FirebaseAuth.instance.currentUser;
       showDialog(
         context: context,
         builder: (context) {
@@ -45,17 +52,17 @@ class LatestBlogController extends GetxController {
           );
         },
       );
-      if (user!=null){
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
+      if (user != null) {
+        DocumentReference userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(user.email);
         await userDocRef.collection('NoteList').add({
-          'selectedText' : selectedText,
+          'selectedText': selectedText,
           'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
           'title': title,
           'noteComment': noteComment
-
-        });  // Data saved successfully
+        }); // Data saved successfully
         print('Notes saved to Firestore');
-        Get.snackbar("Info","Note Add to Successfully");
+        Get.snackbar("Info", "Note Add to Successfully");
 
         // Hide the progress indicator and navigate
         Navigator.of(context).pop();
@@ -74,7 +81,21 @@ class LatestBlogController extends GetxController {
     }
   }
 
+  Color get selectedColor => _selectedColor.value;
 
+  set selectedColor(Color value) {
+    _selectedColor.value = value;
+  }
 
+  bool get shouldShowBottomMenu => _shouldShowBottomMenu.value;
 
+  String get selectedText => _selectedText.value;
+
+  set selectedText(String value) {
+    _selectedText.value = value;
+  }
+
+  set shouldShowBottomMenu(bool value) {
+    _shouldShowBottomMenu.value = value;
+  }
 }

@@ -19,8 +19,6 @@ class LatestBlogScreen extends StatefulWidget {
   final Map<String, dynamic> blogData;
   final String blogId;
 
-
-
   LatestBlogScreen({required this.blogId, required this.blogData});
 
   @override
@@ -28,6 +26,8 @@ class LatestBlogScreen extends StatefulWidget {
 }
 
 class _LatestBlogScreenState extends State<LatestBlogScreen> {
+  LatestBlogController latestBlogController = Get.put(LatestBlogController());
+
   @override
   void initState() {
     super.initState();
@@ -35,11 +35,15 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
   }
 
   Future<void> _updateBlogRead(String blogId) async {
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc(
-        FirebaseAuth.instance.currentUser!.email);
-    await documentReference.collection('blogReadList').doc(widget.blogData['title']).set({
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.email);
+    await documentReference
+        .collection('blogReadList')
+        .doc(widget.blogData['title'])
+        .set({
       'blogRead': blogId,
-      'date':Timestamp.fromDate(DateTime.now()),
+      'date': Timestamp.fromDate(DateTime.now()),
     });
   }
 
@@ -48,7 +52,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
     mediaQueryData = MediaQuery.of(context);
 
     SaveOrEditBlogController controller2 = Get.put(SaveOrEditBlogController());
-          LatestBlogController noteController = LatestBlogController();
+    LatestBlogController noteController = LatestBlogController();
 
     return SafeArea(
       child: Scaffold(
@@ -118,288 +122,400 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
             text: "latest Blogs",
           ),
         ),
-        body: SizedBox(
+        body: Container(
           width: mediaQueryData.size.width,
-          child: SingleChildScrollView(
-            padding: getPadding(
-              top: 18,
-            ),
-            child: Padding(
-              padding: getPadding(
-                left: 29,
-                right: 29,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    height: Get.height * 0.25,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.deepOrange,
-                      borderRadius: BorderRadius.circular(12),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          widget.blogData['imageUrl'] ??
-                              'https://images.pexels.com/photos/1337382/pexels-photo-1337382.jpeg?auto=compress&cs=tinysrgb&w=400',
+          height: mediaQueryData.size.height,
+          child: Stack(
+            alignment: Alignment.topCenter,
+            children: [
+              Padding(
+                padding: getPadding(
+                  left: 29,
+                  right: 29,
+                ),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Container(
+                        height: Get.height * 0.25,
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          color: Colors.deepOrange,
+                          borderRadius: BorderRadius.circular(12),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              widget.blogData['imageUrl'] ??
+                                  'https://images.pexels.com/photos/1337382/pexels-photo-1337382.jpeg?auto=compress&cs=tinysrgb&w=400',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                        fit: BoxFit.cover,
                       ),
-                    ),
+                      Container(
+                        width: getHorizontalSize(
+                          299,
+                        ),
+                        margin: getMargin(
+                          top: 12,
+                          right: 18,
+                        ),
+                        child: Text(
+                          widget.blogData['title'] ?? 'No title',
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          textAlign: TextAlign.left,
+                          style: CustomTextStyles.titleMediumBlack900,
+                        ),
+                      ),
+                      Container(
+                        height: getVerticalSize(
+                          360,
+                        ),
+                        width: getHorizontalSize(
+                          311,
+                        ),
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: Obx(() {
+                              return Theme(
+                                data: ThemeData(
+                                    textSelectionTheme: TextSelectionThemeData(
+                                      cursorColor: Colors.yellow,
+                                      selectionColor:
+                                      latestBlogController.selectedColor,
+                                      selectionHandleColor: Colors.red,
+                                    )),
+                                child: SelectableText(
+                                  widget.blogData['description'],
+                                  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    color:latestBlogController.selectedText.isEmpty? Colors.black:Colors.white,
+                                  ),
+                                  cursorColor: Colors.red,
+                                  onSelectionChanged: (selection, cause) {
+                                    latestBlogController.selectedText =
+                                        selection.textInside(
+                                            widget.blogData['description']);
+                                    if (latestBlogController
+                                        .selectedText.isEmpty) {
+                                      latestBlogController
+                                          .shouldShowBottomMenu = false;
+                                    } else {
+                                      latestBlogController
+                                          .shouldShowBottomMenu = true;
+                                    }
+
+                                    print(latestBlogController.selectedText);
+                                  },
+                                ),
+                              );
+                            })),
+                      ),
+                    ],
                   ),
-                  Container(
-                    width: getHorizontalSize(
-                      299,
-                    ),
-                    margin: getMargin(
-                      top: 12,
-                      right: 18,
-                    ),
-                    child: Text(
-                      widget.blogData['title'] ?? 'No title',
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.left,
-                      style: CustomTextStyles.titleMediumBlack900,
-                    ),
-                  ),
-                  Container(
-                    height: getVerticalSize(
-                      360,
-                    ),
-                    width: getHorizontalSize(
-                      311,
-                    ),
-                    child: Stack(
-                      alignment: Alignment.bottomRight,
-                      children: [
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: Selectable(
-                            selectionColor: Colors.white60,
-                          child:Text( widget.blogData['description'],),
-                          popupMenuItems: [
-                          // SelectableMenuItem(type: SelectableMenuItemType.copy),
-                 SelectableMenuItem(
-                          title: 'Open',
-                          isEnabled: (controller) { return  controller!.isTextSelected;},
-                          handler: (controller) {
-                            Get.bottomSheet(
-                                Container(
-                              height:Get.height*0.2,
-                                  color: Colors.white,
-                              child: Column(
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                ),
+              ),
+              Obx(() {
+                return latestBlogController.shouldShowBottomMenu
+                    ? Positioned(
+                    bottom: 20,
+                    child: Container(
+                      height: Get.height * 0.3,
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Card(
+                        elevation: 10,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Column(
+                          children: [
+                            Container(
+                              width: Get.width * 0.5,
+                              height: Get.height * 0.005,
+                              margin: const EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(15)),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                TextWidget(
+                                  text: widget.blogData['title'],
+                                  color: Colors.black,
+                                  fsize: 15,
+                                  font: FontWeight.w700,
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 10.0, vertical: 20),
+                                  child: InkWell(
+                                    onTap: () {
+                                      String selectedText =
+                                          latestBlogController.selectedText;
+                                      Share.share(selectedText);
+                                    },
                                     child: Container(
-                                      width: Get.width*0.5,
-                                      height: Get.height*0.005,
+                                      height: Get.height * 0.06,
+                                      width: Get.width * 0.23,
                                       decoration: BoxDecoration(
-                                          color: Colors.deepOrange,
-                                          borderRadius: BorderRadius.circular(15)),
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                          color: Colors.black12),
+                                      child: Center(
+                                          child: TextWidget(
+                                            text: "Share",
+                                            color: Colors.black,
+                                            fsize: 14,
+                                          )),
                                     ),
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      SizedBox(width: 5,),
-                                      TextWidget(text: widget.blogData['title'], color:Colors.black, fsize: 15,font: FontWeight.w700,),
-                                    ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.dialog(
+                                        AlertDialog(
+                                          backgroundColor:
+                                          Colors.transparent,
+                                          contentPadding: EdgeInsets.zero,
+                                          insetPadding:
+                                          EdgeInsets.only(left: 0),
+                                          content: SaveOrEditBlogDialog(
+                                            title: widget.blogData['title'],
+                                            copyText: latestBlogController
+                                                .selectedText,
+                                            controller: Get.put(
+                                                SaveOrEditBlogController()),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.04,
+                                      width: Get.width * 0.23,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                          color: Colors.black12),
+                                      child: Center(
+                                          child: TextWidget(
+                                            text: "Image",
+                                            color: Colors.black,
+                                            fsize: 14,
+                                          )),
+                                    ),
                                   ),
-                                  Row(
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10.0,vertical: 20),
-                                        child: InkWell(
-                                          onTap: (){
-                                            String selectedText =controller!.getSelection()!.text!;
-                                            Share.share(selectedText);
-                                          },
-                                          child: Container(
-                                            height:Get.height*0.06,
-                                            width: Get.width*0.23,
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.black12),
-                                            child: Center(child: TextWidget(text: "Share",color: Colors.black,fsize: 14,)),
-
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal:10,vertical: 20),
-                                        child: InkWell(
-                                          onTap: (){
-                                            Get.dialog(
-                                              AlertDialog(
-                                                backgroundColor: Colors.transparent,
-                                                contentPadding: EdgeInsets.zero,
-                                                insetPadding:  EdgeInsets.only(left: 0),
-                                                content: SaveOrEditBlogDialog(
-                                                  title: widget.blogData['title'] ,
-                                                  copyText:controller!.getSelection()!.text!,
-                                                  controller:Get.put(SaveOrEditBlogController()),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                          child: Container(
-                                            height:Get.height*0.04,
-                                            width: Get.width*0.23,
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.black12),
-                                            child: Center(child: TextWidget(text: "Image",color: Colors.black,fsize: 14,)),
-
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal:10,vertical: 20),
-                                        child: InkWell(
-                                          onTap: (){
-                                            Get.dialog(
-                                              AlertDialog(
-                                                backgroundColor: Colors.transparent,
-                                                contentPadding: EdgeInsets.zero,
-                                                insetPadding:  EdgeInsets.only(left: 0),
-                                                content:Container(
-                                                  height: Get.height*0.6,
-                                                  width: Get.width*0.5,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.white,
-                                                    borderRadius: BorderRadius.circular(12)
-
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 20),
+                                  child: InkWell(
+                                    onTap: () {
+                                      Get.dialog(
+                                        AlertDialog(
+                                          backgroundColor:
+                                          Colors.transparent,
+                                          contentPadding: EdgeInsets.zero,
+                                          insetPadding:
+                                          EdgeInsets.only(left: 0),
+                                          content: Container(
+                                            height: Get.height * 0.6,
+                                            width: Get.width * 0.5,
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                borderRadius:
+                                                BorderRadius.circular(
+                                                    12)),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                children: [
+                                                  SizedBox(
+                                                    height: 10,
                                                   ),
-                                                  child: SingleChildScrollView(
-                                                    child: Column(
-                                                      children: [
-                                                        SizedBox(height: 10,),
-                                                        TextWidget(text:'Private Notes', color:Colors.black, fsize: 12),
-                                                        Padding(
-                                                          padding: const EdgeInsets.all(25.0),
-                                                          child: Container(
-                                                              decoration: BoxDecoration(
-                                                                border: Border.all(
-                                                                  color: Colors.black,
-                                                                  width: 1, // Adjust the width as needed
-                                                                ),
-                                                              ),
-                                                              child: Padding(
-                                                                padding: const EdgeInsets.all(20.0),
-                                                                child:
-                                                                TextWidget(text: controller!.getSelection()!.text!, color:Colors.black, fsize: 12),
-                                                              )),
-                                                        ),
-                                                        Padding(
-                                                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                                          child: CustomTextFormField(
-                                                            controller: noteController.noteTextController,
-                                                            textStyle: CustomTextStyles.bodySmallGray50005,
-                                                            hintText: "   Note",
-                                                            hintStyle: CustomTextStyles.bodySmallGray50005,
-                                                            textInputType: TextInputType.visiblePassword,
-                                                            prefixConstraints: BoxConstraints(
-                                                              maxHeight: getVerticalSize(
-                                                                48,
-                                                              ),
-                                                            ),
-                                                            suffixConstraints: BoxConstraints(
-                                                              maxHeight: getVerticalSize(
-                                                                48,
-                                                              ),
-                                                            ),
-                                                            filled: true,
-                                                            fillColor: appTheme.gray50,
+                                                  TextWidget(
+                                                      text: 'Private Notes',
+                                                      color: Colors.black,
+                                                      fsize: 12),
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .all(25.0),
+                                                    child: Container(
+                                                        decoration:
+                                                        BoxDecoration(
+                                                          border:
+                                                          Border.all(
+                                                            color: Colors
+                                                                .black,
+                                                            width:
+                                                            1, // Adjust the width as needed
                                                           ),
                                                         ),
-
-                                                        InkWell(
-                                                          onTap: (){
-                                                            noteController.notesList(context: context,
-                                                                selectedText:controller!.getSelection()!.text!,
-                                                                noteComment: noteController.noteTextController.text, title:widget.blogData['title']);
-                                                          },
-                                                          child: Padding(
-                                                            padding: const EdgeInsets.all(8.0),
-                                                            child: Container(
-                                                              height: Get.height*0.05,
-                                                              width: Get.width*0.2,
-                                                              decoration: BoxDecoration(
-                                                                  borderRadius: BorderRadius.circular(12),
-                                                                  color: Colors.deepOrange),
-                                                              child: Center(
-                                                                child: TextWidget(
-                                                                  text: 'Saved',color: Colors.white,fsize: 14,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        )
-                                                      ],
+                                                        child: Padding(
+                                                          padding:
+                                                          const EdgeInsets
+                                                              .all(
+                                                              20.0),
+                                                          child: TextWidget(
+                                                              text: latestBlogController
+                                                                  .selectedText,
+                                                              color: Colors
+                                                                  .black,
+                                                              fsize: 12),
+                                                        )),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                    const EdgeInsets
+                                                        .symmetric(
+                                                        horizontal:
+                                                        18.0),
+                                                    child:
+                                                    CustomTextFormField(
+                                                      controller: noteController
+                                                          .noteTextController,
+                                                      textStyle:
+                                                      CustomTextStyles
+                                                          .bodySmallGray50005,
+                                                      hintText: "   Note",
+                                                      hintStyle:
+                                                      CustomTextStyles
+                                                          .bodySmallGray50005,
+                                                      textInputType:
+                                                      TextInputType
+                                                          .visiblePassword,
+                                                      prefixConstraints:
+                                                      BoxConstraints(
+                                                        maxHeight:
+                                                        getVerticalSize(
+                                                          48,
+                                                        ),
+                                                      ),
+                                                      suffixConstraints:
+                                                      BoxConstraints(
+                                                        maxHeight:
+                                                        getVerticalSize(
+                                                          48,
+                                                        ),
+                                                      ),
+                                                      filled: true,
+                                                      fillColor:
+                                                      appTheme.gray50,
                                                     ),
                                                   ),
-                                                ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      noteController.notesList(
+                                                          context: context,
+                                                          selectedText:
+                                                          latestBlogController
+                                                              .selectedText,
+                                                          noteComment:
+                                                          noteController
+                                                              .noteTextController
+                                                              .text,
+                                                          title: widget
+                                                              .blogData[
+                                                          'title']);
+                                                    },
+                                                    child: Padding(
+                                                      padding:
+                                                      const EdgeInsets
+                                                          .all(8.0),
+                                                      child: Container(
+                                                        height: Get.height *
+                                                            0.05,
+                                                        width:
+                                                        Get.width * 0.2,
+                                                        decoration: BoxDecoration(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                12),
+                                                            color: Colors
+                                                                .deepOrange),
+                                                        child: Center(
+                                                          child: TextWidget(
+                                                            text: 'Saved',
+                                                            color: Colors
+                                                                .white,
+                                                            fsize: 14,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  )
+                                                ],
                                               ),
-                                            );
-
-                                          },
-                                          child: Container(
-                                            height:Get.height*0.06,
-                                            width: Get.width*0.23,
-                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(25),color: Colors.black12),
-                                            child: Center(child: TextWidget(text: "Notes",color: Colors.black,fsize: 14,)),
-
+                                            ),
                                           ),
                                         ),
-                                      ),
-
-                                    ],
+                                      );
+                                    },
+                                    child: Container(
+                                      height: Get.height * 0.06,
+                                      width: Get.width * 0.23,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                          BorderRadius.circular(25),
+                                          color: Colors.black12),
+                                      child: Center(
+                                          child: TextWidget(
+                                            text: "Notes",
+                                            color: Colors.black,
+                                            fsize: 14,
+                                          )),
+                                    ),
                                   ),
-                                ],
-                              ),
-
-                            ));
-
-                  return true;
-                  },
-                  ),
-                      // SelectableMenuItem(
-                      //   title: 'Share',
-                      //   isEnabled: (controller) => controller!.isTextSelected,
-                      //   handler: (controller) {
-                      //     String selectedText =controller!.getSelection()!.text!;
-                      //     Share.share(selectedText);
-                      //     return true;
-                      //   },
-                      // ),
-                ],
-              ),
+                                ),
+                              ],
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(horizontal: 25),
+                              width: Get.width,
+                              height: 50,
+                              child: ListView.builder(
+                                  itemCount: latestBlogController
+                                      .colorsList.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        latestBlogController.selectedColor =
+                                        latestBlogController
+                                            .colorsList[index];
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.symmetric(
+                                            horizontal: 5),
+                                        width: 50,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: latestBlogController
+                                                .colorsList[index],
+                                            borderRadius:
+                                            BorderRadius.circular(50)),
+                                      ),
+                                    );
+                                  }),
+                            )
+                          ],
                         ),
-                        // Align(
-                        //   alignment: Alignment.topRight,
-                        //   child: SizedBox(
-                        //     width: getHorizontalSize(
-                        //       311,
-                        //     ),
-                        //     child: Padding(
-                        //       padding: const EdgeInsets.symmetric(vertical: 8.0),
-                        //       child: SelectableText(
-                        //         widget.blogData['description'],
-                        //         maxLines: 17,
-                        //         textAlign: TextAlign.left,
-                        //         style: CustomTextStyles.bodySmallBlack900,
-                        //
-                        //
-                        //       ),
-                        //     ),
-                        //   ),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
+                      ),
+                    ))
+                    : SizedBox.shrink();
+              })
+            ],
           ),
         ),
         // floatingActionButton: InkWell(
@@ -425,4 +541,3 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
     );
   }
 }
-
