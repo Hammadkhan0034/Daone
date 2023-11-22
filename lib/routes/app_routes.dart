@@ -1,3 +1,5 @@
+import 'package:daone/presentation/create_images/binding/create_image_binding.dart';
+import 'package:daone/presentation/create_images/view/create_image_view.dart';
 import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
 import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
 import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_view.dart';
@@ -198,6 +200,8 @@ class AppRoutes {
 
   static const String visualizationRoute ='/visualization';
 
+  static const String createImageRoute ='/createImage';
+
 
 
   static List<GetPage> pages = [
@@ -206,6 +210,13 @@ class AppRoutes {
       page: () => MyDashBoard(),
       bindings: [
         DashBoardBinding(),
+      ],
+    ),
+    GetPage(
+      name: createImageRoute,
+      page: () => CreateImageView(),
+      bindings: [
+        CreateImageBinding()
       ],
     ),
     GetPage(

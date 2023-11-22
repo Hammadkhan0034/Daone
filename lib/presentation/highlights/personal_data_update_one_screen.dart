@@ -114,7 +114,7 @@ class PersonalDataUpdateOneScreen
                           ),
 
   //                        color: Colors.green,
-image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
+// image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit.cover),
                         ),
                         width: Get.width*0.6,
                         // height: Get.height*0.2,
@@ -180,12 +180,22 @@ image: DecorationImage(image: NetworkImage(higlightData['imageUrl']),fit: BoxFit
                                     child:  Center(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                                        child:Text(
-                                          higlightData['selectedText'],
-                                          style: GoogleFonts.getFont(
-                                            'Roboto',
-                                            fontSize: higlightData['fontSize'],
-                                            color: Colors.black,
+                                        child:Container(
+                                          width: Get.width*0.9,
+                                          height: Get.height*0.3,
+                                         // color: Colors.orange,
+                                          child: SingleChildScrollView(
+                                            child: Text(
+                                              higlightData['selectedText'],
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.left,
+                                              maxLines: 5,
+                                              style: GoogleFonts.getFont(
+                                                'Roboto',
+                                                fontSize: higlightData['fontSize'],
+                                                color: Colors.black,
+                                              ),
+                                            ),
                                           ),
                                         ),
                                       ),

@@ -36,8 +36,8 @@ class VisualizationView extends StatelessWidget {
         child: Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Text('Visualization',style: GoogleFonts.glassAntiqua(
-              fontSize: 35,color: Colors.black
+            title: Text('Visualization',style: GoogleFonts.playfairDisplay(
+              fontSize: 30,color: Colors.black
             )),
     leadingWidth: 68,
     leading: AppbarIconbutton(

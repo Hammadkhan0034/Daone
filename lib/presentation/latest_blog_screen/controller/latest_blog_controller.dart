@@ -12,11 +12,23 @@ class LatestBlogController extends GetxController {
   final  RxString _selectedText = "".obs;
 
   List<Color> colorsList = [
-    Colors.grey,
     Colors.red,
-    Colors.yellow,
+    Colors.pink,
+    Colors.purple,
+    Colors.deepPurple,
+    Colors.indigo,
     Colors.blue,
-    Colors.green
+    Colors.lightBlue,
+    Colors.cyan,
+    Colors.teal,
+    Colors.green,
+    Colors.lightGreen,
+    Colors.lime,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.deepOrange,
+    Colors.brown,
   ];
   final user = FirebaseAuth.instance.currentUser!.email;
   TextEditingController noteTextController = TextEditingController();

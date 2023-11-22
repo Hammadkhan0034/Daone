@@ -1,5 +1,6 @@
 import 'package:daone/core/app_export.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: must_be_immutable
 class AppbarSubtitle2 extends StatelessWidget {
@@ -30,9 +31,9 @@ class AppbarSubtitle2 extends StatelessWidget {
           text,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.left,
-          style: CustomTextStyles.titleMediumGray90003Medium.copyWith(
-            color: appTheme.gray90003,
-          ),
+          style:GoogleFonts.playfairDisplay(
+            fontWeight: FontWeight.w600,fontSize: 22
+          )
         ),
       ),
     );

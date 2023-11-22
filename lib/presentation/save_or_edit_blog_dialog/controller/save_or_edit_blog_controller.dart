@@ -101,7 +101,8 @@ class SaveOrEditBlogController extends GetxController {
           'textColor': color,
           'fontFamily': fontFamily,
           'fontSize': fontSize,
-          'title': title
+          'title': title,
+          'isHighlighted': false
 
 
         });  // Data saved successfully
@@ -110,7 +111,7 @@ class SaveOrEditBlogController extends GetxController {
 
         // Hide the progress indicator and navigate
         Navigator.of(context).pop();
-        Get.offAndToNamed(AppRoutes.blogScreen);
+        Get.offAndToNamed(AppRoutes.dashboardRoute);
       } else {
         // Handle the case where the user is not authenticated
         print('User is not authenticated');

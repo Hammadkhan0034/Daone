@@ -9,9 +9,9 @@ import 'package:flutter/material.dart';
 
 class SaveOrEditBlogDialog extends StatelessWidget {
   SaveOrEditBlogController controller;
-  String? copyText,title;
+  String? copyText,title,fontName;
 
-  SaveOrEditBlogDialog({ required this.controller,required this.copyText,required this.title});
+  SaveOrEditBlogDialog({ required this.controller,required this.copyText,required this.title,required this.fontName});
   @override
   Widget build(BuildContext context) {
     // ... (previous widget implementation remains the same)
@@ -198,6 +198,7 @@ class SaveOrEditBlogDialog extends StatelessWidget {
               onTap: (){
                 controller.higlightslist(context: context,fontSize: controller.selectedFontSize.value,selectedText: copyText!,
                 color: controller.selectedTextColor.value,imageUrl: controller.selectedBackground.value,
+                  fontFamily: controller.selectedFontFamily.value,
                   title:title!);
                 //context,controller.displayText.value,controller.selectedBackground.value,
               },

@@ -1,6 +1,7 @@
 import 'package:daone/presentation/view_all_task_tab_container_screen/widgets/all_tasks_list.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 import '../../core/utils/image_constant.dart';
@@ -24,12 +25,24 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar:AppBar(
-          elevation: 1.8,
-          backgroundColor: Colors.white,
+        appBar: AppBar(
           centerTitle: true,
-          title: TextWidget(text:"lbl_tasks".tr,color: Colors.black,fsize: 24,font: FontWeight.w600,
-          ),
+          backgroundColor: Colors.white,
+          title: Text('Task',style: GoogleFonts.playfairDisplay(
+              fontSize: 30,color: Colors.black
+          )),
+          leadingWidth: 68,
+          leading: AppbarIconbutton(
+            onTap: (){
+              Get.back();
+            },
+
+            svgPath: ImageConstant.imgInfo,
+            margin: getMargin(
+              left: 30,
+              top: 10,
+              bottom: 5,
+            ),),
         ),
         body: SizedBox(
           width: double.maxFinite,

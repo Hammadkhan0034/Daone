@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/latest_blog_screen/controller/latest_blog_controller.dart';
 import 'package:daone/widgets/text_widget.dart';
@@ -8,6 +9,7 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
 import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
 import 'package:daone/widgets/app_bar/custom_app_bar.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:selectable/selectable.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -135,20 +137,19 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                 ),
                 child: SingleChildScrollView(
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: Get.height * 0.25,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.deepOrange,
-                          borderRadius: BorderRadius.circular(12),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                              widget.blogData['imageUrl'] ??
-                                  'https://images.pexels.com/photos/1337382/pexels-photo-1337382.jpeg?auto=compress&cs=tinysrgb&w=400',
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: CachedNetworkImage(
+                          height: Get.height * 0.2,
+                          width: double.infinity,
+                          imageUrl: widget.blogData['imageUrl'] ??
+                              'https://images.pexels.com/photos/1337382/pexels-photo-1337382.jpeg?auto=compress&cs=tinysrgb&w=400',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Center(child: CircularProgressIndicator()), // You can customize the placeholder
+                          errorWidget: (context, url, error) => Icon(Icons.error),
                         ),
                       ),
                       Container(
@@ -157,19 +158,25 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                         ),
                         margin: getMargin(
                           top: 12,
-                          right: 18,
+                          bottom: 12,
                         ),
-                        child: Text(
-                          widget.blogData['title'] ?? 'No title',
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.left,
-                          style: CustomTextStyles.titleMediumBlack900,
+                        child: Column(
+                          children: [
+                            Text(
+                              widget.blogData['title'] ?? 'No title',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.left,
+                              style:GoogleFonts.playfairDisplay(
+                                fontSize: 20,fontWeight: FontWeight.w700
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       Container(
                         height: getVerticalSize(
-                          360,
+                          420,
                         ),
                         width: getHorizontalSize(
                           311,
@@ -185,28 +192,46 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                       latestBlogController.selectedColor,
                                       selectionHandleColor: Colors.red,
                                     )),
-                                child: SelectableText(
-                                  widget.blogData['description'],
-                                  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    color:latestBlogController.selectedText.isEmpty? Colors.black:Colors.white,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: [
+                                      SelectableText(
+                                        widget.blogData['description'],
+                                        textAlign: TextAlign.justify,
+                                  
+                                        style: GoogleFonts.playfairDisplay(
+                                          color:Colors.black,
+                                          fontSize: 18
+                                        ),
+                                        cursorColor: Colors.red,
+                                        onSelectionChanged: (selection, cause) {
+                                          latestBlogController.selectedText =
+                                              selection.textInside(
+                                                  widget.blogData['description']);
+                                          if (latestBlogController
+                                              .selectedText.isEmpty) {
+                                            latestBlogController
+                                                .shouldShowBottomMenu = false;
+                                          } else {
+                                            latestBlogController
+                                                .shouldShowBottomMenu = true;
+                                          }
+                                  
+                                          print(latestBlogController.selectedText);
+                                        },
+                                      ),
+                                      Obx(() {
+                                        return latestBlogController.shouldShowBottomMenu
+                                            ? Container(
+                                            //  color: Colors.pink,
+                                              height: Get.height * 0.3,
+                                              padding: EdgeInsets.symmetric(horizontal: 10),
+                                            )
+                                            : SizedBox.shrink();
+                                      })
+                                  
+                                    ],
                                   ),
-                                  cursorColor: Colors.red,
-                                  onSelectionChanged: (selection, cause) {
-                                    latestBlogController.selectedText =
-                                        selection.textInside(
-                                            widget.blogData['description']);
-                                    if (latestBlogController
-                                        .selectedText.isEmpty) {
-                                      latestBlogController
-                                          .shouldShowBottomMenu = false;
-                                    } else {
-                                      latestBlogController
-                                          .shouldShowBottomMenu = true;
-                                    }
-
-                                    print(latestBlogController.selectedText);
-                                  },
                                 ),
                               );
                             })),
@@ -218,14 +243,20 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
               Obx(() {
                 return latestBlogController.shouldShowBottomMenu
                     ? Positioned(
-                    bottom: 20,
+                    bottom: 0,
                     child: Container(
+                      color: Colors.white,
                       height: Get.height * 0.3,
                       padding: EdgeInsets.symmetric(horizontal: 10),
                       child: Card(
+                        color: Colors.white,
                         elevation: 10,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(12),
+                            topLeft: Radius.circular(12),
+                          ),
+                        ),
                         child: Column(
                           children: [
                             Container(
@@ -291,6 +322,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                           insetPadding:
                                           EdgeInsets.only(left: 0),
                                           content: SaveOrEditBlogDialog(
+                                            fontName:controller2.selectedFontFamily.value,
                                             title: widget.blogData['title'],
                                             copyText: latestBlogController
                                                 .selectedText,
@@ -301,7 +333,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                       );
                                     },
                                     child: Container(
-                                      height: Get.height * 0.04,
+                                      height: Get.height * 0.06,
                                       width: Get.width * 0.23,
                                       decoration: BoxDecoration(
                                           borderRadius:

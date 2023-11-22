@@ -159,7 +159,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                     //   width: Get.width * 0.36,
                     // ),
                     Spacer(),
-                    Image.asset(ImageConstant.notificationIcon, scale: 3.3),
+                    // Image.asset(ImageConstant.notificationIcon, scale: 3.3),
                   ],
                 ),
               ),

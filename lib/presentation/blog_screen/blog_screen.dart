@@ -61,6 +61,7 @@ class BlogScreen extends GetWidget<BlogController> {
                       left: 3,
                       top: 32,
                       right: 4,
+                      bottom: 5
                     ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -69,7 +70,9 @@ class BlogScreen extends GetWidget<BlogController> {
                           "lbl_latest_blog".tr,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: CustomTextStyles.titleMediumGray90003Medium,
+                          style:GoogleFonts.playfairDisplay(
+                              fontSize: 23,fontWeight: FontWeight.w700
+                          ),
                         ),
                         Padding(
                           padding: getPadding(
@@ -134,7 +137,9 @@ class BlogScreen extends GetWidget<BlogController> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
-                                    style: CustomTextStyles.titleMediumGray90003Medium,
+                                    style:GoogleFonts.playfairDisplay(
+                                        fontSize: 20,fontWeight: FontWeight.w700
+                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -144,7 +149,9 @@ class BlogScreen extends GetWidget<BlogController> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallBlack900,
+                                    style:GoogleFonts.playfairDisplay(
+                                        fontSize: 12,fontWeight: FontWeight.w400
+                                    ),
                                   ),
                                 ),
                               ],
@@ -165,7 +172,9 @@ class BlogScreen extends GetWidget<BlogController> {
                       "lbl_recent_blogs".tr,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
-                      style: CustomTextStyles.titleSmallPoppinsBlack900SemiBold,
+                      style:GoogleFonts.playfairDisplay(
+                          fontSize: 20,fontWeight: FontWeight.w700
+                      ),
                     ),
                   ),
                   StreamBuilder(
@@ -227,15 +236,15 @@ class BlogScreen extends GetWidget<BlogController> {
                                               Padding(
                                                 padding: EdgeInsets.symmetric(horizontal: 2.0),
                                                 child: Container(
+                                                  //color: Colors.pinkAccent,
+                                                  width: Get.width*0.6,
                                                   child: Text(
                                                     title,
                                                     overflow: TextOverflow.fade,
                                                     maxLines: 2,
                                                     textAlign: TextAlign.left,
-                                                    style: GoogleFonts.poppins(
-                                                      fontSize: 10,
-                                                      color: Colors.black,
-                                                      fontWeight: FontWeight.bold,
+                                                    style:GoogleFonts.playfairDisplay(
+                                                        fontSize: 13,fontWeight: FontWeight.w800
                                                     ),
                                                   ),
                                                 ),
@@ -272,7 +281,7 @@ class BlogScreen extends GetWidget<BlogController> {
                                     ),
                                   ),
                                 ),
-                                SizedBox(height: 10,),
+                                SizedBox(height: 20,),
                               ],
                             );
                           },
