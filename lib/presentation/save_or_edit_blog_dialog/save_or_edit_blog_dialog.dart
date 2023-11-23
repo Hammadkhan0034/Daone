@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../widgets/text_widget.dart';
@@ -120,7 +121,7 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                  activeColor: Colors.deepOrange,
                  inactiveColor: Colors.deepOrange,
                  min: 8.0,
-                 max: 16.0,
+                 max: 19.0,
                  onChanged: (value) {
                    controller.updateSelectedFontSize(value);
                  },
@@ -162,9 +163,31 @@ class SaveOrEditBlogDialog extends StatelessWidget {
                                     width: Get.width * 0.3,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(12),
-                                      image: DecorationImage(
-                                        image: NetworkImage(background),
-                                        fit: BoxFit.cover,
+                                      // image: DecorationImage(
+                                      //   image: NetworkImage(background),
+                                      //   fit: BoxFit.cover,
+                                      // ),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: CachedNetworkImage(
+                                        imageUrl: background, // Replace newBackgroundURL with the new image URL
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          height: Get.height * 0.13,
+                                          width: Get.width * 0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) =>
+                                            Center(
+                                                child:
+                                        CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
                                       ),
                                     ),
                                   ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:daone/widgets/text_widget.dart';
 
 import 'controller/edit_affirmation_controller.dart';
@@ -151,28 +152,41 @@ class EditAffirmationDialog extends StatelessWidget {
                                           background);
                                       Get.back();
                                     },
-                                    child: Column(
-                                      children: [
-                                        ListTile(
-                                          title: Text("Background ${index + 1}"),
-
-                                        ),
-                                        Container(
-                                          height: Get.height * 0.05,
-                                          width: Get.width * 0.5,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            image: DecorationImage(
-                                                image: NetworkImage(
-                                                  controller.availableBackgrounds[
-                                                  index],
-                                                ),
-                                                fit: BoxFit.cover),
-                                                
+                                    child: Container(
+                                      height: Get.height * 0.2,
+                                      width: Get.width * 0.5,
+                                      padding: EdgeInsets.symmetric(vertical: 10),
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        // image: DecorationImage(
+                                        //     image: NetworkImage(
+                                        //       controller.availableBackgrounds[
+                                        //       index],
+                                        //     ),
+                                          //  fit: BoxFit.cover),
+                                      ),
+                                      child:ClipRRect(
+                                        borderRadius: BorderRadius.circular(12),
+                                        child: CachedNetworkImage(
+                                          imageUrl: controller.availableBackgrounds[
+                                          index],
+                                          imageBuilder: (context, imageProvider) => Container(
+                                            height: Get.height * 0.13,
+                                            width: Get.width * 0.3,
+                                            decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(12),
+                                              image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
                                           ),
-
+                                          placeholder: (context, url) => Center(child:
+                                          CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
+                                          errorWidget: (context, url, error) => Icon(Icons.error),
                                         ),
-                                      ],
+                                      ),
+
                                     ),
                                   );
                                 },

@@ -231,7 +231,7 @@ class CommunityPage extends StatelessWidget {
                 stream: FirebaseFirestore.instance.collection('postCollection').snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return Center(child: CircularProgressIndicator(color: Colors.deepOrange,));
                   }
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');

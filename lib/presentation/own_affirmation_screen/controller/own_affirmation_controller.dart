@@ -35,7 +35,7 @@ class OwnAffirmationController extends GetxController{
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.uid);
+        FirebaseFirestore.instance.collection('users').doc(user.email);
 
         // Specify the path to the document you want to delete
         DocumentReference taskDocRef =

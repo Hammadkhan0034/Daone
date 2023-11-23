@@ -147,6 +147,7 @@ class _UploadVideoState extends State<UploadVideo> {
         },
         child: Icon(
           _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+          color: Colors.white,
         ),
       ),
     );
