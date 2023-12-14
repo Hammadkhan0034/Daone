@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/visualization/visualization_view/daily_intentions_videos_screen.dart';
 import 'package:daone/presentation/visualization/visualization_view/daone_videos_screen.dart';
+import 'package:daone/presentation/visualization/visualization_view/fav_videos.dart';
 import 'package:daone/presentation/visualization/visualization_view/videoplay/video_player_screen.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -47,10 +48,21 @@ class VisualizationView extends StatelessWidget {
 
     svgPath: ImageConstant.imgInfo,
     margin: getMargin(
-    left: 30,
+    left: 10,
     top: 10,
     bottom: 5,
     ),),
+            actions: [
+              InkWell(
+                onTap: (){
+                  Get.to(()=>FavVideos());
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                  child: Icon(Icons.favorite,color: Colors.deepOrange,size: 30),
+                ),
+              ),
+            ],
           ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
