@@ -112,10 +112,22 @@ class AddTaskController extends GetxController {
 
 
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
+  void selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: selectedDate.value ?? DateTime.now(),
+      firstDate: DateTime(2000),
+      lastDate: DateTime(2101),
+    );
 
-  void updateSelectedDate(DateTime? date){
-  selectedDate.value = date;
+    if (picked != null && picked != selectedDate.value) {
+      selectedDate.value = picked;
+    }
   }
+  //
+  // void updateSelectedDate(DateTime? date){
+  // selectedDate.value = date;
+  // }
 
 
 
@@ -175,6 +187,7 @@ class AddTaskController extends GetxController {
       Get.snackbar('Error', 'User is not authenticated');
     });
   }
+
 
 
 

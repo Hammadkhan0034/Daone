@@ -112,6 +112,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         TextWidget(
                             text: "lbl_welcome_back2".tr,
                             color: Colors.black38,
+                            fontFamily: 'Gotham Light',
+                            font: FontWeight.w400,
                             fsize: 12),
                         StreamBuilder(
                           stream: FirebaseFirestore.instance
@@ -149,7 +151,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                   text: fullName,
                                   color: Colors.black,
                                   fsize: 20,
-                                  font: FontWeight.bold),
+                                  fontFamily: 'Gotham Light',
+                                  font: FontWeight.w800),
                             );
                           },
                         ),
@@ -249,8 +252,12 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .titleSmallPoppinsWhiteA70015,
+                                              style:TextStyle(
+                                                fontSize: 18,
+                                                fontFamily: 'Gotham Light',
+                                                fontWeight: FontWeight.w800,
+                                                color: Colors.white
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -280,6 +287,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                               child: TextWidget(
                                                   text: "Read more",
                                                   color: Colors.white,
+                                                  fontFamily: 'Gotham Light',
+                                                  font: FontWeight.w400,
                                                   fsize: 10)),
                                         ),
                                       ],
@@ -408,6 +417,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                         TextWidget(
                                           text: "Completed",
                                           color: Colors.white,
+                                          fontFamily: 'Gotham Light',
+                                          font: FontWeight.w800,
                                           fsize: 20,
                                         ),
                                         SizedBox(
@@ -486,9 +497,11 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                     children: [
                                       Center(
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                                          child: Text('Create Your Affirmation',style: GoogleFonts.glassAntiqua(
-                                              fontSize: 28,color: Colors.white,fontWeight: FontWeight.w700
+                                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                                          child: Text('Create your own affirmation',style: TextStyle(
+                                              fontFamily: 'Gotham Light',
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 20,color: Colors.white,
                                           )),
                                         ),
                                       ),
@@ -525,6 +538,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                               child: TextWidget(
                                             text:
                                                 affirmationData['affirmation'],
+                                                fontFamily: 'Gotham Light',
+                                                font: FontWeight.w800,
                                             fsize: 13,
                                             color: Colors.black,
                                           )),
@@ -620,14 +635,16 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                   SizedBox(
                                     height: Get.height * 0.02,
                                   ),
-                                  Image.asset(ImageConstant.ladyImg, scale: 4),
+                                  Image.asset(ImageConstant.ladyImg, scale: 5),
                                   SizedBox(
                                     height: Get.height * 0.01,
                                   ),
                                   TextWidget(
-                                      text: "Daily Intention",
+                                      text: "Daily \nIntention",
+                                      fontFamily: 'Gotham Light',
+                                      font: FontWeight.w800,
                                       color: Colors.white,
-                                      fsize: 16),
+                                      fsize: 20),
                                 ],
                               ),
                             ),

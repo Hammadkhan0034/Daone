@@ -105,3 +105,10 @@ flutter:
           weight: 400
         - asset: assets/fonts/RobotoMedium.ttf
           weight: 500
+
+    - family: Gotham Light
+      fonts:
+        - asset: fonts/GOTHMLIG.ttf
+          weight: 400
+        - asset: fonts/GOTHMBOK2.ttf
+          weight: 800

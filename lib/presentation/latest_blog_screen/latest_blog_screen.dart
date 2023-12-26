@@ -103,26 +103,27 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
         //   ),
         // ),
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            97,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Latest Blogs',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
             onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 5,
             ),
           ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "latest Blogs",
-          ),
+
         ),
         body: Container(
           width: mediaQueryData.size.width,
@@ -153,6 +154,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                         ),
                       ),
                       Container(
+                        //color: Colors.orangeAccent,
                         width: getHorizontalSize(
                           299,
                         ),
@@ -167,8 +169,9 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
-                              style:GoogleFonts.playfairDisplay(
-                                fontSize: 20,fontWeight: FontWeight.w700
+                              style:TextStyle(
+                                fontFamily: 'Gotham Light',
+                                fontSize: 18,fontWeight: FontWeight.w800
                               ),
                             ),
                           ],
@@ -199,9 +202,11 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                         widget.blogData['description'],
                                         textAlign: TextAlign.justify,
                                   
-                                        style: GoogleFonts.playfairDisplay(
+                                        style: TextStyle(
+                                          fontFamily: 'Gotham Light',
+                                          fontWeight: FontWeight.w400,
                                           color:Colors.black,
-                                          fontSize: 18
+                                          fontSize: 16
                                         ),
                                         cursorColor: Colors.red,
                                         onSelectionChanged: (selection, cause) {
@@ -277,8 +282,9 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 TextWidget(
                                   text: widget.blogData['title'],
                                   color: Colors.black,
+                                  fontFamily: 'Gotham Light',
                                   fsize: 15,
-                                  font: FontWeight.w700,
+                                  font: FontWeight.w800,
                                 ),
                               ],
                             ),
@@ -303,6 +309,8 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                       child: Center(
                                           child: TextWidget(
                                             text: "Share",
+                                            fontFamily: 'Gotham Light',
+                                            font: FontWeight.w800,
                                             color: Colors.black,
                                             fsize: 14,
                                           )),
@@ -342,6 +350,8 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                       child: Center(
                                           child: TextWidget(
                                             text: "Image",
+                                            fontFamily: 'Gotham Light',
+                                            font: FontWeight.w800,
                                             color: Colors.black,
                                             fsize: 14,
                                           )),
@@ -376,6 +386,8 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                                   ),
                                                   TextWidget(
                                                       text: 'Private Notes',
+                                                      fontFamily: 'Gotham Light',
+                                                      font: FontWeight.w800,
                                                       color: Colors.black,
                                                       fsize: 12),
                                                   Padding(

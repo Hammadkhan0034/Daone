@@ -59,9 +59,10 @@ class _StatsScreenState extends State<StatsScreen> {
                   children: [
                     TextWidget(
                       text: "lbl_daily_affirmations_progress".tr,
+                      fontFamily: 'Gotham Light',
+                      font: FontWeight.w800,
                       color: Colors.black,
                       fsize: 16,
-                      font: FontWeight.w600,
                     ),
                     Container(
                       width: Get.width * 0.17,
@@ -150,9 +151,10 @@ class _StatsScreenState extends State<StatsScreen> {
                             Center(
                                 child: TextWidget(
                                   text: "lbl_affirmation_completed".tr,
+                                  fontFamily: 'Gotham Light',
+                                  font: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
-                                  font: FontWeight.w500,
                                 )),
                           ],
                         ),
@@ -222,9 +224,10 @@ class _StatsScreenState extends State<StatsScreen> {
                             Center(
                                 child: TextWidget(
                                   text: "lbl_intentions_completed".tr,
+                                  fontFamily: 'Gotham Light',
+                                  font: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
-                                  font: FontWeight.w500,
                                 )),
                           ],
                         ),
@@ -294,9 +297,10 @@ class _StatsScreenState extends State<StatsScreen> {
                             Center(
                                 child: TextWidget(
                                   text: "lbl_tasks_completed".tr,
+                                  fontFamily: 'Gotham Light',
+                                  font: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
-                                  font: FontWeight.w500,
                                 )),
                           ],
                         ),
@@ -359,9 +363,10 @@ class _StatsScreenState extends State<StatsScreen> {
                             Center(
                                 child: TextWidget(
                                   text: "lbl_blog_read".tr,
+                                  fontFamily: 'Gotham Light',
+                                  font: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
-                                  font: FontWeight.w500,
                                 )),
                           ],
                         ),
@@ -373,9 +378,10 @@ class _StatsScreenState extends State<StatsScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 18.0),
                   child: TextWidget(
                     text: "lbl_week_badges".tr,
+                    fontFamily: 'Gotham Light',
+                    font: FontWeight.w800,
                     color: Colors.black,
                     fsize: 16,
-                    font: FontWeight.w600,
                   ),
                 ),
                 StreamBuilder(
@@ -430,17 +436,17 @@ class _StatsScreenState extends State<StatsScreen> {
                     }
                   },
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
-                  child: TextWidget(text: 'Weekly Improvement Graph', color: Colors.black, fsize: 17,
-                      font: FontWeight.w600),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: AspectRatio(
-                      aspectRatio: 1.9,
-                      child: ChartWidget()),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 20),
+                //   child: TextWidget(text: 'Weekly Improvement Graph', color: Colors.black, fsize: 17,
+                //       font: FontWeight.w600),
+                // ),
+                // Padding(
+                //   padding: const EdgeInsets.all(8.0),
+                //   child: AspectRatio(
+                //       aspectRatio: 1.9,
+                //       child: ChartWidget()),
+                // ),
               ],
             ),
           ),

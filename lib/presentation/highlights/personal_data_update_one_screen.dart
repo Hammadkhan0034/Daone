@@ -25,25 +25,25 @@ class PersonalDataUpdateOneScreen
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Highlights',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 5,
             ),
-          ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "lbl_highlights".tr,
           ),
 
         ),
@@ -176,31 +176,30 @@ class PersonalDataUpdateOneScreen
                                   Container(
                                     //color: Colors.black26,
                                     width: Get.width*0.73,
-                                    height: 100,
+                                   // height: 100,
                                     child:  Center(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
                                         child:Container(
                                           width: Get.width*0.9,
-                                          height: Get.height*0.3,
+                                         // height: Get.height*0.3,
                                          // color: Colors.orange,
-                                          child: SingleChildScrollView(
-                                            child: Text(
-                                              higlightData['selectedText'],
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              maxLines: 5,
-                                              style: GoogleFonts.getFont(
-                                                'Roboto',
-                                                fontSize: higlightData['fontSize'],
-                                                color: Colors.black,
-                                              ),
+                                          child: Text(
+                                            higlightData['selectedText'],
+                                            // overflow: TextOverflow.ellipsis,
+                                            // textAlign: TextAlign.left,
+                                          //  maxLines: 5,
+                                            style: GoogleFonts.getFont(
+                                              'Roboto',
+                                              fontSize: higlightData['fontSize'],
+                                              color: Colors.black,
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  )
+                                  ),
+
 
                                 ],
                               ),

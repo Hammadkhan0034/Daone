@@ -46,9 +46,11 @@ class ContactUsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Row(
               children: [
-                Icon(Icons.email_outlined,color: Colors.deepOrange,),
+                Icon(Icons.email_outlined,color: Colors.blueAccent,),
                 SizedBox(width: Get.width*0.05),
-                TextWidget(text: "Daoneofficials@gmail.com", color:Colors.black, fsize: 18),
+                TextWidget(text: "Daoneofficials@gmail.com",
+                    fontFamily: 'Gotham Light',font: FontWeight.w800,
+                    color:Colors.black, fsize: 18),
               ],
             ),
           ),
@@ -57,9 +59,11 @@ class ContactUsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Row(
               children: [
-                Icon(Icons.phone,color: Colors.deepOrange,),
+                Icon(Icons.phone,color: Colors.blueAccent,),
                 SizedBox(width: Get.width*0.05),
-                TextWidget(text: "00986556898", color:Colors.black, fsize: 18),
+                TextWidget(text: "00986556898",
+                    fontFamily: 'Gotham Light',font: FontWeight.w800,
+                    color:Colors.black, fsize: 18),
               ],
             ),
           ),
@@ -68,9 +72,11 @@ class ContactUsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Row(
               children: [
-                Icon(Icons.telegram_outlined,color: Colors.deepOrange,),
+                Icon(Icons.telegram_outlined,color: Colors.blueAccent,),
                 SizedBox(width: Get.width*0.05),
-                TextWidget(text: "Daone Telegram", color:Colors.black, fsize: 18),
+                TextWidget(text: "Daone Telegram",
+                    fontFamily: 'Gotham Light',font: FontWeight.w800,
+                    color:Colors.black, fsize: 18),
               ],
             ),
           ),
@@ -79,7 +85,7 @@ class ContactUsPage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18.0),
             child: Row(
               children: [
-                Icon(Icons.location_on_outlined,color: Colors.deepOrange,),
+                Icon(Icons.location_on_outlined,color: Colors.blueAccent,),
                 SizedBox(width: Get.width*0.05),
                 TextWidget(text: "United States Of America", color:Colors.black, fsize: 18),
               ],

@@ -26,26 +26,27 @@ class ViewFriendsTabContainerScreen
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            97,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Friends and Groups',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 23, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 10,
             ),
           ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "Friends and Group",
-          ),
+
         ),
         body: SizedBox(
           width: double.maxFinite,
@@ -89,21 +90,31 @@ class ViewFriendsTabContainerScreen
                   ),
                   tabs: [
                     Tab(
-                      child: Text(
-                        "Users",
-                        overflow: TextOverflow.ellipsis,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 14.0),
+                        child: Text(
+                          "Users",
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                     Tab(
-                      child: Text(
-                        "lbl_friends".tr,
-                        overflow: TextOverflow.ellipsis,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 9.0),
+
+                        child: Text(
+                          "lbl_friends".tr,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                     Tab(
-                      child: Text(
-                        "lbl_groups".tr,
-                        overflow: TextOverflow.ellipsis,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: Text(
+                          "lbl_groups".tr,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                   ],

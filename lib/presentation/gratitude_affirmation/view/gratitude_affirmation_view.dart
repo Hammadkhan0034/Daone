@@ -47,7 +47,9 @@ class _GratitudeAffirmationViewState extends State<GratitudeAffirmationView> wit
           centerTitle: true,
           title: Text(
             'Gratitude',
-            style: GoogleFonts.robotoSlab(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 25,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+            ),
           ),
           leadingWidth: 68,
           leading: AppbarIconbutton(
@@ -74,12 +76,8 @@ class _GratitudeAffirmationViewState extends State<GratitudeAffirmationView> wit
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // Loading indicator while data is being fetched
                       return Center(
-                        child: Container(
-                          height: 100,
-                          width: 100,
-                          child: CircularProgressIndicator(
-                            color: Colors.deepOrangeAccent,
-                          ),
+                        child: CircularProgressIndicator(
+                          color: Colors.deepOrangeAccent,
                         ),
                       );
                     }

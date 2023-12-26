@@ -34,7 +34,10 @@ class CreateImageView extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: Text('Images',
-            style: GoogleFonts.playfairDisplay(fontSize: 30, color: Colors.black)),
+            style: TextStyle(
+                fontFamily: 'Gotham Light',
+            fontWeight: FontWeight.w800,
+              fontSize: 30, color: Colors.black)),
         leadingWidth: 68,
         leading: AppbarIconbutton(
           onTap: () {
@@ -80,9 +83,10 @@ class CreateImageView extends StatelessWidget {
               child: Center(
                 child: TextWidget(
                   text: "You don't have any Image",
+                    fontFamily: 'Gotham Light',
+                    font: FontWeight.w800,
                   color: Colors.black38,
                   fsize: 14,
-                  font: FontWeight.w500,
                 ),
               ),
             );
@@ -113,10 +117,11 @@ class CreateImageView extends StatelessWidget {
                             width: Get.width * 0.1,
                           ),
                           Container(
-                            height: Get.height * 0.06,
+                            height: Get.height * 0.05,
                             width: Get.width * 0.13,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
+                              // borderRadius: BorderRadius.circular(100),
+                              shape: BoxShape.circle,
                               border: Border.all(
                                 color: Colors.black,
                                 width: 3.0,
@@ -124,24 +129,33 @@ class CreateImageView extends StatelessWidget {
                             ),
                           ),
                           SizedBox(
-                            width: Get.width * 0.02,
+                            width: Get.width * 0.001,
                           ),
-                          Container(
-                            width: Get.width * 0.46,
-                            height: Get.height * 0.065,
-                            child: Text(
-                              'You created an image for ${highlightData['title']}',
-                              style: GoogleFonts.playfairDisplay(fontSize: 12),
+                          Stack(
+                            children:[ Container(
+                             // color: Colors.lightBlue,
+                              width: Get.width * 0.63,
+                              height: Get.height * 0.065,
+                              padding: EdgeInsets.only(top: 0),
+                              child: Text(
+                                'You created an image for ${highlightData['title']}',
+                                style: TextStyle(
+                                    fontFamily: 'Gotham Light',
+                                    fontWeight: FontWeight.w800,
+                                    fontSize:Get.width*0.03),
+                              ),
                             ),
+                            Positioned(
+                              bottom: 5,
+                              left: 1,
+                              child: Text(
+                                highlightData['date'],
+                                style: GoogleFonts.playfairDisplay(fontSize: 11),
+                              ),
+                            )
+                            ]
                           ),
-                          Container(
-                            width: Get.width * 0.17,
-                            height: Get.height * 0.065,
-                            child: Text(
-                              highlightData['date'],
-                              style: GoogleFonts.playfairDisplay(fontSize: 11),
-                            ),
-                          ),
+
                         ],
                       ),
                     ),
@@ -152,7 +166,7 @@ class CreateImageView extends StatelessWidget {
                         width: Get.width * 0.8,
                         decoration: BoxDecoration(
                           color: Colors.black,
-                          borderRadius: BorderRadius.circular(12),
+                          borderRadius: BorderRadius.circular(1),
                         ),
                         child: Stack(
                           children: [
@@ -160,7 +174,7 @@ class CreateImageView extends StatelessWidget {
                               imageUrl: highlightData['imageUrl'],
                               imageBuilder: (context, imageProvider) => Container(
                                 decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
+                                  borderRadius: BorderRadius.circular(1),
                                   image: DecorationImage(
                                     image: imageProvider,
                                     fit: BoxFit.cover,
@@ -264,11 +278,12 @@ class CreateImageView extends StatelessWidget {
                                                                     height: Get.height * 0.05,
                                                                     width: Get.width * 0.1,
                                                                     decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(100),
+                                                                      //borderRadius: BorderRadius.circular(100),
                                                                       border: Border.all(
                                                                         color: Colors.black,
                                                                         width: 3.0, // Adjust the width as needed
                                                                       ),
+                                                                      shape: BoxShape.circle,
                                                                     ),
                                                                   ),
                                                                   Column(
@@ -279,7 +294,10 @@ class CreateImageView extends StatelessWidget {
                                                                       Row(
                                                                         children: [
                                                                           SizedBox(width: Get.width*0.02),
-                                                                          TextWidget(text:'Moment', color: Colors.black, fsize:14,font: FontWeight.w500, ),
+                                                                          TextWidget(text:'Moment',
+                                                                            fontFamily: 'Gotham Light',
+                                                                            font: FontWeight.w800,
+                                                                            color: Colors.black, fsize:14, ),
                                                                           SizedBox(width: Get.width*0.04),
                                                                           TextWidget(text:formattedDate, color: Colors.black45, fsize: 12),
 
@@ -287,7 +305,9 @@ class CreateImageView extends StatelessWidget {
                                                                       ),
                                                                       Expanded(child: Padding(
                                                                         padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
-                                                                        child: TextWidget(text:commentData['comment'], color:Colors.black, fsize: 13),
+                                                                        child: TextWidget(text:commentData['comment'],
+                                                                            fontFamily: 'Gotham Light',
+                                                                            font: FontWeight.w800,color:Colors.black, fsize: 13),
                                                                       )),
                                                                       Divider(color: Colors.black12),
 
@@ -311,11 +331,12 @@ class CreateImageView extends StatelessWidget {
                                                     height: Get.height * 0.05,
                                                     width: Get.width * 0.1,
                                                     decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(100),
+                                                   //   borderRadius: BorderRadius.circular(100),
                                                       border: Border.all(
                                                         color: Colors.black,
                                                         width: 3.0, // Adjust the width as needed
                                                       ),
+                                                      shape: BoxShape.circle,
                                                     ),
                                                   ),
                                                   SizedBox( width: Get.width*0.01,  ),
@@ -354,16 +375,19 @@ class CreateImageView extends StatelessWidget {
                                                       ),
                                                     ),
                                                   ),
-                                                  InkWell(
-                                                      onTap: (){
-                                                        if (_formKey.currentState!.validate()) {
-                                                          controller.imageCommentsSection(
-                                                              context: context,postId: docId,
-                                                              comment: controller.createImageCommentController.text
-                                                          );
-                                                        }
-                                                      },
-                                                      child: Image.asset('assets/images/send.png',scale: 2.4,)),
+                                                  Padding(
+                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                    child: InkWell(
+                                                        onTap: (){
+                                                          if (_formKey.currentState!.validate()) {
+                                                            controller.imageCommentsSection(
+                                                                context: context,postId: docId,
+                                                                comment: controller.createImageCommentController.text
+                                                            );
+                                                          }
+                                                        },
+                                                        child: Image.asset('assets/images/send.png',scale: 2.4,)),
+                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -435,7 +459,8 @@ class CreateImageView extends StatelessWidget {
          PopupMenuItem<String>(
            onTap: imageShare,
           value: 'share',
-          child: Text('Share'),
+          child: Text('Share',style: TextStyle( fontFamily: 'Gotham Light',
+            fontWeight: FontWeight.w800,)),
         ),
         PopupMenuItem<String>(
           onTap: (){
@@ -457,7 +482,8 @@ class CreateImageView extends StatelessWidget {
             );
           },
           value: 'createImage',
-          child: Text('Create Image'),
+          child: Text('Create Image',style: TextStyle( fontFamily: 'Gotham Light',
+            fontWeight: FontWeight.w800,)),
         ),
       ],
     );

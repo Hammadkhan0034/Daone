@@ -2,6 +2,7 @@
 import 'package:image_picker/image_picker.dart';
 
 import '../../widgets/text_widget.dart';
+import '../visualization/visualization_view/daily_intentions_videos_screen.dart';
 import 'controller/daily_intension_record_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -160,7 +161,11 @@ class DailyIntensionRecordScreen
                   "msg_record_your_today_s".tr,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.left,
-                  style: CustomTextStyles.titleLargeGray90002,
+                  style:TextStyle(
+                    fontFamily: 'Gotham Light',
+                    fontWeight: FontWeight.w800,
+                    color: Colors.black,fontSize: 19
+                  )
                 ),
               ),
               Container(
@@ -169,7 +174,7 @@ class DailyIntensionRecordScreen
                 ),
                 margin: getMargin(
                   left: 23,
-                  top: 11,
+                   top: 11,
                   right: 21,
                 ),
                 child: Text(
@@ -177,7 +182,11 @@ class DailyIntensionRecordScreen
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   textAlign: TextAlign.center,
-                  style: CustomTextStyles.bodySmallGray60005,
+                  style:TextStyle(
+                      fontFamily: 'Gotham Light',
+                      fontWeight: FontWeight.w400,
+                      color: Colors.black45,fontSize: 12
+                  )
                 ),
               ),
               CustomElevatedButton(
@@ -218,7 +227,10 @@ class DailyIntensionRecordScreen
                                       Icon(Icons.phone_android,size: 40,color: Colors.white),
                                       SizedBox(width: Get.width*0.03,),
                                       TextWidget(color: Colors.white, fsize: 15,
-                                        text: "Phone Gallery",),
+                                        text: "Phone Gallery",
+                                        fontFamily: 'Gotham Light',font: FontWeight.w800,
+
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -247,6 +259,7 @@ class DailyIntensionRecordScreen
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                           child: TextWidget(color: Colors.white, fsize: 15,
+                                            fontFamily: 'Gotham Light',font: FontWeight.w800,
                                             text: "Camera     ",),
                                         ),
                                       ],
@@ -272,6 +285,7 @@ class DailyIntensionRecordScreen
                                     Icon(Icons.cancel,size: 40,color: Colors.white),
                                     SizedBox(width: Get.width*0.02,),
                                     TextWidget(color: Colors.white, fsize: 15,
+                                      fontFamily: 'Gotham Light',font: FontWeight.w800,
                                       text: "  Cancel       ",),
                                   ],
                                 ),
@@ -296,6 +310,34 @@ class DailyIntensionRecordScreen
                 margin: getMargin(
                   left: 6,
                   top: 56,
+                  right: 6,
+                  bottom: 5,
+                ),
+                buttonStyle: CustomButtonStyles.outlineIndigoA1004c.copyWith(
+                    fixedSize: MaterialStateProperty.all<Size>(Size(
+                  double.maxFinite,
+                  getVerticalSize(
+                    57,
+                  ),
+                ))),
+                decoration: CustomButtonStyles.outlineIndigoA1004cDecoration,
+                buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
+              ),
+              CustomElevatedButton(
+                onTap: (){
+                  Get.to(() => DailyIntentionsVideoScreen());
+                  // Get.toNamed(AppRoutes.remindersScreen);
+                },
+                width: getHorizontalSize(
+                  315,
+                ),
+                height: getVerticalSize(
+                  57,
+                ),
+                text: 'Daily Intention Videos',
+                margin: getMargin(
+                  left: 6,
+                  top: 15,
                   right: 6,
                   bottom: 5,
                 ),

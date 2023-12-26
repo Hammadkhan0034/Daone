@@ -54,7 +54,10 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
           centerTitle: true,
           title: Text(
             'Affirmations',
-            style: GoogleFonts.robotoSlab(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 25,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+
+            )
           ),
           leadingWidth: 68,
           leading: AppbarIconbutton(

@@ -41,25 +41,47 @@ class PasswordUpdateScreen
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text( "Update Password",
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
+            onTap: () {
+              Get.back();
+            },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 8,
             ),
-          ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "Update Password",
           ),
 
         ),
+        // appBar: CustomAppBar(
+        //   height: getVerticalSize(
+        //     81,
+        //   ),
+        //   leadingWidth: 77,
+        //   leading: AppbarIconbutton(
+        //     svgPath: ImageConstant.imgInfo,
+        //     margin: getMargin(
+        //       left: 29,
+        //       top: 4,
+        //       bottom: 4,
+        //     ),
+        //   ),
+        //   centerTitle: true,
+        //   title: AppbarSubtitle2(
+        //     text: "Update Password",
+        //   ),
+        //
+        // ),
         body: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -156,7 +178,10 @@ class PasswordUpdateScreen
                           fullName,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: CustomTextStyles.titleSmallPoppinsGray90002_1,
+                          style:TextStyle(
+                            fontWeight: FontWeight.w800,
+                            fontFamily: 'Gotham Light'
+                          )
                         ),
                       );
                     },

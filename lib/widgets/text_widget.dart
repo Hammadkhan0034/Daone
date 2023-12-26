@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TextWidget extends StatelessWidget {
-  var text, color, font, textAlign, softWrap;
+  var text, color, font, textAlign, softWrap,fontFamily;
   double fsize;
 
   TextWidget({
@@ -13,15 +13,17 @@ class TextWidget extends StatelessWidget {
     this.font,
     this.textAlign,
     this.softWrap,
+    this.fontFamily
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       text,
-      style: GoogleFonts.poppins(
+      style: TextStyle(
         fontSize: fsize,
         color: color,
+        fontFamily: fontFamily,
         fontWeight: font,
       ),
       textAlign: textAlign,

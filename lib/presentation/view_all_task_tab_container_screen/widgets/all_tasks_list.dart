@@ -20,12 +20,9 @@ Widget allTaskList(BuildContext context) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading indicator while data is being fetched
           return Center(
-            child: Container(
-                height: 100,
-                width: 100,
-                child: CircularProgressIndicator(
-                  color: Colors.deepOrangeAccent,
-                )),
+            child: CircularProgressIndicator(
+              color: Colors.deepOrangeAccent,
+            ),
           );
         }
 
@@ -445,12 +442,9 @@ Widget completeListWdiget(BuildContext context) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           // Loading indicator while data is being fetched
           return Center(
-            child: Container(
-                height: 100,
-                width: 100,
-                child: CircularProgressIndicator(
-                  color: Colors.deepOrangeAccent,
-                )),
+            child: CircularProgressIndicator(
+              color: Colors.deepOrangeAccent,
+            ),
           );
         }
 

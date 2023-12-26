@@ -23,25 +23,25 @@ class PersonalDataUpdateScreen extends GetWidget<PersonalDataUpdateController> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Achievements',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 5,
             ),
-          ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "lbl_achievements".tr,
           ),
         ),
         body: SizedBox(

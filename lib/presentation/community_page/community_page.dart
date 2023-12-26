@@ -43,6 +43,7 @@ class CommunityPage extends StatelessWidget {
         ),
         backgroundColor: Colors.white,
         floatingActionButton: FloatingActionButton(
+          shape: CircleBorder(),
           backgroundColor: Colors.deepOrange,
           child: Center(child: Icon(Icons.photo, color: Colors.white)),
           onPressed: () {
@@ -201,6 +202,8 @@ class CommunityPage extends StatelessWidget {
                                   child: TextWidget(
                                     text: "Upload",
                                     color: Colors.white,
+                                    fontFamily: 'Gotham Light',
+                                    font: FontWeight.w400,
                                     fsize: 17,
                                   ),
                                 ),
@@ -224,7 +227,10 @@ class CommunityPage extends StatelessWidget {
               Row(
                 children: [
                   SizedBox(width: Get.width*0.1,),
-                  TextWidget(text: 'Community', color:Colors.black, fsize: 32,font: FontWeight.w600),
+                  TextWidget(text: 'Community', color:Colors.black,
+                      fontFamily: 'Gotham Light',
+                      font: FontWeight.w800,
+                      fsize: 32,),
                 ],
               ),
               StreamBuilder(
@@ -303,7 +309,9 @@ class CommunityPage extends StatelessWidget {
                                         children: [
                                           Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                            child: TextWidget(text: userName, color: Colors.black, fsize: 12),
+                                            child: TextWidget(text: userName,
+                                                fontFamily: 'Gotham Light',
+                                                font: FontWeight.w800,color: Colors.black, fsize: 12),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8.0),

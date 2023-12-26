@@ -45,7 +45,9 @@ class _SelfConfidenceAffirmationViewState extends State<SelfConfidenceAffirmatio
           centerTitle: true,
           title: Text(
             'Self Confidence',
-            style: GoogleFonts.robotoSlab(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 25,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+            ),
           ),
           leadingWidth: 68,
           leading: AppbarIconbutton(

@@ -33,74 +33,82 @@ class VisualizationView extends StatelessWidget {
         quality: 100,
       );
     }
+
     return SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Text('Visualization',style: GoogleFonts.playfairDisplay(
-              fontSize: 30,color: Colors.black
-            )),
-    leadingWidth: 68,
-    leading: AppbarIconbutton(
-    onTap: (){
-    Get.back();
-    },
-
-    svgPath: ImageConstant.imgInfo,
-    margin: getMargin(
-    left: 10,
-    top: 10,
-    bottom: 5,
-    ),),
-            actions: [
-              InkWell(
-                onTap: (){
-                  Get.to(()=>FavVideos());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                  child: Icon(Icons.favorite,color: Colors.deepOrange,size: 30),
-                ),
-              ),
-            ],
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Visualization',
+            style:
+                TextStyle(
+                    fontFamily: 'Gotham Light',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 25, color: Colors.black)),
+        leadingWidth: 68,
+        leading: AppbarIconbutton(
+          onTap: () {
+            Get.back();
+          },
+          svgPath: ImageConstant.imgInfo,
+          margin: getMargin(
+            left: 10,
+            top: 10,
+            bottom: 5,
           ),
+        ),
+        actions: [
+          InkWell(
+            onTap: () {
+              Get.to(() => FavVideos());
+            },
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15.0),
+              child: Icon(Icons.favorite, color: Colors.deepOrange, size: 30),
+            ),
+          ),
+        ],
+      ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
+              // InkWell(
+              //   onTap: () {
+              //     Get.to(() => DailyIntentionsVideoScreen());
+              //   },
+              //   child: Padding(
+              //     padding: const EdgeInsets.all(18.0),
+              //     child: Material(
+              //       elevation: 2,
+              //       borderRadius: BorderRadius.circular(15),
+              //       child: Container(
+              //         height: Get.height * 0.3,
+              //         width: Get.width * 0.4,
+              //         decoration: BoxDecoration(
+              //           image: DecorationImage(
+              //               image: AssetImage('assets/images/videos.jpg'),
+              //               fit: BoxFit.cover),
+              //           borderRadius: BorderRadius.circular(15),
+              //         ),
+              //         child: Center(
+              //           child: Padding(
+              //             padding: const EdgeInsets.symmetric(horizontal: 13.0),
+              //             child: Text('Daily Intention Videos',
+              //                 style: GoogleFonts.glassAntiqua(
+              //                     fontSize: 27,
+              //                     color: Colors.white,
+              //                     fontWeight: FontWeight.w600)),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
               InkWell(
-                onTap: (){
-                  Get.to(()=>DailyIntentionsVideoScreen());
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(18.0),
-                  child: Material(
-                    elevation: 2,
-                    borderRadius: BorderRadius.circular(15),
-                    child: Container(
-                      height: Get.height*0.3,
-                      width: Get.width*0.4,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(image:AssetImage('assets/images/videos.jpg'),fit: BoxFit.cover),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 13.0),
-                          child: Text('Daily Intention Videos',style: GoogleFonts.glassAntiqua(
-                              fontSize: 27,color: Colors.white,fontWeight: FontWeight.w600
-                          )),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              InkWell(
-                onTap: (){
-                  Get.to(()=>DaoneVideosScreen());
+                onTap: () {
+                  Get.to(() => DaoneVideosScreen());
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(15.0),
@@ -108,21 +116,25 @@ class VisualizationView extends StatelessWidget {
                     elevation: 4,
                     borderRadius: BorderRadius.circular(13),
                     child: Container(
-                      height: Get.height*0.3,
-                      width: Get.width*0.4,
+                      height: Get.height * 0.3,
+                      width: Get.width * 0.4,
                       decoration: BoxDecoration(
-                        image: DecorationImage(image:AssetImage('assets/images/videos2.jpg'),fit: BoxFit.cover),
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/videos2.jpg'),
+                            fit: BoxFit.cover),
                         borderRadius: BorderRadius.circular(15),
                       ),
                       child: Center(
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 13.0),
-                          child: Text('Daone Affirmation Videos',style: GoogleFonts.glassAntiqua(
-                              fontSize:27,color: Colors.white,fontWeight: FontWeight.w600
-                          )),
+                          child: Text('Daone Affirmation Videos',
+                              style: TextStyle(
+                                  fontFamily: 'Gotham Light',
+                                  fontWeight: FontWeight.w800,
+                                  fontSize:Get.width*0.056,
+                                  color: Colors.white,)),
                         ),
                       ),
-
                     ),
                   ),
                 ),
@@ -131,9 +143,13 @@ class VisualizationView extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 18),
-            child: Text('Recent Videos',style: GoogleFonts.glassAntiqua(
-                fontSize: 27,color: Colors.deepOrange,fontWeight: FontWeight.w700
-            )),
+            child: Text('Recent Videos',
+                style: TextStyle(
+                    fontFamily: 'Gotham Light',
+                    fontWeight: FontWeight.w800,
+                    fontSize: 25,
+                    color: Colors.deepOrange,
+                )),
           ),
           StreamBuilder(
             stream: FirebaseFirestore.instance
@@ -165,8 +181,10 @@ class VisualizationView extends StatelessWidget {
                       ),
                       Text(
                         'No videos Found',
-                        style: GoogleFonts.glassAntiqua(
+                        style: TextStyle(
                           fontSize: 25,
+                          fontFamily: 'Gotham Light',
+                          fontWeight: FontWeight.w800,
                           color: Colors.black,
                         ),
                       ),
@@ -207,7 +225,7 @@ class VisualizationView extends StatelessWidget {
 
                         return InkWell(
                           onTap: () {
-                            Get.to(()=> VideoPlayerScreen(videoUrl: videoUrl));
+                            Get.to(() => VideoPlayerScreen(videoUrl: videoUrl));
                           },
                           child: Padding(
                             padding: const EdgeInsets.symmetric(
@@ -217,48 +235,50 @@ class VisualizationView extends StatelessWidget {
                             child: Row(
                               children: [
                                 Stack(
-                                  children:[ Container(
-                                    height: Get.height * 0.1,
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(13),
-                                      child: thumbnailPath != null
-                                          ? Image.file(
-                                        File(thumbnailPath),
-                                        fit: BoxFit.cover,
-                                      )
-                                          : CachedNetworkImage(
-                                        height: Get.height * 0.13,
-                                        width: Get.width * 0.4,
-                                        imageUrl:
-                                        'https://images.unsplash.com/photo-1560785218-893cc779709b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fGFmZmlybWF0aW9ucyUyMHZpZGVvc3xlbnwwfHwwfHx8MA%3D%3D',
-                                        fit: BoxFit.cover,
+                                  children: [
+                                    Container(
+                                      height: Get.height * 0.1,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(13),
+                                        child: thumbnailPath != null
+                                            ? Image.file(
+                                                File(thumbnailPath),
+                                                fit: BoxFit.cover,
+                                              )
+                                            : CachedNetworkImage(
+                                                height: Get.height * 0.13,
+                                                width: Get.width * 0.4,
+                                                imageUrl:
+                                                    'https://images.unsplash.com/photo-1560785218-893cc779709b?w=400&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fGFmZmlybWF0aW9ucyUyMHZpZGVvc3xlbnwwfHwwfHx8MA%3D%3D',
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                     ),
-                                  ),
-                                    Positioned.fill(child: Center(
-                                      child: Icon(
-                                        Icons.play_circle,
-                                        color: Colors.grey,
-                                        size: 40,
+                                    Positioned.fill(
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.play_circle,
+                                          color: Colors.grey,
+                                          size: 40,
+                                        ),
                                       ),
-                                    ),),
+                                    ),
                                   ],
                                 ),
                                 Column(
                                   children: [
                                     Container(
                                       height: Get.height * 0.1,
-                                      width:
-                                      MediaQuery.of(context).size.width *
+                                      width: MediaQuery.of(context).size.width *
                                           0.48,
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 13),
+                                        padding:
+                                            const EdgeInsets.only(left: 13,top: 4),
                                         child: Column(
                                           mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                              MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                              CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               videoTitle,
@@ -266,7 +286,8 @@ class VisualizationView extends StatelessWidget {
                                               softWrap: true,
                                               overflow: TextOverflow.ellipsis,
                                               style: TextStyle(
-                                                fontWeight: FontWeight.w700,
+                                                fontFamily: 'Gotham Light',
+                                                fontWeight: FontWeight.w800,
                                                 fontSize: 14,
                                               ),
                                             ),
@@ -297,9 +318,6 @@ class VisualizationView extends StatelessWidget {
               );
             },
           ),
-
-
-
         ],
       ),
     ));

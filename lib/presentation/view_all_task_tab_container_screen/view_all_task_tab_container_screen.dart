@@ -28,7 +28,9 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
         appBar: AppBar(
           centerTitle: true,
           backgroundColor: Colors.white,
-          title: Text('Task',style: GoogleFonts.playfairDisplay(
+          title: Text('Task',style: TextStyle(
+            fontFamily: 'Gotham Light',
+              fontWeight: FontWeight.w800,
               fontSize: 30,color: Colors.black
           )),
           leadingWidth: 68,
@@ -39,7 +41,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
 
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 30,
+              left: 10,
               top: 10,
               bottom: 5,
             ),),
@@ -50,72 +52,77 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(
-                height: Get.height*0.1,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: 6,
-                  itemBuilder: (BuildContext context, int index) {
-                    final DateTime currentDate = DateTime.now();
-                    final DateTime date = currentDate.add(Duration(days: index)); // Add days to get next dates
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: SizedBox(
+                  height: Get.height*0.1,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    itemCount: 6,
+                    itemBuilder: (BuildContext context, int index) {
+                      final DateTime currentDate = DateTime.now();
+                      final DateTime date = currentDate.add(Duration(days: index)); // Add days to get next dates
 
-                    return GestureDetector(
-                      onTap: () {
-                        // Handle date selection here
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 10, right: 5.0,left: 5,bottom: 5),
-                        child: Material(
-                          color: date.day == currentDate.day
-                              ? Colors.deepOrange // Current date container color
-                              : Colors.white, // Default container color
-                          borderRadius: BorderRadius.circular(10.0),
-                          elevation: 2,
-                          child: Container(
-                            width: Get.width * 0.15,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: date.day == currentDate.day
-                                  ? Colors.deepOrange // Current date container color
-                                  : Colors.white, // Default container color
-                            ),
-                            child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: <Widget>[
-                                  // TextWidget(
-                                  //   text: date.year.toString(),
-                                  //   color: date.day == currentDate.day
-                                  //       ? Colors.white // Current date text color
-                                  //       : Colors.black, // Default container text color
-                                  //   fsize: 0.2,
-                                  // ),
+                      return GestureDetector(
+                        onTap: () {
+                          // Handle date selection here
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 10, right: 5.0,left: 5,bottom: 5),
+                          child: Material(
+                            color: date.day == currentDate.day
+                                ? Colors.deepOrange // Current date container color
+                                : Colors.white, // Default container color
+                            borderRadius: BorderRadius.circular(10.0),
+                            elevation: 2,
+                            child: Container(
+                              width: Get.width * 0.12,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: date.day == currentDate.day
+                                    ? Colors.deepOrange // Current date container color
+                                    : Colors.white, // Default container color
+                              ),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: <Widget>[
+                                    // TextWidget(
+                                    //   text: date.year.toString(),
+                                    //   color: date.day == currentDate.day
+                                    //       ? Colors.white // Current date text color
+                                    //       : Colors.black, // Default container text color
+                                    //   fsize: 0.2,
+                                    // ),
 
 
-                                  TextWidget(
-                                    text: date.day.toString(),
-                                    color: date.day == currentDate.day
-                                        ? Colors.white // Current date text color
-                                        : Colors.black, // Default container text color
-                                    fsize: 20,
-                                  ),
-                                  TextWidget(
-                                    text: calenderController.getMonthName(date.month),
-                                    color: date.day == currentDate.day
-                                        ? Colors.white // Current date text color
-                                        : Colors.black, // Default container text color
-                                    fsize: 10,
-                                  ),
-                                ],
+                                    TextWidget(
+                                      text: date.day.toString(),
+                                      color: date.day == currentDate.day
+                                          ? Colors.white // Current date text color
+                                          : Colors.black, // Default container text color
+                                      fsize: 20,
+                                    ),
+                                    TextWidget(
+                                      text: calenderController.getMonthName(date.month),
+                                      fontFamily: 'Gotham Light',
+                                      font: FontWeight.w800,
+                                      color: date.day == currentDate.day
+                                          ? Colors.white // Current date text color
+                                          : Colors.black, // Default container text color
+                                      fsize: 10,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    );
-                  },
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(

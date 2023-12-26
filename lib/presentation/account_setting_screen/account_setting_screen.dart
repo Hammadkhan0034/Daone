@@ -3,6 +3,7 @@ import 'package:daone/presentation/account_setting_screen/privacy_policy/privacy
 import 'package:daone/presentation/community_page/community_page.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../badges/badgeslist.dart';
 import '../notes/notes.dart';
 import 'contact_us/contact_us.dart';
@@ -29,23 +30,32 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            40,
-          ),
+        appBar: AppBar(
           centerTitle: true,
-          title: Padding(
-            padding: const EdgeInsets.only(top: 18.0),
-            child: AppbarSubtitle2(
-              text: "lbl_profile".tr,
-            ),
-          ),
+          title: Text( "lbl_profile".tr,
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
         ),
+        // appBar: CustomAppBar(
+        //   height: getVerticalSize(
+        //     40,
+        //   ),
+        //   centerTitle: true,
+        //   title: Padding(
+        //     padding: const EdgeInsets.only(top: 18.0),
+        //     child: AppbarSubtitle2(
+        //       text: "lbl_profile".tr,
+        //     ),
+        //   ),
+        // ),
         body: SizedBox(
           width: mediaQueryData.size.width,
           child: SingleChildScrollView(
             padding: getPadding(
-              top: 32,
+              top:10,
             ),
             child: Padding(
               padding: getPadding(
@@ -66,12 +76,8 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
 
                           if (snapshot.connectionState == ConnectionState.waiting) {
                             return Center(
-                              child: Container(
-                                height: 50,
-                                width: 50,
-                                child: CircularProgressIndicator(
-                                  color: Colors.deepOrangeAccent,
-                                ),
+                              child: CircularProgressIndicator(
+                                color: Colors.deepOrangeAccent,
                               ),
                             );
                           } else {
@@ -108,72 +114,77 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                           }
                         },
                       ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 21,
-                        ),
-                        child: StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
-                          builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                            if (snapshot.connectionState == ConnectionState.waiting) {
-                              // While the data is being fetched, you can return a loading indicator or an empty widget.
-                              return CircularProgressIndicator(); // Replace with your loading indicator widget
-                            }
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                // While the data is being fetched, you can return a loading indicator or an empty widget.
+                                return CircularProgressIndicator(); // Replace with your loading indicator widget
+                              }
 
-                            if (snapshot.hasError) {
-                              // Handle errors here
-                              return Text('Error: ${snapshot.error}');
-                            }
+                              if (snapshot.hasError) {
+                                // Handle errors here
+                                return Text('Error: ${snapshot.error}');
+                              }
 
-                            if (!snapshot.hasData || !snapshot.data!.exists) {
-                              // Handle the case where the document doesn't exist
-                              return Text('Document not found');
-                            }
+                              if (!snapshot.hasData || !snapshot.data!.exists) {
+                                // Handle the case where the document doesn't exist
+                                return Text('Document not found');
+                              }
 
-                            // Access the 'fullName' field from the document data
-                            String fullName = snapshot.data!['fullName'];
+                              // Access the 'fullName' field from the document data
+                              String fullName = snapshot.data!['fullName'];
 
-                            return Padding(
-                              padding: getPadding(
-                                top: 1,
+                              return Container(
+                               //   color: Colors.lightBlue,
+                                  height: Get.height*0.04,
+                                  width: Get.width*0.56,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 2.0),
+                                    child: Text(fullName,style: TextStyle(
+                                        fontFamily: 'Gotham Light',
+                                        fontWeight:FontWeight.w800,
+                                        fontSize: 19),),
+                                  ));
+                            },
+                          ),
+                          // Spacer(),
+                          CustomElevatedButton(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
+                            },
+                            width: getHorizontalSize(
+                              83,
+                            ),
+                            height: getVerticalSize(
+                              30,
+                            ),
+                            text: "lbl_edit".tr,
+                            margin: getMargin(
+                              top: 5,
+                              bottom: 0,
+                            ),
+                            buttonStyle: CustomButtonStyles
+                                .gradientnamedeeporangeA20006nameprimaryTL15
+                                .copyWith(
+                                    fixedSize: MaterialStateProperty.all<Size>(Size(
+                              getHorizontalSize(
+                                83,
                               ),
-                              child:TextWidget(text: fullName,color: Colors.black,fsize: 20),
-                            );
-                          },
-                        ),
-                      ),
-                      Spacer(),
-                      CustomElevatedButton(
-                        onTap: (){
-                          Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
-                        },
-                        width: getHorizontalSize(
-                          83,
-                        ),
-                        height: getVerticalSize(
-                          30,
-                        ),
-                        text: "lbl_edit".tr,
-                        margin: getMargin(
-                          top: 20,
-                          bottom: 28,
-                        ),
-                        buttonStyle: CustomButtonStyles
-                            .gradientnamedeeporangeA20006nameprimaryTL15
-                            .copyWith(
-                                fixedSize: MaterialStateProperty.all<Size>(Size(
-                          getHorizontalSize(
-                            83,
+                              getVerticalSize(
+                                30,
+                              ),
+                            ))),
+                            decoration: CustomButtonStyles
+                                .gradientnamedeeporangeA20006nameprimaryTL15Decoration,
+                            buttonTextStyle:
+                                CustomTextStyles.labelLargeWhiteA700Medium,
                           ),
-                          getVerticalSize(
-                            30,
-                          ),
-                        ))),
-                        decoration: CustomButtonStyles
-                            .gradientnamedeeporangeA20006nameprimaryTL15Decoration,
-                        buttonTextStyle:
-                            CustomTextStyles.labelLargeWhiteA700Medium,
+                        ],
                       ),
                     ],
                   ),
@@ -202,7 +213,11 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             "lbl_account".tr,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: theme.textTheme.titleLarge,
+                            style: TextStyle(
+                              fontFamily: 'Gotham Light',
+                              fontWeight:FontWeight.w800,
+                              fontSize: 18
+                            )
                           ),
                         ),
 
@@ -231,7 +246,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: TextWidget(text:  "lbl_achievement".tr, color:Colors.black54, fsize: 14),
+                                  child: TextWidget(text:  "lbl_achievement".tr,
+                                          fontFamily: 'Gotham Light',
+                                          font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -280,7 +298,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 11,
                                     top: 1,
                                   ),
-                                  child: TextWidget(text:  "lbl_highlights".tr, color:Colors.black54, fsize: 14),
+                                  child: TextWidget(text:  "lbl_highlights".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                CustomImageView(
@@ -323,7 +344,9 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   padding: getPadding(
                                     left: 11,
                                   ),
-                                  child:TextWidget(text:  "lbl_community".tr, color:Colors.black54, fsize: 14),
+                                  child:TextWidget(text:  "lbl_community".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -364,7 +387,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: TextWidget(text:  "lbl_notes".tr, color:Colors.black54, fsize: 14),
+                                  child: TextWidget(text:  "lbl_notes".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -411,7 +437,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   padding: getPadding(
                                     left: 11,
                                   ),
-                                  child:TextWidget(text:  "lbl_friends".tr, color:Colors.black54, fsize: 14),
+                                  child:TextWidget(text:  "lbl_friends".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -453,7 +482,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child:TextWidget(text:  "lbl_contact_us".tr, color:Colors.black54, fsize: 14),
+                                  child:TextWidget(text:  "lbl_contact_us".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -498,7 +530,11 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: TextWidget(text:'Images', color:Colors.black54, fsize: 14),
+                                  child: TextWidget(
+                                      text:'Images',
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -544,7 +580,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     top: 2,
                                   ),
-                                  child: TextWidget(text:  "lbl_privacy_policy".tr, color:Colors.black54, fsize: 14),
+                                  child: TextWidget(text:  "lbl_privacy_policy".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -588,7 +627,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     top: 2,
                                   ),
-                                  child: TextWidget(text: "Change Password", color:Colors.black54, fsize: 14),
+                                  child: TextWidget(text: "Change Password",
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -610,7 +652,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.defaultDialog(title:"LOGOUT ?",
+                            Get.defaultDialog(title:"Do you want to log out?",
+                                titleStyle: TextStyle(
+                                  fontSize: 16,fontFamily: 'Gotham Light',fontWeight: FontWeight.w800
+                                ),
                                 content:Row(
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -669,7 +714,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child:  TextWidget(text:  "Logout", color:Colors.black54, fsize: 14),
+                                  child:  TextWidget(text:  "Logout",
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(

@@ -105,7 +105,7 @@ class _UploadVideoState extends State<UploadVideo> {
                         color: Colors.white,
                         fsize: 20,
                         font: FontWeight.w300,
-                        text: "Upload",
+                        text: "Upload video",
                       ),
                     ),
                   ),
@@ -127,7 +127,7 @@ class _UploadVideoState extends State<UploadVideo> {
                         color: Colors.white,
                         fsize: 20,
                         font: FontWeight.w300,
-                        text: "End Intension",
+                        text: "End Intention",
                       ),
                     ),
                   ),
@@ -137,6 +137,7 @@ class _UploadVideoState extends State<UploadVideo> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         backgroundColor: Colors.deepOrange,
         onPressed: () {
           if (_controller.value.isPlaying) {

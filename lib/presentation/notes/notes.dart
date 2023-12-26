@@ -27,27 +27,26 @@ class NotesPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Notes',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
+          leadingWidth: 68,
           leading: AppbarIconbutton(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
+              left: 10,
+              top: 10,
+              bottom: 5,
             ),
           ),
-          centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "lbl_notes".tr,
-          ),
-
         ),
         body: Container(
           height: Get.height*0.85,
@@ -93,9 +92,10 @@ class NotesPage extends StatelessWidget {
                       TextWidget(
                         text:
                         "You don't have any Notes",
+                        fontFamily: 'Gotham Light',
+                        font: FontWeight.w400,
                         color: Colors.black38,
                         fsize: 14,
-                        font: FontWeight.w500,
                       )
                     ],
                   ),
@@ -131,14 +131,18 @@ class NotesPage extends StatelessWidget {
                                             width: Get.width*0.1,
                                             height: Get.height*0.05,
                                             decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(100),
+                                              //borderRadius: BorderRadius.circular(100),
                                               border: Border.all(
                                                 color: Colors.black,
                                                 width: 1, // Adjust the width as needed
                                               ),
+                                            shape: BoxShape.circle
                                             ),
                                             child: Center(
-                                              child: TextWidget(text: "N",color: Colors.black,fsize: 10),
+                                              child: TextWidget(text: "N",color: Colors.black,
+                                                  fontFamily: 'Gotham Light',
+                                                  font: FontWeight.w400,
+                                                  fsize: 10),
                                             ),
 
                                           ),
@@ -151,11 +155,20 @@ class NotesPage extends StatelessWidget {
                                     children: [
                                       Row(
                                         children: [
-                                          TextWidget(text: "You added a note on", color: Colors.black, fsize: 10),
+                                          TextWidget(text: "You added a note on",
+                                              fontFamily: 'Gotham Light',
+                                              font: FontWeight.w400,
+                                              color: Colors.black, fsize: 10),
                                         ],
                                       ),
-                                      Container(child: TextWidget(text:' ${notesData['title']}', color: Colors.black, fsize: 10,font: FontWeight.w600, softWrap: true,)),
-                                      TextWidget(text: notesData['date'], color: Colors.black, fsize: 11,font: FontWeight.w600),
+                                      Container(child: TextWidget(text:' ${notesData['title']}',
+                                        fontFamily: 'Gotham Light',
+                                        font: FontWeight.w800,
+                                        color: Colors.black, fsize: 10, softWrap: true,)),
+                                      TextWidget(text: notesData['date'], color: Colors.black,
+                                          fontFamily: 'Gotham Light',
+                                          font: FontWeight.w800,
+                                          fsize: 9),
                                     ],
                                   ),
 

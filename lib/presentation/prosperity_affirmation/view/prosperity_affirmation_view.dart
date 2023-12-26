@@ -50,7 +50,9 @@ class _ProsperityAffirmationViewState extends State<ProsperityAffirmationView> w
           centerTitle: true,
           title: Text(
             'Prosperity',
-            style: GoogleFonts.robotoSlab(fontSize: 30, color: Colors.black),
+            style: TextStyle(
+                fontSize: 25,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+            ),
           ),
           leadingWidth: 68,
           leading: AppbarIconbutton(
@@ -80,12 +82,9 @@ class _ProsperityAffirmationViewState extends State<ProsperityAffirmationView> w
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       // Loading indicator while data is being fetched
                       return Center(
-                        child: Container(
-                            height: 100,
-                            width: 100,
-                            child: CircularProgressIndicator(
-                              color: Colors.deepOrangeAccent,
-                            )),
+                        child: CircularProgressIndicator(
+                          color: Colors.deepOrangeAccent,
+                        ),
                       );
                     }
                     if (snapshot.hasError) {

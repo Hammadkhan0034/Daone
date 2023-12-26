@@ -399,13 +399,13 @@ class AppRoutes {
         SelectTaskBinding(),
       ],
     ),
-    GetPage(
-      name: addTaskScreen,
-      page: () => AddTaskScreen(),
-      bindings: [
-        AddTaskBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: addTaskScreen,
+    //   page: () => AddTaskScreen(),
+    //   bindings: [
+    //     AddTaskBinding(),
+    //   ],
+    // ),
     GetPage(
       name: viewAllTaskTabContainerScreen,
       page: () => ViewAllTaskTabContainerScreen(),

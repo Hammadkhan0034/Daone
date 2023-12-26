@@ -12,6 +12,7 @@ import 'package:video_thumbnail/video_thumbnail.dart';
 import '../../../core/utils/image_constant.dart';
 import '../../../core/utils/size_utils.dart';
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
+import 'fav_videos.dart';
 
 class DailyIntentionsVideoScreen extends StatelessWidget {
   Future<String?> generateThumbnail(String videoUrl) async {
@@ -32,10 +33,12 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Videos',
-            style: GoogleFonts.glassAntiqua(fontSize: 35, color: Colors.black),
-          ),
+          title: Text('Videos',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
           leadingWidth: 68,
           leading: AppbarIconbutton(
             onTap: () {
@@ -43,11 +46,22 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 30,
+              left: 10,
               top: 10,
               bottom: 5,
             ),
           ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Get.to(() => FavVideos());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Icon(Icons.favorite, color: Colors.deepOrange, size: 30),
+              ),
+            ),
+          ],
         ),
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -80,8 +94,10 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                     ),
                     Text(
                       'No videos Found',
-                      style: GoogleFonts.glassAntiqua(
-                        fontSize: 30,
+                      style: TextStyle(
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
                         color: Colors.black,
                       ),
                     ),

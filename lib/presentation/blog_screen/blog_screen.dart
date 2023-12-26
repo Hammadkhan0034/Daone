@@ -70,8 +70,9 @@ class BlogScreen extends GetWidget<BlogController> {
                           "lbl_latest_blog".tr,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style:GoogleFonts.playfairDisplay(
-                              fontSize: 23,fontWeight: FontWeight.w700
+                          style:TextStyle(
+                            fontFamily: 'Gotham Light',
+                              fontSize: 23,fontWeight: FontWeight.w800
                           ),
                         ),
                         Padding(
@@ -137,8 +138,9 @@ class BlogScreen extends GetWidget<BlogController> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
-                                    style:GoogleFonts.playfairDisplay(
-                                        fontSize: 20,fontWeight: FontWeight.w700
+                                    style:TextStyle(
+                                        fontFamily: 'Gotham Light',
+                                        fontSize: 18,fontWeight: FontWeight.w800
                                     ),
                                   ),
                                 ),
@@ -149,7 +151,8 @@ class BlogScreen extends GetWidget<BlogController> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     textAlign: TextAlign.left,
-                                    style:GoogleFonts.playfairDisplay(
+                                    style:TextStyle(
+                                        fontFamily: 'Gotham Light',
                                         fontSize: 12,fontWeight: FontWeight.w400
                                     ),
                                   ),
@@ -172,8 +175,9 @@ class BlogScreen extends GetWidget<BlogController> {
                       "lbl_recent_blogs".tr,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.left,
-                      style:GoogleFonts.playfairDisplay(
-                          fontSize: 20,fontWeight: FontWeight.w700
+                      style:TextStyle(
+                          fontFamily: 'Gotham Light',
+                          fontSize: 20,fontWeight: FontWeight.w800
                       ),
                     ),
                   ),
@@ -187,7 +191,7 @@ class BlogScreen extends GetWidget<BlogController> {
                         return CircularProgressIndicator();
                       }
                       return Container(
-                        height: Get.height * 0.5,
+                        height: Get.height * 0.49,
                         width: double.infinity,
                       // color: Colors.deepOrange,
                         child: ListView.builder(
@@ -243,7 +247,8 @@ class BlogScreen extends GetWidget<BlogController> {
                                                     overflow: TextOverflow.fade,
                                                     maxLines: 2,
                                                     textAlign: TextAlign.left,
-                                                    style:GoogleFonts.playfairDisplay(
+                                                    style:TextStyle(
+                                                        fontFamily: 'Gotham Light',
                                                         fontSize: 13,fontWeight: FontWeight.w800
                                                     ),
                                                   ),
@@ -260,7 +265,10 @@ class BlogScreen extends GetWidget<BlogController> {
                                                     maxLines: 2,
                                                     overflow: TextOverflow.ellipsis,
                                                     textAlign: TextAlign.left,
-                                                    style: CustomTextStyles.bodySmallBlack900,
+                                                    style:TextStyle(
+                                                        fontFamily: 'Gotham Light',
+                                                        fontWeight: FontWeight.w400,
+                                                        fontSize: 9)
                                                   ),
                                                 ),
                                               ),
@@ -268,7 +276,10 @@ class BlogScreen extends GetWidget<BlogController> {
                                                 crossAxisAlignment: CrossAxisAlignment.start,
                                                 mainAxisAlignment: MainAxisAlignment.start,
                                                 children: [
-                                                  TextWidget(text: "by ", color: Colors.black, fsize: 8),
+                                                  TextWidget(text: "by ",
+                                                      fontFamily: 'Gotham Light',
+                                                      font: FontWeight.w400,
+                                                      color: Colors.black, fsize: 8),
                                                   TextWidget(text: writerName, color: Colors.deepOrange, fsize: 8),
                                                   SizedBox(width: 10),
                                                   TextWidget(text: date, color: Colors.black, fsize: 8),

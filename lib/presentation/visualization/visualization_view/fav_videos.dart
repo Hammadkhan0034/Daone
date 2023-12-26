@@ -33,10 +33,12 @@ class FavVideos extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Favorite Videos',
-            style: GoogleFonts.glassAntiqua(fontSize: 35, color: Colors.black),
-          ),
+          title: Text('Favourite Videos',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 23, color: Colors.black)),
           leadingWidth: 68,
           leading: AppbarIconbutton(
             onTap: () {
@@ -46,10 +48,11 @@ class FavVideos extends StatelessWidget {
             margin: getMargin(
               left: 10,
               top: 10,
-              bottom: 5,
+              bottom: 8,
             ),
           ),
         ),
+
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
               .collection('users')
@@ -80,9 +83,11 @@ class FavVideos extends StatelessWidget {
                       scale: 2,
                     ),
                     Text(
-                      'No videos Found',
-                      style: GoogleFonts.glassAntiqua(
-                        fontSize: 30,
+                      'No videos found',
+                      style:  TextStyle(
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w800,
+                        fontSize: 20,
                         color: Colors.black,
                       ),
                     ),

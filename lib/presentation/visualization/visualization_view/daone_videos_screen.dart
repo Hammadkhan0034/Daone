@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
+import 'fav_videos.dart';
 
 class DaoneVideosScreen extends StatelessWidget {
   const DaoneVideosScreen({Key? key}) : super(key: key);
@@ -33,10 +34,12 @@ class DaoneVideosScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
-            'Videos',
-            style: GoogleFonts.glassAntiqua(fontSize: 35, color: Colors.black),
-          ),
+          title: Text('Videos',
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
           leadingWidth: 68,
           leading: AppbarIconbutton(
             onTap: () {
@@ -44,11 +47,22 @@ class DaoneVideosScreen extends StatelessWidget {
             },
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
-              left: 30,
+              left: 10,
               top: 10,
               bottom: 5,
             ),
           ),
+          actions: [
+            InkWell(
+              onTap: () {
+                Get.to(() => FavVideos());
+              },
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15.0),
+                child: Icon(Icons.favorite, color: Colors.deepOrange, size: 30),
+              ),
+            ),
+          ],
         ),
         body: StreamBuilder(
           stream: FirebaseFirestore.instance
@@ -79,7 +93,9 @@ class DaoneVideosScreen extends StatelessWidget {
                     ),
                     Text(
                       'No videos Found',
-                      style: GoogleFonts.glassAntiqua(
+                      style: TextStyle(
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w800,
                         fontSize: 30,
                         color: Colors.black,
                       ),
@@ -129,8 +145,10 @@ class DaoneVideosScreen extends StatelessWidget {
                                 width: Get.width*0.9,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                                  child: Text(videotitle,style: GoogleFonts.poppins(
-                                      fontSize: 15,color: Colors.black,fontWeight: FontWeight.w600
+                                  child: Text(videotitle,style: TextStyle(
+                                      fontFamily: 'Gotham Light',
+                                      fontWeight: FontWeight.w800,
+                                      fontSize: 15,color: Colors.black
                                   )),
                                 ),
                               ),

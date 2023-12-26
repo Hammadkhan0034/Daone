@@ -96,7 +96,10 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                             "Add Affirmation",
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: CustomTextStyles.titleSmallPoppinsWhiteA700,
+                            style: TextStyle(
+                              fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+                                ,color: Colors.white
+                            )
                           ),
                         ),
                       ],
@@ -149,7 +152,9 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: CustomTextStyles.labelLargeGray80001,
+                            style: TextStyle(
+                                fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+                            )
                           ),
                         ),
                       ],
@@ -196,7 +201,9 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
-                              style: CustomTextStyles.labelLargeGray80001,
+                              style:TextStyle(
+                                  fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+                              )
                             ),
                           ),
                         ],
@@ -251,7 +258,10 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: CustomTextStyles.labelLargeGray80001,
+                            style: TextStyle(
+                                fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+
+                            )
                           ),
                         ),
                       ],
@@ -297,7 +307,10 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.left,
-                              style: CustomTextStyles.labelLargeGray80001,
+                              style:TextStyle(
+                                  fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+
+                              )
                             ),
                           ),
                         ],
@@ -353,7 +366,9 @@ class SelectAffirmationScreen extends GetWidget<SelectAffirmationController> {
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: CustomTextStyles.labelLargeGray80001,
+                            style:TextStyle(
+                                fontSize: 12,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+                            )
                           ),
                         ),
                       ],

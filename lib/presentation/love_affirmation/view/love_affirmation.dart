@@ -54,8 +54,9 @@ class _LoveAffirmationViewState extends State<LoveAffirmationView> with SingleTi
           centerTitle: true,
           title: Text(
             'Love',
-            style: GoogleFonts.robotoSlab(fontSize: 30, color: Colors.black),
-          ),
+            style: TextStyle(
+        fontSize: 25,fontWeight: FontWeight.w800,fontFamily: 'Gotham Light'
+    ),),
           leadingWidth: 68,
           leading: AppbarIconbutton(
             onTap: () {

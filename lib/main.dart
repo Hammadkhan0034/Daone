@@ -36,6 +36,8 @@ class MyApp extends StatelessWidget {
           dialHandColor: Colors.deepOrange,
           dialTextColor: Colors.black,
         ),
+        primarySwatch: Colors.deepOrange
+
       ),
       translations: AppLocalization(),
       locale: Get.deviceLocale,
