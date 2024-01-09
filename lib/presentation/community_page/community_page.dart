@@ -224,14 +224,18 @@ class CommunityPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  SizedBox(width: Get.width*0.1,),
-                  TextWidget(text: 'Community', color:Colors.black,
-                      fontFamily: 'Gotham Light',
-                      font: FontWeight.w800,
-                      fsize: 32,),
-                ],
+              Material(
+                color: Colors.white,
+                elevation: 3,
+                child: Row(
+                  children: [
+                    SizedBox(width: Get.width*0.1,),
+                    TextWidget(text: 'Community', color:Colors.black,
+                        fontFamily: 'Gotham Light',
+                        font: FontWeight.w800,
+                        fsize: 32,),
+                  ],
+                ),
               ),
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('postCollection').snapshots(),
@@ -242,7 +246,7 @@ class CommunityPage extends StatelessWidget {
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
-                  if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                  if (!snapshot.hasData || snapshot.data == null || snapshot.data.docs.isEmpty) {
                     return Text('No posts found');
                   }
                   
@@ -334,7 +338,7 @@ class CommunityPage extends StatelessWidget {
                                   height: Get.height * 0.22,
                                   width: Get.width * 0.7,
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(12),
+                                    borderRadius: BorderRadius.circular(2),
                                     color: Colors.white,
                                     image: DecorationImage(
                                       image: NetworkImage(postPic),

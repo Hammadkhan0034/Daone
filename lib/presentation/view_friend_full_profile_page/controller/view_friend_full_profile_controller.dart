@@ -36,7 +36,7 @@ class ViewFriendFullProfileController extends GetxController {
       if (user != null) {
         if (name != null && gmail != null && profile != null ) {
           DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
-          await userDocRef.collection('FriendList').add({
+          await userDocRef.collection('FriendList').doc(name).set({
             'email': gmail,
             'imageUrl': profile,
             'name': name,
@@ -69,6 +69,46 @@ class ViewFriendFullProfileController extends GetxController {
     }
   }
 
+    Future<void> deleteFriend(
+        BuildContext context,
+        String? friendName,
+        ) async {
+      try {
+        User? user = FirebaseAuth.instance.currentUser;
+
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: Colors.deepOrange,
+              ),
+            );
+          },
+        );
+
+        if (user != null && friendName != null) {
+          DocumentReference userDocRef =
+          FirebaseFirestore.instance.collection('users').doc(user.email);
+
+          // Delete the friend from the FriendList collection
+          await userDocRef.collection('FriendList').doc(friendName).delete();
+
+          Get.snackbar("Info", "$friendName removed from your friend list");
+          Get.offAndToNamed(AppRoutes.accountSettingScreen);
+        } else {
+          // Handle the case where the user is not authenticated or friendName is null
+          print('User is not authenticated or friendName is null');
+          Get.snackbar('Error', 'User is not authenticated or friendName is null');
+          Navigator.of(context).pop(); // Hide the progress indicator
+        }
+      } catch (e) {
+        // Handle errors here
+        print('Error deleting friend: $e');
+        Get.snackbar('Error deleting friend:', '$e');
+        Navigator.of(context).pop(); // Hide the progress indicator
+      }
+    }
 
 
 
@@ -79,9 +119,7 @@ class ViewFriendFullProfileController extends GetxController {
 
 
 
-
-
-  //
+    //
   // Future<void> copyDataToFriendList(String email,String name) async {
   //   try {
   //     // Reference to the Firestore instance
