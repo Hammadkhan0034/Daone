@@ -157,6 +157,7 @@ class EditAffirmationDialog extends StatelessWidget {
                                       width: Get.width * 0.5,
                                       padding: EdgeInsets.symmetric(vertical: 10),
                                       decoration: BoxDecoration(
+                                        //color: Colors.blue,
                                         borderRadius: BorderRadius.circular(12),
                                         // image: DecorationImage(
                                         //     image: NetworkImage(

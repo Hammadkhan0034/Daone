@@ -4,10 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:confetti/confetti.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 
 class OwnAffirmationController extends GetxController{
   final confettiController = ConfettiController(duration: const Duration(seconds: 5));
   RxInt affirmationCount = 0.obs;
+  RxString selectedBackground= ''.obs;
+  RxList<String> availableBackgrounds = RxList<String>();
+  TextEditingController affirmationText=TextEditingController();
+
+
   void updateAffirmationCount(int newCount) {
     affirmationCount.value = newCount;
   }
@@ -56,6 +62,18 @@ class OwnAffirmationController extends GetxController{
       print('Error deleting task: $e');
       Get.snackbar('Error deleting task:', '$e');
     }
+  }
+
+  Future<void>fetchBackgrounds()async{
+    try{
+      final snapshot = await FirebaseFirestore.instance.collection('backgrounds').get();
+      final backgrounds = snapshot.docs.map((doc) => doc['imageUrl'] as String).toList();
+      availableBackgrounds.assignAll(backgrounds);
+    }catch(e){
+      print('Error fetching backgrounds: $e');
+    }}
+  void setSelectedBackground(String background) {
+    selectedBackground.value = background;
   }
 
   @override

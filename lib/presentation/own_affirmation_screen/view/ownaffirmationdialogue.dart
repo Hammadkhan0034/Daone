@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 
+import '../../../widgets/text_widget.dart';
 import '../../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
 import '../../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 import '../controller/own_affirmation_controller.dart';
@@ -59,172 +60,98 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(
-                height: getVerticalSize(
-                  238,
-                ),
-                width: getHorizontalSize(
-                  269,
-                ),
-                child: Stack(
-                  alignment: Alignment.topCenter,
-                  children: [
-                    CachedNetworkImage(  // Use CachedNetworkImage here
-                      imageUrl: decorationImage,
-                      fit: BoxFit.cover,
-                      height: getVerticalSize(238),
-                      width: getHorizontalSize(269),
-                      placeholder: (context, url) => CircularProgressIndicator(),  // Add a placeholder widget while the image is loading
-                      errorWidget: (context, url, error) => Icon(Icons.error),  // Add an error widget in case of an error
-                    ),
-                    Align(
+              Center(
+                child: SizedBox(
+                  height: getVerticalSize(
+                    238,
+                  ),
+                  width: getHorizontalSize(
+                    269,
+                  ),
+                  child: Card(
+                    color: Colors.white,
+
+                    child: Stack(
                       alignment: Alignment.topCenter,
-                      child: Container(
-                        width: getHorizontalSize(
-                          219,
-                        ),
-                        margin: getMargin(
-                          top: 45,
-                        ),
-                        child: Text(
-                          affirmation,
-                          maxLines: 4,
-                          overflow: TextOverflow.ellipsis,
-                          textAlign: TextAlign.center,
-                          style: GoogleFonts.poppins(
-                            fontSize: 23,
-                            color: Color(0xff5E4646),
-                            fontWeight: FontWeight.w300,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: getPadding(
-                  left: 3,
-                  top: 20,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CustomElevatedButton(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.selectAffirmationScreen);
-                        },
-                        text: "lbl_select".tr,
-                        margin: getMargin(
-                          right: 4,
-                        ),
-                        buttonStyle: CustomButtonStyles.fillGreen300.copyWith(
-                            fixedSize: MaterialStateProperty.all<Size>(
-                              Size(
-                                double.maxFinite,
-                                getVerticalSize(
-                                  40,
-                                ),
+                      children: [
+                        Positioned(
+                          right:getHorizontalSize(10),
+                          top: getVerticalSize(10),
+                          child: InkWell(
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                // color: Colors.blue,
+                                shape: BoxShape.circle,
+                                border: Border.all(color: Colors.grey.withOpacity(0.3))
                               ),
-                            )),
-                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteA700,
-                      ),
-                    ),
-                    Expanded(
-                      child: CustomElevatedButton(
-                        onTap: () {
-                          Get.dialog(AlertDialog(
-                            backgroundColor: Colors.transparent,
-                            contentPadding: EdgeInsets.zero,
-                            insetPadding: const EdgeInsets.only(left: 0),
-                            content: EditAffirmationDialog(
-                              Get.put(
-                                EditAffirmationController(),
+                              child: Icon(Icons.mode_edit_outline_outlined,
+                              color: Colors.blue,
                               ),
                             ),
-                          ));
-                        },
-                        text: "lbl_add_new".tr,
-                        margin: getMargin(
-                          left: 4,
+                          ),
                         ),
-                        buttonStyle: CustomButtonStyles.fillGray90003.copyWith(
-                            fixedSize: MaterialStateProperty.all<Size>(
-                              Size(
-                                double.maxFinite,
-                                getVerticalSize(
-                                  40,
-                                ),
+                        Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: getHorizontalSize(8)),
+                            child: TextFormField(
+                              // affirmation,
+                              controller: controller.affirmationText,
+                              maxLines: 6,
+                              decoration: InputDecoration(
+                                border: InputBorder.none
                               ),
-                            )),
-                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteA700,
-                      ),
+                              // overflow: TextOverflow.ellipsis,
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.poppins(
+                                fontSize: 16,
+                                color: Color(0xff5E4646),
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-              CustomElevatedButton(
-                onTap: () {
-                  controller.deleteAffirmation(snapshotIndex);
-                  Get.back();
-                },
-                text: "Delete Affirmation".tr,
-                margin: getMargin(
-                  top: 19,
-                  right: 6,
-                ),
-                buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      Size(
-                        double.maxFinite,
-                        getVerticalSize(
-                          57,
-                        ),
-                      ),
-                    )),
-                buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
-              ),
-              CustomElevatedButton(
-                onTap: () async {
-                  final user = FirebaseAuth.instance.currentUser;
-                  controller.playAudioFromAsset('1.mp3');
-                  controller.playConfetti();
-                  int currentCount = currentAffirmationCount;
-                  int newCount = currentCount + 1;
+                  ),
 
-                  FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(user?.email)
-                      .collection('OwnAffirmationList')
-                      .doc(documentId) // Use the document ID to reference the specific document
-                      .update({
-                    'affirmationCount': newCount
-                  }).then((_) {
-                    // Document updated successfully
-                    print('AffirmationCount updated successfully');
-                  }).catchError((error) {
-                    // Handle errors if the update fails
-                    print('Error updating AffirmationCount: $error');
-                  });
-                },
-                text: 'Blast Affirmation',
-                margin: getMargin(
-                  top: 19,
-                  right: 6,
                 ),
-                buttonStyle: CustomButtonStyles.radiusTL28.copyWith(
-                    fixedSize: MaterialStateProperty.all<Size>(
-                      Size(
-                        double.maxFinite,
-                        getVerticalSize(
-                          57,
-                        ),
-                      ),
-                    )),
-                buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
               ),
+              SizedBox(height: getVerticalSize(20),),
+              InkWell(
+                onTap: () {
+                  // Handle button press
+                },
+                child: Ink(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.grey), // Border color for the button
+                  ),
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: getHorizontalSize(8),vertical: getVerticalSize(5)),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(getHorizontalSize(50))),
+                        border: Border.all(
+                        style: BorderStyle.solid,color: Colors.black.withOpacity(0.3)
+                      )
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(Icons.edit_outlined, size: 16),
+                        SizedBox(width: getHorizontalSize(5)),
+                        Text("Add Image", style: TextStyle(fontSize: 12)),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+
             ],
           ),
         ),

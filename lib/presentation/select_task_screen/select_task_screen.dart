@@ -182,7 +182,7 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
         return AlertDialog(
           title: Text('Select a Task'),
           content: Container(
-            height: Get.height*0.3,
+            height: Get.height*0.22,
             child: Column(
               children: [
                 ListTile(
@@ -201,12 +201,12 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
 
                   },
                 ),
-                ListTile(
-                  title: Text(taskType3),
-                  onTap: () {
-                    Get.to(()=>AddTaskScreen(taskType:taskType3));
-                  },
-                ),
+                // ListTile(
+                //   title: Text(taskType3),
+                //   onTap: () {
+                //     Get.to(()=>AddTaskScreen(taskType:taskType3));
+                //   },
+                // ),
                 ListTile(
                   title: Text(taskType4),
                   onTap: () {

@@ -100,7 +100,7 @@ class LoginPageController extends GetxController {
       isLoading.value = false; // Hide the progress indicator
       Get.snackbar(
         "Authentication Error",
-        error as String,
+        error.toString(),
         backgroundColor: Colors.red,
         colorText: Colors.white,
         snackPosition: SnackPosition.BOTTOM,

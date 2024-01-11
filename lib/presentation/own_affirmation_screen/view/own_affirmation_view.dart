@@ -25,6 +25,8 @@ class OwnAffirmationView extends StatefulWidget {
 class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   final GlobalKey key = GlobalKey();
+  final controller=Get.find<OwnAffirmationController>();
+
 
   @override
   void initState() {
@@ -150,13 +152,14 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                           opacity: _animationController.drive(CurveTween(curve: Curves.easeInOut)),
                           child: InkWell(
                             onTap: () {
+                              controller.affirmationText.text=affirmationData['affirmation'];
                               Get.dialog(
                                 AlertDialog(
                                   backgroundColor: Colors.transparent,
                                   contentPadding: EdgeInsets.zero,
                                   insetPadding: const EdgeInsets.only(left: 0),
                                   content: OwnAffirmationBlastEffectDialog(
-                                    OwnAffirmationController(),
+                                    controller,
                                     affirmationCountPresent: affirmationCount,
                                     currentAffirmationCount: affirmationCount,
                                     documentId: documentId,
