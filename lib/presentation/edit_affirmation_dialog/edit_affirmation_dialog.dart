@@ -135,67 +135,156 @@ class EditAffirmationDialog extends StatelessWidget {
                   InkWell(
                     onTap: (){
                       Get.dialog(
-
-                        AlertDialog(
-                          title: Text("Choose a Background"),
-                          content: Obx(
-                                () => Expanded(
-                              child: ListView.builder(
-                                itemCount:
-                                controller.availableBackgrounds.length,
-                                itemBuilder: (context, index) {
-                                  final background =
-                                  controller.availableBackgrounds[index];
-                                  return InkWell(
-                                    onTap: () {
-                                      controller.setSelectedBackground(
-                                          background);
-                                      Get.back();
-                                    },
-                                    child: Container(
-                                      height: Get.height * 0.2,
-                                      width: Get.width * 0.5,
-                                      padding: EdgeInsets.symmetric(vertical: 10),
-                                      decoration: BoxDecoration(
-                                        //color: Colors.blue,
-                                        borderRadius: BorderRadius.circular(12),
-                                        // image: DecorationImage(
-                                        //     image: NetworkImage(
-                                        //       controller.availableBackgrounds[
-                                        //       index],
-                                        //     ),
-                                          //  fit: BoxFit.cover),
-                                      ),
-                                      child:ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: CachedNetworkImage(
-                                          imageUrl: controller.availableBackgrounds[
-                                          index],
-                                          imageBuilder: (context, imageProvider) => Container(
-                                            height: Get.height * 0.13,
-                                            width: Get.width * 0.3,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(12),
-                                              image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover,
+                        Material(
+                          type: MaterialType.transparency,
+                          child: Center(
+                            child: Container(
+                              // margin: EdgeInsets.all(20),
+                              // padding: EdgeInsets.all(16),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text("Choose a Background"),
+                                  SizedBox(height: 10),
+                                  Obx(
+                                        () => Expanded(
+                                      child: ListView.builder(
+                                        itemCount: controller.availableBackgrounds.length,
+                                        itemBuilder: (context, index) {
+                                          final background = controller.availableBackgrounds[index];
+                                          return InkWell(
+                                            onTap: () {
+                                              controller.setSelectedBackground(background);
+                                              Get.back();
+                                            },
+                                            child: Container(
+                                              height: Get.height * 0.2,
+                                              width: Get.width * 0.5,
+                                              padding: EdgeInsets.symmetric(vertical: 10),
+                                              decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(12),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius: BorderRadius.circular(12),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: controller.availableBackgrounds[index],
+                                                  imageBuilder: (context, imageProvider) => Container(
+                                                    height: Get.height * 0.13,
+                                                    width: Get.width * 0.3,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(12),
+                                                      image: DecorationImage(
+                                                        image: imageProvider,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  placeholder: (context, url) => Center(
+                                                    child: CircularProgressIndicator(
+                                                      color: Colors.deepOrange,
+                                                    ),
+                                                  ),
+                                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          placeholder: (context, url) => Center(child:
-                                          CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
-                                          errorWidget: (context, url, error) => Icon(Icons.error),
-                                        ),
+                                          );
+                                        },
                                       ),
-
                                     ),
-                                  );
-                                },
+                                  ),
+                                ],
                               ),
                             ),
                           ),
                         ),
                       );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                      //old
+                      // Get.dialog(
+                      //
+                      //   AlertDialog(
+                      //     title: Text("Choose a Background"),
+                      //     content: Obx(
+                      //           () => FractionallySizedBox(
+                      //             widthFactor: 1.0,
+                      //             child: Expanded(
+                      //                                           child: ListView.builder(
+                      //             itemCount:
+                      //             controller.availableBackgrounds.length,
+                      //             itemBuilder: (context, index) {
+                      //               final background =
+                      //               controller.availableBackgrounds[index];
+                      //               return InkWell(
+                      //                 onTap: () {
+                      //                   controller.setSelectedBackground(
+                      //                       background);
+                      //                   Get.back();
+                      //                 },
+                      //                 child: Container(
+                      //                   height: Get.height * 0.2,
+                      //                   width: Get.width * 0.5,
+                      //                   padding: EdgeInsets.symmetric(vertical: 10),
+                      //                   decoration: BoxDecoration(
+                      //                     //color: Colors.blue,
+                      //                     borderRadius: BorderRadius.circular(12),
+                      //                     // image: DecorationImage(
+                      //                     //     image: NetworkImage(
+                      //                     //       controller.availableBackgrounds[
+                      //                     //       index],
+                      //                     //     ),
+                      //                       //  fit: BoxFit.cover),
+                      //                   ),
+                      //                   child:ClipRRect(
+                      //                     borderRadius: BorderRadius.circular(12),
+                      //                     child: CachedNetworkImage(
+                      //                       imageUrl: controller.availableBackgrounds[
+                      //                       index],
+                      //                       imageBuilder: (context, imageProvider) => Container(
+                      //                         height: Get.height * 0.13,
+                      //                         width: Get.width * 0.3,
+                      //                         decoration: BoxDecoration(
+                      //                           borderRadius: BorderRadius.circular(12),
+                      //                           image: DecorationImage(
+                      //                             image: imageProvider,
+                      //                             fit: BoxFit.cover,
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                       placeholder: (context, url) => Center(child:
+                      //                       CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
+                      //                       errorWidget: (context, url, error) => Icon(Icons.error),
+                      //                     ),
+                      //                   ),
+                      //
+                      //                 ),
+                      //               );
+                      //             },
+                      //                                           ),
+                      //                                         ),
+                      //           ),
+                      //     ),
+                      //   ),
+                      // );
                     },
                     child:Obx(() => Container(
                       height:Get.height*0.027,
