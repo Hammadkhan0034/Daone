@@ -241,10 +241,10 @@ class ViewFriendsTabContainerScreen
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(
-                                                horizontal: 12.0, vertical: 10),
+                                                horizontal: 8.0, vertical: 10),
                                             child: TextWidget(text: (userData as Map<String,
                                                 dynamic>)?['fullName'] ??
-                                                'No Name',color: Colors.black,fsize: 18),
+                                                'No Name',color: Colors.black,fsize: 16),
                                           ),
                                           Spacer(),
                                           StreamBuilder(
