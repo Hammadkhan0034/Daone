@@ -77,14 +77,15 @@ class ViewFriendsTabContainerScreen
                   labelStyle: TextStyle(),
                   unselectedLabelColor: theme.colorScheme.primaryContainer,
                   unselectedLabelStyle: TextStyle(),
+                  indicatorSize: TabBarIndicatorSize.tab,
                   indicatorPadding: getPadding(
-                    all: 2.0,
+                    all: 1.0,
                   ),
                   indicator: BoxDecoration(
                     color: appTheme.deepOrangeA20005,
                     borderRadius: BorderRadius.circular(
                       getHorizontalSize(
-                        18,
+                        15,
                       ),
                     ),
                   ),
