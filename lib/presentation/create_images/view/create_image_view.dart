@@ -78,7 +78,7 @@ class CreateImageView extends StatelessWidget {
               height: Get.height,
               width: Get.width,
               decoration: BoxDecoration(
-                //  color: Colors.teal
+                // color: Colors.teal
               ),
               child: Center(
                 child: TextWidget(
@@ -94,6 +94,7 @@ class CreateImageView extends StatelessWidget {
           return Container(
             height: Get.height * 0.9,
             width: Get.width,
+            //color: Colors.blue,
             child: ListView.builder(
               itemCount: snapshot.data.docs.length,
               itemBuilder: (context, index) {
@@ -110,331 +111,667 @@ class CreateImageView extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.1,
-                          ),
-                          Container(
-                            height: Get.height * 0.05,
-                            width: Get.width * 0.13,
-                            decoration: BoxDecoration(
-                              // borderRadius: BorderRadius.circular(100),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 3.0,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.001,
-                          ),
-                          Stack(
-                            children:[ Container(
-                             // color: Colors.lightBlue,
-                              width: Get.width * 0.63,
-                              height: Get.height * 0.065,
-                              padding: EdgeInsets.only(top: 0),
-                              child: Text(
-                                'You created an image for ${highlightData['title']}',
-                                style: TextStyle(
-                                    fontFamily: 'Gotham Light',
-                                    fontWeight: FontWeight.w800,
-                                    fontSize:Get.width*0.03),
-                              ),
-                            ),
-                            Positioned(
-                              bottom: 5,
-                              left: 1,
-                              child: Text(
-                                highlightData['date'],
-                                style: GoogleFonts.playfairDisplay(fontSize: 11),
-                              ),
-                            )
-                            ]
-                          ),
-
-                        ],
-                      ),
-                    ),
-                    Screenshot(
-                      controller:screenshotController,
+                      padding: EdgeInsets.symmetric(horizontal: Get.width* 0.04, vertical: Get.height * 0.01),
                       child: Container(
-                        height: Get.height * 0.4,
-                        width: Get.width * 0.8,
+                        height: Get.height*0.58,
+                        width: Get.width,
                         decoration: BoxDecoration(
-                          color: Colors.black,
-                          borderRadius: BorderRadius.circular(1),
+                            // color: Colors.blue,
+                          color: Colors.grey.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(10)
                         ),
-                        child: Stack(
+                        child: Column(
                           children: [
-                            CachedNetworkImage(
-                              imageUrl: highlightData['imageUrl'],
-                              imageBuilder: (context, imageProvider) => Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(1),
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit.cover,
+                            Padding(
+                              padding: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 16),
+                              child: Row(
+                                children: [
+                                  // SizedBox(
+                                  //   width: Get.width * 0.1,
+                                  // ),
+                                  Container(
+                                    height: Get.height * 0.05,
+                                    width: Get.width * 0.13,
+                                    decoration: BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(100),
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 3.0,
+                                      ),
+                                    ),
                                   ),
+                                  SizedBox(
+                                    width: Get.width * 0.001,
+                                  ),
+                                  Stack(
+                                      children:[ Container(
+                                        //color: Colors.lightBlue,
+                                        width: Get.width * 0.63,
+                                        height: Get.height * 0.065,
+                                        padding: EdgeInsets.only(top: 0),
+                                        child: Text(
+                                          'You created an image for ${highlightData['title']}',
+                                          style: TextStyle(
+                                              fontFamily: 'Gotham Light',
+                                              fontWeight: FontWeight.w800,
+                                              fontSize:Get.width*0.03),
+                                        ),
+                                      ),
+                                        Positioned(
+                                          bottom: 5,
+                                          left: 1,
+                                          child: Text(
+                                            highlightData['date'],
+                                            style: GoogleFonts.playfairDisplay(fontSize: 11),
+                                          ),
+                                        )
+                                      ]
+                                  ),
+
+                                ],
+                              ),
+                            ),
+                            Screenshot(
+                              controller:screenshotController,
+                              child: Container(
+                                height: Get.height * 0.4,
+                                width: Get.width * 0.8,
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: highlightData['imageUrl'],
+                                      imageBuilder: (context, imageProvider) => Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                    ),
+                                    Center(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(12.0),
+                                        child: Text(
+                                          highlightData['selectedText'],
+                                          style: GoogleFonts.getFont(
+                                            highlightData['fontFamily']??'Roboto',
+                                            fontSize: highlightData['fontSize'],
+                                            color: textColor ,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              placeholder: (context, url) => Center(child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) => Icon(Icons.error),
                             ),
-                            Center(
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Text(
-                                  highlightData['selectedText'],
-                                  style: GoogleFonts.getFont(
-                                    highlightData['fontFamily']??'Roboto',
-                                    fontSize: highlightData['fontSize'],
-                                    color: textColor ,
+                            SizedBox(
+                              height: Get.height * 0.01,
+                            ),
+                            Padding(
+                                padding: EdgeInsets.only(top: 5.0,bottom: 5.0,left: 22),
+                              // padding: const EdgeInsets.symmetric(vertical: 5.0),
+                              child: Row(
+                                children: [
+                                  // SizedBox(
+                                  //   width: Get.width * 0.14,
+                                  // ),
+                                  InkWell(
+                                    onTap: () {
+                                      controller.toggleHighlightStatus(docId);
+                                    },
+                                    child: highlightData['isHighlighted'] == false
+                                        ? Image.asset('assets/images/heart.png', scale: 5,)
+                                        : Image.asset('assets/images/hearted.png', scale: 17,),
                                   ),
-                                ),
+                                  SizedBox(
+                                    width: Get.width * 0.1,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.bottomSheet(
+                                        Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius: BorderRadius.circular(5),
+                                            ),
+                                            child:  SingleChildScrollView(
+                                              child: Form(
+                                                key: _formKey,
+                                                child: Column(
+                                                  children: [
+
+                                                    StreamBuilder(
+                                                        stream: FirebaseFirestore.instance
+                                                            .collection('users').doc(user!.email)
+                                                            .collection('highlightList').doc(docId)
+                                                            .collection('comment').snapshots(),
+
+
+                                                        builder:(context,AsyncSnapshot snapshot){
+                                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                                            // Loading indicator while data is being fetched
+                                                            return Center(
+                                                              child: CircularProgressIndicator(
+                                                                color: Colors.deepOrange,
+                                                              ),
+                                                            );
+                                                          }
+                                                          return  SizedBox(
+                                                            height: Get.height*0.472,
+                                                            width: Get.width,
+                                                            child: ListView.builder(
+                                                                itemCount: snapshot.data.docs.length,
+                                                                itemBuilder: (context,index){
+
+                                                                  var commentData =snapshot.data.docs[index].data();
+                                                                  var formattedDate=DateFormat('d MMM, yyyy').format(commentData['date'].toDate());
+                                                                  return Container(
+                                                                    height: Get.height*0.1,
+                                                                    width: Get.width*1,
+                                                                    decoration: BoxDecoration(
+                                                                      borderRadius: BorderRadius.circular(100),
+                                                                      //    color: Colors.blue,
+                                                                    ),
+                                                                    child:  Padding(
+                                                                      padding: const EdgeInsets.all(12.0),
+                                                                      child: Row(
+                                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                                        children: [
+                                                                          Container(
+                                                                            height: Get.height * 0.05,
+                                                                            width: Get.width * 0.1,
+                                                                            decoration: BoxDecoration(
+                                                                              //borderRadius: BorderRadius.circular(100),
+                                                                              border: Border.all(
+                                                                                color: Colors.black,
+                                                                                width: 3.0, // Adjust the width as needed
+                                                                              ),
+                                                                              shape: BoxShape.circle,
+                                                                            ),
+                                                                          ),
+                                                                          Column(
+                                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                                            children: [
+
+                                                                              Row(
+                                                                                children: [
+                                                                                  SizedBox(width: Get.width*0.02),
+                                                                                  TextWidget(text:'Moment',
+                                                                                    fontFamily: 'Gotham Light',
+                                                                                    font: FontWeight.w800,
+                                                                                    color: Colors.black, fsize:14, ),
+                                                                                  SizedBox(width: Get.width*0.04),
+                                                                                  TextWidget(text:formattedDate, color: Colors.black45, fsize: 12),
+
+                                                                                ],
+                                                                              ),
+                                                                              Expanded(child: Padding(
+                                                                                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
+                                                                                child: TextWidget(text:commentData['comment'],
+                                                                                    fontFamily: 'Gotham Light',
+                                                                                    font: FontWeight.w800,color:Colors.black, fsize: 13),
+                                                                              )),
+                                                                              Divider(color: Colors.black12),
+
+                                                                            ],
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                }),
+                                                          );
+                                                        }),
+
+
+
+                                                    Padding(
+                                                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                                      child: Row(
+                                                        children: [
+                                                          Container(
+                                                            height: Get.height * 0.05,
+                                                            width: Get.width * 0.1,
+                                                            decoration: BoxDecoration(
+                                                              //   borderRadius: BorderRadius.circular(100),
+                                                              border: Border.all(
+                                                                color: Colors.black,
+                                                                width: 3.0, // Adjust the width as needed
+                                                              ),
+                                                              shape: BoxShape.circle,
+                                                            ),
+                                                          ),
+                                                          SizedBox( width: Get.width*0.01,  ),
+                                                          Container(
+                                                            // color: Colors.yellow,
+                                                            height: Get.height*0.09,
+                                                            width: Get.width*0.7,
+                                                            decoration: BoxDecoration(
+
+                                                            ),
+                                                            child: TextFormField(
+                                                              onSaved: (value){
+                                                                controller.createImageCommentController.text =value!;
+                                                              },
+                                                              controller: controller.createImageCommentController,
+                                                              validator: (value) {
+                                                                if (value == null || value.isEmpty) {
+                                                                  return 'Please enter a comment';
+                                                                }
+                                                                return null; // Return null to indicate no error
+                                                              },
+                                                              decoration: InputDecoration(
+                                                                labelText: 'Type Something here...',
+                                                                enabledBorder: InputBorder.none,
+                                                                labelStyle: TextStyle(color: Colors.black),
+
+                                                                border: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(50.0),
+                                                                  borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                                                                ),
+                                                                // Custom border for the input field when focused
+                                                                focusedBorder: OutlineInputBorder(
+                                                                  borderRadius: BorderRadius.circular(50.0),
+                                                                  borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                            child: InkWell(
+                                                                onTap: (){
+                                                                  if (_formKey.currentState!.validate()) {
+                                                                    controller.imageCommentsSection(
+                                                                        context: context,postId: docId,
+                                                                        comment: controller.createImageCommentController.text
+                                                                    );
+                                                                  }
+                                                                },
+                                                                child: Image.asset('assets/images/send.png',scale: 2.4,)),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                        ),
+
+                                      );
+                                    },
+                                    child: Image.asset('assets/images/newcomment.png', scale: 17,),
+                                  ),
+                                  SizedBox(
+                                    width: Get.width * 0.45,
+                                  ),
+                                  buildPopupMenuButton(context: context,title: highlightData['title'],
+                                    description: highlightData['selectedText'],fontName: highlightData['fontFamily'],
+                                    imageShare: () async {
+                                      try {
+                                        Uint8List? imageUint8List = await screenshotController.capture();
+                                        if (imageUint8List != null) {
+                                          final tempDir = await getTemporaryDirectory();
+                                          final tempFile = File('${tempDir.path}/image.png');
+                                          await tempFile.writeAsBytes(imageUint8List);
+
+                                          Share.shareFiles([tempFile.path], text: 'Check out this image!');
+                                        } else {
+                                          // Handle the case where imageUint8List is null
+                                          print('Error capturing image. Image data is null.');
+                                        }
+                                      } catch (e) {
+                                        // Handle exceptions
+                                        print('Error sharing image: $e');
+                                      }
+                                    },
+                                  ),
+                                ],
                               ),
                             ),
                           ],
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            width: Get.width * 0.14,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              controller.toggleHighlightStatus(docId);
-                            },
-                            child: highlightData['isHighlighted'] == false
-                                ? Image.asset('assets/images/heart.png', scale: 5,)
-                                : Image.asset('assets/images/hearted.png', scale: 17,),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.1,
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Get.bottomSheet(
-                                Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(5),
-                                    ),
-                                    child:  SingleChildScrollView(
-                                      child: Form(
-                                        key: _formKey,
-                                        child: Column(
-                                          children: [
-
-                                            StreamBuilder(
-                                                stream: FirebaseFirestore.instance
-                                                    .collection('users').doc(user!.email)
-                                                    .collection('highlightList').doc(docId)
-                                                    .collection('comment').snapshots(),
-
-
-                                                builder:(context,AsyncSnapshot snapshot){
-                                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                                    // Loading indicator while data is being fetched
-                                                    return Center(
-                                                      child: CircularProgressIndicator(
-                                                        color: Colors.deepOrange,
-                                                      ),
-                                                    );
-                                                  }
-                                                  return  SizedBox(
-                                                    height: Get.height*0.472,
-                                                    width: Get.width,
-                                                    child: ListView.builder(
-                                                        itemCount: snapshot.data.docs.length,
-                                                        itemBuilder: (context,index){
-
-                                                          var commentData =snapshot.data.docs[index].data();
-                                                          var formattedDate=DateFormat('d MMM, yyyy').format(commentData['date'].toDate());
-                                                          return Container(
-                                                            height: Get.height*0.1,
-                                                            width: Get.width*1,
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(100),
-                                                              //    color: Colors.blue,
-                                                            ),
-                                                            child:  Padding(
-                                                              padding: const EdgeInsets.all(12.0),
-                                                              child: Row(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                mainAxisAlignment: MainAxisAlignment.start,
-                                                                children: [
-                                                                  Container(
-                                                                    height: Get.height * 0.05,
-                                                                    width: Get.width * 0.1,
-                                                                    decoration: BoxDecoration(
-                                                                      //borderRadius: BorderRadius.circular(100),
-                                                                      border: Border.all(
-                                                                        color: Colors.black,
-                                                                        width: 3.0, // Adjust the width as needed
-                                                                      ),
-                                                                      shape: BoxShape.circle,
-                                                                    ),
-                                                                  ),
-                                                                  Column(
-                                                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                                                    mainAxisAlignment: MainAxisAlignment.start,
-                                                                    children: [
-
-                                                                      Row(
-                                                                        children: [
-                                                                          SizedBox(width: Get.width*0.02),
-                                                                          TextWidget(text:'Moment',
-                                                                            fontFamily: 'Gotham Light',
-                                                                            font: FontWeight.w800,
-                                                                            color: Colors.black, fsize:14, ),
-                                                                          SizedBox(width: Get.width*0.04),
-                                                                          TextWidget(text:formattedDate, color: Colors.black45, fsize: 12),
-
-                                                                        ],
-                                                                      ),
-                                                                      Expanded(child: Padding(
-                                                                        padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
-                                                                        child: TextWidget(text:commentData['comment'],
-                                                                            fontFamily: 'Gotham Light',
-                                                                            font: FontWeight.w800,color:Colors.black, fsize: 13),
-                                                                      )),
-                                                                      Divider(color: Colors.black12),
-
-                                                                    ],
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          );
-                                                        }),
-                                                  );
-                                                }),
-
-
-
-                                            Padding(
-                                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                                              child: Row(
-                                                children: [
-                                                  Container(
-                                                    height: Get.height * 0.05,
-                                                    width: Get.width * 0.1,
-                                                    decoration: BoxDecoration(
-                                                   //   borderRadius: BorderRadius.circular(100),
-                                                      border: Border.all(
-                                                        color: Colors.black,
-                                                        width: 3.0, // Adjust the width as needed
-                                                      ),
-                                                      shape: BoxShape.circle,
-                                                    ),
-                                                  ),
-                                                  SizedBox( width: Get.width*0.01,  ),
-                                                  Container(
-                                                    // color: Colors.yellow,
-                                                    height: Get.height*0.09,
-                                                    width: Get.width*0.7,
-                                                    decoration: BoxDecoration(
-
-                                                    ),
-                                                    child: TextFormField(
-                                                      onSaved: (value){
-                                                        controller.createImageCommentController.text =value!;
-                                                      },
-                                                      controller: controller.createImageCommentController,
-                                                      validator: (value) {
-                                                        if (value == null || value.isEmpty) {
-                                                          return 'Please enter a comment';
-                                                        }
-                                                        return null; // Return null to indicate no error
-                                                      },
-                                                      decoration: InputDecoration(
-                                                        labelText: 'Type Something here...',
-                                                        enabledBorder: InputBorder.none,
-                                                        labelStyle: TextStyle(color: Colors.black),
-
-                                                        border: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(50.0),
-                                                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
-                                                        ),
-                                                        // Custom border for the input field when focused
-                                                        focusedBorder: OutlineInputBorder(
-                                                          borderRadius: BorderRadius.circular(50.0),
-                                                          borderSide: BorderSide(color: Colors.transparent, width: 0.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Padding(
-                                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                                    child: InkWell(
-                                                        onTap: (){
-                                                          if (_formKey.currentState!.validate()) {
-                                                            controller.imageCommentsSection(
-                                                                context: context,postId: docId,
-                                                                comment: controller.createImageCommentController.text
-                                                            );
-                                                          }
-                                                        },
-                                                        child: Image.asset('assets/images/send.png',scale: 2.4,)),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    )
-                                ),
-
-                              );
-                            },
-                            child: Image.asset('assets/images/newcomment.png', scale: 17,),
-                          ),
-                          SizedBox(
-                            width: Get.width * 0.42,
-                          ),
-                          buildPopupMenuButton(context: context,title: highlightData['title'],
-                            description: highlightData['selectedText'],fontName: highlightData['fontFamily'],
-                            imageShare: () async {
-                              try {
-                                Uint8List? imageUint8List = await screenshotController.capture();
-                                if (imageUint8List != null) {
-                                  final tempDir = await getTemporaryDirectory();
-                                  final tempFile = File('${tempDir.path}/image.png');
-                                  await tempFile.writeAsBytes(imageUint8List);
-
-                                  Share.shareFiles([tempFile.path], text: 'Check out this image!');
-                                } else {
-                                  // Handle the case where imageUint8List is null
-                                  print('Error capturing image. Image data is null.');
-                                }
-                              } catch (e) {
-                                // Handle exceptions
-                                print('Error sharing image: $e');
-                              }
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: Get.height * 0.01,
-                    ),
-                    Divider(
-                      color: Colors.black12,
-                      thickness: 1,
-                    ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: Get.width * 0.1,
+                    //       ),
+                    //       Container(
+                    //         height: Get.height * 0.05,
+                    //         width: Get.width * 0.13,
+                    //         decoration: BoxDecoration(
+                    //           // borderRadius: BorderRadius.circular(100),
+                    //           shape: BoxShape.circle,
+                    //           border: Border.all(
+                    //             color: Colors.black,
+                    //             width: 3.0,
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       SizedBox(
+                    //         width: Get.width * 0.001,
+                    //       ),
+                    //       Stack(
+                    //         children:[ Container(
+                    //           color: Colors.lightBlue,
+                    //           width: Get.width * 0.63,
+                    //           height: Get.height * 0.065,
+                    //           padding: EdgeInsets.only(top: 0),
+                    //           child: Text(
+                    //             'You created an image for ${highlightData['title']}',
+                    //             style: TextStyle(
+                    //                 fontFamily: 'Gotham Light',
+                    //                 fontWeight: FontWeight.w800,
+                    //                 fontSize:Get.width*0.03),
+                    //           ),
+                    //         ),
+                    //         Positioned(
+                    //           bottom: 5,
+                    //           left: 1,
+                    //           child: Text(
+                    //             highlightData['date'],
+                    //             style: GoogleFonts.playfairDisplay(fontSize: 11),
+                    //           ),
+                    //         )
+                    //         ]
+                    //       ),
+                    //
+                    //     ],
+                    //   ),
+                    // ),
+                    // Screenshot(
+                    //   controller:screenshotController,
+                    //   child: Container(
+                    //     height: Get.height * 0.4,
+                    //     width: Get.width * 0.8,
+                    //     decoration: BoxDecoration(
+                    //       color: Colors.black,
+                    //       borderRadius: BorderRadius.circular(1),
+                    //     ),
+                    //     child: Stack(
+                    //       children: [
+                    //         CachedNetworkImage(
+                    //           imageUrl: highlightData['imageUrl'],
+                    //           imageBuilder: (context, imageProvider) => Container(
+                    //             decoration: BoxDecoration(
+                    //               borderRadius: BorderRadius.circular(1),
+                    //               image: DecorationImage(
+                    //                 image: imageProvider,
+                    //                 fit: BoxFit.cover,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           placeholder: (context, url) => Center(child: CircularProgressIndicator()),
+                    //           errorWidget: (context, url, error) => Icon(Icons.error),
+                    //         ),
+                    //         Center(
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.all(12.0),
+                    //             child: Text(
+                    //               highlightData['selectedText'],
+                    //               style: GoogleFonts.getFont(
+                    //                 highlightData['fontFamily']??'Roboto',
+                    //                 fontSize: highlightData['fontSize'],
+                    //                 color: textColor ,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: Get.height * 0.01,
+                    // ),
+                    // Padding(
+                    //   padding: const EdgeInsets.symmetric(vertical: 5.0),
+                    //   child: Row(
+                    //     children: [
+                    //       SizedBox(
+                    //         width: Get.width * 0.14,
+                    //       ),
+                    //       InkWell(
+                    //         onTap: () {
+                    //           controller.toggleHighlightStatus(docId);
+                    //         },
+                    //         child: highlightData['isHighlighted'] == false
+                    //             ? Image.asset('assets/images/heart.png', scale: 5,)
+                    //             : Image.asset('assets/images/hearted.png', scale: 17,),
+                    //       ),
+                    //       SizedBox(
+                    //         width: Get.width * 0.1,
+                    //       ),
+                    //       InkWell(
+                    //         onTap: () {
+                    //           Get.bottomSheet(
+                    //             Container(
+                    //                 decoration: BoxDecoration(
+                    //                   color: Colors.white,
+                    //                   borderRadius: BorderRadius.circular(5),
+                    //                 ),
+                    //                 child:  SingleChildScrollView(
+                    //                   child: Form(
+                    //                     key: _formKey,
+                    //                     child: Column(
+                    //                       children: [
+                    //
+                    //                         StreamBuilder(
+                    //                             stream: FirebaseFirestore.instance
+                    //                                 .collection('users').doc(user!.email)
+                    //                                 .collection('highlightList').doc(docId)
+                    //                                 .collection('comment').snapshots(),
+                    //
+                    //
+                    //                             builder:(context,AsyncSnapshot snapshot){
+                    //                               if (snapshot.connectionState == ConnectionState.waiting) {
+                    //                                 // Loading indicator while data is being fetched
+                    //                                 return Center(
+                    //                                   child: CircularProgressIndicator(
+                    //                                     color: Colors.deepOrange,
+                    //                                   ),
+                    //                                 );
+                    //                               }
+                    //                               return  SizedBox(
+                    //                                 height: Get.height*0.472,
+                    //                                 width: Get.width,
+                    //                                 child: ListView.builder(
+                    //                                     itemCount: snapshot.data.docs.length,
+                    //                                     itemBuilder: (context,index){
+                    //
+                    //                                       var commentData =snapshot.data.docs[index].data();
+                    //                                       var formattedDate=DateFormat('d MMM, yyyy').format(commentData['date'].toDate());
+                    //                                       return Container(
+                    //                                         height: Get.height*0.1,
+                    //                                         width: Get.width*1,
+                    //                                         decoration: BoxDecoration(
+                    //                                           borderRadius: BorderRadius.circular(100),
+                    //                                           //    color: Colors.blue,
+                    //                                         ),
+                    //                                         child:  Padding(
+                    //                                           padding: const EdgeInsets.all(12.0),
+                    //                                           child: Row(
+                    //                                             crossAxisAlignment: CrossAxisAlignment.start,
+                    //                                             mainAxisAlignment: MainAxisAlignment.start,
+                    //                                             children: [
+                    //                                               Container(
+                    //                                                 height: Get.height * 0.05,
+                    //                                                 width: Get.width * 0.1,
+                    //                                                 decoration: BoxDecoration(
+                    //                                                   //borderRadius: BorderRadius.circular(100),
+                    //                                                   border: Border.all(
+                    //                                                     color: Colors.black,
+                    //                                                     width: 3.0, // Adjust the width as needed
+                    //                                                   ),
+                    //                                                   shape: BoxShape.circle,
+                    //                                                 ),
+                    //                                               ),
+                    //                                               Column(
+                    //                                                 crossAxisAlignment: CrossAxisAlignment.start,
+                    //                                                 mainAxisAlignment: MainAxisAlignment.start,
+                    //                                                 children: [
+                    //
+                    //                                                   Row(
+                    //                                                     children: [
+                    //                                                       SizedBox(width: Get.width*0.02),
+                    //                                                       TextWidget(text:'Moment',
+                    //                                                         fontFamily: 'Gotham Light',
+                    //                                                         font: FontWeight.w800,
+                    //                                                         color: Colors.black, fsize:14, ),
+                    //                                                       SizedBox(width: Get.width*0.04),
+                    //                                                       TextWidget(text:formattedDate, color: Colors.black45, fsize: 12),
+                    //
+                    //                                                     ],
+                    //                                                   ),
+                    //                                                   Expanded(child: Padding(
+                    //                                                     padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
+                    //                                                     child: TextWidget(text:commentData['comment'],
+                    //                                                         fontFamily: 'Gotham Light',
+                    //                                                         font: FontWeight.w800,color:Colors.black, fsize: 13),
+                    //                                                   )),
+                    //                                                   Divider(color: Colors.black12),
+                    //
+                    //                                                 ],
+                    //                                               ),
+                    //                                             ],
+                    //                                           ),
+                    //                                         ),
+                    //                                       );
+                    //                                     }),
+                    //                               );
+                    //                             }),
+                    //
+                    //
+                    //
+                    //                         Padding(
+                    //                           padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    //                           child: Row(
+                    //                             children: [
+                    //                               Container(
+                    //                                 height: Get.height * 0.05,
+                    //                                 width: Get.width * 0.1,
+                    //                                 decoration: BoxDecoration(
+                    //                                //   borderRadius: BorderRadius.circular(100),
+                    //                                   border: Border.all(
+                    //                                     color: Colors.black,
+                    //                                     width: 3.0, // Adjust the width as needed
+                    //                                   ),
+                    //                                   shape: BoxShape.circle,
+                    //                                 ),
+                    //                               ),
+                    //                               SizedBox( width: Get.width*0.01,  ),
+                    //                               Container(
+                    //                                 // color: Colors.yellow,
+                    //                                 height: Get.height*0.09,
+                    //                                 width: Get.width*0.7,
+                    //                                 decoration: BoxDecoration(
+                    //
+                    //                                 ),
+                    //                                 child: TextFormField(
+                    //                                   onSaved: (value){
+                    //                                     controller.createImageCommentController.text =value!;
+                    //                                   },
+                    //                                   controller: controller.createImageCommentController,
+                    //                                   validator: (value) {
+                    //                                     if (value == null || value.isEmpty) {
+                    //                                       return 'Please enter a comment';
+                    //                                     }
+                    //                                     return null; // Return null to indicate no error
+                    //                                   },
+                    //                                   decoration: InputDecoration(
+                    //                                     labelText: 'Type Something here...',
+                    //                                     enabledBorder: InputBorder.none,
+                    //                                     labelStyle: TextStyle(color: Colors.black),
+                    //
+                    //                                     border: OutlineInputBorder(
+                    //                                       borderRadius: BorderRadius.circular(50.0),
+                    //                                       borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                    //                                     ),
+                    //                                     // Custom border for the input field when focused
+                    //                                     focusedBorder: OutlineInputBorder(
+                    //                                       borderRadius: BorderRadius.circular(50.0),
+                    //                                       borderSide: BorderSide(color: Colors.transparent, width: 0.0),
+                    //                                     ),
+                    //                                   ),
+                    //                                 ),
+                    //                               ),
+                    //                               Padding(
+                    //                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    //                                 child: InkWell(
+                    //                                     onTap: (){
+                    //                                       if (_formKey.currentState!.validate()) {
+                    //                                         controller.imageCommentsSection(
+                    //                                             context: context,postId: docId,
+                    //                                             comment: controller.createImageCommentController.text
+                    //                                         );
+                    //                                       }
+                    //                                     },
+                    //                                     child: Image.asset('assets/images/send.png',scale: 2.4,)),
+                    //                               ),
+                    //                             ],
+                    //                           ),
+                    //                         ),
+                    //                       ],
+                    //                     ),
+                    //                   ),
+                    //                 )
+                    //             ),
+                    //
+                    //           );
+                    //         },
+                    //         child: Image.asset('assets/images/newcomment.png', scale: 17,),
+                    //       ),
+                    //       SizedBox(
+                    //         width: Get.width * 0.42,
+                    //       ),
+                    //       buildPopupMenuButton(context: context,title: highlightData['title'],
+                    //         description: highlightData['selectedText'],fontName: highlightData['fontFamily'],
+                    //         imageShare: () async {
+                    //           try {
+                    //             Uint8List? imageUint8List = await screenshotController.capture();
+                    //             if (imageUint8List != null) {
+                    //               final tempDir = await getTemporaryDirectory();
+                    //               final tempFile = File('${tempDir.path}/image.png');
+                    //               await tempFile.writeAsBytes(imageUint8List);
+                    //
+                    //               Share.shareFiles([tempFile.path], text: 'Check out this image!');
+                    //             } else {
+                    //               // Handle the case where imageUint8List is null
+                    //               print('Error capturing image. Image data is null.');
+                    //             }
+                    //           } catch (e) {
+                    //             // Handle exceptions
+                    //             print('Error sharing image: $e');
+                    //           }
+                    //         },
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
+                    // SizedBox(
+                    //   height: Get.height * 0.01,
+                    // ),
+                    // Divider(
+                    //   color: Colors.black12,
+                    //   thickness: 1,
+                    // ),
                   ],
                 );
               },

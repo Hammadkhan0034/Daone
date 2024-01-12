@@ -25,9 +25,14 @@ class CommunityPage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(
+          centerTitle: true,
           height: getVerticalSize(
             70,
           ),
+          title: TextWidget(text: 'Community', color:Colors.black,
+            fontFamily: 'Gotham Light',
+            font: FontWeight.w800,
+            fsize: 25,),
           leadingWidth: 72,
           leading: AppbarIconbutton(
             onTap: (){
@@ -224,15 +229,15 @@ class CommunityPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                children: [
-                  SizedBox(width: Get.width*0.1,),
-                  TextWidget(text: 'Community', color:Colors.black,
-                      fontFamily: 'Gotham Light',
-                      font: FontWeight.w800,
-                      fsize: 32,),
-                ],
-              ),
+              // Row(
+              //   children: [
+              //     SizedBox(width: Get.width*0.1,),
+              //     TextWidget(text: 'Community', color:Colors.black,
+              //         fontFamily: 'Gotham Light',
+              //         font: FontWeight.w800,
+              //         fsize: 32,),
+              //   ],
+              // ),
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('postCollection').snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -275,11 +280,14 @@ class CommunityPage extends StatelessWidget {
                         // });
 
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 4),
+                          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 10),
                           child: Container(
-                            height: Get.height * 0.43,
+                            height: Get.height * 0.41,
                             width: Get.width * 0.9,
-                            decoration: BoxDecoration(),
+                            decoration: BoxDecoration(
+                              color: Colors.grey.withOpacity(0.1),
+                              borderRadius: BorderRadius.circular(18)
+                            ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -338,7 +346,7 @@ class CommunityPage extends StatelessWidget {
                                     color: Colors.white,
                                     image: DecorationImage(
                                       image: NetworkImage(postPic),
-                                      fit: BoxFit.contain,
+                                      fit: BoxFit.fill,
                                     ),
                                   ),
                                 ),
@@ -641,7 +649,7 @@ class CommunityPage extends StatelessWidget {
                                     ],
                                   ),
                                 ),
-                                Divider(),
+                                //Divider(),
                               ],
                             ),
                           ),

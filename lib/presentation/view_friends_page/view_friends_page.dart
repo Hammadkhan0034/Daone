@@ -152,9 +152,13 @@ class ViewFriendsPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(99), // Set your desired border radius
                   ),
-                  minimumSize: Size(123, 59), // Set your desired width and height
+                  minimumSize: Size(80, 40), // Set your desired width and height
                 ),
-                child: Text('Cancel'),
+                child: Text('Cancel',
+                style: TextStyle(
+                  color: Colors.white
+                ),
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -172,9 +176,13 @@ class ViewFriendsPage extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(99), // Set your desired border radius
                   ),
-                  minimumSize: Size(123, 59), // Set your desired width and height
+                  minimumSize: Size(80, 40), // Set your desired width and height
                 ),
-                child: Text('Create'),
+                child: Text('Create',
+                style: TextStyle(
+                  color: Colors.white
+                ),
+                ),
               ),
             ],
           ),

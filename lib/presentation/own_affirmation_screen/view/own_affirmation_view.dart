@@ -77,159 +77,161 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
 
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: Column(
-            children: [
-              SizedBox(height: Get.height*0.02),
-              Container(
-                height: Get.height * 0.82,
-                width: double.infinity,
-                child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection("users")
-                      .doc(user?.email)
-                      .collection('OwnAffirmationList')
-                      .snapshots(),
-                  builder: (context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      // Loading indicator while data is being fetched
-                      return Center(
-                        child: Container(
-                            height: 100,
-                            width: 100,
-                            child: CircularProgressIndicator(
-                              color: Colors.deepOrangeAccent,
-                            )),
-                      );
-                    }
-
-                    if (snapshot.hasError) {
-                      // Handle errors here
-                      return Text('Error: ${snapshot.error}');
-                    }
-
-                    // Check if there are no tasks
-                    if (snapshot.data.docs.isEmpty) {
-                      return Container(
-                        height: Get.height * 0.3,
-                        width: Get.width * 0.9,
-                        decoration: BoxDecoration(),
-                        child: Column(
-                          children: [
-                            SizedBox(height: Get.height * 0.08),
-                            Center(
-                              child: Image.asset(
-                                ImageConstant.vector21,
-                                scale: 4,
-                              ),
-                            ),
-                            SizedBox(height: Get.height * 0.04),
-                            TextWidget(
-                              text: "You don't have any affirmation",
-                              color: Colors.black38,
-                              fsize: 14,
-                              font: FontWeight.w500,
-                            ),
-                          ],
-                        ),
-                      );
-                    }
-
-                    return GridView.builder(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2, // Set the number of columns here
-                        crossAxisSpacing: 8.0, // Adjust spacing as needed
-                        mainAxisSpacing: 8.0, // Adjust spacing as needed
-                      ),
-                      itemCount: snapshot.data.docs.length,
-                      itemBuilder: (context, index) {
-                        final affirmationData = snapshot.data.docs[index].data();
-                        final affirmationText = affirmationData['affirmation'];
-                        final imageUrl = affirmationData['imageUrl'];
-                        final documentId = snapshot.data.docs[index].id;
-                        int affirmationCount = affirmationData['affirmationCount'];
-
-                        return FadeTransition(
-                          opacity: _animationController.drive(CurveTween(curve: Curves.easeInOut)),
-                          child: InkWell(
-                            onTap: () {
-                              controller.affirmationText.text=affirmationData['affirmation'];
-                              Get.dialog(
-                                AlertDialog(
-                                  backgroundColor: Colors.transparent,
-                                  contentPadding: EdgeInsets.zero,
-                                  insetPadding: const EdgeInsets.only(left: 0),
-                                  content: OwnAffirmationBlastEffectDialog(
-                                    controller,
-                                    affirmationCountPresent: affirmationCount,
-                                    currentAffirmationCount: affirmationCount,
-                                    documentId: documentId,
-                                    affirmation: affirmationText,
-                                    decorationImage: affirmationData['imageUrl'],
-                                    graditudeAffirmationText: affirmationText,
-                                    snapshotIndex: documentId,
-                                    key: key,
-                                  ),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: Get.height*0.02),
+                Container(
+                  height: Get.height * 0.82,
+                  width: double.infinity,
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection("users")
+                        .doc(user?.email)
+                        .collection('OwnAffirmationList')
+                        .snapshots(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Loading indicator while data is being fetched
+                        return Center(
+                          child: Container(
+                              height: 100,
+                              width: 100,
+                              child: CircularProgressIndicator(
+                                color: Colors.deepOrangeAccent,
+                              )),
+                        );
+                      }
+            
+                      if (snapshot.hasError) {
+                        // Handle errors here
+                        return Text('Error: ${snapshot.error}');
+                      }
+            
+                      // Check if there are no tasks
+                      if (snapshot.data.docs.isEmpty) {
+                        return Container(
+                          height: Get.height * 0.3,
+                          width: Get.width * 0.9,
+                          decoration: BoxDecoration(),
+                          child: Column(
+                            children: [
+                              SizedBox(height: Get.height * 0.08),
+                              Center(
+                                child: Image.asset(
+                                  ImageConstant.vector21,
+                                  scale: 4,
                                 ),
-                              );
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
-                              child: Material(
-                                elevation: 5,
-                                borderRadius: BorderRadius.circular(8),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                      image:  CachedNetworkImageProvider(imageUrl),
-                                      fit: BoxFit.cover,
+                              ),
+                              SizedBox(height: Get.height * 0.04),
+                              TextWidget(
+                                text: "You don't have any affirmation",
+                                color: Colors.black38,
+                                fsize: 14,
+                                font: FontWeight.w500,
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+            
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2, // Set the number of columns here
+                          crossAxisSpacing: 8.0, // Adjust spacing as needed
+                          mainAxisSpacing: 8.0, // Adjust spacing as needed
+                        ),
+                        itemCount: snapshot.data.docs.length,
+                        itemBuilder: (context, index) {
+                          final affirmationData = snapshot.data.docs[index].data();
+                          final affirmationText = affirmationData['affirmation'];
+                          final imageUrl = affirmationData['imageUrl'];
+                          final documentId = snapshot.data.docs[index].id;
+                          int affirmationCount = affirmationData['affirmationCount'];
+            
+                          return FadeTransition(
+                            opacity: _animationController.drive(CurveTween(curve: Curves.easeInOut)),
+                            child: InkWell(
+                              onTap: () {
+                                controller.affirmationText.text=affirmationData['affirmation'];
+                                Get.dialog(
+                                  AlertDialog(
+                                    backgroundColor: Colors.transparent,
+                                    contentPadding: EdgeInsets.zero,
+                                    insetPadding: const EdgeInsets.only(left: 0),
+                                    content: OwnAffirmationBlastEffectDialog(
+                                      controller,
+                                      affirmationCountPresent: affirmationCount,
+                                      currentAffirmationCount: affirmationCount,
+                                      documentId: documentId,
+                                      affirmation: affirmationText,
+                                      decorationImage: affirmationData['imageUrl'],
+                                      graditudeAffirmationText: affirmationText,
+                                      snapshotIndex: documentId,
+                                      key: key,
                                     ),
-                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  padding: EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Center(
-                                        child: Container(
-                                          height: Get.height * 0.12,
-                                          child: Text(
-                                            affirmationData['affirmation'],
-                                            maxLines: 4,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.center,
-                                            style: GoogleFonts.poppins(
-                                              fontSize: 12,
-                                              color: Color(0xff5E4646),
-                                              fontWeight: FontWeight.w500,
+                                );
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
+                                child: Material(
+                                  elevation: 5,
+                                  borderRadius: BorderRadius.circular(8),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image:  CachedNetworkImageProvider(imageUrl),
+                                        fit: BoxFit.cover,
+                                      ),
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Center(
+                                          child: Container(
+                                            height: Get.height * 0.12,
+                                            child: Text(
+                                              affirmationData['affirmation'],
+                                              maxLines: 4,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.center,
+                                              style: GoogleFonts.poppins(
+                                                fontSize: 12,
+                                                color: Color(0xff5E4646),
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      Container(
-                                        height: Get.height * 0.03,
-                                        width: Get.width * 0.1,
-                                        decoration: BoxDecoration(
-                                          color: Colors.deepOrange,
-                                          borderRadius: BorderRadius.circular(12),
+                                        Container(
+                                          height: Get.height * 0.03,
+                                          width: Get.width * 0.1,
+                                          decoration: BoxDecoration(
+                                            color: Colors.deepOrange,
+                                            borderRadius: BorderRadius.circular(12),
+                                          ),
+                                          child: Center(
+                                            child: TextWidget(text: affirmationCount.toString(), color: Colors.white, fsize: 10),
+                                          ),
                                         ),
-                                        child: Center(
-                                          child: TextWidget(text: affirmationCount.toString(), color: Colors.white, fsize: 10),
-                                        ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
-                      },
-                    );
-                  },
+                          );
+                        },
+                      );
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
