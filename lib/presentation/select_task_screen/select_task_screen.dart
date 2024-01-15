@@ -27,13 +27,13 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).collection('OwnAffirmationList').snapshots(),
-                builder: (context, AsyncSnapshot snapshot) {
-                  final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
-
-
+                stream: FirebaseFirestore.instance
+                    .collection('users')
+                    .doc(FirebaseAuth.instance.currentUser?.email)
+                    .collection('OwnAffirmationList')
+                    .snapshots(),
+                builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return Center(
                       child: Container(
@@ -44,44 +44,98 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                         ),
                       ),
                     );
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('Error: ${snapshot.error}'),
+                    );
+                  } else if (snapshot.data?.docs.isEmpty ?? true) {
+                    // Handle the case when there are no documents
+                    return Center(
+                      child: Text('No documents found'),
+                    );
                   } else {
+                    final data = snapshot.data!.docs.length;
+
                     List<int> createNumberList(int n) {
-                      List<int> result = List<int>.generate(n, (index) => index + 1);
-                      return result;
+                      return List<int>.generate(n, (index) => index + 1);
                     }
+
                     int itemCount = (data / 100).ceil(); // Calculate the number of grid items
                     List<int> numberList = createNumberList(itemCount);
-                    final newNum =numberList.last;
+                    final newNum = numberList.last;
 
                     return Container(
-                       //color: Colors.deepOrange,
-                      width: Get.width*0.5,
-                      height:Get.height*0.22,
+                      width: Get.width * 0.5,
+                      height: Get.height * 0.22,
                       child: ListView.builder(
-                        itemCount:1,
+                        itemCount: 1,
                         itemBuilder: (context, index) {
                           print(newNum);
-                          return  Padding(
+                          return Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Image.asset(badges[newNum % badges.length - 1],),
+                            child: Image.asset(badges[newNum % badges.length - 1]),
                           );
-                          // return Center(
-                          //   child: Container(
-                          //     width: Get.width*0.28,
-                          //     height:Get.height*0.1,
-                          //     decoration: BoxDecoration(
-                          //     color: Colors.lightBlue,
-                          //       // image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1]),fit: BoxFit.cover),
-                          //     ),
-                          //    // child: Image.asset(badges[newNum % badges.length - 1],),
-                          //   ),
-                          // );
                         },
                       ),
                     );
                   }
                 },
               ),
+              //old
+              // StreamBuilder(
+              //   stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).collection('OwnAffirmationList').snapshots(),
+              //   builder: (context, AsyncSnapshot snapshot) {
+              //     final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+              //
+              //
+              //     if (snapshot.connectionState == ConnectionState.waiting) {
+              //       return Center(
+              //         child: Container(
+              //           height: 50,
+              //           width: 50,
+              //           child: CircularProgressIndicator(
+              //             color: Colors.deepOrangeAccent,
+              //           ),
+              //         ),
+              //       );
+              //     } else {
+              //       List<int> createNumberList(int n) {
+              //         List<int> result = List<int>.generate(n, (index) => index + 1);
+              //         return result;
+              //       }
+              //       int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+              //       List<int> numberList = createNumberList(itemCount);
+              //       final newNum =numberList.last;
+              //
+              //       return Container(
+              //          //color: Colors.deepOrange,
+              //         width: Get.width*0.5,
+              //         height:Get.height*0.22,
+              //         child: ListView.builder(
+              //           itemCount:1,
+              //           itemBuilder: (context, index) {
+              //             print(newNum);
+              //             return  Padding(
+              //               padding: const EdgeInsets.all(8.0),
+              //               child: Image.asset(badges[newNum % badges.length - 1],),
+              //             );
+              //             // return Center(
+              //             //   child: Container(
+              //             //     width: Get.width*0.28,
+              //             //     height:Get.height*0.1,
+              //             //     decoration: BoxDecoration(
+              //             //     color: Colors.lightBlue,
+              //             //       // image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1]),fit: BoxFit.cover),
+              //             //     ),
+              //             //    // child: Image.asset(badges[newNum % badges.length - 1],),
+              //             //   ),
+              //             // );
+              //           },
+              //         ),
+              //       );
+              //     }
+              //   },
+              // ),
               SizedBox(
                 height: Get.height*0.02,
               ),
