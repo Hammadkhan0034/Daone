@@ -115,11 +115,12 @@ class NotesPage extends StatelessWidget {
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
+                          color: Colors.grey.withOpacity(0.1),
                        //   color: Colors.green,
-                          border: Border.all(
-                            color: Colors.black,
-                            width: 1, // Adjust the width as needed
-                          ),
+                       //    border: Border.all(
+                       //      color: Colors.black,
+                       //      width: 1, // Adjust the width as needed
+                       //    ),
                         ),
                         width: Get.width*0.6,
                         // height: Get.height*0.2,

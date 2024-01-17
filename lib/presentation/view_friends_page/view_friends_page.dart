@@ -2,12 +2,10 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import '../view_friends_page/widgets/view_friends1_item_widget.dart';
-import 'controller/group_controller.dart';
-import 'controller/view_friends_controller.dart';
-import 'models/group_model.dart';
-import 'models/view_friends1_item_model.dart';
-import 'models/view_friends_model.dart';
+import '../group_page/controller/view_friends_controller.dart';
+import '../group_page/models/group_model.dart';
+import '../group_page/models/view_friends_model.dart';
+import '../group_page/widgets/view_friends1_item_widget.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_drop_down.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';

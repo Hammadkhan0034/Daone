@@ -74,6 +74,7 @@ class ViewFriendsTabContainerScreen
                   labelStyle: TextStyle(),
                   unselectedLabelColor: theme.colorScheme.primaryContainer,
                   unselectedLabelStyle: TextStyle(),
+                  indicatorSize: TabBarIndicatorSize.tab,
                   indicatorPadding: getPadding(
                     all: 2.0,
                   ),
@@ -120,7 +121,9 @@ class ViewFriendsTabContainerScreen
               SizedBox(
                 height: getVerticalSize(
                   657,
+
                 ),
+
                 child: TabBarView(
                   controller: controller.tabviewController,
                   children: [

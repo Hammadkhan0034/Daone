@@ -230,19 +230,19 @@ class CommunityPage extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              Material(
-                color: Colors.white,
-                elevation: 3,
-                child: Row(
-                  children: [
-                    SizedBox(width: Get.width*0.1,),
-                    TextWidget(text: 'Community', color:Colors.black,
-                        fontFamily: 'Gotham Light',
-                        font: FontWeight.w800,
-                        fsize: 32,),
-                  ],
-                ),
-              ),
+              // Material(
+              //   color: Colors.white,
+              //   elevation: 3,
+              //   child: Row(
+              //     children: [
+              //       SizedBox(width: Get.width*0.1,),
+              //       TextWidget(text: 'Community', color:Colors.black,
+              //           fontFamily: 'Gotham Light',
+              //           font: FontWeight.w800,
+              //           fsize: 32,),
+              //     ],
+              //   ),
+              // ),
               StreamBuilder(
                 stream: FirebaseFirestore.instance.collection('postCollection').snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {

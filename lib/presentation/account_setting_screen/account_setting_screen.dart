@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/account_setting_screen/privacy_policy/privacy_policy.dart';
 import 'package:daone/presentation/community_page/community_page.dart';
+import 'package:daone/presentation/invite_friends/community_screen.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -413,6 +414,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         InkWell(
                           onTap: (){
                             Get.toNamed(AppRoutes.viewFriendsTabContainerScreen);
+                            // Get.to(CommunityScreenNew());
                           },
                           child: Padding(
                             padding: getPadding(
