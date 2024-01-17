@@ -2,10 +2,12 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/visualization/visualization_view/videoplay/video_player_screen.dart';
+import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
@@ -115,7 +117,31 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   var vidData = snapshot.data.docs[index].data();
                   var videoUrl = vidData['videoUrl'];
-                  var videoTitle = vidData['date'];
+                  var videoTitle = vidData['title'];
+                  var videoDate = vidData['date'];
+                  var videoTag =  vidData['tags'];
+                  // Convert the Timestamp to a DateTime
+                  DateTime dateTime = videoDate.toDate();
+
+// Calculate the difference between the current date and the video date
+                  Duration difference = DateTime.now().difference(dateTime);
+
+// Determine the time elapsed in days
+                  int days = difference.inDays;
+
+// Format the result based on the time elapsed
+                  String formattedDate = '';
+
+                  if (days == 0) {
+                    formattedDate = 'Today';
+                  } else if (days == 1) {
+                    formattedDate = '1 day ago';
+                  } else if (days < 7) {
+                    formattedDate = '$days days ago';
+                  } else {
+                    // Format the date using intl package for more advanced formatting
+                    formattedDate = DateFormat.yMMMd().format(dateTime);
+                  }
 
                   return FutureBuilder<String?>(
                     future: generateThumbnail(videoUrl),
@@ -135,45 +161,90 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
 
                       var thumbnailPath = thumbnailSnapshot.data;
 
-                      return InkWell(
-                        onTap: (){
-                        Get.to(()=> VideoPlayerScreen(videoUrl: videoUrl));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 18.0, vertical: 10),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                height: Get.height * 0.25,
-                                width: Get.width * 0.8,
-                                decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(12),
+                      return Container(
+                        margin: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+                        decoration: BoxDecoration(
+                         // color: Colors.pinkAccent,
+                          border: Border.all(color: Colors.grey)
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              onTap: (){
+                              Get.to(()=> VideoPlayerScreen(videoUrl: videoUrl));
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 18.0, vertical: 10),
+                                child: Stack(
+                                  alignment: Alignment.center,
+                                  children: [
+                                    Container(
+                                      height: Get.height * 0.18,
+                                      width: Get.width * 0.3,
+                                      decoration: BoxDecoration(
+                                        color: Colors.black,
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(13),
+                                        child: thumbnailPath != null
+                                            ? Image.file(
+                                          File(thumbnailPath),
+                                          fit: BoxFit.cover,
+                                        )
+                                            : Image.asset(
+                                          "assets/images/novideo.png",
+                                          scale: 2,
+                                        ),
+                                      ),
+                                    ),
+                                                      Positioned.fill(child: Center(
+                                child: Icon(
+                                  Icons.play_circle,
+                                  color: Colors.grey,
+                                  size: 70,
                                 ),
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(13),
-                                  child: thumbnailPath != null
-                                      ? Image.file(
-                                    File(thumbnailPath),
-                                    fit: BoxFit.contain,
-                                  )
-                                      : Image.asset(
-                                    "assets/images/novideo.png",
-                                    scale: 2,
-                                  ),
-                                ),
+                                                      ),),
+                                  ],
+                                )
                               ),
-                                                Positioned.fill(child: Center(
-                          child: Icon(
-                            Icons.play_circle,
-                            color: Colors.grey,
-                            size: 100,
-                          ),
-                                                ),),
-                            ],
-                          )
+                            ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: Get.height*0.02,),
+                                Container(
+                                  //color: Colors.deepOrange,
+                                  height: Get.height*0.036,
+                                  width: Get.width*0.54,
+                                  child: TextWidget(text:formattedDate==null? 'null': formattedDate,fontFamily: 'Gotham Light',fsize: 12),
+                                ),
+                                Container(
+                                  //color: Colors.pinkAccent,
+                                  height: Get.height*0.09,
+                                  width: Get.width*0.54,
+                                  child: Text(videoTitle==null? 'null':videoTitle,
+                                    overflow: TextOverflow.visible,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                    fontFamily: 'Gotham Light',fontWeight: FontWeight.w800
+                                  ),)
+                                ),
+                                Container(
+                                 // color: Colors.green,
+                                  height: Get.height*0.04,
+                                  width: Get.width*0.54,
+                                  child: Text(videoTag,style: TextStyle(
+                                    fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,fontSize: 12
+                                  ),)
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       );
                     },

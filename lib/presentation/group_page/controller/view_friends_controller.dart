@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daone/core/app_export.dart';import 'package:daone/presentation/view_friends_page/models/view_friends_model.dart';
+import 'package:daone/core/app_export.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-import '../models/group_model.dart';/// A controller class for the ViewFriendsPage.
+import '../models/group_model.dart';
+import '../models/view_friends_model.dart';/// A controller class for the ViewFriendsPage.
 ///
 /// This class manages the state of the ViewFriendsPage, including the
 /// current viewFriendsModelObj

@@ -25,6 +25,7 @@ class TextWidget extends StatelessWidget {
         color: color,
         fontFamily: fontFamily,
         fontWeight: font,
+        overflow: TextOverflow.ellipsis
       ),
       textAlign: textAlign,
       softWrap: softWrap,

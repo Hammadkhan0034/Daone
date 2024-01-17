@@ -112,3 +112,5 @@ flutter:
           weight: 400
         - asset: fonts/GOTHMBOK2.ttf
           weight: 800
+        - asset: fonts/GOTHMBOK2.ttf
+          weight: 900

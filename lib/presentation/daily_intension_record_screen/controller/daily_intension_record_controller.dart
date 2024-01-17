@@ -6,6 +6,7 @@ import 'package:daone/presentation/daily_intension_record_screen/models/daily_in
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 import '../videos/upload_video.dart';
 
@@ -16,6 +17,8 @@ class DailyIntensionRecordController extends GetxController {
   Rx<DailyIntensionRecordModel> dailyIntensionRecordModelObj =
       DailyIntensionRecordModel().obs;
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController tagsController = TextEditingController();
 
 
 
@@ -50,9 +53,9 @@ class DailyIntensionRecordController extends GetxController {
       await uploadTask.whenComplete(() async {
         String downloadUrl = await storageReference.getDownloadURL();
         // You can now save `downloadUrl` to a database or use it in your app.
+        updateVideoUrl(downloadUrl,tagsController.text,titleController.text);
 
         Get.offAndToNamed(AppRoutes.dashboardRoute);
-        updateVideoUrl(downloadUrl);
         // // Navigate to the dashboard screen
         // Navigator.of(context).pushReplacement(
         //   MaterialPageRoute(
@@ -65,7 +68,7 @@ class DailyIntensionRecordController extends GetxController {
     }
   }
 
-  void updateVideoUrl(downloadUrl)async {
+  void updateVideoUrl(downloadUrl,tags,title)async {
 
 
     DocumentReference documentReference = FirebaseFirestore.instance.collection(
@@ -74,6 +77,9 @@ class DailyIntensionRecordController extends GetxController {
     await documentReference.collection('VideosUrl').add({
       'videoUrl': downloadUrl,
       'date':Timestamp.fromDate(DateTime.now()),
+      'tags': tags,
+      'title':title
     });
   }
+
 }

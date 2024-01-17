@@ -7,6 +7,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 import '../../core/utils/image_constant.dart';
 import '../../core/utils/size_utils.dart';
@@ -105,11 +106,16 @@ class NotesPage extends StatelessWidget {
                   itemCount: snapshot.data.docs.length,
                   itemBuilder: (context,index){
                     var notesData= snapshot.data.docs[index].data();
+                    var dateString = notesData['date'];
+                   var  formattedDate = formatDate(dateString);
+                   print(formattedDate);
+
                     return Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Container(
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
+                       //   color: Colors.green,
                           border: Border.all(
                             color: Colors.black,
                             width: 1, // Adjust the width as needed
@@ -122,31 +128,22 @@ class NotesPage extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.all(12.0),
                               child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Stack(
-                                        children: [
-                                          Container(
-                                            width: Get.width*0.1,
-                                            height: Get.height*0.05,
-                                            decoration: BoxDecoration(
-                                              //borderRadius: BorderRadius.circular(100),
-                                              border: Border.all(
-                                                color: Colors.black,
-                                                width: 1, // Adjust the width as needed
-                                              ),
-                                            shape: BoxShape.circle
-                                            ),
-                                            child: Center(
-                                              child: TextWidget(text: "N",color: Colors.black,
-                                                  fontFamily: 'Gotham Light',
-                                                  font: FontWeight.w400,
-                                                  fsize: 10),
-                                            ),
-
-                                          ),
-                                        ]
+                                    child: Container(
+                                      width: Get.width*0.1,
+                                      height: Get.height*0.05,
+                                      decoration: BoxDecoration(
+                                        //borderRadius: BorderRadius.circular(100),
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 2, // Adjust the width as needed
+                                        ),
+                                      shape: BoxShape.circle
+                                      ),
                                     ),
                                   ),
                                   Column(
@@ -165,11 +162,19 @@ class NotesPage extends StatelessWidget {
                                         fontFamily: 'Gotham Light',
                                         font: FontWeight.w800,
                                         color: Colors.black, fsize: 10, softWrap: true,)),
-                                      TextWidget(text: notesData['date'], color: Colors.black,
-                                          fontFamily: 'Gotham Light',
-                                          font: FontWeight.w800,
-                                          fsize: 9),
+                                      // TextWidget(text: formattedDate, color: Colors.black,
+                                      //     fontFamily: 'Gotham Light',
+                                      //     font: FontWeight.w800,
+                                      //     fsize: 9),
                                     ],
+                                  ),
+                                  Spacer(),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: Get.width*0.035),
+                                    child: TextWidget(text: formattedDate, color: Colors.black,
+                                        fontFamily: 'Gotham Light',
+                                        font: FontWeight.w800,
+                                        fsize: 9),
                                   ),
 
                                 ],
@@ -179,19 +184,28 @@ class NotesPage extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
                                 children: [
-                                  SizedBox(width:Get.width*0.05,),
-                                  Container(
-                                    width: 1, // Adjust the width of the line
-                                    height: 100, // Adjust the height of the line
-                                    color: Colors.black, // Adjust the color of the line
-                                  ),
+                                  // SizedBox(width:Get.width*0.05,),
+                                  // Container(
+                                  //   width: 1, // Adjust the width of the line
+                                  //   height: 100, // Adjust the height of the line
+                                  //   color: Colors.black, // Adjust the color of the line
+                                  // ),
                                   Container(
                                     //color: Colors.black26,
                                     width: Get.width*0.73,
-                                    height: 100,
+                                    margin: EdgeInsets.symmetric(horizontal: Get.width*0.05),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                          left: BorderSide(
+                                          color: Colors.black, // Adjust the color of the border
+                                          width: 2.0, // Adjust the width of the border
+                                        ),
+                                      ),
+                                    ),
+                                    //height: 100,
                                     child:  Center(
                                       child: Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                                        padding:  EdgeInsets.symmetric(horizontal: Get.width*0.1,vertical: Get.height*0.01),
                                         child:Text(
                                           notesData['selectedText'],
                                           style: GoogleFonts.getFont(
@@ -231,6 +245,40 @@ class NotesPage extends StatelessWidget {
         ),
       ),
     );
+  }
+  String formatDate(String inputDate) {
+    try {
+      List<String> dateComponents = inputDate.split('-');
+      int day = int.parse(dateComponents[0]);
+      int month = int.parse(dateComponents[1]);
+      int year = int.parse(dateComponents[2]);
+
+      DateTime date = DateTime(year, month, day);
+      Duration difference = DateTime.now().difference(date);
+
+      if (difference.inDays == 0) {
+        return 'Today';
+      } else if (difference.inDays == 1) {
+        return '1 day';
+      } else if (difference.inDays > 1 && difference.inDays < 7) {
+        return '${difference.inDays} days';
+      } else if (difference.inDays >= 7 && difference.inDays < 14) {
+        return '1w';
+      } else if (difference.inDays >= 14 && difference.inDays < 21) {
+        return '2w';
+      } else if (difference.inDays >= 21) {
+        final int weeks = (difference.inDays / 7).floor();
+        return '$weeks w';
+      } else if (difference.inDays >= 30) {
+        final int months = (difference.inDays / 30).floor();
+        return '$months m';
+      } else {
+        return 'Today';
+      }
+    } catch (e) {
+      print('Error parsing date: $e');
+      return 'Invalid date';
+    }
   }
 }
 

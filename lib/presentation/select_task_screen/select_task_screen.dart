@@ -276,8 +276,8 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
   }
   String taskType1 = 'Workout';
   String taskType2 = 'Job';
-  String taskType3 = 'Sleep';
-  String taskType4 = 'Event';
+  String taskType3 = 'Event';
+  String taskType4 = 'Other';
 
 
 }
