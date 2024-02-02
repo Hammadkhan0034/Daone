@@ -29,25 +29,35 @@ class NotesPage extends StatelessWidget {
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
         appBar: AppBar(
-          centerTitle: true,
+          // centerTitle: true,
           title: Text('Notes',
               style:
               TextStyle(
                   fontFamily: 'Gotham Light',
                   fontWeight: FontWeight.w800,
                   fontSize: 25, color: Colors.black)),
-          leadingWidth: 68,
-          leading: AppbarIconbutton(
-            onTap: () {
-              Get.back();
-            },
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(
-              left: 10,
-              top: 10,
-              bottom: 5,
+          // leadingWidth: 68,
+          // leading: AppbarIconbutton(
+          //   onTap: () {
+          //     Get.back();
+          //   },
+          //   svgPath: ImageConstant.imgInfo,
+          //   margin: getMargin(
+          //     left: 10,
+          //     top: 10,
+          //     bottom: 5,
+          //   ),
+          // ),
+          actions: [
+            Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(Icons.edit_outlined),
             ),
-          ),
+            Padding(
+              padding: EdgeInsets.only(right: 10),
+              child: Icon(Icons.menu),
+            )
+          ],
         ),
         body: Container(
           height: Get.height*0.85,
