@@ -38,6 +38,9 @@ class UpdateRemindersScreen extends GetWidget<UpdateRemindersController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppbarIconbutton(
+                      onTap: (){
+                        Get.back();
+                      },
                       svgPath: ImageConstant.imgInfo,
                     ),
                     Center(

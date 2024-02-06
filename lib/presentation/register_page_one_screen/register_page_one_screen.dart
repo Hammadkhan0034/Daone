@@ -1,3 +1,4 @@
+import 'package:daone/presentation/sleep_tracking_section/controller/sleep_tracking_controller.dart';
 import 'package:flutter/gestures.dart';
 
 import 'controller/register_page_one_controller.dart';
@@ -16,18 +17,17 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
           key: key,
         );
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: _formKey,
+          key: controller.formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -91,12 +91,12 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                       48,
                     ),
                   ),
-                  validator: (value) {
-                    if (!isText(value)) {
-                      return "Please enter valid text";
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (!isText(value)) {
+                  //     return "Please enter valid text";
+                  //   }
+                  //   return null;
+                  // },
                   filled: true,
                   fillColor: appTheme.gray50,
                 ),
@@ -171,13 +171,13 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                       48,
                     ),
                   ),
-                  validator: (value) {
-                    if (value == null ||
-                        (!isValidEmail(value, isRequired: true))) {
-                      return "Please enter valid email";
-                    }
-                    return null;
-                  },
+                  // validator: (value) {
+                  //   if (value == null ||
+                  //       (!isValidEmail(value, isRequired: true))) {
+                  //     return "Please enter valid email";
+                  //   }
+                  //   return null;
+                  // },
                   filled: true,
                   fillColor: appTheme.gray50,
                 ),
@@ -235,13 +235,13 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                         48,
                       ),
                     ),
-                    validator: (value) {
-                      if (value == null ||
-                          (!isValidPassword(value, isRequired: true))) {
-                        return "Please enter valid password";
-                      }
-                      return null;
-                    },
+                    // validator: (value) {
+                    //   if (value == null ||
+                    //       (!isValidPassword(value, isRequired: true))) {
+                    //     return "Please enter valid password";
+                    //   }
+                    //   return null;
+                    // },
                     obscureText: controller.isShowPassword.value,
                     filled: true,
                     fillColor: appTheme.gray50,
@@ -274,9 +274,8 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 ),
                 Spacer(),
                 CustomElevatedButton(
-                   onTap: (){
-        Get.toNamed(AppRoutes.successRegistrationScreen);
-        },
+                  onTap: (){
+                    controller.signUp(controller.emailController.text,controller.passwordController.text, context);},
                   width: getHorizontalSize(
                     315,
                   ),
@@ -405,8 +404,8 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                           style: CustomTextStyles.titleSmallPoppinsGray90002,
                         ),
                         TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap=(){
-                              Get.toNamed(AppRoutes.loginPageScreen);
+                          recognizer: TapGestureRecognizer()..onTap= (){
+                            Get.toNamed(AppRoutes.loginPageScreen);
                           },
                           text: "lbl_login".tr,
                           style:

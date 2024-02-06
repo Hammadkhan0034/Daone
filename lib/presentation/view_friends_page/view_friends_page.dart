@@ -1,548 +1,199 @@
-import '../view_friends_page/widgets/view_friends1_item_widget.dart';
-import 'controller/view_friends_controller.dart';
-import 'models/view_friends1_item_model.dart';
-import 'models/view_friends_model.dart';
+import 'dart:io';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../group_page/controller/view_friends_controller.dart';
+import '../group_page/models/group_model.dart';
+import '../group_page/models/view_friends_model.dart';
+import '../group_page/widgets/view_friends1_item_widget.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_drop_down.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
-
+import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 class ViewFriendsPage extends StatelessWidget {
   ViewFriendsPage({Key? key})
       : super(
           key: key,
         );
-
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   ViewFriendsController controller =
       Get.put(ViewFriendsController(ViewFriendsModel().obs));
+
+
+
 
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.transparent,
-        body: SizedBox(
-          width: mediaQueryData.size.width,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+    return SizedBox(
+      width: Get.width*0.3,
+      height: Get.height*0.5,
+      child: Padding(
+        padding: getPadding(
+          left: 29,
+          top: 31,
+          right: 20,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: getVerticalSize(480),
+              width: getHorizontalSize(400),
+              child: ListView.builder(
+                physics: BouncingScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: controller
+                    .groups.length,
+                itemBuilder: (context, index) {
+                  print(controller
+                      .viewFriendsModelObj
+                      .value
+                      .viewFriends1ItemList.value.length);
+                  return ViewFriends1ItemWidget(
+                    controller
+                        .groups[index],
+                    index: index,
+                  );
+                },
+              ),
+            ),
+            Spacer(),
+            Row(
               children: [
-                Expanded(
-                  child: SizedBox(
-                    width: double.maxFinite,
-                    child: Padding(
-                      padding: getPadding(
-                        left: 29,
-                        top: 31,
-                        right: 20,
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Expanded(
-                            child: Obx(
-                              () => ListView.separated(
-                                physics: BouncingScrollPhysics(),
-                                shrinkWrap: true,
-                                separatorBuilder: (
-                                  context,
-                                  index,
-                                ) {
-                                  return Padding(
-                                    padding: getPadding(
-                                      top: 15.5,
-                                      bottom: 15.5,
-                                    ),
-                                    child: SizedBox(
-                                      width: getHorizontalSize(
-                                        169,
-                                      ),
-                                      child: Divider(
-                                        height: getVerticalSize(
-                                          1,
-                                        ),
-                                        thickness: getVerticalSize(
-                                          1,
-                                        ),
-                                        color: appTheme.blueGray100,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                itemCount: controller.viewFriendsModelObj.value
-                                    .viewFriends1ItemList.value.length,
-                                itemBuilder: (context, index) {
-                                  ViewFriends1ItemModel model = controller
-                                      .viewFriendsModelObj
-                                      .value
-                                      .viewFriends1ItemList
-                                      .value[index];
-                                  return ViewFriends1ItemWidget(
-                                    model,
-                                  );
-                                },
-                              ),
-                            ),
-                          ),
-                          CustomElevatedButton(
-                            width: getHorizontalSize(
-                              307,
-                            ),
-                            height: getVerticalSize(
-                              60,
-                            ),
-                            text: "lbl_create_group".tr,
-                            margin: getMargin(
-                              left: 5,
-                              top: 153,
-                              right: 14,
-                            ),
-                            buttonStyle: CustomButtonStyles.outlineIndigoA1004c
-                                .copyWith(
-                                    fixedSize:
-                                        MaterialStateProperty.all<Size>(Size(
-                              double.maxFinite,
-                              getVerticalSize(
-                                60,
-                              ),
-                            ))),
-                            decoration: CustomButtonStyles
-                                .outlineIndigoA1004cDecoration,
-                            buttonTextStyle:
-                                CustomTextStyles.titleMediumWhiteA700,
-                          ),
-                          Padding(
-                            padding: getPadding(
-                              left: 1,
-                              top: 170,
-                              right: 10,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: getPadding(
-                                    top: 3,
-                                    bottom: 3,
-                                  ),
-                                  child: Text(
-                                    "msg_workout_progress".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: theme.textTheme.titleMedium,
-                                  ),
-                                ),
-                                CustomDropDown(
-                                  width: getHorizontalSize(
-                                    76,
-                                  ),
-                                  icon: Container(
-                                    margin: getMargin(
-                                      left: 5,
-                                      right: 10,
-                                    ),
-                                    child: CustomImageView(
-                                      svgPath: ImageConstant.imgArrowdown,
-                                    ),
-                                  ),
-                                  hintText: "lbl_weekly".tr,
-                                  textStyle:
-                                      CustomTextStyles.bodySmallWhiteA70010,
-                                  items: controller.viewFriendsModelObj.value
-                                      .dropdownItemList.value,
-                                  contentPadding: getPadding(
-                                    left: 10,
-                                    top: 7,
-                                    bottom: 7,
-                                  ),
-                                  onChanged: (value) {
-                                    controller.onSelected(value);
-                                  },
-                                ),
-                              ],
-                            ),
-                          ),
-                          Container(
-                            height: getVerticalSize(
-                              182,
-                            ),
-                            width: getHorizontalSize(
-                              315,
-                            ),
-                            margin: getMargin(
-                              top: 5,
-                            ),
-                            child: Stack(
-                              alignment: Alignment.topCenter,
-                              children: [
-                                Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height: getVerticalSize(
-                                          164,
-                                        ),
-                                        width: getHorizontalSize(
-                                          283,
-                                        ),
-                                        margin: getMargin(
-                                          top: 8,
-                                        ),
-                                        child: Stack(
-                                          alignment: Alignment.bottomCenter,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.topCenter,
-                                              child: Container(
-                                                height: getVerticalSize(
-                                                  137,
-                                                ),
-                                                width: getHorizontalSize(
-                                                  283,
-                                                ),
-                                                padding: getPadding(
-                                                  top: 12,
-                                                  bottom: 12,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  image: DecorationImage(
-                                                    image: fs.Svg(
-                                                      ImageConstant.imgGroup116,
-                                                    ),
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                                child: Stack(
-                                                  children: [
-                                                    CustomImageView(
-                                                      imagePath: ImageConstant
-                                                          .imgLinegraph,
-                                                      height: getVerticalSize(
-                                                        110,
-                                                      ),
-                                                      width: getHorizontalSize(
-                                                        282,
-                                                      ),
-                                                      alignment:
-                                                          Alignment.center,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.bottomCenter,
-                                              child: Container(
-                                                width: getHorizontalSize(
-                                                  275,
-                                                ),
-                                                margin: getMargin(
-                                                  left: 4,
-                                                  top: 146,
-                                                  right: 4,
-                                                ),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(
-                                                      "lbl_sun".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                    Text(
-                                                      "lbl_mon".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                    Text(
-                                                      "lbl_tue".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                    Text(
-                                                      "lbl_wed".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                    Text(
-                                                      "lbl_thu".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                    Text(
-                                                      "lbl_fri".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.labelLarge,
-                                                    ),
-                                                    Text(
-                                                      "lbl_sat".tr,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign: TextAlign.left,
-                                                      style: theme
-                                                          .textTheme.bodySmall,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              imagePath:
-                                                  ImageConstant.imgActivegraph,
-                                              height: getVerticalSize(
-                                                121,
-                                              ),
-                                              width: getHorizontalSize(
-                                                25,
-                                              ),
-                                              alignment: Alignment.bottomRight,
-                                              margin: getMargin(
-                                                right: 39,
-                                                bottom: 5,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: getPadding(
-                                          left: 3,
-                                          bottom: 18,
-                                        ),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: Text(
-                                                "lbl_100".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: CustomTextStyles
-                                                    .bodySmall10,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                left: 2,
-                                                top: 12,
-                                              ),
-                                              child: Text(
-                                                "lbl_80".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: CustomTextStyles
-                                                    .bodySmall10,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                left: 2,
-                                                top: 11,
-                                              ),
-                                              child: Text(
-                                                "lbl_60".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: CustomTextStyles
-                                                    .bodySmall10,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                top: 12,
-                                              ),
-                                              child: Text(
-                                                "lbl_40".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style:
-                                                    theme.textTheme.labelMedium,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                left: 3,
-                                                top: 11,
-                                              ),
-                                              child: Text(
-                                                "lbl_20".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: CustomTextStyles
-                                                    .bodySmall10,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                left: 3,
-                                                top: 12,
-                                              ),
-                                              child: Text(
-                                                "lbl_0".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.right,
-                                                style: CustomTextStyles
-                                                    .bodySmall10,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Align(
-                                  alignment: Alignment.topCenter,
-                                  child: Container(
-                                    margin: getMargin(
-                                      left: 94,
-                                      right: 91,
-                                    ),
-                                    padding: getPadding(
-                                      all: 10,
-                                    ),
-                                    decoration: AppDecoration.outline2.copyWith(
-                                      borderRadius:
-                                          BorderRadiusStyle.roundedBorder8,
-                                    ),
-                                    child: Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Text(
-                                              "lbl_fri_28_may".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: CustomTextStyles
-                                                  .bodySmallGray500058,
-                                            ),
-                                            Padding(
-                                              padding: getPadding(
-                                                left: 33,
-                                              ),
-                                              child: Text(
-                                                "lbl_90".tr,
-                                                overflow: TextOverflow.ellipsis,
-                                                textAlign: TextAlign.left,
-                                                style: CustomTextStyles
-                                                    .bodySmallGreen5008,
-                                              ),
-                                            ),
-                                            CustomImageView(
-                                              svgPath: ImageConstant.imgUpload,
-                                              height: getSize(
-                                                8,
-                                              ),
-                                              width: getSize(
-                                                8,
-                                              ),
-                                              margin: getMargin(
-                                                top: 2,
-                                                bottom: 2,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 3,
-                                          ),
-                                          child: Text(
-                                            "msg_upperbody_workout".tr,
-                                            overflow: TextOverflow.ellipsis,
-                                            textAlign: TextAlign.left,
-                                            style:
-                                                CustomTextStyles.bodySmall10_1,
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: getPadding(
-                                            top: 3,
-                                          ),
-                                          child: Container(
-                                            height: getVerticalSize(
-                                              5,
-                                            ),
-                                            width: getHorizontalSize(
-                                              110,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              color: appTheme.gray50,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                getHorizontalSize(
-                                                  2,
-                                                ),
-                                              ),
-                                            ),
-                                            child: ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                getHorizontalSize(
-                                                  2,
-                                                ),
-                                              ),
-                                              child: LinearProgressIndicator(
-                                                value: 0.79,
-                                                backgroundColor:
-                                                    appTheme.gray50,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                CustomElevatedButton(
+                  onTap: (){
+                    createGroupDialog(context);
+                  },
+                  width: getHorizontalSize(
+                    250,
+                  ),
+                  height: getVerticalSize(
+                    60,
+                  ),
+                  text: "lbl_create_group".tr,
+                  margin: getMargin(
+                    left: 5,
+                    right: 14,
+                  ),
+                  buttonStyle: CustomButtonStyles.outlineIndigoA1004c
+                      .copyWith(
+                      fixedSize:
+                      MaterialStateProperty.all<Size>(Size(
+                        double.maxFinite,
+                        getVerticalSize(
+                          60,
+                        ),
+                      ))),
+                  decoration: CustomButtonStyles
+                      .outlineIndigoA1004cDecoration,
+                  buttonTextStyle:
+                  CustomTextStyles.titleMediumWhiteA700,
+                ),
+                Padding(
+                  padding: getMargin(
+                    left: 5,
+                  ),                  child: IconButton(onPressed: ()async{
+                    await controller.loadGroups();
+                  }, icon: Icon(Icons.refresh),
                   ),
                 ),
               ],
             ),
-          ),
+            SizedBox(height: getVerticalSize(20),)
+          ],
         ),
       ),
     );
   }
+
+  Future<void> createGroupDialog(BuildContext context) async {
+    TextEditingController groupNameController = TextEditingController();
+
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Container(
+
+          child: AlertDialog(
+
+            title: Text('Enter Group Name'),
+            content: Container(
+        height: Get.height*0.2,
+              width: Get.width*0.05,
+        padding: EdgeInsets.all(16),
+        decoration: BoxDecoration(
+        color: Colors.white, // Set your desired background color
+        borderRadius: BorderRadius.circular(14),), // Set your d
+              child: TextField(
+                controller: groupNameController,
+                decoration: InputDecoration(
+                  enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14),borderSide: BorderSide(color: Color(0xffC4BEBE))),
+                  focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(14),borderSide: BorderSide(color: Color(0xffC4BEBE))),
+                  hintText: 'Enter Group Name',
+                ),
+              ),
+            ),
+            actions: <Widget>[
+
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xffF56737),    // Set your desired background color
+                  padding: EdgeInsets.all(0), // Remove default padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(99), // Set your desired border radius
+                  ),
+                  minimumSize: Size(80, 40), // Set your desired width and height
+                ),
+                child: Text('Cancel',
+                style: TextStyle(
+                  color: Colors.white
+                ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  // Save the group to Firebase
+                  String groupName = groupNameController.text;
+                  if (groupName.isNotEmpty) {
+                    // Call a function to save the group to Firebase
+                    saveGroupToFirebase(GroupModel(groupName, []));
+                  }
+                  Navigator.of(context).pop();
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: Color(0xffF56737),      // Set your desired background color
+                  padding: EdgeInsets.all(0), // Remove default padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(99), // Set your desired border radius
+                  ),
+                  minimumSize: Size(80, 40), // Set your desired width and height
+                ),
+                child: Text('Create',
+                style: TextStyle(
+                  color: Colors.white
+                ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+  Future<void> saveGroupToFirebase(GroupModel group) async {
+    CollectionReference groups = FirebaseFirestore.instance.collection('groups');
+
+    // Convert the GroupModel to a map and save it to Firebase
+    await groups.add(group.toMap());
+  }
+
+
 }

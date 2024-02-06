@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/view_friends_tab_container_screen/models/view_friends_tab_container_model.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 /// A controller class for the ViewFriendsTabContainerScreen.
@@ -11,6 +13,15 @@ class ViewFriendsTabContainerController extends GetxController
   Rx<ViewFriendsTabContainerModel> viewFriendsTabContainerModelObj =
       ViewFriendsTabContainerModel().obs;
 
+  final user = FirebaseAuth.instance.currentUser;
+
+
+
   late TabController tabviewController =
-      Get.put(TabController(vsync: this, length: 2));
+      Get.put(TabController(vsync: this, length: 3));
+
+
+
+
+
 }

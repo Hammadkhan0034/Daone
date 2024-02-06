@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="Gradle: com.google.android.play:integrity:1.1.0@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/db93c89b3f62491838877a2f3cb596d4/transformed/jetified-integrity-1.1.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/db93c89b3f62491838877a2f3cb596d4/transformed/jetified-integrity-1.1.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/db93c89b3f62491838877a2f3cb596d4/transformed/jetified-integrity-1.1.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,14 +1,19 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/presentation/account_setting_screen/privacy_policy/privacy_policy.dart';
+import 'package:daone/presentation/community_page/community_page.dart';
+import 'package:daone/presentation/invite_friends/community_screen.dart';
+import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../badges/badgeslist.dart';
+import '../notes/notes.dart';
+import 'contact_us/contact_us.dart';
 import 'controller/account_setting_controller.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
 import 'package:daone/widgets/app_bar/appbar_subtitle_2.dart';
 import 'package:daone/widgets/app_bar/custom_app_bar.dart';
-import 'package:daone/widgets/custom_bottom_bar.dart';
-import 'package:daone/widgets/custom_drop_down.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
-import 'package:daone/widgets/custom_switch.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 // ignore_for_file: must_be_immutable
 class AccountSettingScreen extends GetWidget<AccountSettingController> {
@@ -20,36 +25,38 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
+    final user =FirebaseAuth.instance.currentUser!.email;
+
 
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        appBar: CustomAppBar(
-          height: getVerticalSize(
-            81,
-          ),
-          leadingWidth: 77,
-          leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(
-              left: 29,
-              top: 4,
-              bottom: 4,
-            ),
-          ),
+        appBar: AppBar(
           centerTitle: true,
-          title: AppbarSubtitle2(
-            text: "lbl_profile".tr,
-          ),
+          title: Text( "lbl_profile".tr,
+              style:
+              TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25, color: Colors.black)),
         ),
+        // appBar: CustomAppBar(
+        //   height: getVerticalSize(
+        //     40,
+        //   ),
+        //   centerTitle: true,
+        //   title: Padding(
+        //     padding: const EdgeInsets.only(top: 18.0),
+        //     child: AppbarSubtitle2(
+        //       text: "lbl_profile".tr,
+        //     ),
+        //   ),
+        // ),
         body: SizedBox(
           width: mediaQueryData.size.width,
           child: SingleChildScrollView(
             padding: getPadding(
-              top: 32,
+              top:10,
             ),
             child: Padding(
               padding: getPadding(
@@ -63,73 +70,122 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      CustomImageView(
-                        imagePath: ImageConstant.imgUntit11,
-                        height: getSize(
-                          78,
-                        ),
-                        width: getSize(
-                          78,
-                        ),
-                      ),
-                      Padding(
-                        padding: getPadding(
-                          top: 12,
-                          bottom: 21,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              "lbl_stefani".tr,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.left,
-                              style:
-                                  CustomTextStyles.titleSmallPoppinsGray90002_1,
-                            ),
-                            Padding(
-                              padding: getPadding(
-                                top: 5,
+                      StreamBuilder(
+                        stream: FirebaseFirestore.instance.collection('users').doc(user).collection('OwnAffirmationList').snapshots(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                         final data = snapshot.data?.docs.length == 0 ? 1 : snapshot.data?.docs.length;
+
+                          if (snapshot.connectionState == ConnectionState.waiting) {
+                            return Center(
+                              child: CircularProgressIndicator(
+                                color: Colors.deepOrangeAccent,
                               ),
-                              child: Text(
-                                "lbl_the_crixus".tr,
-                                overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.left,
-                                style: CustomTextStyles.bodySmallGray60005,
+                            );
+                          } else {
+                            List<int> createNumberList(int n) {
+                              List<int> result = List<int>.generate(n, (index) => index + 1);
+                              return result;
+                            }
+                            int itemCount = (data / 100).ceil(); // Calculate the number of grid items
+                           List<int> numberList = createNumberList(itemCount);
+                           final newNum =numberList.last;
+
+                            return Container(
+                              //color: Colors.deepOrange,
+                              width: Get.width*0.2,
+                              height:Get.height*0.09,
+                              child: ListView.builder(
+                                itemCount:1,
+                                itemBuilder: (context, index) {
+                                  return Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Center(
+                                      child: Container(
+                                        width: Get.width*0.2,
+                                        height:Get.height*0.08,
+                                        decoration: BoxDecoration(
+                                          image: DecorationImage(image: AssetImage(badges[newNum % badges.length - 1]),fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                },
                               ),
-                            ),
-                          ],
-                        ),
+                            );
+                          }
+                        },
                       ),
-                      Spacer(),
-                      CustomElevatedButton(
-                        width: getHorizontalSize(
-                          83,
-                        ),
-                        height: getVerticalSize(
-                          30,
-                        ),
-                        text: "lbl_edit".tr,
-                        margin: getMargin(
-                          top: 20,
-                          bottom: 28,
-                        ),
-                        buttonStyle: CustomButtonStyles
-                            .gradientnamedeeporangeA20006nameprimaryTL15
-                            .copyWith(
-                                fixedSize: MaterialStateProperty.all<Size>(Size(
-                          getHorizontalSize(
-                            83,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                              if (snapshot.connectionState == ConnectionState.waiting) {
+                                // While the data is being fetched, you can return a loading indicator or an empty widget.
+                                return CircularProgressIndicator(); // Replace with your loading indicator widget
+                              }
+
+                              if (snapshot.hasError) {
+                                // Handle errors here
+                                return Text('Error: ${snapshot.error}');
+                              }
+
+                              if (!snapshot.hasData || !snapshot.data!.exists) {
+                                // Handle the case where the document doesn't exist
+                                return Text('Document not found');
+                              }
+
+                              // Access the 'fullName' field from the document data
+                              String fullName = snapshot.data!['fullName'];
+
+                              return Container(
+                               //   color: Colors.lightBlue,
+                                  height: Get.height*0.04,
+                                  width: Get.width*0.56,
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(top: 2.0),
+                                    child: Text(fullName,style: TextStyle(
+                                        fontFamily: 'Gotham Light',
+                                        fontWeight:FontWeight.w800,
+                                        fontSize: 19),),
+                                  ));
+                            },
                           ),
-                          getVerticalSize(
-                            30,
+                          // Spacer(),
+                          CustomElevatedButton(
+                            onTap: (){
+                              Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
+                            },
+                            width: getHorizontalSize(
+                              83,
+                            ),
+                            height: getVerticalSize(
+                              30,
+                            ),
+                            text: "lbl_edit".tr,
+                            margin: getMargin(
+                              top: 5,
+                              bottom: 0,
+                            ),
+                            buttonStyle: CustomButtonStyles
+                                .gradientnamedeeporangeA20006nameprimaryTL15
+                                .copyWith(
+                                    fixedSize: MaterialStateProperty.all<Size>(Size(
+                              getHorizontalSize(
+                                83,
+                              ),
+                              getVerticalSize(
+                                30,
+                              ),
+                            ))),
+                            decoration: CustomButtonStyles
+                                .gradientnamedeeporangeA20006nameprimaryTL15Decoration,
+                            buttonTextStyle:
+                                CustomTextStyles.labelLargeWhiteA700Medium,
                           ),
-                        ))),
-                        decoration: CustomButtonStyles
-                            .gradientnamedeeporangeA20006nameprimaryTL15Decoration,
-                        buttonTextStyle:
-                            CustomTextStyles.labelLargeWhiteA700Medium,
+                        ],
                       ),
                     ],
                   ),
@@ -144,9 +200,7 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                       right: 15,
                       bottom: 20,
                     ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
+
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,59 +214,14 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             "lbl_account".tr,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
+                            style: TextStyle(
+                              fontFamily: 'Gotham Light',
+                              fontWeight:FontWeight.w800,
+                              fontSize: 18
+                            )
                           ),
                         ),
-                        InkWell(
-                          onTap: (){
-                            Get.toNamed(AppRoutes.personalDataUpdateTwoScreen);
-                          },
-                          child: Padding(
-                            padding: getPadding(
-                              left: 5,
-                              top: 14,
-                            ),
-                            child: Row(
-                              children: [
-                                CustomImageView(
-                                  imagePath: ImageConstant.imgIconlylightprofile,
-                                  height: getSize(
-                                    20,
-                                  ),
-                                  width: getSize(
-                                    20,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 10,
-                                    bottom: 1,
-                                  ),
-                                  child: Text(
-                                    "lbl_personal_data".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
-                                ),
-                                Spacer(),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgArrowrightGray60005,
-                                  height: getSize(
-                                    18,
-                                  ),
-                                  width: getSize(
-                                    18,
-                                  ),
-                                  margin: getMargin(
-                                    top: 1,
-                                    bottom: 1,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
                         InkWell(
                           onTap: (){
                             Get.toNamed(AppRoutes.personalDataUpdateScreen);
@@ -238,12 +247,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_achievement".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child: TextWidget(text:  "lbl_achievement".tr,
+                                          fontFamily: 'Gotham Light',
+                                          font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -292,15 +299,13 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 11,
                                     top: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_highlights".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child: TextWidget(text:  "lbl_highlights".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
-                                CustomImageView(
+                               CustomImageView(
                                   svgPath: ImageConstant.imgArrowrightGray60005,
                                   height: getSize(
                                     18,
@@ -318,7 +323,49 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.toNamed(AppRoutes.blogScreen);
+                            Get.to(()=>CommunityPage());
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 6,
+                              top: 11,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgLocation,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 11,
+                                  ),
+                                  child:TextWidget(text:  "lbl_community".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>NotesPage());
                           },
                           child: Padding(
                             padding: getPadding(
@@ -341,12 +388,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                     left: 10,
                                     bottom: 1,
                                   ),
-                                  child: Text(
-                                    "lbl_notes".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child: TextWidget(text:  "lbl_notes".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -368,52 +413,8 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                         ),
                         InkWell(
                           onTap: (){
-                            Get.toNamed(AppRoutes.communityTabContainerScreen);
-                          },
-                          child: Padding(
-                            padding: getPadding(
-                              left: 6,
-                              top: 11,
-                            ),
-                            child: Row(
-                              children: [
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgLocation,
-                                  height: getSize(
-                                    18,
-                                  ),
-                                  width: getSize(
-                                    18,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    left: 11,
-                                  ),
-                                  child: Text(
-                                    "lbl_community".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
-                                ),
-                                Spacer(),
-                                CustomImageView(
-                                  svgPath: ImageConstant.imgArrowrightGray60005,
-                                  height: getSize(
-                                    18,
-                                  ),
-                                  width: getSize(
-                                    18,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        InkWell(
-                          onTap: (){
                             Get.toNamed(AppRoutes.viewFriendsTabContainerScreen);
+                            // Get.to(CommunityScreenNew());
                           },
                           child: Padding(
                             padding: getPadding(
@@ -438,12 +439,10 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                                   padding: getPadding(
                                     left: 11,
                                   ),
-                                  child: Text(
-                                    "lbl_friends".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmallGray60005,
-                                  ),
+                                  child:TextWidget(text:  "lbl_friends".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
                                 Spacer(),
                                 CustomImageView(
@@ -459,636 +458,288 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: getMargin(
-                      left: 8,
-                      top: 15,
-                    ),
-                    padding: getPadding(
-                      left: 15,
-                      top: 19,
-                      right: 15,
-                      bottom: 19,
-                    ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                          ),
-                          child: Text(
-                            "lbl_notification".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 15,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath:
-                                    ImageConstant.imgIconlylightnotification,
-                                height: getSize(
-                                  20,
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>ContactUsPage());
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath:
+                                  ImageConstant.imgIconlylightmessage20x20,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
                                 ),
-                                width: getSize(
-                                  20,
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child:TextWidget(text:  "lbl_contact_us".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
                                 ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 1,
-                                ),
-                                child: Text(
-                                  "msg_pop_up_notification".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              Obx(
-                                () => CustomSwitch(
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
                                   margin: getMargin(
                                     top: 1,
                                     bottom: 1,
-                                  ),
-                                  value: controller.isSelectedSwitch.value,
-                                  onChange: (value) {
-                                    controller.isSelectedSwitch.value = value;
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    margin: getMargin(
-                      left: 8,
-                      top: 15,
-                    ),
-                    padding: getPadding(
-                      left: 15,
-                      top: 19,
-                      right: 15,
-                      bottom: 19,
-                    ),
-                    decoration: AppDecoration.outline2.copyWith(
-                      borderRadius: BorderRadiusStyle.roundedBorder18,
-                    ),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                          ),
-                          child: Text(
-                            "lbl_other".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 14,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath:
-                                    ImageConstant.imgIconlylightmessage20x20,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  bottom: 1,
-                                ),
-                                child: Text(
-                                  "lbl_contact_us".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 9,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightshield,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 2,
-                                ),
-                                child: Text(
-                                  "lbl_privacy_policy".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 2,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: getPadding(
-                            left: 5,
-                            top: 10,
-                          ),
-                          child: Row(
-                            children: [
-                              CustomImageView(
-                                imagePath: ImageConstant.imgIconlylightsetting,
-                                height: getSize(
-                                  20,
-                                ),
-                                width: getSize(
-                                  20,
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 10,
-                                  top: 2,
-                                ),
-                                child: Text(
-                                  "lbl_settings".tr,
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.left,
-                                  style: CustomTextStyles.bodySmallGray60005,
-                                ),
-                              ),
-                              Spacer(),
-                              CustomImageView(
-                                svgPath: ImageConstant.imgArrowrightGray60005,
-                                height: getSize(
-                                  18,
-                                ),
-                                width: getSize(
-                                  18,
-                                ),
-                                margin: getMargin(
-                                  top: 1,
-                                  bottom: 1,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: getPadding(
-                      left: 8,
-                      top: 185,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: getPadding(
-                            top: 3,
-                            bottom: 3,
-                          ),
-                          child: Text(
-                            "msg_workout_progress".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: theme.textTheme.titleMedium,
-                          ),
-                        ),
-                        CustomDropDown(
-                          width: getHorizontalSize(
-                            76,
-                          ),
-                          icon: Container(
-                            margin: getMargin(
-                              left: 5,
-                              right: 10,
-                            ),
-                            child: CustomImageView(
-                              svgPath: ImageConstant.imgArrowdown,
-                            ),
-                          ),
-                          hintText: "lbl_weekly".tr,
-                          textStyle: CustomTextStyles.bodySmallWhiteA70010,
-                          items: controller.accountSettingModelObj.value
-                              .dropdownItemList.value,
-                          contentPadding: getPadding(
-                            left: 10,
-                            top: 7,
-                            bottom: 7,
-                          ),
-                          onChanged: (value) {
-                            controller.onSelected(value);
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  Container(
-                    height: getVerticalSize(
-                      182,
-                    ),
-                    width: getHorizontalSize(
-                      315,
-                    ),
-                    margin: getMargin(
-                      top: 5,
-                    ),
-                    child: Stack(
-                      alignment: Alignment.topCenter,
-                      children: [
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: getVerticalSize(
-                                  164,
-                                ),
-                                width: getHorizontalSize(
-                                  283,
-                                ),
-                                margin: getMargin(
-                                  top: 8,
-                                ),
-                                child: Stack(
-                                  alignment: Alignment.bottomCenter,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.topCenter,
-                                      child: Container(
-                                        height: getVerticalSize(
-                                          137,
-                                        ),
-                                        width: getHorizontalSize(
-                                          283,
-                                        ),
-                                        padding: getPadding(
-                                          top: 11,
-                                          bottom: 11,
-                                        ),
-                                        decoration: BoxDecoration(
-                                          image: DecorationImage(
-                                            image: fs.Svg(
-                                              ImageConstant.imgGroup116,
-                                            ),
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
-                                        child: Stack(
-                                          children: [
-                                            CustomImageView(
-                                              imagePath:
-                                                  ImageConstant.imgLinegraph,
-                                              height: getVerticalSize(
-                                                110,
-                                              ),
-                                              width: getHorizontalSize(
-                                                282,
-                                              ),
-                                              alignment: Alignment.center,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomCenter,
-                                      child: Container(
-                                        width: getHorizontalSize(
-                                          275,
-                                        ),
-                                        margin: getMargin(
-                                          left: 4,
-                                          top: 146,
-                                          right: 4,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              "lbl_sun".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                            Text(
-                                              "lbl_mon".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                            Text(
-                                              "lbl_tue".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                            Text(
-                                              "lbl_wed".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                            Text(
-                                              "lbl_thu".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                            Text(
-                                              "lbl_fri".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.labelLarge,
-                                            ),
-                                            Text(
-                                              "lbl_sat".tr,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.left,
-                                              style: theme.textTheme.bodySmall,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    CustomImageView(
-                                      imagePath: ImageConstant.imgActivegraph,
-                                      height: getVerticalSize(
-                                        121,
-                                      ),
-                                      width: getHorizontalSize(
-                                        25,
-                                      ),
-                                      alignment: Alignment.bottomRight,
-                                      margin: getMargin(
-                                        right: 39,
-                                        bottom: 5,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: getPadding(
-                                  left: 3,
-                                  bottom: 18,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Align(
-                                      alignment: Alignment.centerRight,
-                                      child: Text(
-                                        "lbl_100".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: CustomTextStyles.bodySmall10,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 2,
-                                        top: 12,
-                                      ),
-                                      child: Text(
-                                        "lbl_80".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: CustomTextStyles.bodySmall10,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 2,
-                                        top: 11,
-                                      ),
-                                      child: Text(
-                                        "lbl_60".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: CustomTextStyles.bodySmall10,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        top: 12,
-                                      ),
-                                      child: Text(
-                                        "lbl_40".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: theme.textTheme.labelMedium,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 3,
-                                        top: 11,
-                                      ),
-                                      child: Text(
-                                        "lbl_20".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: CustomTextStyles.bodySmall10,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 3,
-                                        top: 12,
-                                      ),
-                                      child: Text(
-                                        "lbl_0".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.right,
-                                        style: CustomTextStyles.bodySmall10,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: Container(
-                            margin: getMargin(
-                              left: 94,
-                              right: 91,
-                            ),
-                            padding: getPadding(
-                              all: 10,
-                            ),
-                            decoration: AppDecoration.outline2.copyWith(
-                              borderRadius: BorderRadiusStyle.roundedBorder8,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "lbl_fri_28_may".tr,
-                                      overflow: TextOverflow.ellipsis,
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          CustomTextStyles.bodySmallGray500058,
-                                    ),
-                                    Padding(
-                                      padding: getPadding(
-                                        left: 33,
-                                      ),
-                                      child: Text(
-                                        "lbl_90".tr,
-                                        overflow: TextOverflow.ellipsis,
-                                        textAlign: TextAlign.left,
-                                        style:
-                                            CustomTextStyles.bodySmallGreen5008,
-                                      ),
-                                    ),
-                                    CustomImageView(
-                                      svgPath: ImageConstant.imgUpload,
-                                      height: getSize(
-                                        8,
-                                      ),
-                                      width: getSize(
-                                        8,
-                                      ),
-                                      margin: getMargin(
-                                        top: 2,
-                                        bottom: 2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    "msg_upperbody_workout".tr,
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.left,
-                                    style: CustomTextStyles.bodySmall10_1,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: getPadding(
-                                    top: 3,
-                                  ),
-                                  child: Container(
-                                    height: getVerticalSize(
-                                      5,
-                                    ),
-                                    width: getHorizontalSize(
-                                      110,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: appTheme.gray50,
-                                      borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(
-                                          2,
-                                        ),
-                                      ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(
-                                        getHorizontalSize(
-                                          2,
-                                        ),
-                                      ),
-                                      child: LinearProgressIndicator(
-                                        value: 0.79,
-                                        backgroundColor: appTheme.gray50,
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.createImageRoute);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 9,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightchart,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child: TextWidget(
+                                      text:'Images',
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.to(()=>PrivacyPolicyPage());
+                          },
+
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 9,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightshield,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    top: 2,
+                                  ),
+                                  child: TextWidget(text:  "lbl_privacy_policy".tr,
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 2,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.toNamed(AppRoutes.changePasswordRoute);
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 10,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightsetting,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    top: 2,
+                                  ),
+                                  child: TextWidget(text: "Change Password",
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    18,
+                                  ),
+                                  width: getSize(
+                                    18,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          onTap: (){
+                            Get.defaultDialog(title:"Do you want to log out?",
+                                titleStyle: TextStyle(
+                                  fontSize: 16,fontFamily: 'Gotham Light',fontWeight: FontWeight.w800
+                                ),
+                                content:Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    InkWell(
+                                      onTap:(){
+                                     controller.signOut();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red,
+                                          borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Center(child: TextWidget(color: Colors.white,text: "Yes",fsize: 12),),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10),
+                                    InkWell(
+                                      onTap: (){
+                                        Get.back();
+                                      },
+                                      child: Container(
+                                        height: 30,
+                                        width: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.deepOrangeAccent,
+                                            borderRadius: BorderRadius.circular(12),
+                                        ),
+                                        child: Center(child: TextWidget(color: Colors.white,text: "No",fsize: 12),)
+                                      ),
+                                    )
+                                  ],
+
+                                ), );
+                          },
+                          child: Padding(
+                            padding: getPadding(
+                              left: 5,
+                              top: 14,
+                            ),
+                            child: Row(
+                              children: [
+                                CustomImageView(
+                                  imagePath: ImageConstant.imgIconlylightprofile,
+                                  height: getSize(
+                                    20,
+                                  ),
+                                  width: getSize(
+                                    20,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: getPadding(
+                                    left: 10,
+                                    bottom: 1,
+                                  ),
+                                  child:  TextWidget(text:  "Logout",
+                                      fontFamily: 'Gotham Light',
+                                      font:FontWeight.w800,
+                                      color:Colors.black54, fsize: 14),
+                                ),
+                                Spacer(),
+                                CustomImageView(
+                                  svgPath: ImageConstant.imgArrowrightGray60005,
+                                  height: getSize(
+                                    25,
+                                  ),
+                                  width: getSize(
+                                    25,
+                                  ),
+                                  margin: getMargin(
+                                    top: 1,
+                                    bottom: 1,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),
@@ -1096,9 +747,6 @@ class AccountSettingScreen extends GetWidget<AccountSettingController> {
               ),
             ),
           ),
-        ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
         ),
       ),
     );

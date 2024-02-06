@@ -12,51 +12,51 @@ class RecordingScreen extends GetWidget<RecordingController> {
   @override
   Widget build(BuildContext context) {
     mediaQueryData = MediaQuery.of(context);
-
     return SafeArea(
       child: Scaffold(
-        //extendBody: true,
-        //extendBodyBehindAppBar: true,
+        extendBody: true,
+        extendBodyBehindAppBar: true,
         backgroundColor: appTheme.whiteA700,
-        body: InkWell(
-          onTap: (){
-            Get.toNamed(AppRoutes.remindersScreen);
-          },
-          child: Container(
-            width: mediaQueryData.size.width,
-            height: mediaQueryData.size.height,
-            decoration: BoxDecoration(
-              color: appTheme.whiteA700,
-              image: DecorationImage(
-                image: AssetImage(
-                  ImageConstant.imgRecording
-                ),
-                fit: BoxFit.cover,
-              ),
-            ),
-            // child: Container(
-            //   width: double.maxFinite,
-            //   padding: getPadding(
-            //     left: 7,
-            //     top: 88,
-            //     right: 7,
-            //   ),
-            //   child: CustomImageView(
-            //     imagePath: ImageConstant.imgRectangle5942,
-            //     height: getVerticalSize(
-            //       546,
-            //     ),
-            //     width: getHorizontalSize(
-            //       358,
-            //     ),
-            //     alignment: Alignment.center,
-            //     margin: getMargin(
-            //       bottom: 5,
-            //     ),
-            //   ),
-            // ),
+        body:Container(
+          decoration: BoxDecoration(
+          color: Colors.blue,
+            image: DecorationImage(image: AssetImage(ImageConstant.imgRecording,),fit:BoxFit.cover),
           ),
         ),
+        // Container(
+        //   width: mediaQueryData.size.width,
+        //   height: mediaQueryData.size.height,
+        //   decoration: BoxDecoration(
+        //     color: appTheme.whiteA700,
+        //     image: DecorationImage(
+        //       image: AssetImage(
+        //         ImageConstant.imgRecording,
+        //       ),
+        //       fit: BoxFit.cover,
+        //     ),
+        //   ),
+        //   child: Container(
+        //     width: double.maxFinite,
+        //     padding: getPadding(
+        //       left: 7,
+        //       top: 88,
+        //       right: 7,
+        //     ),
+        //     child: CustomImageView(
+        //       imagePath: ImageConstant.imgRectangle5942,
+        //       height: getVerticalSize(
+        //         546,
+        //       ),
+        //       width: getHorizontalSize(
+        //         358,
+        //       ),
+        //       alignment: Alignment.center,
+        //       margin: getMargin(
+        //         bottom: 5,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }

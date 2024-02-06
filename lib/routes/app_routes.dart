@@ -1,4 +1,13 @@
-import 'package:daone/presentation/view_all_task_page/view_all_task_page.dart';
+import 'package:daone/presentation/create_images/binding/create_image_binding.dart';
+import 'package:daone/presentation/create_images/view/create_image_view.dart';
+import 'package:daone/presentation/dashboard/binding/dashboard_binding.dart';
+import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
+import 'package:daone/presentation/own_affirmation_screen/view/own_affirmation_view.dart';
+import 'package:daone/presentation/prosperity_affirmation/view/prosperity_affirmation_view.dart';
+import 'package:daone/presentation/sleep_tracking_section/binding/sleep_tracking_binding.dart';
+import 'package:daone/presentation/sleep_tracking_section/view/sleep_tracking_view.dart';
+import 'package:daone/presentation/visualization/visualization_binding/visualization_binding.dart';
+import 'package:daone/presentation/visualization/visualization_view/visualization_view.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/welcome_screen_one_screen.dart';
 import 'package:daone/presentation/welcome_screen_one_screen/binding/welcome_screen_one_binding.dart';
 import 'package:daone/presentation/onboarding_one_screen/onboarding_one_screen.dart';
@@ -15,8 +24,6 @@ import 'package:daone/presentation/success_registration_screen/success_registrat
 import 'package:daone/presentation/success_registration_screen/binding/success_registration_binding.dart';
 import 'package:daone/presentation/login_page_screen/login_page_screen.dart';
 import 'package:daone/presentation/login_page_screen/binding/login_page_binding.dart';
-import 'package:daone/presentation/home_screen/home_screen.dart';
-import 'package:daone/presentation/home_screen/binding/home_binding.dart';
 import 'package:daone/presentation/daily_intension_record_screen/daily_intension_record_screen.dart';
 import 'package:daone/presentation/daily_intension_record_screen/binding/daily_intension_record_binding.dart';
 import 'package:daone/presentation/recording_screen/recording_screen.dart';
@@ -37,8 +44,6 @@ import 'package:daone/presentation/home_no_task_screen/home_no_task_screen.dart'
 import 'package:daone/presentation/home_no_task_screen/binding/home_no_task_binding.dart';
 import 'package:daone/presentation/select_task_screen/select_task_screen.dart';
 import 'package:daone/presentation/select_task_screen/binding/select_task_binding.dart';
-import 'package:daone/presentation/add_task_screen/add_task_screen.dart';
-import 'package:daone/presentation/add_task_screen/binding/add_task_binding.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/view_all_task_tab_container_screen.dart';
 import 'package:daone/presentation/view_all_task_tab_container_screen/binding/view_all_task_tab_container_binding.dart';
 import 'package:daone/presentation/task_empty_screen/task_empty_screen.dart';
@@ -51,12 +56,6 @@ import 'package:daone/presentation/sleep_tracker_screen/sleep_tracker_screen.dar
 import 'package:daone/presentation/sleep_tracker_screen/binding/sleep_tracker_binding.dart';
 import 'package:daone/presentation/blog_screen/blog_screen.dart';
 import 'package:daone/presentation/blog_screen/binding/blog_binding.dart';
-import 'package:daone/presentation/latest_blog_screen/latest_blog_screen.dart';
-import 'package:daone/presentation/latest_blog_screen/binding/latest_blog_binding.dart';
-import 'package:daone/presentation/latest_blog_one_screen/latest_blog_one_screen.dart';
-import 'package:daone/presentation/latest_blog_one_screen/binding/latest_blog_one_binding.dart';
-import 'package:daone/presentation/community_tab_container_screen/community_tab_container_screen.dart';
-import 'package:daone/presentation/community_tab_container_screen/binding/community_tab_container_binding.dart';
 import 'package:daone/presentation/comment_section_screen/comment_section_screen.dart';
 import 'package:daone/presentation/comment_section_screen/binding/comment_section_binding.dart';
 import 'package:daone/presentation/add_friends_screen/add_friends_screen.dart';
@@ -67,13 +66,24 @@ import 'package:daone/presentation/account_setting_screen/account_setting_screen
 import 'package:daone/presentation/account_setting_screen/binding/account_setting_binding.dart';
 import 'package:daone/presentation/personal_data_update_two_screen/personal_data_update_two_screen.dart';
 import 'package:daone/presentation/personal_data_update_two_screen/binding/personal_data_update_two_binding.dart';
-import 'package:daone/presentation/personal_data_update_screen/personal_data_update_screen.dart';
-import 'package:daone/presentation/personal_data_update_screen/binding/personal_data_update_binding.dart';
-import 'package:daone/presentation/personal_data_update_one_screen/personal_data_update_one_screen.dart';
-import 'package:daone/presentation/personal_data_update_one_screen/binding/personal_data_update_one_binding.dart';
 import 'package:daone/presentation/app_navigation_screen/app_navigation_screen.dart';
 import 'package:daone/presentation/app_navigation_screen/binding/app_navigation_binding.dart';
 import 'package:get/get.dart';
+import '../presentation/add_task_screen/add_task_screen.dart';
+import '../presentation/add_task_screen/binding/add_task_binding.dart';
+import '../presentation/badges/binding/personal_data_update_binding.dart';
+import '../presentation/badges/personal_data_update_screen.dart';
+import '../presentation/gratitude_affirmation/binding/gratitude_affirmation_binding.dart';
+import '../presentation/gratitude_affirmation/view/gratitude_affirmation_view.dart';
+import '../presentation/highlights/binding/personal_data_update_one_binding.dart';
+import '../presentation/highlights/personal_data_update_one_screen.dart';
+import '../presentation/love_affirmation/binding/love_affirmation_binding.dart';
+import '../presentation/love_affirmation/view/love_affirmation.dart';
+import '../presentation/own_affirmation_screen/binding/own_affirmation_binding.dart';
+import '../presentation/personal_data_update_two_screen/change_password.dart';
+import '../presentation/prosperity_affirmation/binding/prosperityAffirmationBinding.dart';
+import '../presentation/self_confidence_affirmation/binding/self_confidence_binding.dart';
+import '../presentation/self_confidence_affirmation/view/self_confidence_view.dart';
 
 class AppRoutes {
   static const String welcomeScreenOneScreen = '/welcome_screen_one_screen';
@@ -172,12 +182,102 @@ class AppRoutes {
 
   static const String initialRoute = '/initialRoute';
 
+  static const String dashboardRoute = '/dashboardRoute';
+
+  static const String ownAffirmationRoute ='/ownAffirmation';
+
+  static const String loveAffirmationRoute ='/loveAffirmation';
+
+  static const String prosperityAffirmationRoute ='/prosperityAffirmation';
+
+  static const String gratitudeAffirmationRoute ='/gratitudeAffirmation';
+
+  static const String selfAffirmationRoute ='/selfAffirmation';
+
+  static const String changePasswordRoute ='/changePass';
+
+  static const String sleepTrackingRoute ='/sleepTracking';
+
+  static const String visualizationRoute ='/visualization';
+
+  static const String createImageRoute ='/createImage';
+
+
+
   static List<GetPage> pages = [
+    GetPage(
+      name: dashboardRoute,
+      page: () => MyDashBoard(),
+      bindings: [
+        DashBoardBinding(),
+      ],
+    ),
+    GetPage(
+      name: createImageRoute,
+      page: () => CreateImageView(),
+      bindings: [
+        CreateImageBinding()
+      ],
+    ),
+    GetPage(
+      name: visualizationRoute,
+      page: () => VisualizationView(),
+      bindings: [
+        VisualizationBindings(),
+      ],
+    ),
     GetPage(
       name: welcomeScreenOneScreen,
       page: () => WelcomeScreenOneScreen(),
       bindings: [
         WelcomeScreenOneBinding(),
+      ],
+    ), GetPage(
+      name: changePasswordRoute,
+      page: () => PasswordUpdateScreen(),
+      bindings: [
+        PersonalDataUpdateTwoBinding(),
+      ],
+    ),
+    GetPage(
+      name: prosperityAffirmationRoute,
+      page: () => ProsperityAffirmationView(),
+      bindings: [
+        ProsperityAffirmationBinding(),
+      ],
+    ),
+    GetPage(
+      name: sleepTrackingRoute,
+      page: () => SleepTrackingView(),
+      bindings: [
+        SleepTrackingBinding(),
+      ],
+    ),
+    GetPage(
+      name: gratitudeAffirmationRoute,
+      page: () => GratitudeAffirmationView(),
+      bindings: [
+        GratitudeAffirmationBinding(),
+      ],
+    ),GetPage(
+      name: selfAffirmationRoute,
+      page: () => SelfConfidenceAffirmationView() ,
+      bindings: [
+        SelfConfidenceBinding(),
+      ],
+    ),
+    GetPage(
+      name: loveAffirmationRoute,
+      page: () => LoveAffirmationView(),
+      bindings: [
+        LoveAffirmationBinding(),
+      ],
+    ),
+    GetPage(
+      name: ownAffirmationRoute,
+      page: () => OwnAffirmationView(),
+      bindings: [
+        OwnAffirmationBinding(),
       ],
     ),
     GetPage(
@@ -227,13 +327,6 @@ class AppRoutes {
       page: () => LoginPageScreen(),
       bindings: [
         LoginPageBinding(),
-      ],
-    ),
-    GetPage(
-      name: homeScreen,
-      page: () => HomeScreen(),
-      bindings: [
-        HomeBinding(),
       ],
     ),
     GetPage(
@@ -306,13 +399,13 @@ class AppRoutes {
         SelectTaskBinding(),
       ],
     ),
-    GetPage(
-      name: addTaskScreen,
-      page: () => AddTaskScreen(),
-      bindings: [
-        AddTaskBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: addTaskScreen,
+    //   page: () => AddTaskScreen(),
+    //   bindings: [
+    //     AddTaskBinding(),
+    //   ],
+    // ),
     GetPage(
       name: viewAllTaskTabContainerScreen,
       page: () => ViewAllTaskTabContainerScreen(),
@@ -355,27 +448,24 @@ class AppRoutes {
         BlogBinding(),
       ],
     ),
-    GetPage(
-      name: latestBlogScreen,
-      page: () => LatestBlogScreen(),
-      bindings: [
-        LatestBlogBinding(),
-      ],
-    ),
-    GetPage(
-      name: latestBlogOneScreen,
-      page: () => LatestBlogOneScreen(),
-      bindings: [
-        LatestBlogOneBinding(),
-      ],
-    ),
-    GetPage(
-      name: communityTabContainerScreen,
-      page: () => CommunityTabContainerScreen(),
-      bindings: [
-        CommunityTabContainerBinding(),
-      ],
-    ),
+    // GetPage(
+    //   name: latestBlogScreen,
+    //   page: () => LatestBlogScreen(blogId:FirebaseAuth.instance.currentUser!.uid, blogData: {},
+    //   updateBlogRead: (documentID)async{
+    //     return null;
+    //   },
+    //   ),
+    //   bindings: [
+    //     LatestBlogBinding(),
+    //   ],
+    // ),
+    // GetPage(
+    //   name: communityTabContainerScreen,
+    //   page: () => CommunityTabContainerScreen(),
+    //   bindings: [
+    //     CommunityTabContainerBinding(),
+    //   ],
+    // ),
     GetPage(
       name: commentSectionScreen,
       page: () => CommentSectionScreen(),
@@ -397,6 +487,14 @@ class AppRoutes {
         ViewFriendsTabContainerBinding(),
       ],
     ),
+  // GetPage(
+  //     name: viewFriendFullProfilePage,
+  //     page: () =>ViewFriendFullProfilePage(),
+  //     bindings: [
+  //       ViewFriendsFullProfileBinding(),
+  //     ],
+  //   ),
+
     GetPage(
       name: accountSettingScreen,
       page: () => AccountSettingScreen(),
@@ -423,13 +521,6 @@ class AppRoutes {
       page: () => PersonalDataUpdateOneScreen(),
       bindings: [
         PersonalDataUpdateOneBinding(),
-      ],
-    ),
-    GetPage(
-      name: appNavigationScreen,
-      page: () => AppNavigationScreen(),
-      bindings: [
-        AppNavigationBinding(),
       ],
     ),
     GetPage(

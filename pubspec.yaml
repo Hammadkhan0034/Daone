@@ -14,14 +14,54 @@ dependencies:
   flutter_svg_provider: ^1.0.4
   outline_gradient_button: ^2.0.1+1
   intl: ^0.18.1
-dev_dependencies: 
+  google_fonts: ^5.1.0
+  percent_indicator: ^4.2.3
+  firebase_core: ^2.16.0
+  firebase_auth: ^4.10.0
+  cloud_firestore: ^4.9.2
+  google_sign_in: ^6.1.5
+  firebase_auth_platform_interface: ^6.19.0
+  flutter_facebook_auth: ^6.0.2
+  confetti: ^0.7.0
+  audioplayers: ^5.2.0
+  image_picker: ^1.0.4
+  permission_handler: ^11.0.1
+  firebase_storage: ^11.2.8
+  firebase_app_check: ^0.2.0+1
+  fl_chart: ^0.64.0
+  video_player: ^2.7.2
+  uuid: ^4.1.0
+  get_storage: ^2.1.1
+  timezone: any
+  pull_to_refresh_flutter3: ^2.0.2
+  alarm: ^2.1.1
+  flutter_markdown: ^0.6.18+2
+  selectable: ^0.3.0
+  share_plus: ^7.2.1
+  flutter_colorpicker: ^1.0.3
+  chewie: ^1.7.1
+  video_thumbnail: ^0.5.3
+  path_provider: ^2.1.1
+  screenshot: ^2.1.0
+  flutter_downloader: ^1.11.5
+
+
+
+
+
+
+dev_dependencies:
   flutter_test: 
     sdk: flutter
 flutter: 
   uses-material-design: true
-  assets: 
+  assets:
     - assets/
     - assets/images/
+    - assets/badges/
+    - assets/1.mp3
+    - assets/relaxing-piano-and-ocean-waves-logo-165199.mp3
+
   fonts: 
     - family: Poppins
       fonts: 
@@ -65,3 +105,12 @@ flutter:
           weight: 400
         - asset: assets/fonts/RobotoMedium.ttf
           weight: 500
+
+    - family: Gotham Light
+      fonts:
+        - asset: fonts/GOTHMLIG.ttf
+          weight: 400
+        - asset: fonts/GOTHMBOK2.ttf
+          weight: 800
+        - asset: fonts/GOTHMBOK2.ttf
+          weight: 900

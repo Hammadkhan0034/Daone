@@ -1,344 +1,474 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../widgets/text_widget.dart';
+import 'colorPickerClass.dart';
 import 'controller/save_or_edit_blog_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
-import 'package:daone/widgets/custom_outlined_button.dart';
-import 'package:daone/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
 class SaveOrEditBlogDialog extends StatelessWidget {
-  SaveOrEditBlogDialog(
-    this.controller, {
-    Key? key,
-  }) : super(
-          key: key,
-        );
-
   SaveOrEditBlogController controller;
+  String? copyText,title,fontName;
 
+  SaveOrEditBlogDialog({ required this.controller,required this.copyText,required this.title,required this.fontName});
   @override
   Widget build(BuildContext context) {
-    mediaQueryData = MediaQuery.of(context);
+    // ... (previous widget implementation remains the same)
 
     return Container(
-      width: getHorizontalSize(
-        318,
-      ),
-      padding: getPadding(
-        left: 20,
-        top: 22,
-        right: 20,
-        bottom: 22,
-      ),
+      width: getHorizontalSize(318),
+      padding: getPadding(left: 20, top: 22, right: 20, bottom: 22),
       decoration: AppDecoration.fill.copyWith(
         borderRadius: BorderRadiusStyle.roundedBorder22,
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          Container(
-            height: getVerticalSize(
-              209,
-            ),
-            width: getHorizontalSize(
-              269,
-            ),
-            margin: getMargin(
-              left: 2,
-              top: 6,
-            ),
-            child: Stack(
-              alignment: Alignment.topCenter,
-              children: [
-                CustomImageView(
-                  imagePath: ImageConstant.imgRectangle11,
-                  height: getVerticalSize(
-                    209,
-                  ),
-                  width: getHorizontalSize(
-                    269,
-                  ),
-                  radius: BorderRadius.circular(
-                    getHorizontalSize(
-                      15,
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                ),
-                Align(
-                  alignment: Alignment.topCenter,
-                  child: Container(
-                    width: getHorizontalSize(
-                      219,
-                    ),
-                    margin: getMargin(
-                      top: 30,
-                    ),
-                    child: Text(
-                      "msg_i_deserve_to_experience".tr,
-                      maxLines: 4,
-                      overflow: TextOverflow.ellipsis,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          CustomTextFormField(
-            controller: controller.statementController,
-            margin: getMargin(
-              left: 2,
-              top: 35,
-              right: 6,
-            ),
-            contentPadding: getPadding(
-              left: 5,
-              right: 5,
-            ),
-            textStyle: CustomTextStyles.bodySmallGray9000310,
-            hintText: "msg_i_deserve_to_experience2".tr,
-            hintStyle: CustomTextStyles.bodySmallGray9000310,
-            textInputAction: TextInputAction.next,
-            defaultBorderDecoration:
-                TextFormFieldStyleHelper.underLineGray30003,
-            enabledBorderDecoration:
-                TextFormFieldStyleHelper.underLineGray30003,
-            focusedBorderDecoration:
-                TextFormFieldStyleHelper.underLineGray30003,
-            disabledBorderDecoration:
-                TextFormFieldStyleHelper.underLineGray30003,
-          ),
-          Padding(
-            padding: getPadding(
-              top: 25,
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: getPadding(
-                    top: 5,
-                    bottom: 3,
-                  ),
-                  child: Text(
-                    "lbl_background".tr,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: CustomTextStyles.bodySmallGray9000311_1,
-                  ),
-                ),
-                CustomImageView(
-                  imagePath: ImageConstant.imgRectangle5909,
-                  height: getVerticalSize(
-                    26,
-                  ),
-                  width: getHorizontalSize(
-                    123,
-                  ),
-                  radius: BorderRadius.circular(
-                    getHorizontalSize(
-                      3,
-                    ),
-                  ),
-                  margin: getMargin(
-                    left: 20,
-                  ),
-                ),
-                CustomOutlinedButton(
-                  text: "lbl_5e4646".tr,
-                  margin: getMargin(
-                    left: 14,
-                  ),
-                  buttonStyle: CustomButtonStyles.outlineGray30003.copyWith(
-                      fixedSize: MaterialStateProperty.all<Size>(Size(
-                    getHorizontalSize(
-                      48,
-                    ),
-                    getVerticalSize(
-                      26,
-                    ),
-                  ))),
-                  buttonTextStyle: CustomTextStyles.poppinsWhiteA700Regular,
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: getPadding(
-              top: 28,
-            ),
-            child: Row(
-              children: [
-                Padding(
-                  padding: getPadding(
-                    top: 5,
-                    bottom: 3,
-                  ),
-                  child: Text(
-                    "lbl_font".tr,
-                    overflow: TextOverflow.ellipsis,
-                    textAlign: TextAlign.left,
-                    style: CustomTextStyles.bodySmallGray9000311_1,
-                  ),
-                ),
-                Spacer(),
-                CustomTextFormField(
-                  width: getHorizontalSize(
-                    123,
-                  ),
-                  controller: controller.fontfamilyController,
-                  contentPadding: getPadding(
-                    left: 14,
-                    top: 5,
-                    right: 14,
-                    bottom: 5,
-                  ),
-                  textStyle: CustomTextStyles.bodySmallRadleyGray90003,
-                  hintText: "lbl_radely".tr,
-                  hintStyle: CustomTextStyles.bodySmallRadleyGray90003,
-                  defaultBorderDecoration:
-                      TextFormFieldStyleHelper.outlineGray30003,
-                  enabledBorderDecoration:
-                      TextFormFieldStyleHelper.outlineGray30003,
-                  focusedBorderDecoration:
-                      TextFormFieldStyleHelper.outlineGray30003,
-                  disabledBorderDecoration:
-                      TextFormFieldStyleHelper.outlineGray30003,
-                ),
-                Container(
-                  height: getVerticalSize(
-                    26,
-                  ),
-                  width: getHorizontalSize(
-                    48,
-                  ),
-                  margin: getMargin(
-                    left: 14,
-                  ),
-                  child: Stack(
-                    alignment: Alignment.center,
-                    children: [
-                      Align(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          padding: getPadding(
-                            left: 9,
-                            top: 3,
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            TextWidget(text: 'Create Image', color: Colors.black, fsize: 14),
+            Container(
+              height: getVerticalSize(209),
+              width: getHorizontalSize(269),
+              margin: getMargin(left: 2, top: 6),
+              child: Stack(
+                alignment: Alignment.topCenter,
+                children: [
+                  Obx(
+                        () => Container(
+                      height: getVerticalSize(209),
+                      width: getHorizontalSize(269),
+                      decoration: BoxDecoration(
+                        color: Colors.black12,
+                        borderRadius: BorderRadius.circular(
+                          getHorizontalSize(15),
+                        ),
+                        image: controller.selectedBackground.value != ''
+                            ? DecorationImage(
+                          image: NetworkImage(
+                            controller.selectedBackground.value,
                           ),
-                          child: Text(
-                            "lbl_12".tr,
-                            overflow: TextOverflow.ellipsis,
-                            textAlign: TextAlign.left,
-                            style: CustomTextStyles.bodySmallGray90003,
+                          fit: BoxFit.cover,
+                        )
+                            : null,
+                      ),
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          child:Text(
+                            copyText!,
+                            style: GoogleFonts.getFont(
+                              controller.selectedFontFamily.value,
+                              fontSize: controller.selectedFontSize.value,
+                              color: Color(int.parse('0xFF${controller.selectedTextColor.value.substring(1)}')),
+                            ),
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: Container(
-                          padding: getPadding(
-                            all: 1,
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+            Obx(() =>  ColorPickerButton(
+              color: Color(int.parse('0xFF${controller.selectedTextColor.value.substring(1)}')),
+
+              onColorChanged: (color) {
+                controller.updateSelectedTextColor(color);
+              },
+            ),
+            ),
+           Row(children: [
+             Container(
+                 decoration: BoxDecoration(
+                     color:Colors.deepOrange,borderRadius: BorderRadius.circular(10)),
+                 child: Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: TextWidget(text: 'Font Family',color: Colors.white,fsize: 12,),
+                 )),
+             Obx(() => Padding(
+               padding: const EdgeInsets.symmetric(horizontal: 25.0),
+               child: DropdownButton<String>(
+                 value: controller.selectedFontFamily.value,
+                 onChanged: (value) {
+                   controller.updateSelectedFontFamily(value!);
+                 },
+                 items: controller.fontFamilies.map((String fontFamily) {
+                   return DropdownMenuItem<String>(
+                     value: fontFamily,
+                     child:  TextWidget(text: fontFamily, color:Colors.black, fsize: 12),
+                   );
+                 }).toList(),
+               ),
+             ),),
+           ],),
+           Row(children: [
+             Container(
+                 decoration: BoxDecoration(
+                     color:Colors.deepOrange,borderRadius: BorderRadius.circular(10)),
+                 child: Padding(
+                   padding: const EdgeInsets.all(8.0),
+                   child: TextWidget(text: 'Font Size',color: Colors.white,fsize: 12,),
+                 )),
+             Obx(() => Container(
+               width: Get.width*0.4,
+               child: Slider(
+                 value: controller.selectedFontSize.value,
+                 activeColor: Colors.deepOrange,
+                 inactiveColor: Colors.deepOrange,
+                 min: 8.0,
+                 max: 19.0,
+                 onChanged: (value) {
+                   controller.updateSelectedFontSize(value);
+                 },
+               ),
+             ),),
+           ],),
+
+
+            CustomElevatedButton(
+              onTap: (){
+                Get.dialog(
+
+                  AlertDialog(
+                    title: Text("Choose a Background"),
+                    content: Obx(
+                          () => Container(
+                        height: Get.height*0.5,
+                        child: GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2, // Number of columns
+                            // crossAxisSpacing: 1.0, // Horizontal spacing between grid items
+                            // mainAxisSpacing: 1.0, // Vertical spacing between grid items
                           ),
-                          decoration: AppDecoration.outline10.copyWith(
-                            borderRadius: BorderRadiusStyle.roundedBorder3,
-                          ),
-                          child: Card(
-                            clipBehavior: Clip.antiAlias,
-                            elevation: 0,
-                            margin: EdgeInsets.all(0),
-                            color: appTheme.blueGray50,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadiusStyle.roundedBorder3,
-                            ),
-                            child: Container(
-                              height: getVerticalSize(
-                                24,
-                              ),
-                              width: getHorizontalSize(
-                                18,
-                              ),
-                              padding: getPadding(
-                                left: 5,
-                                top: 10,
-                                right: 5,
-                                bottom: 10,
-                              ),
-                              decoration: AppDecoration.fill10.copyWith(
-                                borderRadius: BorderRadiusStyle.roundedBorder3,
-                              ),
-                              child: Stack(
+                          itemCount: controller.availableBackgrounds.length,
+                          itemBuilder: (context, index) {
+                            final background = controller.availableBackgrounds[index];
+                            return InkWell(
+                              onTap: () {
+                                controller.setSelectedBackground(background);
+                                Get.back();
+                              },
+                              child: Column(
                                 children: [
-                                  CustomImageView(
-                                    svgPath: ImageConstant.imgVectorBlack900,
-                                    height: getVerticalSize(
-                                      3,
+                                  // ListTile(
+                                  //   title: Text("Background ${index + 1}"),
+                                  // ),
+                                  Container(
+                                    height: Get.height * 0.13,
+                                    width: Get.width * 0.3,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      // image: DecorationImage(
+                                      //   image: NetworkImage(background),
+                                      //   fit: BoxFit.cover,
+                                      // ),
                                     ),
-                                    width: getHorizontalSize(
-                                      6,
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(12),
+                                      child: CachedNetworkImage(
+                                        imageUrl: background, // Replace newBackgroundURL with the new image URL
+                                        imageBuilder: (context, imageProvider) => Container(
+                                          height: Get.height * 0.13,
+                                          width: Get.width * 0.3,
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(12),
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) =>
+                                            Center(
+                                                child:
+                                        CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
+                                        errorWidget: (context, url, error) => Icon(Icons.error),
+                                      ),
                                     ),
-                                    alignment: Alignment.bottomRight,
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
+                            );
+                          },
                         ),
+
                       ),
-                    ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: getPadding(
-              top: 30,
-            ),
-            child: Row(
-              children: [
-                Text(
-                  "lbl_align".tr,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.bodySmallGray9000311_1,
-                ),
-                CustomImageView(
-                  svgPath: ImageConstant.imgMenuGray90003,
-                  height: getVerticalSize(
-                    12,
-                  ),
-                  width: getHorizontalSize(
-                    85,
-                  ),
-                  margin: getMargin(
-                    left: 59,
-                    top: 1,
-                    bottom: 3,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          CustomElevatedButton(
-            text: "lbl_save_to_profile".tr,
-            margin: getMargin(
-              left: 2,
-              top: 24,
-              right: 7,
-            ),
-            buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
-                fixedSize: MaterialStateProperty.all<Size>(Size(
-              double.maxFinite,
-              getVerticalSize(
-                46,
+                );
+              },
+              text: "Choose your Background Image",
+              margin: getMargin(
+                left: 2,
+                top: 24,
+                right: 7,
               ),
-            ))),
-            buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
-          ),
-        ],
+              buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
+                  fixedSize: MaterialStateProperty.all<Size>(Size(
+                    double.maxFinite,
+                    getVerticalSize(
+                      46,
+                    ),
+                  ))),
+              buttonTextStyle: TextStyle(color: Colors.white,fontSize: 12),
+            ),
+            CustomElevatedButton(
+              onTap: (){
+                controller.higlightslist(context: context,fontSize: controller.selectedFontSize.value,selectedText: copyText!,
+                color: controller.selectedTextColor.value,imageUrl: controller.selectedBackground.value,
+                  fontFamily: controller.selectedFontFamily.value,
+                  title:title!);
+                //context,controller.displayText.value,controller.selectedBackground.value,
+              },
+              text: "lbl_save_to_profile".tr,
+              margin: getMargin(
+                left: 2,
+                top: 24,
+                right: 7,
+              ),
+              buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
+                  fixedSize: MaterialStateProperty.all<Size>(Size(
+                    double.maxFinite,
+                    getVerticalSize(
+                      46,
+                    ),
+                  ))),
+              buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
+            ),
+
+
+
+          ],
+        ),
       ),
     );
   }
 }
+
+
+
+
+// class SaveOrEditBlogDialog extends StatelessWidget {
+//   String? copyText;
+//
+//   SaveOrEditBlogDialog(
+//     this.controller, { required this.copyText,
+//     Key? key,
+//   }) : super(
+//           key: key,
+//         );
+//
+//   SaveOrEditBlogController controller;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     mediaQueryData = MediaQuery.of(context);
+//     return Container(
+//       width: getHorizontalSize(
+//         318,
+//       ),
+//       padding: getPadding(
+//         left: 20,
+//         top: 22,
+//         right: 20,
+//         bottom: 22,
+//       ),
+//       decoration: AppDecoration.fill.copyWith(
+//         borderRadius: BorderRadiusStyle.roundedBorder22,
+//       ),
+//       child: SingleChildScrollView(
+//         child: Column(
+//           mainAxisSize: MainAxisSize.min,
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisAlignment: MainAxisAlignment.end,
+//           children: [
+//             TextWidget(text: 'Create Image', color:Colors.black, fsize: 14),
+//             Container(
+//               height: getVerticalSize(
+//                 209,
+//               ),
+//               width: getHorizontalSize(
+//                 269,
+//               ),
+//               margin: getMargin(
+//                 left: 2,
+//                 top: 6,
+//               ),
+//               child: Stack(
+//                 alignment: Alignment.topCenter,
+//                 children: [
+//                   Obx(
+//                     () => Container(
+//                       height: getVerticalSize(
+//                         209,
+//                       ),
+//                       width: getHorizontalSize(
+//                         269,
+//                       ),
+//                       decoration: BoxDecoration(
+//                         color: Colors.black12,
+//                         borderRadius: BorderRadius.circular(
+//                           getHorizontalSize(
+//                             15,
+//                           ),
+//                         ),
+//                         image:controller.selectedBackground.value != '' ?
+//                         DecorationImage(image: NetworkImage(controller.selectedBackground.value), fit: BoxFit.cover,)
+//                             : null,
+//                       ),
+//                       child: Center(child: Padding(
+//                         padding: const EdgeInsets.symmetric(horizontal: 18.0),
+//                         child: TextWidget(text:copyText, color:Colors.white, fsize: 12),
+//                       ))),
+//                   ),
+//                   Align(
+//                     alignment: Alignment.topCenter,
+//                     child: Container(
+//                       width: getHorizontalSize(
+//                         219,
+//                       ),
+//                       margin: getMargin(top: 20, bottom: 20),
+//                       child: Obx(
+//                         () => SingleChildScrollView(
+//                           child: Text(controller.displayText.value,
+//                             style: GoogleFonts.getFont(
+//                               controller.selectedFontFamily.value,
+//                               fontSize: controller.selectedFontSize.value,
+//                               fontWeight: controller.selectedFontWeight.value,
+//                               color: Color(int.parse('#${controller.selectedTextColor.value}')
+//                               ),
+//                             ),
+//                           ),
+//                         ),
+//                       ),
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+
+//             SizedBox(height: 16.0),
+//
+//             // Font Size
+//             Text('Font Size: ${controller.selectedFontSize}'),
+//             Slider(
+//               value: controller.selectedFontSize.value,
+//               min: 10.0,
+//               max: 40.0,
+//               onChanged: (value) {
+//                 controller.updateSelectedFontSize(value);
+//               },
+//             ),
+//             SizedBox(height: 16.0),
+//
+//             // Font Weight
+//             Text('Font Weight:'),
+
+
+
+
+//             SizedBox(height: 16.0),
+//
+//             // Text Color
+
+
+
+//
+//
+//             // Padding(
+//             //   padding: getPadding(
+//             //     top: 26,
+//             //     right: 1,
+//             //   ),
+//             //   child: Row(
+//             //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//             //     children: [
+//             //       Padding(
+//             //         padding: getPadding(
+//             //           top: 5,
+//             //           bottom: 3,
+//             //         ),
+//             //         child: Text(
+//             //           "Choose your background Image",
+//             //           overflow: TextOverflow.ellipsis,
+//             //           textAlign: TextAlign.left,
+//             //           style: CustomTextStyles.bodySmallGray9000311_1,
+//             //         ),
+//             //       ),
+//             //       InkWell(
+//             //           onTap: (){
+//             //             Get.dialog(
+//             //
+//             //               AlertDialog(
+//             //                 title: Text("Choose a Background"),
+//             //                 content: Obx(
+//             //                       () => Expanded(
+//             //                     child: ListView.builder(
+//             //                       itemCount:
+//             //                       controller.availableBackgrounds.length,
+//             //                       itemBuilder: (context, index) {
+//             //                         final background =
+//             //                         controller.availableBackgrounds[index];
+//             //                         return InkWell(
+//             //                           onTap: () {
+//             //                             controller.setSelectedBackground(
+//             //                                 background);
+//             //                             Get.back();
+//             //                           },
+//             //                           child: Column(
+//             //                             children: [
+//             //                               ListTile(
+//             //                                 title: Text("Background ${index + 1}"),
+//             //
+//             //                               ),
+//             //                               Container(
+//             //                                 height: Get.height * 0.05,
+//             //                                 width: Get.width * 0.5,
+//             //                                 decoration: BoxDecoration(
+//             //                                   borderRadius: BorderRadius.circular(12),
+//             //                                   image: DecorationImage(
+//             //                                       image: NetworkImage(
+//             //                                         controller.availableBackgrounds[
+//             //                                         index],
+//             //                                       ),
+//             //                                       fit: BoxFit.cover),
+//             //
+//             //                                 ),
+//             //                               ),
+//             //                             ],
+//             //                           ),
+//             //                         );
+//             //                       },
+//             //                     ),
+//             //                   ),
+//             //                 ),
+//             //               ),
+//             //             );
+//             //           },
+//             //           child:Obx(() => Container(
+//             //             height:Get.height*0.1,
+//             //             width: Get.width*0.2,
+//             //             decoration: BoxDecoration(
+//             //               color: Colors.teal,
+//             //               borderRadius: BorderRadius.circular(12),
+//             //               image: DecorationImage(
+//             //                   image:
+//             //                   NetworkImage(controller.selectedBackground.value),fit: BoxFit.cover),),
+//             //           ),)
+//             //       ),
+//             //     ],
+//             //   ),
+//             // ),
+
+
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

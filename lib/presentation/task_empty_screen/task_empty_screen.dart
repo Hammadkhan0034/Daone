@@ -595,9 +595,6 @@ class TaskEmptyScreen extends GetWidget<TaskEmptyController> {
             ),
           ),
         ),
-        bottomNavigationBar: CustomBottomBar(
-          onChanged: (BottomBarEnum type) {},
-        ),
       ),
     );
   }

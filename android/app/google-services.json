@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "1056216974066",
+    "project_id": "daone-58141",
+    "storage_bucket": "daone-58141.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056216974066:android:a955ec9e305cac2c57866b",
+        "android_client_info": {
+          "package_name": "com.daone.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1056216974066-tnf79brvj08bp6ql3n6bj0ikd2ja1qc8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "82a946200102fbee8467fede275cc53c787ced70"
+          }
+        },
+        {
+          "client_id": "1056216974066-jumslt4ehc1n9722i9tm91spoc0niqiv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdJOVragED6d9-t_4bGu0thiVV8Bzpu48"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1056216974066-ct0h8pstad945o9imkqphfs91gpertb4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

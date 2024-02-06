@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 
+import '../../widgets/custom_elevated_button.dart';
 import 'controller/login_page_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/validation_functions.dart';
@@ -14,7 +16,6 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
           key: key,
         );
 
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +26,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: _formKey,
+          key: controller.formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -60,6 +61,9 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                   ),
                 ),
                 CustomTextFormField(
+                  function: (value) {
+                    controller.emailController.text = value;
+                  },
                   controller: controller.emailController,
                   margin: getMargin(
                     top: 30,
@@ -102,7 +106,11 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 ),
                 Obx(
                   () => CustomTextFormField(
+
                     controller: controller.passwordController,
+                    function: (value) {
+                      controller.emailController.text = value;
+                    },
                     margin: getMargin(
                       top: 15,
                     ),
@@ -155,8 +163,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                       ),
                     ),
                     validator: (value) {
-                      if (value == null ||
-                          (!isValidPassword(value, isRequired: true))) {
+                      if (value == null || value.isEmpty) {
                         return "Please enter valid password";
                       }
                       return null;
@@ -232,6 +239,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                     ),
                   ],
                 ),
+                Spacer(),
                 Padding(
                   padding: getPadding(
                     top: 21,
@@ -239,18 +247,34 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CustomIconButton(
-                        height: 50,
-                        width: 50,
-                        padding: getPadding(
-                          all: 15,
-                        ),
-                        decoration: IconButtonStyleHelper.outlineGray300,
-                        child: CustomImageView(
-                          imagePath: ImageConstant.imgGroup9684,
-                        ),
+                      Obx(() =>
+                      controller.isLoading.value?
+                      CircularProgressIndicator()
+                          : CustomIconButton(
+                            onTap: ()async{
+                              User? user =await controller.handleSignIn();
+                              if(user != null){
+                                Get.offAndToNamed(AppRoutes.dashboardRoute);
+                                Get.snackbar("User signed in",user.displayName.toString());
+                              }else{
+                                Get.snackbar("Google Sign In failed","");
+                              }
+                            },
+                            height: 50,
+                            width: 50,
+                            padding: getPadding(
+                              all: 15,
+                            ),
+                            decoration: IconButtonStyleHelper.outlineGray300,
+                            child: CustomImageView(
+                              imagePath: ImageConstant.imgGroup9684,
+                            ),
+                          ),
                       ),
                       CustomIconButton(
+                        onTap: (){
+                          controller.signInWithFacebook();
+                        },
                         height: 50,
                         width: 50,
                         margin: getMargin(
@@ -290,6 +314,31 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                     ),
                     textAlign: TextAlign.left,
                   ),
+                ),
+                Spacer(),
+                CustomElevatedButton(
+                  onTap: (){
+                   controller.logIn(controller.emailController.text,controller.passwordController.text,context);
+                  },
+                  width: getHorizontalSize(
+                    315,
+                  ),
+                  height: getVerticalSize(
+                    57,
+                  ),
+                  text: "lbl_login".tr,
+                  buttonStyle: CustomButtonStyles
+                      .gradientnamedeeporangeA20006nameprimary
+                      .copyWith(
+                      fixedSize: MaterialStateProperty.all<Size>(Size(
+                        double.maxFinite,
+                        getVerticalSize(
+                          57,
+                        ),
+                      ))),
+                  decoration: CustomButtonStyles
+                      .gradientnamedeeporangeA20006nameprimaryDecoration,
+                  buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
                 ),
               ],
             ),

@@ -67,90 +67,90 @@ class OnboardingFourScreen extends GetWidget<OnboardingFourController> {
                   style: theme.textTheme.bodyMedium,
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: getMargin(
-                    top: 90,
-                    right: 30,
-                    bottom: 40,
-                  ),
-                  decoration: AppDecoration.outline.copyWith(
-                    borderRadius: BorderRadiusStyle.circleBorder30,
-                  ),
-                  child: OutlineGradientButton(
-                    padding: EdgeInsets.only(
-                      left: getHorizontalSize(
-                        2,
-                      ),
-                      top: getVerticalSize(
-                        2,
-                      ),
-                      right: getHorizontalSize(
-                        2,
-                      ),
-                      bottom: getVerticalSize(
-                        2,
-                      ),
-                    ),
-                    strokeWidth: getHorizontalSize(
-                      2,
-                    ),
-                    gradient: LinearGradient(
-                      begin: Alignment(
-                        1,
-                        1,
-                      ),
-                      end: Alignment(
-                        -0.24,
-                        -0.31,
-                      ),
-                      colors: [
-                        appTheme.deepOrangeA20006,
-                        theme.colorScheme.primary,
-                      ],
-                    ),
-                    corners: Corners(
-                      topLeft: Radius.circular(
-                        30,
-                      ),
-                      topRight: Radius.circular(
-                        30,
-                      ),
-                      bottomLeft: Radius.circular(
-                        30,
-                      ),
-                      bottomRight: Radius.circular(
-                        30,
-                      ),
-                    ),
-                    child: Container(
-                      height: getSize(
-                        60,
-                      ),
-                      width: getSize(
-                        60,
-                      ),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(
-                          getHorizontalSize(
-                            30,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
+              // Align(
+              //   alignment: Alignment.centerRight,
+              //   child: Container(
+              //     margin: getMargin(
+              //       top: 90,
+              //       right: 30,
+              //       bottom: 40,
+              //     ),
+              //     decoration: AppDecoration.outline.copyWith(
+              //       borderRadius: BorderRadiusStyle.circleBorder30,
+              //     ),
+              //     child: OutlineGradientButton(
+              //       padding: EdgeInsets.only(
+              //         left: getHorizontalSize(
+              //           2,
+              //         ),
+              //         top: getVerticalSize(
+              //           2,
+              //         ),
+              //         right: getHorizontalSize(
+              //           2,
+              //         ),
+              //         bottom: getVerticalSize(
+              //           2,
+              //         ),
+              //       ),
+              //       strokeWidth: getHorizontalSize(
+              //         2,
+              //       ),
+              //       gradient: LinearGradient(
+              //         begin: Alignment(
+              //           1,
+              //           1,
+              //         ),
+              //         end: Alignment(
+              //           -0.24,
+              //           -0.31,
+              //         ),
+              //         colors: [
+              //           appTheme.deepOrangeA20006,
+              //           theme.colorScheme.primary,
+              //         ],
+              //       ),
+              //       corners: Corners(
+              //         topLeft: Radius.circular(
+              //           30,
+              //         ),
+              //         topRight: Radius.circular(
+              //           30,
+              //         ),
+              //         bottomLeft: Radius.circular(
+              //           30,
+              //         ),
+              //         bottomRight: Radius.circular(
+              //           30,
+              //         ),
+              //       ),
+              //       child: Container(
+              //         height: getSize(
+              //           60,
+              //         ),
+              //         width: getSize(
+              //           60,
+              //         ),
+              //         decoration: BoxDecoration(
+              //           borderRadius: BorderRadius.circular(
+              //             getHorizontalSize(
+              //               30,
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //   ),
+              // ),
             ],
           ),
         ),
         floatingActionButton: CustomFloatingButton(
-          onTap:(){
+          onTap: (){
             Get.toNamed(AppRoutes.registerPageOneScreen);
-          } ,
-          height: 50,
-          width: 50,
+          },
+          height: 75,
+          width: 75,
           child: CustomImageView(
             svgPath: ImageConstant.imgArrowright,
             height: getVerticalSize(

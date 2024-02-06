@@ -45,6 +45,7 @@ class CustomFloatingButton extends StatelessWidget {
   Widget get fabWidget => Padding(
         padding: margin ?? EdgeInsets.zero,
         child: FloatingActionButton(
+          shape:CircleBorder(),
           backgroundColor: backgroundColor,
           onPressed: onTap,
           child: Container(
@@ -53,11 +54,12 @@ class CustomFloatingButton extends StatelessWidget {
             height: getSize(height ?? 0),
             decoration: decoration ??
                 BoxDecoration(
-                  borderRadius: BorderRadius.circular(
-                    getHorizontalSize(
-                      25.00,
-                    ),
-                  ),
+                  shape: BoxShape.circle,
+                  // borderRadius: BorderRadius.circular(
+                  //   getHorizontalSize(
+                  //     25.00,
+                  //   ),
+                  //),
                   gradient: LinearGradient(
                     begin: Alignment(
                       1.0,

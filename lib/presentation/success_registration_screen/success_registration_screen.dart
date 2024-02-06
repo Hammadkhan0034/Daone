@@ -1,3 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'controller/success_registration_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
@@ -37,15 +41,40 @@ class SuccessRegistrationScreen
                   277,
                 ),
               ),
+              SizedBox(height: Get.height*0.02),
               Padding(
                 padding: getPadding(
-                  top: 44,
+                  top: 12,
+                  bottom: 21,
                 ),
-                child: Text(
-                  "msg_welcome_stefani".tr,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style: CustomTextStyles.titleLargeGray90002,
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser?.email).snapshots(),
+                  builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      // While the data is being fetched, you can return a loading indicator or an empty widget.
+                      return CircularProgressIndicator(); // Replace with your loading indicator widget
+                    }
+
+                    if (snapshot.hasError) {
+                      // Handle errors here
+                      return Text('Error: ${snapshot.error}');
+                    }
+
+                    if (!snapshot.hasData || !snapshot.data!.exists) {
+                      // Handle the case where the document doesn't exist
+                      return Text('Document not found');
+                    }
+
+                    // Access the 'fullName' field from the document data
+                    String fullName = snapshot.data!['fullName'];
+
+                    return Padding(
+                      padding: getPadding(
+                        top: 1,
+                      ),
+                      child:TextWidget(text:"Welcome, $fullName", color:Colors.black, fsize:20,font: FontWeight.w600,),
+                    );
+                  },
                 ),
               ),
               Container(
@@ -71,7 +100,7 @@ class SuccessRegistrationScreen
         ),
         bottomNavigationBar: CustomElevatedButton(
           onTap: (){
-            Get.toNamed(AppRoutes.homeScreen);
+            Get.offAndToNamed(AppRoutes.dashboardRoute);
           },
           width: getHorizontalSize(
             315,

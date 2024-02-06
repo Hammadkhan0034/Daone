@@ -5,3 +5,9 @@ class SelectTaskModel {Rx<List<SelectTaskItemModel>> selectTaskItemList = Rx(Lis
 Rx<List<SelectionPopupModel>> dropdownItemList = Rx([SelectionPopupModel(id:1,title:"Item One",isSelected:true,),SelectionPopupModel(id:2,title:"Item Two",),SelectionPopupModel(id:3,title:"Item Three",)]);
 
  }
+class AlarmModel {
+ String title;
+ DateTime dateTime;
+
+ AlarmModel({required this.dateTime,required this.title});
+}

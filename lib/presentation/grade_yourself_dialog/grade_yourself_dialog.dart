@@ -7,9 +7,7 @@ class GradeYourselfDialog extends StatelessWidget {
   GradeYourselfDialog(
     this.controller, {
     Key? key,
-  }) : super(
-          key: key,
-        );
+  });
 
   GradeYourselfController controller;
 
@@ -144,6 +142,9 @@ class GradeYourselfDialog extends StatelessWidget {
             ),
           ),
           CustomElevatedButton(
+            onTap: (){
+              Get.toNamed(AppRoutes.homeScreen);
+            },
             width: getHorizontalSize(
               252,
             ),

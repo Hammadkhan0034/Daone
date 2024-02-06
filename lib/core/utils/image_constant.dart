@@ -10,6 +10,7 @@ class ImageConstant {
   static String img1OrangeA200 = 'assets/images/img_1_orange_a200.svg';
 
   static String imgEllipse262 = 'assets/images/img_ellipse262.png';
+  static String notificationIcon = 'assets/images/Notification-Icon.png';
 
   static String imgFacebook1 = 'assets/images/img_facebook1.svg';
 
@@ -404,4 +405,27 @@ class ImageConstant {
       'assets/images/img_iconlylightmessage_20x20.png';
 
   static String imageNotFound = 'assets/images/image_not_found.png';
+  static String vector9 = 'assets/images/Vector 9.png';
+  static String containerBackgroundImg = 'assets/images/container_background_img.png';
+  static String blackMoreButtonImg = 'assets/images/blackmore.png';
+  static String virtualizationImg = 'assets/images/virtualizationImg.png';
+  static String vector10 = 'assets/images/Vector 10.png';
+  static String ladyImg = 'assets/images/ladyimg.png';
+  static String workout = 'assets/images/workoutIcon.png';
+  static String job = 'assets/images/job.png';
+  static String moon = 'assets/images/moon.png';
+  static String calender = 'assets/images/Calendar.png';
+  static String  doubleQuotation  = 'assets/images/“.png';
+  static String  doubleQuotation2  = 'assets/images/doublequotation2.png';
+  static String  vector21 = 'assets/images/vector21.png';
+  static String  arrowDown2 = 'assets/images/ArrowDown2.png';
+  static String  group10110 = 'assets/images/Group10110.png';
+  static String  camIcon = 'assets/images/camicon.png';
+  static String  group10111 = 'assets/images/Group10111.png';
+  static String  msgIcon = 'assets/images/msg.png';
+  static String  imageBadges = 'assets/images/badges.png';
+  static String  imageBlog1 = 'assets/images/blog1.png';
+  static String  imageBlog2 = 'assets/images/blog2.png';
+  static String  imageBlog3 = 'assets/images/blog3.png';
+  static String  profile2 = 'assets/images/profile2.png';
 }
