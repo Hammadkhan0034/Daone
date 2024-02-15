@@ -29,6 +29,7 @@ class TextWidget extends StatelessWidget {
         overflow: TextOverflow.ellipsis
 
       ),
+      maxLines: 1,
       textAlign: textAlign,
       softWrap: softWrap,
     );

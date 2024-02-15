@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:daone/presentation/daily_intension_record_screen/dailt_intention_list_widget.dart';
 import 'package:daone/presentation/visualization/visualization_view/videoplay/video_player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -114,100 +115,7 @@ class DaoneVideosScreen extends StatelessWidget {
 
             int itemCount = snapshot.data!.length;
 
-            return Column(
-              children: [
-                SizedBox(height: Get.height*0.03),
-                Container(
-                  height: Get.height * 0.84,
-                  child: ListView.builder(
-                    itemCount: itemCount,
-                    itemBuilder: (context, index) {
-                      DailyIntentionModel dailyIntentionModel=snapshot.data![index];
-
-                      return FutureBuilder<String?>(
-                        future: generateThumbnail(dailyIntentionModel.videoUrl),
-                        builder: (context, thumbnailSnapshot) {
-                          if (thumbnailSnapshot.connectionState ==
-                              ConnectionState.waiting) {
-                            return Container(
-                              height: Get.height * 0.25,
-                              width: Get.width * 0.8,
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  color: Colors.deepOrange,
-                                ),
-                              ),
-                            );
-                          }
-
-                          var thumbnailPath = thumbnailSnapshot.data;
-
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: Get.width*0.9,
-                                child: Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                                  child: Text(dailyIntentionModel.title,style: TextStyle(
-                                      fontFamily: 'Gotham Light',
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 15,color: Colors.black
-                                  )),
-                                ),
-                              ),
-                              InkWell(
-                                onTap: (){
-                                  Get.to(()=> VideoPlayerScreen(dailyIntentionModel: dailyIntentionModel));
-                                },
-                                child: Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 18.0, vertical: 10),
-                                    child: Stack(
-                                      alignment: Alignment.center,
-                                      children: [
-                                        Container(
-                                          height: Get.height * 0.25,
-                                          width: Get.width * 0.8,
-                                          decoration: BoxDecoration(
-                                            color: Colors.black,
-                                            borderRadius: BorderRadius.circular(12),
-                                          ),
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(13),
-                                            child: thumbnailPath != null
-                                                ? Image.file(
-                                              File(thumbnailPath),
-                                              fit: BoxFit.contain,
-                                            )
-                                                : Image.asset(
-                                              "assets/images/novideo.png",
-                                              scale: 2,
-                                            ),
-                                          ),
-                                        ),
-                                        Positioned.fill(child: Center(
-                                          child: Icon(
-                                            Icons.play_circle,
-                                            color: Colors.grey,
-                                            size: 100,
-                                          ),
-                                        ),),
-                                      ],
-                                    )
-                                ),
-                              ),
-                              Divider(),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ],
-            );
+            return DailyIntentionListWidget(dailyIntentionList: snapshot.data!);
           },
         ),
       ),

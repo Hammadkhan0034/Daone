@@ -21,20 +21,19 @@ import '../../daily_intension_record_screen/models/daily_intension_record_model.
 
 class VisualizationView extends StatelessWidget {
   const VisualizationView({Key? key}) : super(key: key);
+  Future<String?> generateThumbnail(String videoUrl) async {
+    Directory tempDir = await getTemporaryDirectory();
 
+    return await VideoThumbnail.thumbnailFile(
+      video: videoUrl,
+      thumbnailPath: tempDir.path,
+      imageFormat: ImageFormat.PNG,
+      maxHeight: 200,
+      quality: 100,
+    );
+  }
   @override
   Widget build(BuildContext context) {
-    Future<String?> generateThumbnail(String videoUrl) async {
-      Directory tempDir = await getTemporaryDirectory();
-
-      return await VideoThumbnail.thumbnailFile(
-        video: videoUrl,
-        thumbnailPath: tempDir.path,
-        imageFormat: ImageFormat.PNG,
-        maxHeight: 200,
-        quality: 100,
-      );
-    }
 
     return SafeArea(
         child: Scaffold(

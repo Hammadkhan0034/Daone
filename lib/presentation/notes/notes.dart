@@ -48,16 +48,16 @@ class NotesPage extends StatelessWidget {
           //     bottom: 5,
           //   ),
           // ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(Icons.edit_outlined),
-            ),
-            Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Icon(Icons.menu),
-            )
-          ],
+          // actions: [
+          //   // Padding(
+          //   //   padding: EdgeInsets.only(right: 10),
+          //   //   child: Icon(Icons.edit_outlined),
+          //   // ),
+          //   Padding(
+          //     padding: EdgeInsets.only(right: 10),
+          //     child: Icon(Icons.menu),
+          //   )
+          // ],
         ),
         body: Container(
           height: Get.height*0.85,
@@ -133,21 +133,22 @@ class NotesPage extends StatelessWidget {
                      //      width: 1, // Adjust the width as needed
                      //    ),
                       ),
-                      width: Get.width*0.6,
+                      width: Get.width,
                       // height: Get.height*0.2,
                       child: Column(
                         children: [
-                          Padding(
+                          Container(
+                            width: Get.width,
                             padding: const EdgeInsets.all(12.0),
                             child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                   child: Container(
-                                    width: Get.width*0.1,
-                                    height: Get.height*0.05,
+                                    width: 40,
+                                    height: 40,
                                     decoration: BoxDecoration(
                                       //borderRadius: BorderRadius.circular(100),
                                       border: Border.all(
@@ -162,15 +163,29 @@ class NotesPage extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Row(
-                                      children: [
-                                        TextWidget(text: "You added a note on",
-                                            fontFamily: 'Gotham Light',
-                                            fontWeight: FontWeight.w400,
-                                            color: Colors.black, fsize: 10),
-                                      ],
+                                    SizedBox(
+                                      width: Get.width-104,
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          TextWidget(text: "You added a note ",
+                                              fontFamily: 'Gotham Light',
+                                              fontWeight: FontWeight.w400,
+                                              color: Colors.black, fsize: 10),
+                                          Padding(
+                                            padding: EdgeInsets.only(right: Get.width*0.035),
+                                            child: TextWidget(text: formattedDate, color: Colors.black,
+                                                fontFamily: 'Gotham Light',
+                                                fontWeight: FontWeight.w800,
+                                                fsize: 9),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                    Container(child: TextWidget(text:' ${notesData['title']}',
+                                    Container(
+                                        margin: EdgeInsets.only(top: 3),
+                                        child: TextWidget(text:' ${notesData['title']}',
                                       fontFamily: 'Gotham Light',
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black, fsize: 10, softWrap: true,)),
@@ -180,14 +195,7 @@ class NotesPage extends StatelessWidget {
                                     //     fsize: 9),
                                   ],
                                 ),
-                                Spacer(),
-                                Padding(
-                                  padding: EdgeInsets.only(right: Get.width*0.035),
-                                  child: TextWidget(text: formattedDate, color: Colors.black,
-                                      fontFamily: 'Gotham Light',
-                                      fontWeight: FontWeight.w800,
-                                      fsize: 9),
-                                ),
+
 
                               ],
                             ),
@@ -270,19 +278,19 @@ class NotesPage extends StatelessWidget {
       if (difference.inDays == 0) {
         return 'Today';
       } else if (difference.inDays == 1) {
-        return '1 day';
+        return '1 day ago';
       } else if (difference.inDays > 1 && difference.inDays < 7) {
-        return '${difference.inDays} days';
+        return '${difference.inDays} days ago';
       } else if (difference.inDays >= 7 && difference.inDays < 14) {
-        return '1w';
+        return '1w ago';
       } else if (difference.inDays >= 14 && difference.inDays < 21) {
-        return '2w';
+        return '2w ago';
       } else if (difference.inDays >= 21) {
         final int weeks = (difference.inDays / 7).floor();
-        return '$weeks w';
+        return '${weeks}w ago';
       } else if (difference.inDays >= 30) {
         final int months = (difference.inDays / 30).floor();
-        return '$months m';
+        return '${months}m ago';
       } else {
         return 'Today';
       }
