@@ -93,7 +93,7 @@ class PersonalDataUpdateOneScreen
                         "You don't have any Higlights",
                         color: Colors.black38,
                         fsize: 14,
-                        font: FontWeight.w500,
+                        fontWeight: FontWeight.w500,
                       )
                     ],
                   ),
@@ -153,10 +153,10 @@ class PersonalDataUpdateOneScreen
                                       Row(
                                         children: [
                                           TextWidget(text: "You Higlighted", color: Colors.black, fsize: 10),
-                                          TextWidget(text:' ${higlightData['title']}', color: Colors.black, fsize: 11,font: FontWeight.w600),
+                                          TextWidget(text:' ${higlightData['title']}', color: Colors.black, fsize: 11,fontWeight: FontWeight.w600),
                                         ],
                                       ),
-                                      TextWidget(text: higlightData['date'], color: Colors.black, fsize: 11,font: FontWeight.w600),
+                                      TextWidget(text: higlightData['date'], color: Colors.black, fsize: 11,fontWeight: FontWeight.w600),
                                     ],
                                   ),
 

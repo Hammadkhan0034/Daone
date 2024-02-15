@@ -3,17 +3,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TextWidget extends StatelessWidget {
-  var text, color, font, textAlign, softWrap,fontFamily;
+  var text, color, fontWeight, textAlign, softWrap,fontFamily;
   double fsize;
+
 
   TextWidget({
     @required this.text,
     this.color = Colors.black,
     this.fsize = 14.0,
-    this.font,
+    this.fontWeight,
     this.textAlign,
     this.softWrap,
-    this.fontFamily
+    this.fontFamily,
   });
 
   @override
@@ -24,8 +25,9 @@ class TextWidget extends StatelessWidget {
         fontSize: fsize,
         color: color,
         fontFamily: fontFamily,
-        fontWeight: font,
+        fontWeight: fontWeight,
         overflow: TextOverflow.ellipsis
+
       ),
       textAlign: textAlign,
       softWrap: softWrap,

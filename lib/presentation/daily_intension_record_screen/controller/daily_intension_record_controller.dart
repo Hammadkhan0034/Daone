@@ -14,8 +14,6 @@ class DailyIntensionRecordController extends GetxController {
 
 
 
-  Rx<DailyIntensionRecordModel> dailyIntensionRecordModelObj =
-      DailyIntensionRecordModel().obs;
 
   TextEditingController titleController = TextEditingController();
   TextEditingController tagsController = TextEditingController();

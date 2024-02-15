@@ -72,7 +72,7 @@ class SuccessRegistrationScreen
                       padding: getPadding(
                         top: 1,
                       ),
-                      child:TextWidget(text:"Welcome, $fullName", color:Colors.black, fsize:20,font: FontWeight.w600,),
+                      child:TextWidget(text:"Welcome, $fullName", color:Colors.black, fsize:20,fontWeight: FontWeight.w600,),
                     );
                   },
                 ),

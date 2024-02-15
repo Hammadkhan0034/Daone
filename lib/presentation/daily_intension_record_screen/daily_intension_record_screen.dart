@@ -228,7 +228,7 @@ class DailyIntensionRecordScreen
                                       SizedBox(width: Get.width*0.03,),
                                       TextWidget(color: Colors.white, fsize: 15,
                                         text: "Phone Gallery",
-                                        fontFamily: 'Gotham Light',font: FontWeight.w800,
+                                        fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
 
                                       ),
                                     ],
@@ -259,7 +259,7 @@ class DailyIntensionRecordScreen
                                         Padding(
                                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                           child: TextWidget(color: Colors.white, fsize: 15,
-                                            fontFamily: 'Gotham Light',font: FontWeight.w800,
+                                            fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
                                             text: "Camera     ",),
                                         ),
                                       ],
@@ -285,7 +285,7 @@ class DailyIntensionRecordScreen
                                     Icon(Icons.cancel,size: 40,color: Colors.white),
                                     SizedBox(width: Get.width*0.02,),
                                     TextWidget(color: Colors.white, fsize: 15,
-                                      fontFamily: 'Gotham Light',font: FontWeight.w800,
+                                      fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
                                       text: "  Cancel       ",),
                                   ],
                                 ),

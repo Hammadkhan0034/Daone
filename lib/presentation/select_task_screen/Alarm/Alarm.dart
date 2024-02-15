@@ -37,7 +37,7 @@ class _AlarmViewState extends State<AlarmView> {
     return Scaffold(
       appBar: CustomAppBar(
         centerTitle: true,
-        title: TextWidget(text: 'Alarm',fsize: 20,color: Colors.black,font: FontWeight.w700,),
+        title: TextWidget(text: 'Alarm',fsize: 20,color: Colors.black,fontWeight: FontWeight.w700,),
         height: getVerticalSize(79),
         leadingWidth: 72,
         leading: AppbarIconbutton(
@@ -253,7 +253,7 @@ class _AlarmViewState extends State<AlarmView> {
                             text: "You don't have any Alarm",
                             color: Colors.black38,
                             fsize: 16,
-                            font: FontWeight.w500,
+                            fontWeight: FontWeight.w500,
                           ),
                         ],
                       ),

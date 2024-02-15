@@ -10,12 +10,13 @@ import 'package:share_plus/share_plus.dart';
 import 'package:video_player/video_player.dart';
 
 import '../../../../widgets/app_bar/appbar_iconbutton.dart';
+import '../../../daily_intension_record_screen/models/daily_intension_record_model.dart';
 import '../fav_videos.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final String videoUrl;
+  final DailyIntentionModel dailyIntentionModel;
 
-  VideoPlayerScreen({required this.videoUrl});
+  VideoPlayerScreen({required this.dailyIntentionModel});
 
   @override
   _VideoPlayerScreenState createState() => _VideoPlayerScreenState();
@@ -32,7 +33,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     // FlutterDownloader.initialize(
     //   debug: true, // Set to false for production
     // );
-    _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.videoUrl))
+    _videoPlayerController = VideoPlayerController.networkUrl(Uri.parse(widget.dailyIntentionModel.videoUrl))
       ..initialize().then((_) {
         // Fetch video metadata asynchronously and set aspect ratio
        double aspectRatio = _videoPlayerController.value.aspectRatio;
@@ -144,7 +145,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
               InkWell(
                 onTap: (){
                   //   _downloadFile(widget.videoUrl);
-                  vController.addToFav(context: context, videoUrl: widget.videoUrl);
+                  vController.addToFav(context: context, dailyIntentionModel: widget.dailyIntentionModel);
 
                 },
                 child: Container(

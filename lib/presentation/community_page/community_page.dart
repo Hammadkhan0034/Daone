@@ -31,7 +31,7 @@ class CommunityPage extends StatelessWidget {
           ),
           title: TextWidget(text: 'Community', color:Colors.black,
             fontFamily: 'Gotham Light',
-            font: FontWeight.w800,
+            fontWeight: FontWeight.w800,
             fsize: 25,),
           leadingWidth: 72,
           leading: AppbarIconbutton(
@@ -208,7 +208,7 @@ class CommunityPage extends StatelessWidget {
                                     text: "Upload",
                                     color: Colors.white,
                                     fontFamily: 'Gotham Light',
-                                    font: FontWeight.w400,
+                                    fontWeight: FontWeight.w400,
                                     fsize: 17,
                                   ),
                                 ),
@@ -324,7 +324,7 @@ class CommunityPage extends StatelessWidget {
                                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                             child: TextWidget(text: userName,
                                                 fontFamily: 'Gotham Light',
-                                                font: FontWeight.w800,color: Colors.black, fsize: 12),
+                                                fontWeight: FontWeight.w800,color: Colors.black, fsize: 12),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -517,7 +517,7 @@ class CommunityPage extends StatelessWidget {
                                                                               Row(
                                                                                 children: [
                                                                                   SizedBox(width: Get.width*0.02),
-                                                                                  TextWidget(text: name, color: Colors.black, fsize:14,font: FontWeight.w500, ),
+                                                                                  TextWidget(text: name, color: Colors.black, fsize:14,fontWeight: FontWeight.w500, ),
                                                                                   SizedBox(width: Get.width*0.04),
                                                                                   TextWidget(text: formattedDate.toString(), color: Colors.black45, fsize: 12),
 

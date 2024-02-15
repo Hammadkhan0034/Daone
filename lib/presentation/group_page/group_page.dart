@@ -157,7 +157,7 @@ class GroupPage extends StatelessWidget {
                       color: Colors.deepOrange,
                       borderRadius: BorderRadius.circular(59),
                     ),
-                    child: Center(child: TextWidget(text: 'Create Group',color: Colors.white,fontFamily: 'Gotham light',font: FontWeight.w800,)),
+                    child: Center(child: TextWidget(text: 'Create Group',color: Colors.white,fontFamily: 'Gotham light',fontWeight: FontWeight.w800,)),
                   ),
                 ),
                 Spacer(),

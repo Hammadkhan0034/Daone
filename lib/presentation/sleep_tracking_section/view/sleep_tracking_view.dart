@@ -126,7 +126,7 @@ class _SleepTrackingViewState extends State<SleepTrackingView> {
                     ),
                   ),
                   centerTitle: true,
-                  title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
+                  title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,fontWeight:FontWeight.bold),
                 ),
                 floatingActionButton:InkWell(
                     onTap: (){
@@ -176,13 +176,13 @@ class _SleepTrackingViewState extends State<SleepTrackingView> {
                                         children: [
                                           Row(
                                             children: [
-                                              TextWidget(text: "${sleepTrackingController.currentDayOfWeek} Bedtime, ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: "${sleepTrackingController.currentDayOfWeek} Bedtime, ", color:Colors.black, fsize:12,fontWeight: FontWeight.w600),
                                               TextWidget(text:startTime.toString(), color:Colors.black, fsize:12),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              TextWidget(text: "Duration ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: "Duration ", color:Colors.black, fsize:12,fontWeight: FontWeight.w600),
                                               TextWidget(text: '${duration.toString()} Hours', color:Colors.black, fsize:14),
                                             ],
                                           ),
@@ -219,13 +219,13 @@ class _SleepTrackingViewState extends State<SleepTrackingView> {
                                         children: [
                                           Row(
                                             children: [
-                                              TextWidget(text: "Wake-up Time, ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: "Wake-up Time, ", color:Colors.black, fsize:12,fontWeight: FontWeight.w600),
                                               TextWidget(text: todayData['end_time'].toString(), color:Colors.black, fsize:12),
                                             ],
                                           ),
                                           Row(
                                             children: [
-                                              TextWidget(text: "Sleep Quality: ", color:Colors.black, fsize:12,font: FontWeight.w600),
+                                              TextWidget(text: "Sleep Quality: ", color:Colors.black, fsize:12,fontWeight: FontWeight.w600),
                                               TextWidget(text: todayData['quality'], color:Colors.black, fsize:12),
                                             ],
                                           ),

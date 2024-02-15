@@ -108,7 +108,7 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
                                     TextWidget(
                                       text: calenderController.getMonthName(date.month),
                                       fontFamily: 'Gotham Light',
-                                      font: FontWeight.w800,
+                                      fontWeight: FontWeight.w800,
                                       color: date.day == currentDate.day
                                           ? Colors.white // Current date text color
                                           : Colors.black, // Default container text color

@@ -41,7 +41,7 @@ class SleepTrackerScreen extends GetWidget<SleepTrackerController> {
             ),
           ),
           centerTitle: true,
-          title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,font:FontWeight.bold),
+          title:TextWidget(text:"lbl_sleep_tracker".tr, color:Colors.black, fsize: 18,fontWeight:FontWeight.bold),
           // title: Text(
           //   "lbl_sleep_tracker".tr,
           //   overflow: TextOverflow.ellipsis,

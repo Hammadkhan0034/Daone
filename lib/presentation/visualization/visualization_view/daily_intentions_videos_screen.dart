@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/presentation/daily_intension_record_screen/models/daily_intension_record_model.dart';
 import 'package:daone/presentation/visualization/visualization_view/videoplay/video_player_screen.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -32,6 +33,7 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -65,13 +67,19 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: StreamBuilder(
+        body: StreamBuilder<List<DailyIntentionModel>>(
           stream: FirebaseFirestore.instance
               .collection('users')
               .doc(FirebaseAuth.instance.currentUser?.email)
               .collection('VideosUrl')
-              .snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              .snapshots().map((event) {
+                List<DailyIntentionModel> list=[];
+                for( var data in event.docs){
+                  list.add(DailyIntentionModel.fromMap(data.data()));
+                }
+                return list;
+          }),
+          builder: (BuildContext context, AsyncSnapshot<List<DailyIntentionModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
@@ -84,7 +92,7 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             }
 
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -108,28 +116,24 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
               );
             }
 
-            int itemCount = snapshot.data!.docs.length;
+            int itemCount = snapshot.data!.length;
 
             return Container(
-              height: Get.height * 0.85,
               child: ListView.builder(
                 itemCount: itemCount,
                 itemBuilder: (context, index) {
-                  var vidData = snapshot.data.docs[index].data();
-                  var videoUrl = vidData['videoUrl'];
-                  var videoTitle = vidData['title'];
-                  var videoDate = vidData['date'];
-                  var videoTag =  vidData['tags'];
-                  // Convert the Timestamp to a DateTime
-                  DateTime dateTime = videoDate.toDate();
+                 DailyIntentionModel dailyIntentionModel = snapshot.data![index];
 
-// Calculate the difference between the current date and the video date
+                  // Convert the Timestamp to a DateTime
+                  DateTime dateTime = dailyIntentionModel.date.toDate();
+
+      // Calculate the difference between the current date and the video date
                   Duration difference = DateTime.now().difference(dateTime);
 
-// Determine the time elapsed in days
+      // Determine the time elapsed in days
                   int days = difference.inDays;
 
-// Format the result based on the time elapsed
+      // Format the result based on the time elapsed
                   String formattedDate = '';
 
                   if (days == 0) {
@@ -144,12 +148,12 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                   }
 
                   return FutureBuilder<String?>(
-                    future: generateThumbnail(videoUrl),
+                    future: generateThumbnail(dailyIntentionModel.videoUrl),
                     builder: (context, thumbnailSnapshot) {
                       if (thumbnailSnapshot.connectionState ==
                           ConnectionState.waiting) {
                         return Container(
-                          height: Get.height * 0.25,
+                          height: 200,
                           width: Get.width * 0.8,
                           child: Center(
                             child: CircularProgressIndicator(
@@ -162,18 +166,18 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                       var thumbnailPath = thumbnailSnapshot.data;
 
                       return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 5,vertical: 10),
+                        margin: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
                         decoration: BoxDecoration(
-                         // color: Colors.pinkAccent,
-                          border: Border.all(color: Colors.grey)
+                            gradient:LinearGradient(stops: [0,0.8], begin: Alignment.bottomRight, end: Alignment.topLeft, colors: [Colors.deepOrangeAccent,Colors.orange??Colors.orangeAccent]) ,
+                      borderRadius: BorderRadius.circular(20)
                         ),
                         child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             InkWell(
                               onTap: (){
-                              Get.to(()=> VideoPlayerScreen(videoUrl: videoUrl));
+                              Get.to(()=> VideoPlayerScreen(dailyIntentionModel: dailyIntentionModel));
                               },
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(
@@ -182,8 +186,8 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                                   alignment: Alignment.center,
                                   children: [
                                     Container(
-                                      height: Get.height * 0.18,
-                                      width: Get.width * 0.3,
+                                      height: 100,
+                                      width:100,
                                       decoration: BoxDecoration(
                                         color: Colors.black,
                                         borderRadius: BorderRadius.circular(12),
@@ -213,33 +217,35 @@ class DailyIntentionsVideoScreen extends StatelessWidget {
                               ),
                             ),
                             Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.max,
                               children: [
-                                SizedBox(height: Get.height*0.02,),
                                 Container(
-                                  //color: Colors.deepOrange,
-                                  height: Get.height*0.036,
                                   width: Get.width*0.54,
-                                  child: TextWidget(text:formattedDate==null? 'null': formattedDate,fontFamily: 'Gotham Light',fsize: 12),
+                                  child: TextWidget(
+                                      color: Colors.white,
+                                      text:formattedDate==null? 'null': formattedDate,fsize: 14,fontWeight: FontWeight.w600,),
                                 ),
+                                SizedBox(height: 5),
+
                                 Container(
-                                  //color: Colors.pinkAccent,
-                                  height: Get.height*0.09,
                                   width: Get.width*0.54,
-                                  child: Text(videoTitle==null? 'null':videoTitle,
-                                    overflow: TextOverflow.visible,
+                                  child: Text(dailyIntentionModel.title==null? 'No Title':dailyIntentionModel.title,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      fontSize: 14,
-                                    fontFamily: 'Gotham Light',fontWeight: FontWeight.w800
+                                      color: Colors.white,
+                                      fontSize: 18,
+                                    fontWeight: FontWeight.w700
                                   ),)
                                 ),
+                                SizedBox(height: 5),
+
                                 Container(
-                                 // color: Colors.green,
-                                  height: Get.height*0.04,
                                   width: Get.width*0.54,
-                                  child: Text(videoTag,style: TextStyle(
-                                    fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,fontSize: 12
+                                  child: Text(dailyIntentionModel.tags,style: TextStyle(
+                                      color: Colors.white,
+                                     fontWeight: FontWeight.w600,fontSize: 14
                                   ),)
                                 ),
                               ],

@@ -64,21 +64,21 @@ class CustomIconButton extends StatelessWidget {
                       14.00,
                     ),
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: appTheme.gray10001,
-                      spreadRadius: getHorizontalSize(
-                        2.00,
-                      ),
-                      blurRadius: getHorizontalSize(
-                        2.00,
-                      ),
-                      offset: Offset(
-                        -3,
-                        7,
-                      ),
-                    ),
-                  ],
+                  // boxShadow: [
+                  //   BoxShadow(
+                  //     color: appTheme.gray10001,
+                  //     spreadRadius: getHorizontalSize(
+                  //       2.00,
+                  //     ),
+                  //     blurRadius: getHorizontalSize(
+                  //       2.00,
+                  //     ),
+                  //     offset: Offset(
+                  //       -3,
+                  //       7,
+                  //     ),
+                  //   ),
+                  // ],
                 ),
             child: child,
           ),

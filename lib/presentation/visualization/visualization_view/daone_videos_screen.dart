@@ -13,6 +13,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 import '../../../widgets/app_bar/appbar_iconbutton.dart';
+import '../../daily_intension_record_screen/models/daily_intension_record_model.dart';
 import 'fav_videos.dart';
 
 class DaoneVideosScreen extends StatelessWidget {
@@ -64,11 +65,17 @@ class DaoneVideosScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: StreamBuilder(
+        body: StreamBuilder<List<DailyIntentionModel>>(
           stream: FirebaseFirestore.instance
               .collection('daoneVideos')
-              .snapshots(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              .snapshots().map((event) {
+            List<DailyIntentionModel> list=[];
+            for( var data in event.docs){
+              list.add(DailyIntentionModel.fromMap(data.data()));
+            }
+            return list;
+          }),
+          builder: (BuildContext context, AsyncSnapshot<List<DailyIntentionModel>> snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return Center(
                 child: CircularProgressIndicator(
@@ -81,7 +88,7 @@ class DaoneVideosScreen extends StatelessWidget {
               return Text('Error: ${snapshot.error}');
             }
 
-            if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            if (!snapshot.hasData || snapshot.data!.isEmpty) {
               return Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -105,7 +112,7 @@ class DaoneVideosScreen extends StatelessWidget {
               );
             }
 
-            int itemCount = snapshot.data!.docs.length;
+            int itemCount = snapshot.data!.length;
 
             return Column(
               children: [
@@ -115,12 +122,10 @@ class DaoneVideosScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: itemCount,
                     itemBuilder: (context, index) {
-                      var vidData = snapshot.data.docs[index].data();
-                      var videoUrl = vidData['videoLink'];
-                      var videotitle = vidData['title'];
+                      DailyIntentionModel dailyIntentionModel=snapshot.data![index];
 
                       return FutureBuilder<String?>(
-                        future: generateThumbnail(videoUrl),
+                        future: generateThumbnail(dailyIntentionModel.videoUrl),
                         builder: (context, thumbnailSnapshot) {
                           if (thumbnailSnapshot.connectionState ==
                               ConnectionState.waiting) {
@@ -145,7 +150,7 @@ class DaoneVideosScreen extends StatelessWidget {
                                 width: Get.width*0.9,
                                 child: Padding(
                                   padding: const EdgeInsets.symmetric(horizontal: 23.0),
-                                  child: Text(videotitle,style: TextStyle(
+                                  child: Text(dailyIntentionModel.title,style: TextStyle(
                                       fontFamily: 'Gotham Light',
                                       fontWeight: FontWeight.w800,
                                       fontSize: 15,color: Colors.black
@@ -154,7 +159,7 @@ class DaoneVideosScreen extends StatelessWidget {
                               ),
                               InkWell(
                                 onTap: (){
-                                  Get.to(()=> VideoPlayerScreen(videoUrl: videoUrl));
+                                  Get.to(()=> VideoPlayerScreen(dailyIntentionModel: dailyIntentionModel));
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(

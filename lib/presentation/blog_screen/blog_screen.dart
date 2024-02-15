@@ -278,7 +278,7 @@ class BlogScreen extends GetWidget<BlogController> {
                                                 children: [
                                                   TextWidget(text: "by ",
                                                       fontFamily: 'Gotham Light',
-                                                      font: FontWeight.w400,
+                                                      fontWeight: FontWeight.w400,
                                                       color: Colors.black, fsize: 8),
                                                   TextWidget(text: writerName, color: Colors.deepOrange, fsize: 8),
                                                   SizedBox(width: 10),

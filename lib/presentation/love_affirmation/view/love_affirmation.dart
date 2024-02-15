@@ -121,7 +121,7 @@ class _LoveAffirmationViewState extends State<LoveAffirmationView> with SingleTi
                               text: "You don't have any affirmation",
                               color: Colors.black38,
                               fsize: 14,
-                              font: FontWeight.w500,
+                              fontWeight: FontWeight.w500,
                             ),
                           ],
                         ),

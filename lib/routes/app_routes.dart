@@ -30,8 +30,6 @@ import 'package:daone/presentation/recording_screen/recording_screen.dart';
 import 'package:daone/presentation/recording_screen/binding/recording_binding.dart';
 import 'package:daone/presentation/reminders_screen/reminders_screen.dart';
 import 'package:daone/presentation/reminders_screen/binding/reminders_binding.dart';
-import 'package:daone/presentation/daily_intension_record_one_screen/daily_intension_record_one_screen.dart';
-import 'package:daone/presentation/daily_intension_record_one_screen/binding/daily_intension_record_one_binding.dart';
 import 'package:daone/presentation/update_reminders_screen/update_reminders_screen.dart';
 import 'package:daone/presentation/update_reminders_screen/binding/update_reminders_binding.dart';
 import 'package:daone/presentation/complete_screen/complete_screen.dart';
@@ -350,13 +348,7 @@ class AppRoutes {
         RemindersBinding(),
       ],
     ),
-    GetPage(
-      name: dailyIntensionRecordOneScreen,
-      page: () => DailyIntensionRecordOneScreen(),
-      bindings: [
-        DailyIntensionRecordOneBinding(),
-      ],
-    ),
+
     GetPage(
       name: updateRemindersScreen,
       page: () => UpdateRemindersScreen(),

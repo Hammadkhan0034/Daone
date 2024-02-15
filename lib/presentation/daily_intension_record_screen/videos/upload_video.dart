@@ -225,7 +225,7 @@ class _UploadVideoState extends State<UploadVideo> {
                           child: TextWidget(
                             color: Colors.white,
                             fsize: 20,
-                            font: FontWeight.w300,
+                            fontWeight: FontWeight.w300,
                             text: "Upload video",
                           ),
                         ),
@@ -247,7 +247,7 @@ class _UploadVideoState extends State<UploadVideo> {
                           child: TextWidget(
                             color: Colors.white,
                             fsize: 20,
-                            font: FontWeight.w300,
+                            fontWeight: FontWeight.w300,
                             text: "End Intention",
                           ),
                         ),

@@ -104,7 +104,7 @@ class NotesPage extends StatelessWidget {
                         text:
                         "You don't have any Notes",
                         fontFamily: 'Gotham Light',
-                        font: FontWeight.w400,
+                        fontWeight: FontWeight.w400,
                         color: Colors.black38,
                         fsize: 14,
                       )
@@ -120,133 +120,133 @@ class NotesPage extends StatelessWidget {
                    var  formattedDate = formatDate(dateString);
                    print(formattedDate);
 
-                    return Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.grey.withOpacity(0.1),
-                       //   color: Colors.green,
-                       //    border: Border.all(
-                       //      color: Colors.black,
-                       //      width: 1, // Adjust the width as needed
-                       //    ),
-                        ),
-                        width: Get.width*0.6,
-                        // height: Get.height*0.2,
-                        child: Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                    child: Container(
-                                      width: Get.width*0.1,
-                                      height: Get.height*0.05,
-                                      decoration: BoxDecoration(
-                                        //borderRadius: BorderRadius.circular(100),
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 2, // Adjust the width as needed
-                                        ),
-                                      shape: BoxShape.circle
-                                      ),
-                                    ),
-                                  ),
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          TextWidget(text: "You added a note on",
-                                              fontFamily: 'Gotham Light',
-                                              font: FontWeight.w400,
-                                              color: Colors.black, fsize: 10),
-                                        ],
-                                      ),
-                                      Container(child: TextWidget(text:' ${notesData['title']}',
-                                        fontFamily: 'Gotham Light',
-                                        font: FontWeight.w800,
-                                        color: Colors.black, fsize: 10, softWrap: true,)),
-                                      // TextWidget(text: formattedDate, color: Colors.black,
-                                      //     fontFamily: 'Gotham Light',
-                                      //     font: FontWeight.w800,
-                                      //     fsize: 9),
-                                    ],
-                                  ),
-                                  Spacer(),
-                                  Padding(
-                                    padding: EdgeInsets.only(right: Get.width*0.035),
-                                    child: TextWidget(text: formattedDate, color: Colors.black,
-                                        fontFamily: 'Gotham Light',
-                                        font: FontWeight.w800,
-                                        fsize: 9),
-                                  ),
+                    return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      margin: const EdgeInsets.all(12.0),
 
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                children: [
-                                  // SizedBox(width:Get.width*0.05,),
-                                  // Container(
-                                  //   width: 1, // Adjust the width of the line
-                                  //   height: 100, // Adjust the height of the line
-                                  //   color: Colors.black, // Adjust the color of the line
-                                  // ),
-                                  Container(
-                                    //color: Colors.black26,
-                                    width: Get.width*0.73,
-                                    margin: EdgeInsets.symmetric(horizontal: Get.width*0.05),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Colors.grey.withOpacity(0.1),
+                     //   color: Colors.green,
+                     //    border: Border.all(
+                     //      color: Colors.black,
+                     //      width: 1, // Adjust the width as needed
+                     //    ),
+                      ),
+                      width: Get.width*0.6,
+                      // height: Get.height*0.2,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Container(
+                                    width: Get.width*0.1,
+                                    height: Get.height*0.05,
                                     decoration: BoxDecoration(
-                                      border: Border(
-                                          left: BorderSide(
-                                          color: Colors.black, // Adjust the color of the border
-                                          width: 2.0, // Adjust the width of the border
+                                      //borderRadius: BorderRadius.circular(100),
+                                      border: Border.all(
+                                        color: Colors.black,
+                                        width: 2, // Adjust the width as needed
+                                      ),
+                                    shape: BoxShape.circle
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        TextWidget(text: "You added a note on",
+                                            fontFamily: 'Gotham Light',
+                                            fontWeight: FontWeight.w400,
+                                            color: Colors.black, fsize: 10),
+                                      ],
+                                    ),
+                                    Container(child: TextWidget(text:' ${notesData['title']}',
+                                      fontFamily: 'Gotham Light',
+                                      fontWeight: FontWeight.w800,
+                                      color: Colors.black, fsize: 10, softWrap: true,)),
+                                    // TextWidget(text: formattedDate, color: Colors.black,
+                                    //     fontFamily: 'Gotham Light',
+                                    //     font: FontWeight.w800,
+                                    //     fsize: 9),
+                                  ],
+                                ),
+                                Spacer(),
+                                Padding(
+                                  padding: EdgeInsets.only(right: Get.width*0.035),
+                                  child: TextWidget(text: formattedDate, color: Colors.black,
+                                      fontFamily: 'Gotham Light',
+                                      fontWeight: FontWeight.w800,
+                                      fsize: 9),
+                                ),
+
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              children: [
+                                // SizedBox(width:Get.width*0.05,),
+                                // Container(
+                                //   width: 1, // Adjust the width of the line
+                                //   height: 100, // Adjust the height of the line
+                                //   color: Colors.black, // Adjust the color of the line
+                                // ),
+                                Container(
+                                  //color: Colors.black26,
+                                  width: Get.width*0.73,
+                                  margin: EdgeInsets.symmetric(horizontal: Get.width*0.05),
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                        left: BorderSide(
+                                        color: Colors.black, // Adjust the color of the border
+                                        width: 2.0, // Adjust the width of the border
+                                      ),
+                                    ),
+                                  ),
+                                  //height: 100,
+                                  child:  Center(
+                                    child: Padding(
+                                      padding:  EdgeInsets.symmetric(horizontal: Get.width*0.1,vertical: Get.height*0.01),
+                                      child:Text(
+                                        notesData['selectedText'],
+                                        style: GoogleFonts.getFont(
+                                          'Roboto',
+                                          fontSize: 12,
+                                          color: Colors.black,
                                         ),
                                       ),
                                     ),
-                                    //height: 100,
-                                    child:  Center(
-                                      child: Padding(
-                                        padding:  EdgeInsets.symmetric(horizontal: Get.width*0.1,vertical: Get.height*0.01),
-                                        child:Text(
-                                          notesData['selectedText'],
-                                          style: GoogleFonts.getFont(
-                                            'Roboto',
-                                            fontSize: 12,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  ),
+                                )
 
-                                ],
-                              ),
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                color: Colors.black12,
-                                // height: Get.height*0.1,
-                                width: Get.width*0.8,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Center(child: TextWidget(text: notesData['noteComment'], color: Colors.black, fsize: 12)),
-                              ),
-                              ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              color: Colors.black12,
+                              // height: Get.height*0.1,
+                              width: Get.width*0.8,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Center(child: TextWidget(text: notesData['noteComment'], color: Colors.black, fsize: 12)),
                             ),
+                            ),
+                          ),
 
-                          ],
-                        ),
+                        ],
                       ),
                     );
                   });

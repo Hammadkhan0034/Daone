@@ -110,7 +110,7 @@ class _GratitudeAffirmationViewState extends State<GratitudeAffirmationView> wit
                               text: "You don't have any affirmation",
                               color: Colors.black38,
                               fsize: 14,
-                              font: FontWeight.w500,
+                              fontWeight: FontWeight.w500,
                             ),
                           ],
                         ),

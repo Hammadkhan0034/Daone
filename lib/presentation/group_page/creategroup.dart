@@ -212,7 +212,7 @@ class CreateGroup extends StatelessWidget {
                           text: "Create",
                           color: Colors.white,
                           fontFamily: "Gotham Light",
-                          font: FontWeight.w800,
+                          fontWeight: FontWeight.w800,
                         )),
                   ),
               )

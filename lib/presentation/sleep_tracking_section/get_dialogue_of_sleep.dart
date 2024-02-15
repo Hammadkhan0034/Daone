@@ -28,7 +28,7 @@ class SleepDialogue extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: TextWidget(text: "Add Sleep", color:Colors.black, fsize: 18,font: FontWeight.w500),
+            child: TextWidget(text: "Add Sleep", color:Colors.black, fsize: 18,fontWeight: FontWeight.w500),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 15.0),

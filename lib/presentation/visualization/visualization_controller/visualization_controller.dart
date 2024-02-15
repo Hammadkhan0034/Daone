@@ -1,6 +1,7 @@
 
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/presentation/daily_intension_record_screen/models/daily_intension_record_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import '../../../routes/app_routes.dart';
 class VisualizationController extends GetxController{
 
   Future<void> addToFav({required BuildContext context,
-    required String videoUrl}) async {
+    required DailyIntentionModel dailyIntentionModel}) async {
     try {
       User? user =FirebaseAuth.instance.currentUser;
       showDialog(
@@ -26,16 +27,12 @@ class VisualizationController extends GetxController{
       );
       if (user!=null){
         DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
-        await userDocRef.collection('favVideos').add({
-          'videoUrl' : videoUrl,
-
-        });  // Data saved successfully
+        await userDocRef.collection('favVideos').doc(dailyIntentionModel.date.millisecondsSinceEpoch.toString()).set(dailyIntentionModel.toMap());  // Data saved successfully
         print('highlights saved to Firestore');
         Get.snackbar("Info","Selected video saved to Favorite List");
 
         // Hide the progress indicator and navigate
         Navigator.of(context).pop();
-        Get.offAndToNamed(AppRoutes.visualizationRoute);
       } else {
         // Handle the case where the user is not authenticated
         print('User is not authenticated');

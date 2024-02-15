@@ -84,7 +84,7 @@ class CreateImageView extends StatelessWidget {
                 child: TextWidget(
                   text: "You don't have any Image",
                     fontFamily: 'Gotham Light',
-                    font: FontWeight.w800,
+                    fontWeight: FontWeight.w800,
                   color: Colors.black38,
                   fsize: 14,
                 ),
@@ -310,7 +310,7 @@ class CreateImageView extends StatelessWidget {
                                                                                   SizedBox(width: Get.width*0.02),
                                                                                   TextWidget(text:'Moment',
                                                                                     fontFamily: 'Gotham Light',
-                                                                                    font: FontWeight.w800,
+                                                                                    fontWeight: FontWeight.w800,
                                                                                     color: Colors.black, fsize:14, ),
                                                                                   SizedBox(width: Get.width*0.04),
                                                                                   TextWidget(text:formattedDate, color: Colors.black45, fsize: 12),
@@ -321,7 +321,7 @@ class CreateImageView extends StatelessWidget {
                                                                                 padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 0),
                                                                                 child: TextWidget(text:commentData['comment'],
                                                                                     fontFamily: 'Gotham Light',
-                                                                                    font: FontWeight.w800,color:Colors.black, fsize: 13),
+                                                                                    fontWeight: FontWeight.w800,color:Colors.black, fsize: 13),
                                                                               )),
                                                                               Divider(color: Colors.black12),
 

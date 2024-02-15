@@ -60,7 +60,7 @@ class _StatsScreenState extends State<StatsScreen> {
                     TextWidget(
                       text: "lbl_daily_affirmations_progress".tr,
                       fontFamily: 'Gotham Light',
-                      font: FontWeight.w800,
+                      fontWeight: FontWeight.w800,
                       color: Colors.black,
                       fsize: 16,
                     ),
@@ -130,7 +130,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                               : "0",
                                           color: Colors.black,
                                           fsize: 50,
-                                          font: FontWeight.w600,
+                                          fontWeight: FontWeight.w600,
                                         );}),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 5,top:3.0),
@@ -152,7 +152,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                 child: TextWidget(
                                   text: "lbl_affirmation_completed".tr,
                                   fontFamily: 'Gotham Light',
-                                  font: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
                                 )),
@@ -199,7 +199,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                               : "0",
                                           color: Colors.black,
                                           fsize: 50,
-                                          font: FontWeight.w600,
+                                          fontWeight: FontWeight.w600,
                                         );}),
 
                                   SizedBox(
@@ -225,7 +225,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                 child: TextWidget(
                                   text: "lbl_intentions_completed".tr,
                                   fontFamily: 'Gotham Light',
-                                  font: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
                                 )),
@@ -276,7 +276,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                               : "0",
                                           color: Colors.black,
                                           fsize: 50,
-                                          font: FontWeight.w600,
+                                          fontWeight: FontWeight.w600,
                                         );}),
                                   Padding(
                                     padding: const EdgeInsets.only(left:3,top:8.0),
@@ -298,7 +298,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                 child: TextWidget(
                                   text: "lbl_tasks_completed".tr,
                                   fontFamily: 'Gotham Light',
-                                  font: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
                                 )),
@@ -345,7 +345,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                               : "0",
                                           color: Colors.black,
                                           fsize: 50,
-                                          font: FontWeight.w600,
+                                          fontWeight: FontWeight.w600,
                                         );}),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 8,left: 5,right: 5),
@@ -364,7 +364,7 @@ class _StatsScreenState extends State<StatsScreen> {
                                 child: TextWidget(
                                   text: "lbl_blog_read".tr,
                                   fontFamily: 'Gotham Light',
-                                  font: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                   color: Colors.black54,
                                   fsize: 12,
                                 )),
@@ -379,7 +379,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   child: TextWidget(
                     text: "lbl_week_badges".tr,
                     fontFamily: 'Gotham Light',
-                    font: FontWeight.w800,
+                    fontWeight: FontWeight.w800,
                     color: Colors.black,
                     fsize: 16,
                   ),

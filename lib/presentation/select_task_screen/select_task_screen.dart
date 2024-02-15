@@ -160,7 +160,7 @@ class SelectTaskScreen extends GetWidget<SelectTaskController> {
                   // Access the 'fullName' field from the document data
                   String fullName = snapshot.data!['fullName'];
 
-                  return TextWidget(text: fullName,color: Colors.black,fsize: 25,font: FontWeight.w600,);
+                  return TextWidget(text: fullName,color: Colors.black,fsize: 25,fontWeight: FontWeight.w600,);
                 },
               ),
               SizedBox(

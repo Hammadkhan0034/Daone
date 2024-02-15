@@ -284,7 +284,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                   color: Colors.black,
                                   fontFamily: 'Gotham Light',
                                   fsize: 15,
-                                  font: FontWeight.w800,
+                                  fontWeight: FontWeight.w800,
                                 ),
                               ],
                             ),
@@ -310,7 +310,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                           child: TextWidget(
                                             text: "Share",
                                             fontFamily: 'Gotham Light',
-                                            font: FontWeight.w800,
+                                            fontWeight: FontWeight.w800,
                                             color: Colors.black,
                                             fsize: 14,
                                           )),
@@ -351,7 +351,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                           child: TextWidget(
                                             text: "Image",
                                             fontFamily: 'Gotham Light',
-                                            font: FontWeight.w800,
+                                            fontWeight: FontWeight.w800,
                                             color: Colors.black,
                                             fsize: 14,
                                           )),
@@ -387,7 +387,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                                   TextWidget(
                                                       text: 'Private Notes',
                                                       fontFamily: 'Gotham Light',
-                                                      font: FontWeight.w800,
+                                                      fontWeight: FontWeight.w800,
                                                       color: Colors.black,
                                                       fsize: 12),
                                                   Padding(

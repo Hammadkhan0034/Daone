@@ -369,7 +369,7 @@ class ViewFriendsTabContainerScreen
                                       color: Colors.deepOrange,
                                       borderRadius: BorderRadius.circular(59),
                                     ),
-                                    child: Center(child: TextWidget(text: 'Invite Friends',color: Colors.white,fontFamily: 'Gotham light',font: FontWeight.w800,)),
+                                    child: Center(child: TextWidget(text: 'Invite Friends',color: Colors.white,fontFamily: 'Gotham light',fontWeight: FontWeight.w800,)),
                                   ),
                                 ),
                                 Spacer(),
@@ -675,17 +675,17 @@ class ViewFriendsTabContainerScreen
                     Container(
                      //   color: Colors.orange,for test
                         width: Get.width*0.4,
-                        child: TextWidget(text: name??'No name', color: Colors.black, fsize: 14,font:FontWeight.w600,)),
+                        child: TextWidget(text: name??'No name', color: Colors.black, fsize: 14,fontWeight:FontWeight.w600,)),
                     Container(
                         width: Get.width*0.4,
                       //  color: Colors.green,for test
                         child: TextWidget(
-                      text: email??'xyz@gmail.com', color: Colors.black, fsize: 10,font:FontWeight.w600,)),
+                      text: email??'xyz@gmail.com', color: Colors.black, fsize: 10,fontWeight:FontWeight.w600,)),
                     Container(
                        // color: Colors.orange, for test
                         width: Get.width*0.4,
                         child: TextWidget(
-                      text: phone??'No Number', color: Colors.black, fsize: 10,font:FontWeight.w600,)),
+                      text: phone??'No Number', color: Colors.black, fsize: 10,fontWeight:FontWeight.w600,)),
                     SizedBox(height: 10),
                     InkWell(
                       onTap: (){
