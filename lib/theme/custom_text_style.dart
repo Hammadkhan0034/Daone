@@ -540,7 +540,7 @@ class CustomTextStyles {
   static get bodySmallGray9000311_1 => theme.textTheme.bodySmall!.copyWith(
         color: appTheme.gray90003,
         fontSize: getFontSize(
-          11,
+          12,
         ),
       );
   static get bodyMediumHindSiliguriRed200 =>

@@ -2,11 +2,9 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
-import 'package:daone/presentation/daily_intension_record_screen/models/daily_intension_record_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:get/get_state_manager/src/simple/list_notifier.dart';
 import 'package:image_picker/image_picker.dart';
 import '../videos/upload_video.dart';
 

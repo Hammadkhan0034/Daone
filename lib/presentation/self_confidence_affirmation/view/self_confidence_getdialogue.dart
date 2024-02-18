@@ -126,10 +126,11 @@ class SelfConfidenceAffirmationBlastEffectDialog extends StatelessWidget {
                   Expanded(
                     child: CustomElevatedButton(
                       onTap: (){
-                        Get.dialog(AlertDialog(backgroundColor: Colors.transparent,
-                          contentPadding: EdgeInsets.zero,
-                          insetPadding: const EdgeInsets.only(left: 0),
-                          content:EditAffirmationDialog(Get.put(EditAffirmationController(),),),));
+                        Get.to(()=>EditAffirmationScreen(
+                          // Get.put(
+                          //   EditAffirmationController(),
+                          // ),
+                        ));
                       },
                       text: "lbl_add_new".tr,
                       margin: getMargin(

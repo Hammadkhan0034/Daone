@@ -129,8 +129,8 @@ class PersonalDataUpdateOneScreen
                                     child: Stack(
                                       children: [
                                       Container(
-                                        width: Get.width*0.1,
-                                        height: Get.height*0.05,
+                                        width: 45,
+                                        height: 45,
                                         decoration: BoxDecoration(
                                           borderRadius: BorderRadius.circular(100),
                                           border: Border.all(
@@ -156,6 +156,7 @@ class PersonalDataUpdateOneScreen
                                           TextWidget(text:' ${higlightData['title']}', color: Colors.black, fsize: 11,fontWeight: FontWeight.w600),
                                         ],
                                       ),
+                                      SizedBox(height: 5),
                                       TextWidget(text: higlightData['date'], color: Colors.black, fsize: 11,fontWeight: FontWeight.w600),
                                     ],
                                   ),

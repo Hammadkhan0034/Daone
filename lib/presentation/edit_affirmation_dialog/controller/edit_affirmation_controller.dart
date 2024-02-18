@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/edit_affirmation_dialog/models/edit_affirmation_model.dart';
+import 'package:daone/presentation/own_affirmation_screen/own_affirmation_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -39,8 +40,9 @@ class EditAffirmationController extends GetxController {
       BuildContext context,
       String? affirmation,
       String? imageUrl,
-      String? dateStart,
-      String? dateEnd,
+      TimeOfDay? dateStart,
+      TimeOfDay? dateEnd,
+      Timestamp timestamp,
       int affirmationCount,
       ) async {
     try {
@@ -57,14 +59,15 @@ class EditAffirmationController extends GetxController {
       );
 
       if (user != null) {
+
         if (affirmation != null && imageUrl != null && dateStart != null && dateEnd != null) {
           DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
-          await userDocRef.collection('OwnAffirmationList').add({
+          await userDocRef.collection('OwnAffirmationList').doc(timestamp.millisecondsSinceEpoch.toString()).set({
             'affirmation': affirmation,
             'imageUrl': imageUrl,
-            'dateStart': dateStart,
-            'date': Timestamp.fromDate(DateTime.now()),
-            'dateEnd': dateEnd,
+            'dateStart': OwnAffirmationModel.timeOfDayToFirebase(dateStart),
+            'date': timestamp,
+            'dateEnd': OwnAffirmationModel.timeOfDayToFirebase(dateEnd),
             'affirmationCount': affirmationCount,
           });  // Data saved successfully
           print('Task saved to Firestore');

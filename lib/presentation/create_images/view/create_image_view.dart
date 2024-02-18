@@ -801,21 +801,13 @@ class CreateImageView extends StatelessWidget {
         ),
         PopupMenuItem<String>(
           onTap: (){
-            Get.dialog(
-              AlertDialog(
-                backgroundColor:
-                Colors.transparent,
-                contentPadding: EdgeInsets.zero,
-                insetPadding:
-                EdgeInsets.only(left: 0),
-                content: SaveOrEditBlogDialog(
-                  fontName:fontName,
-                  title: title,
-                  copyText: description,
-                  controller: Get.put(
-                      SaveOrEditBlogController()),
-                ),
-              ),
+            Get.to(()=>SaveOrEditBlogScreen(
+              fontName:fontName,
+              title: title,
+              copyText: description,
+              controller: Get.put(
+                  SaveOrEditBlogController()),
+            ),
             );
           },
           value: 'createImage',

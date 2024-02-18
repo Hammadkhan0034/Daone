@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/own_affirmation_screen/controller/own_affirmation_controller.dart';
+import 'package:daone/presentation/own_affirmation_screen/own_affirmation_model.dart';
 import 'package:daone/presentation/own_affirmation_screen/view/ownaffirmationdialogue.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -84,12 +85,20 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                 Container(
                   height: Get.height * 0.82,
                   width: double.infinity,
-                  child: StreamBuilder(
+                  child: StreamBuilder<List<OwnAffirmationModel>>(
                     stream: FirebaseFirestore.instance
                         .collection("users")
                         .doc(user?.email)
                         .collection('OwnAffirmationList')
-                        .snapshots(),
+                        .snapshots().map((snapshot) {
+                          if(snapshot.size==0) return [];
+                          List<OwnAffirmationModel> list=[];
+                          for(var affirmation in snapshot.docs){
+                            OwnAffirmationModel ownAffirmationModel=OwnAffirmationModel.fromMap(affirmation.data());
+                            list.add(ownAffirmationModel);
+                          }
+                          return list;
+                    }),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         // Loading indicator while data is being fetched
@@ -109,7 +118,7 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                       }
             
                       // Check if there are no tasks
-                      if (snapshot.data.docs.isEmpty) {
+                      if (snapshot.data.isEmpty) {
                         return Container(
                           height: Get.height * 0.3,
                           width: Get.width * 0.9,
@@ -141,33 +150,23 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                           crossAxisSpacing: 8.0, // Adjust spacing as needed
                           mainAxisSpacing: 8.0, // Adjust spacing as needed
                         ),
-                        itemCount: snapshot.data.docs.length,
+                        itemCount: snapshot.data.length,
                         itemBuilder: (context, index) {
-                          final affirmationData = snapshot.data.docs[index].data();
-                          final affirmationText = affirmationData['affirmation'];
-                          final imageUrl = affirmationData['imageUrl'];
-                          final documentId = snapshot.data.docs[index].id;
-                          int affirmationCount = affirmationData['affirmationCount'];
-            
+                         final OwnAffirmationModel affirmationModel=snapshot.data[index];
                           return FadeTransition(
                             opacity: _animationController.drive(CurveTween(curve: Curves.easeInOut)),
                             child: InkWell(
                               onTap: () {
-                                controller.affirmationText.text=affirmationData['affirmation'];
+                                controller.affirmationText.text=affirmationModel.affirmation;
                                 Get.dialog(
                                   AlertDialog(
                                     backgroundColor: Colors.transparent,
                                     contentPadding: EdgeInsets.zero,
                                     insetPadding: const EdgeInsets.only(left: 0),
-                                    content: OwnAffirmationBlastEffectDialog(
+                                    content:
+                                    OwnAffirmationBlastEffectDialog(
                                       controller,
-                                      affirmationCountPresent: affirmationCount,
-                                      currentAffirmationCount: affirmationCount,
-                                      documentId: documentId,
-                                      affirmation: affirmationText,
-                                      decorationImage: affirmationData['imageUrl'],
-                                      graditudeAffirmationText: affirmationText,
-                                      snapshotIndex: documentId,
+                                      ownAffirmationModel: affirmationModel,
                                       key: key,
                                     ),
                                   ),
@@ -181,7 +180,7 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                                   child: Container(
                                     decoration: BoxDecoration(
                                       image: DecorationImage(
-                                        image:  CachedNetworkImageProvider(imageUrl),
+                                        image:  CachedNetworkImageProvider(affirmationModel.imageUrl),
                                         fit: BoxFit.cover,
                                       ),
                                       borderRadius: BorderRadius.circular(8),
@@ -195,7 +194,7 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                                           child: Container(
                                             height: Get.height * 0.12,
                                             child: Text(
-                                              affirmationData['affirmation'],
+                                              affirmationModel.affirmation,
                                               maxLines: 4,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
@@ -215,7 +214,7 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView> with SingleTick
                                             borderRadius: BorderRadius.circular(12),
                                           ),
                                           child: Center(
-                                            child: TextWidget(text: affirmationCount.toString(), color: Colors.white, fsize: 10),
+                                            child: TextWidget(text: affirmationModel.affirmationCount.toString(), color: Colors.white, fsize: 10),
                                           ),
                                         ),
                                       ],

@@ -8,250 +8,287 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 import 'package:flutter/material.dart';
 
-class SaveOrEditBlogDialog extends StatelessWidget {
+class SaveOrEditBlogScreen extends StatelessWidget {
   SaveOrEditBlogController controller;
-  String? copyText,title,fontName;
+  String? copyText, title, fontName;
 
-  SaveOrEditBlogDialog({ required this.controller,required this.copyText,required this.title,required this.fontName});
+  SaveOrEditBlogScreen(
+      {required this.controller,
+      required this.copyText,
+      required this.title,
+      required this.fontName});
   @override
   Widget build(BuildContext context) {
-    // ... (previous widget implementation remains the same)
-
-    return Container(
-      width: getHorizontalSize(318),
-      padding: getPadding(left: 20, top: 22, right: 20, bottom: 22),
-      decoration: AppDecoration.fill.copyWith(
-        borderRadius: BorderRadiusStyle.roundedBorder22,
+    return Scaffold(
+      appBar: AppBar(
+        leading:InkWell(
+          onTap: Get.back,
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.deepOrange,
+          ),
+        ),
+        title: TextWidget(text: 'Create Image', color: Colors.black, fsize: 24),
       ),
-      child: SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            TextWidget(text: 'Create Image', color: Colors.black, fsize: 14),
-            Container(
-              height: getVerticalSize(209),
-              width: getHorizontalSize(269),
-              margin: getMargin(left: 2, top: 6),
-              child: Stack(
-                alignment: Alignment.topCenter,
-                children: [
-                  Obx(
-                        () => Container(
-                      height: getVerticalSize(209),
-                      width: getHorizontalSize(269),
-                      decoration: BoxDecoration(
-                        color: Colors.black12,
-                        borderRadius: BorderRadius.circular(
-                          getHorizontalSize(15),
-                        ),
-                        image: controller.selectedBackground.value != ''
-                            ? DecorationImage(
-                          image: NetworkImage(
-                            controller.selectedBackground.value,
+      body: Container(
+        width: Get.width,
+        height: Get.height,
+        padding: getPadding(left: 20, top: 22, right: 20, bottom: 22),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                height: getVerticalSize(209),
+                width: Get.width,
+                margin: getMargin(left: 2, top: 6),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    Obx(
+                      () => Container(
+                        height: getVerticalSize(209),
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: Colors.black12,
+                          borderRadius: BorderRadius.circular(
+                            getHorizontalSize(15),
                           ),
-                          fit: BoxFit.cover,
-                        )
-                            : null,
-                      ),
-                      child: Center(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                          child:Text(
-                            copyText!,
-                            style: GoogleFonts.getFont(
-                              controller.selectedFontFamily.value,
-                              fontSize: controller.selectedFontSize.value,
-                              color: Color(int.parse('0xFF${controller.selectedTextColor.value.substring(1)}')),
+                          image: controller.selectedBackground.value != ''
+                              ? DecorationImage(
+                                  image: NetworkImage(
+                                    controller.selectedBackground.value,
+                                  ),
+                                  fit: BoxFit.cover,
+                                )
+                              : null,
+                        ),
+                        child: Center(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 18.0),
+                            child: Text(
+                              copyText!,
+                              style: GoogleFonts.getFont(
+                                controller.selectedFontFamily.value,
+                                fontSize: controller.selectedFontSize.value,
+                                color: Color(int.parse(
+                                    '0xFF${controller.selectedTextColor.value.substring(1)}')),
+                              ),
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-
-                ],
+                  ],
+                ),
               ),
-            ),
-            Obx(() =>  ColorPickerButton(
-              color: Color(int.parse('0xFF${controller.selectedTextColor.value.substring(1)}')),
-
-              onColorChanged: (color) {
-                controller.updateSelectedTextColor(color);
-              },
-            ),
-            ),
-           Row(children: [
-             Container(
-                 decoration: BoxDecoration(
-                     color:Colors.deepOrange,borderRadius: BorderRadius.circular(10)),
-                 child: Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: TextWidget(text: 'Font Family',color: Colors.white,fsize: 12,),
-                 )),
-             Obx(() => Padding(
-               padding: const EdgeInsets.symmetric(horizontal: 25.0),
-               child: DropdownButton<String>(
-                 value: controller.selectedFontFamily.value,
-                 onChanged: (value) {
-                   controller.updateSelectedFontFamily(value!);
-                 },
-                 items: controller.fontFamilies.map((String fontFamily) {
-                   return DropdownMenuItem<String>(
-                     value: fontFamily,
-                     child:  TextWidget(text: fontFamily, color:Colors.black, fsize: 12),
-                   );
-                 }).toList(),
-               ),
-             ),),
-           ],),
-           Row(children: [
-             Container(
-                 decoration: BoxDecoration(
-                     color:Colors.deepOrange,borderRadius: BorderRadius.circular(10)),
-                 child: Padding(
-                   padding: const EdgeInsets.all(8.0),
-                   child: TextWidget(text: 'Font Size',color: Colors.white,fsize: 12,),
-                 )),
-             Obx(() => Container(
-               width: Get.width*0.4,
-               child: Slider(
-                 value: controller.selectedFontSize.value,
-                 activeColor: Colors.deepOrange,
-                 inactiveColor: Colors.deepOrange,
-                 min: 8.0,
-                 max: 19.0,
-                 onChanged: (value) {
-                   controller.updateSelectedFontSize(value);
-                 },
-               ),
-             ),),
-           ],),
-
-
-            CustomElevatedButton(
-              onTap: (){
-                Get.dialog(
-
-                  AlertDialog(
-                    title: Text("Choose a Background"),
-                    content: Obx(
-                          () => Container(
-                        height: Get.height*0.5,
-                        child: GridView.builder(
-                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2, // Number of columns
-                            // crossAxisSpacing: 1.0, // Horizontal spacing between grid items
-                            // mainAxisSpacing: 1.0, // Vertical spacing between grid items
-                          ),
-                          itemCount: controller.availableBackgrounds.length,
-                          itemBuilder: (context, index) {
-                            final background = controller.availableBackgrounds[index];
-                            return InkWell(
-                              onTap: () {
-                                controller.setSelectedBackground(background);
-                                Get.back();
-                              },
-                              child: Column(
-                                children: [
-                                  // ListTile(
-                                  //   title: Text("Background ${index + 1}"),
-                                  // ),
-                                  Container(
-                                    height: Get.height * 0.13,
-                                    width: Get.width * 0.3,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(12),
-                                      // image: DecorationImage(
-                                      //   image: NetworkImage(background),
-                                      //   fit: BoxFit.cover,
-                                      // ),
-                                    ),
-                                    child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(12),
-                                      child: CachedNetworkImage(
-                                        imageUrl: background, // Replace newBackgroundURL with the new image URL
-                                        imageBuilder: (context, imageProvider) => Container(
-                                          height: Get.height * 0.13,
-                                          width: Get.width * 0.3,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(12),
-                                            image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                        ),
-                                        placeholder: (context, url) =>
-                                            Center(
-                                                child:
-                                        CircularProgressIndicator(color: Colors.deepOrange,)), // You can customize the placeholder
-                                        errorWidget: (context, url, error) => Icon(Icons.error),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            );
-                          },
+              SizedBox(height: 10),
+              Obx(
+                () => ColorPickerButton(
+                  color: Color(int.parse(
+                      '0xFF${controller.selectedTextColor.value.substring(1)}')),
+                  onColorChanged: (color) {
+                    controller.updateSelectedTextColor(color);
+                  },
+                ),
+              ),
+              Row(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.deepOrange,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextWidget(
+                          text: 'Font Family',
+                          color: Colors.white,
+                          fsize: 12,
                         ),
-
+                      )),
+                  Obx(
+                    () => Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                      child: DropdownButton<String>(
+                        value: controller.selectedFontFamily.value,
+                        onChanged: (value) {
+                          controller.updateSelectedFontFamily(value!);
+                        },
+                        items: controller.fontFamilies.map((String fontFamily) {
+                          return DropdownMenuItem<String>(
+                            value: fontFamily,
+                            child: TextWidget(
+                                text: fontFamily,
+                                color: Colors.black,
+                                fsize: 12),
+                          );
+                        }).toList(),
                       ),
                     ),
                   ),
-                );
-              },
-              text: "Choose your Background Image",
-              margin: getMargin(
-                left: 2,
-                top: 24,
-                right: 7,
+                ],
               ),
-              buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
-                  fixedSize: MaterialStateProperty.all<Size>(Size(
-                    double.maxFinite,
-                    getVerticalSize(
-                      46,
+              Row(
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                          color: Colors.deepOrange,
+                          borderRadius: BorderRadius.circular(10)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextWidget(
+                          text: 'Font Size',
+                          color: Colors.white,
+                          fsize: 12,
+                        ),
+                      )),
+                  Obx(
+                    () => Container(
+                      width: Get.width * 0.4,
+                      child: Slider(
+                        value: controller.selectedFontSize.value,
+                        activeColor: Colors.deepOrange,
+                        inactiveColor: Colors.deepOrange,
+                        min: 8.0,
+                        max: 19.0,
+                        onChanged: (value) {
+                          controller.updateSelectedFontSize(value);
+                        },
+                      ),
                     ),
-                  ))),
-              buttonTextStyle: TextStyle(color: Colors.white,fontSize: 12),
-            ),
-            CustomElevatedButton(
-              onTap: (){
-                controller.higlightslist(context: context,fontSize: controller.selectedFontSize.value,selectedText: copyText!,
-                color: controller.selectedTextColor.value,imageUrl: controller.selectedBackground.value,
-                  fontFamily: controller.selectedFontFamily.value,
-                  title:title!);
-                //context,controller.displayText.value,controller.selectedBackground.value,
-              },
-              text: "lbl_save_to_profile".tr,
-              margin: getMargin(
-                left: 2,
-                top: 24,
-                right: 7,
+                  ),
+                ],
               ),
-              buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
-                  fixedSize: MaterialStateProperty.all<Size>(Size(
-                    double.maxFinite,
-                    getVerticalSize(
-                      46,
+              CustomElevatedButton(
+                onTap: () {
+                  Get.bottomSheet(
+                    Obx(
+                      () => Container(
+                        height: Get.height,
+                        width: Get.width,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20)
+
+                        ),
+                        child: Card(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Container(width: 60,height: 5,
+                                margin: const EdgeInsets.only(top: 20),
+
+                                decoration: BoxDecoration(color: Colors.grey,
+                              borderRadius: BorderRadius.circular(10)
+                              ),
+                              ),
+                              Container(
+
+                                margin: const EdgeInsets.only(top: 10, bottom:10,left: 10),
+                                child: TextWidget(text: "Choose Your  Background Image",fsize: 18,),
+                              alignment: Alignment.centerLeft,
+                              ),
+                              Expanded(
+                                child: GridView.builder(
+                                  gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3, // Number of columns
+                                      ),
+                                  itemCount:
+                                      controller.availableBackgrounds.length,
+                                  itemBuilder: (context, index) {
+                                    final background =
+                                        controller.availableBackgrounds[index];
+                                    return InkWell(
+                                      onTap: () {
+                                        controller
+                                            .setSelectedBackground(background);
+                                        Get.back();
+                                      },
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            background, // Replace newBackgroundURL with the new image URL
+                                        imageBuilder: (context, imageProvider) =>
+                                            Container(
+                                          // height: Get.width * 0.3,
+                                          // width: Get.width * 0.3,
+                                          decoration: BoxDecoration(
+                                            image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.fill,
+                                            ),
+                                          ),
+                                        ),
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator(
+                                          color: Colors.deepOrange,
+                                        )), // You can customize the placeholder
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ),
-                  ))),
-              buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
-            ),
-
-
-
-          ],
+                  );
+                },
+                text: "Choose your Background Image",
+                margin: getMargin(
+                  left: 2,
+                  top: 24,
+                  right: 7,
+                ),
+                buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
+                    fixedSize: MaterialStateProperty.all<Size>(Size(
+                  double.maxFinite,
+                  getVerticalSize(
+                    46,
+                  ),
+                ))),
+                buttonTextStyle: TextStyle(color: Colors.white, fontSize: 12),
+              ),
+              CustomElevatedButton(
+                onTap: () {
+                  controller.higlightslist(
+                      context: context,
+                      fontSize: controller.selectedFontSize.value,
+                      selectedText: copyText!,
+                      color: controller.selectedTextColor.value,
+                      imageUrl: controller.selectedBackground.value,
+                      fontFamily: controller.selectedFontFamily.value,
+                      title: title!);
+                  //context,controller.displayText.value,controller.selectedBackground.value,
+                },
+                text: "lbl_save_to_profile".tr,
+                margin: getMargin(
+                  left: 2,
+                  top: 24,
+                  right: 7,
+                ),
+                buttonStyle: CustomButtonStyles.fillDeeporangeA20001.copyWith(
+                    fixedSize: MaterialStateProperty.all<Size>(Size(
+                  double.maxFinite,
+                  getVerticalSize(
+                    46,
+                  ),
+                ))),
+                buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Medium_2,
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
-
-
-
 
 // class SaveOrEditBlogDialog extends StatelessWidget {
 //   String? copyText;
@@ -369,14 +406,9 @@ class SaveOrEditBlogDialog extends StatelessWidget {
 //             // Font Weight
 //             Text('Font Weight:'),
 
-
-
-
 //             SizedBox(height: 16.0),
 //
 //             // Text Color
-
-
 
 //
 //
@@ -464,7 +496,6 @@ class SaveOrEditBlogDialog extends StatelessWidget {
 //             //     ],
 //             //   ),
 //             // ),
-
 
 //           ],
 //         ),

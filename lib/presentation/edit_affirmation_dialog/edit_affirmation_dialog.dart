@@ -1,31 +1,54 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/widgets/text_widget.dart';
 
+import '../own_affirmation_screen/own_affirmation_model.dart';
 import 'controller/edit_affirmation_controller.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 import 'package:daone/widgets/custom_text_form_field.dart';
 import 'package:flutter/material.dart';
 
-class EditAffirmationDialog extends StatelessWidget {
-  EditAffirmationDialog(
-    this.controller, {
+class EditAffirmationScreen extends StatelessWidget {
+  OwnAffirmationModel? ownAffirmationModel;
+  EditAffirmationScreen(
+    {
+      this.ownAffirmationModel,
     Key? key,
   }) : super(
           key: key,
-        );
+        ){
+    controller=Get.put(EditAffirmationController());
+    if(ownAffirmationModel!=null){
+      controller.selectedBackground.value=ownAffirmationModel!.imageUrl;
+      controller.displayText.value=ownAffirmationModel!.affirmation;
+      controller.messageController.text=ownAffirmationModel!.affirmation;
+      controller.selectedTime1.value=ownAffirmationModel!.dateStart;
+      controller.selectedTime2.value=ownAffirmationModel!.dateEnd;
+    }
+  }
 
-  EditAffirmationController controller;
+  late EditAffirmationController controller ;
 
   @override
   Widget build(BuildContext context) {
+
     mediaQueryData = MediaQuery.of(context);
 
-    return SingleChildScrollView(
-      child: Container(
-        width: getHorizontalSize(
-          318,
+    return Scaffold(
+      appBar:AppBar(
+        leading: InkWell(
+          onTap: Get.back,
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.deepOrange,
+          ),
         ),
+        title: TextWidget(text: ownAffirmationModel==null?'Create Affirmation':'Edit Affirmation', color: Colors.black, fsize: 20),
+      ),
+      body: Container(
+        width: Get.width,
+        height: Get.height,
         padding: getPadding(
           left: 24,
           top: 15,
@@ -37,15 +60,13 @@ class EditAffirmationDialog extends StatelessWidget {
         ),
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Obx(() =>            Container(
               height: getVerticalSize(
                 209,
               ),
-              width: getHorizontalSize(
-                269,
-              ),
+              width: Get.width,
               margin: getMargin(
                 top: 12,
               ),
@@ -93,6 +114,7 @@ class EditAffirmationDialog extends StatelessWidget {
                 left: 5,
                 right: 5,
               ),
+
               textStyle: CustomTextStyles.bodySmallGray9000310,
               hintText: "Write Your Affirmation Here",
               hintStyle: CustomTextStyles.bodySmallGray9000310,
@@ -134,68 +156,73 @@ class EditAffirmationDialog extends StatelessWidget {
                   ),
                   InkWell(
                     onTap: (){
-                      Get.dialog(
-                        Material(
-                          type: MaterialType.transparency,
-                          child: Center(
-                            child: Container(
-                              // margin: EdgeInsets.all(20),
-                              // padding: EdgeInsets.all(16),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
+                      Get.bottomSheet(
+                        Obx(
+                              () => Container(
+                            height: Get.height,
+                            width: Get.width,
+                            decoration: BoxDecoration(
                                 color: Colors.white,
-                                borderRadius: BorderRadius.circular(10),
-                              ),
+                                borderRadius: BorderRadius.circular(20)
+
+                            ),
+                            child: Card(
                               child: Column(
-                                mainAxisSize: MainAxisSize.min,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  Text("Choose a Background"),
-                                  SizedBox(height: 10),
-                                  Obx(
-                                        () => Expanded(
-                                      child: ListView.builder(
-                                        itemCount: controller.availableBackgrounds.length,
-                                        itemBuilder: (context, index) {
-                                          final background = controller.availableBackgrounds[index];
-                                          return InkWell(
-                                            onTap: () {
-                                              controller.setSelectedBackground(background);
-                                              Get.back();
-                                            },
-                                            child: Container(
-                                              height: Get.height * 0.2,
-                                              width: Get.width * 0.5,
-                                              padding: EdgeInsets.symmetric(vertical: 10),
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(12),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.circular(12),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: controller.availableBackgrounds[index],
-                                                  imageBuilder: (context, imageProvider) => Container(
-                                                    height: Get.height * 0.13,
-                                                    width: Get.width * 0.3,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius: BorderRadius.circular(12),
-                                                      image: DecorationImage(
-                                                        image: imageProvider,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  placeholder: (context, url) => Center(
-                                                    child: CircularProgressIndicator(
-                                                      color: Colors.deepOrange,
-                                                    ),
-                                                  ),
-                                                  errorWidget: (context, url, error) => Icon(Icons.error),
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
+                                  Container(width: 60,height: 5,
+                                    margin: const EdgeInsets.only(top: 20),
+
+                                    decoration: BoxDecoration(color: Colors.grey,
+                                        borderRadius: BorderRadius.circular(10)
+                                    ),
+                                  ),
+                                  Container(
+
+                                    margin: const EdgeInsets.only(top: 10, bottom:10,left: 10),
+                                    child: TextWidget(text: "Choose Your  Background Image",fsize: 18,),
+                                    alignment: Alignment.centerLeft,
+                                  ),
+                                  Expanded(
+                                    child: GridView.builder(
+                                      gridDelegate:
+                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                        crossAxisCount: 3, // Number of columns
                                       ),
+                                      itemCount:
+                                      controller.availableBackgrounds.length,
+                                      itemBuilder: (context, index) {
+                                        final background =
+                                        controller.availableBackgrounds[index];
+                                        return InkWell(
+                                          onTap: () {
+                                            controller
+                                                .setSelectedBackground(background);
+                                            Get.back();
+                                          },
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                            background, // Replace newBackgroundURL with the new image URL
+                                            imageBuilder: (context, imageProvider) =>
+                                                Container(
+                                                  // height: Get.width * 0.3,
+                                                  // width: Get.width * 0.3,
+                                                  decoration: BoxDecoration(
+                                                    image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.fill,
+                                                    ),
+                                                  ),
+                                                ),
+                                            placeholder: (context, url) => Center(
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.deepOrange,
+                                                )), // You can customize the placeholder
+                                            errorWidget: (context, url, error) =>
+                                                Icon(Icons.error),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                 ],
@@ -204,6 +231,80 @@ class EditAffirmationDialog extends StatelessWidget {
                           ),
                         ),
                       );
+
+
+
+
+                      // Get.dialog(
+                      //   Material(
+                      //     type: MaterialType.transparency,
+                      //     child: Center(
+                      //       child: Container(
+                      //         // margin: EdgeInsets.all(20),
+                      //         // padding: EdgeInsets.all(16),
+                      //         width: double.infinity,
+                      //         decoration: BoxDecoration(
+                      //           color: Colors.white,
+                      //           borderRadius: BorderRadius.circular(10),
+                      //         ),
+                      //         child: Column(
+                      //           mainAxisSize: MainAxisSize.min,
+                      //           children: [
+                      //             Text("Choose a Background"),
+                      //             SizedBox(height: 10),
+                      //             Obx(
+                      //                   () => Expanded(
+                      //                 child: GridView.builder(
+                      //                   itemCount: controller.availableBackgrounds.length,
+                      //                   itemBuilder: (context, index) {
+                      //                     final background = controller.availableBackgrounds[index];
+                      //                     return InkWell(
+                      //                       onTap: () {
+                      //                         controller.setSelectedBackground(background);
+                      //                         Get.back();
+                      //                       },
+                      //                       child: Container(
+                      //                         height: Get.height * 0.2,
+                      //                         width: Get.width * 0.5,
+                      //                         padding: EdgeInsets.symmetric(vertical: 10),
+                      //                         decoration: BoxDecoration(
+                      //                           borderRadius: BorderRadius.circular(12),
+                      //                         ),
+                      //                         child: ClipRRect(
+                      //                           borderRadius: BorderRadius.circular(12),
+                      //                           child: CachedNetworkImage(
+                      //                             imageUrl: controller.availableBackgrounds[index],
+                      //                             imageBuilder: (context, imageProvider) => Container(
+                      //                               height: Get.height * 0.13,
+                      //                               width: Get.width * 0.3,
+                      //                               decoration: BoxDecoration(
+                      //                                 borderRadius: BorderRadius.circular(12),
+                      //                                 image: DecorationImage(
+                      //                                   image: imageProvider,
+                      //                                   fit: BoxFit.cover,
+                      //                                 ),
+                      //                               ),
+                      //                             ),
+                      //                             placeholder: (context, url) => Center(
+                      //                               child: CircularProgressIndicator(
+                      //                                 color: Colors.deepOrange,
+                      //                               ),
+                      //                             ),
+                      //                             errorWidget: (context, url, error) => Icon(Icons.error),
+                      //                           ),
+                      //                         ),
+                      //                       ),
+                      //                     );
+                      //                   },
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // );
 
 
 
@@ -296,7 +397,7 @@ class EditAffirmationDialog extends StatelessWidget {
                           image:
                           NetworkImage(controller.selectedBackground.value),fit: BoxFit.cover),),
                    child: controller.selectedBackground.value == "" ?
-    Center(child: TextWidget(fsize: 10,color: Colors.white,text: "Add Background")): null,
+            Center(child: TextWidget(fsize: 10,color: Colors.white,text: "Add Background")): null,
                     ),
                     )
                   ),
@@ -444,8 +545,10 @@ class EditAffirmationDialog extends StatelessWidget {
             ),
             CustomElevatedButton(
               onTap: (){
-            controller.OwnAffirmationList(context,controller.displayText.value,controller.selectedBackground.value, controller.selectedTime1.value.toString(),
-                controller.selectedTime2.toString(), controller.currentValue.value.toInt());
+                Timestamp timeStamp=ownAffirmationModel==null?Timestamp.now():ownAffirmationModel!.date;
+
+            controller.OwnAffirmationList(context,controller.displayText.value,controller.selectedBackground.value, controller.selectedTime1.value,
+                controller.selectedTime2.value, timeStamp,controller.currentValue.value.toInt());
               },
               width: getHorizontalSize(
                 252,
@@ -453,7 +556,7 @@ class EditAffirmationDialog extends StatelessWidget {
               height: getVerticalSize(
                 45,
               ),
-              text: "lbl_save".tr,
+              text: ownAffirmationModel==null? "lbl_save".tr:"Update",
               margin: getMargin(
                 left: 15,
                 top: 19,

@@ -92,7 +92,7 @@ class ViewFriendsTabContainerScreen
                         padding: const EdgeInsets.symmetric(horizontal: 14.0),
                         child: Text(
                           "Users",
-                          // overflow: TextOverflow.ellipsis,
+                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -102,7 +102,7 @@ class ViewFriendsTabContainerScreen
 
                         child: Text(
                           "lbl_friends".tr,
-                          // overflow: TextOverflow.ellipsis,
+                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),
@@ -111,7 +111,7 @@ class ViewFriendsTabContainerScreen
                         padding: const EdgeInsets.symmetric(horizontal: 15.0),
                         child: Text(
                           "lbl_groups".tr,
-                          // overflow: TextOverflow.ellipsis,
+                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
                     ),

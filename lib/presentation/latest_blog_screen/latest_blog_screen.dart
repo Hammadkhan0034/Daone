@@ -322,22 +322,15 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                       horizontal: 10, vertical: 20),
                                   child: InkWell(
                                     onTap: () {
-                                      Get.dialog(
-                                        AlertDialog(
-                                          backgroundColor:
-                                          Colors.transparent,
-                                          contentPadding: EdgeInsets.zero,
-                                          insetPadding:
-                                          EdgeInsets.only(left: 0),
-                                          content: SaveOrEditBlogDialog(
-                                            fontName:controller2.selectedFontFamily.value,
-                                            title: widget.blogData['title'],
-                                            copyText: latestBlogController
-                                                .selectedText,
-                                            controller: Get.put(
-                                                SaveOrEditBlogController()),
-                                          ),
-                                        ),
+                                      Get.to(()=>SaveOrEditBlogScreen(
+                                        fontName:controller2.selectedFontFamily.value,
+                                        title: widget.blogData['title'],
+                                        copyText: latestBlogController
+                                            .selectedText,
+                                        controller: Get.put(
+                                            SaveOrEditBlogController()),
+                                      ),
+
                                       );
                                     },
                                     child: Container(

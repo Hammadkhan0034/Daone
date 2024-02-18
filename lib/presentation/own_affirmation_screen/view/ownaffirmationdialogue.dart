@@ -13,23 +13,14 @@ import '../../../widgets/text_widget.dart';
 import '../../edit_affirmation_dialog/controller/edit_affirmation_controller.dart';
 import '../../edit_affirmation_dialog/edit_affirmation_dialog.dart';
 import '../controller/own_affirmation_controller.dart';
+import '../own_affirmation_model.dart';
 
 class OwnAffirmationBlastEffectDialog extends StatelessWidget {
-  String decorationImage;
-  var graditudeAffirmationText, documentId;
-  var snapshotIndex;
-  var affirmation;
-  var affirmationCountPresent, currentAffirmationCount;
+OwnAffirmationModel ownAffirmationModel;
 
   OwnAffirmationBlastEffectDialog(
       this.controller, {
-        required this.affirmationCountPresent,
-        required this.affirmation,
-        required this.snapshotIndex,
-        required this.decorationImage,
-        required this.graditudeAffirmationText,
-        required this.documentId,
-        required this.currentAffirmationCount,
+       required this.ownAffirmationModel,
         Key? key,
       }) : super(
     key: key,
@@ -44,6 +35,7 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
     return Stack(
       alignment: Alignment.topCenter,
       children: [
+
         Container(
           width: getHorizontalSize(
             318,
@@ -76,36 +68,18 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                     child: Stack(
                       alignment: Alignment.topCenter,
                       children: [
-                        Positioned(
-                          right:getHorizontalSize(10),
-                          top: getVerticalSize(10),
-                          child: InkWell(
-                            child: Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                // color: Colors.blue,
-                                shape: BoxShape.circle,
-                                border: Border.all(color: Colors.grey.withOpacity(0.3))
-                              ),
-                              child: Icon(Icons.mode_edit_outline_outlined,
-                              color: Colors.blue,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Align(
-                          alignment: Alignment.bottomCenter,
-                          child: Padding(
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Container(
+                            alignment: Alignment.center,
+                          
                             padding: EdgeInsets.symmetric(horizontal: getHorizontalSize(8)),
-                            child: TextFormField(
+                            decoration: BoxDecoration(image: DecorationImage(image: NetworkImage(ownAffirmationModel.imageUrl,),fit: BoxFit.fill)),
+                            child: Text(
                               // affirmation,
-                              controller: controller.affirmationText,
+                               ownAffirmationModel.affirmation,
                               maxLines: 6,
-                              decoration: InputDecoration(
-                                border: InputBorder.none
-                              ),
-                              // overflow: TextOverflow.ellipsis,
+                               overflow: TextOverflow.ellipsis,
                               textAlign: TextAlign.center,
                               style: GoogleFonts.poppins(
                                 fontSize: 16,
@@ -115,6 +89,28 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                             ),
                           ),
                         ),
+                        Positioned(
+                          right:getHorizontalSize(10),
+                          top: getVerticalSize(10),
+                          child: InkWell(
+                            onTap: (){
+                             Get.to(()=> EditAffirmationScreen(ownAffirmationModel: ownAffirmationModel,));
+                            },
+                            child: Container(
+                              height: 40,
+                              width: 40,
+                              decoration: BoxDecoration(
+                                // color: Colors.blue,
+                                  shape: BoxShape.circle,
+                                  border: Border.all(color: Colors.blue)
+                              ),
+                              child: Icon(Icons.mode_edit_outline_outlined,
+                                color: Colors.blue,
+                              ),
+                            ),
+                          ),
+                        ),
+
                       ],
                     ),
                   ),
