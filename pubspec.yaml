@@ -24,6 +24,7 @@ dependencies:
   flutter_facebook_auth: ^6.0.2
   confetti: ^0.7.0
   audioplayers: ^5.2.0
+  contacts_service: ^0.6.3
   image_picker: ^1.0.4
   permission_handler: ^11.0.1
   firebase_storage: ^11.2.8

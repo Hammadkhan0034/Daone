@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,32 +15,32 @@ class CreateGroup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    GroupController _controller =Get.put(GroupController());
+    GroupController _controller = Get.put(GroupController());
     GlobalKey<FormState> _key = GlobalKey<FormState>();
 
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-        centerTitle: true,
-        title: Text('Add Details',
-            style:
-            TextStyle(
-                fontFamily: 'Gotham Light',
-                fontWeight: FontWeight.w800,
-                fontSize: 25, color: Colors.black)),
-        leadingWidth: 68,
-        leading: AppbarIconbutton(
-          onTap: () {
-            Get.back();
-          },
-          svgPath: ImageConstant.imgInfo,
-          margin: getMargin(
-            left: 10,
-            top: 10,
-            bottom: 5,
+          centerTitle: true,
+          title: Text('Add Details',
+              style: TextStyle(
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25,
+                  color: Colors.black)),
+          leadingWidth: 68,
+          leading: AppbarIconbutton(
+            onTap: () {
+              Get.back();
+            },
+            svgPath: ImageConstant.imgInfo,
+            margin: getMargin(
+              left: 10,
+              top: 10,
+              bottom: 5,
+            ),
           ),
         ),
-      ),
         body: SingleChildScrollView(
           child: Form(
             key: _key,
@@ -49,42 +48,48 @@ class CreateGroup extends StatelessWidget {
               children: [
                 Material(
                   elevation: 4,
-                  child:Obx(()=> Container(
-                    height: Get.height*0.3,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      // color: Colors.green,
-                    //   image: DecorationImage(image: AssetImage('assets/images/addimage.png',),scale: 5),
+                  child: Obx(
+                    () => Container(
+                      height: Get.height * 0.3,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          // color: Colors.green,
+                          //   image: DecorationImage(image: AssetImage('assets/images/addimage.png',),scale: 5),
+                          ),
+                      child: InkWell(
+                          onTap: () {
+                            _controller.pickImage();
+                          },
+                          child: _controller.selectedImage.value != null
+                              ? Image.file(
+                                  _controller.selectedImage.value!,
+                                  height: Get.height * 0.3,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                )
+                              : Image.asset(
+                                  'assets/images/addimage.png',
+                                  scale: 5,
+                                )),
                     ),
-                    child: InkWell(
-                        onTap: (){
-                          _controller.pickImage();
-                        },
-                        child: _controller.selectedImage.value != null ?
-                            Image.file(
-                              _controller.selectedImage.value!,
-                              height: Get.height*0.3,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                            ):Image.asset('assets/images/addimage.png',scale: 5,)),
-                  ),),
+                  ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 22.0,top: 20),
+                  padding: const EdgeInsets.only(left: 22.0, top: 20),
                   child: Row(
                     children: [
-                      TextWidget(text:"Name"),
+                      TextWidget(text: "Name"),
                       Spacer(),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: CustomTextFormField(
                     function: (value) {
-                     _controller.groupName.text = value;
+                      _controller.groupName.text = value;
                     },
-                   controller: _controller.groupName,
+                    controller: _controller.groupName,
                     margin: getMargin(
                       top: 30,
                     ),
@@ -99,21 +104,20 @@ class CreateGroup extends StatelessWidget {
                     textInputAction: TextInputAction.next,
                     textInputType: TextInputType.name,
                     prefix: Container(
-                      margin: getMargin(
-                        left: 15,
-                        top: 15,
-                        right: 10,
-                        bottom: 15,
-                      ),
-                      child: Icon(Icons.abc)
-                    ),
+                        margin: getMargin(
+                          left: 15,
+                          top: 15,
+                          right: 10,
+                          bottom: 15,
+                        ),
+                        child: Icon(Icons.abc)),
                     prefixConstraints: BoxConstraints(
                       maxHeight: getVerticalSize(
                         48,
                       ),
                     ),
                     validator: (value) {
-                      if (value == '' ) {
+                      if (value == '') {
                         return "Please enter group name";
                       }
                       return null;
@@ -123,19 +127,19 @@ class CreateGroup extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 22.0,top: 20),
+                  padding: const EdgeInsets.only(left: 22.0, top: 20),
                   child: Row(
                     children: [
-                      TextWidget(text:"Description"),
+                      TextWidget(text: "Description"),
                       Spacer(),
                     ],
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal:20.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
                   child: CustomTextFormField(
                     function: (value) {
-                     _controller.groupDes.text = value;
+                      _controller.groupDes.text = value;
                     },
                     controller: _controller.groupDes,
                     margin: getMargin(
@@ -153,21 +157,20 @@ class CreateGroup extends StatelessWidget {
                     textInputType: TextInputType.name,
                     maxLines: 3,
                     prefix: Container(
-                      margin: getMargin(
-                        left: 15,
-                        top: 15,
-                        right: 10,
-                        bottom: 15,
-                      ),
-                      child: Icon(Icons.description)
-                    ),
+                        margin: getMargin(
+                          left: 15,
+                          top: 15,
+                          right: 10,
+                          bottom: 15,
+                        ),
+                        child: Icon(Icons.description)),
                     prefixConstraints: BoxConstraints(
                       maxHeight: getVerticalSize(
                         48,
                       ),
                     ),
                     validator: (value) {
-                      if (value=='') {
+                      if (value == '') {
                         return "Please enter group description";
                       }
                       return null;
@@ -177,30 +180,31 @@ class CreateGroup extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: Get.height*0.1,
+                  height: Get.height * 0.1,
                 ),
-              InkWell(
+                InkWell(
                   onTap: () async {
-    if (_key.currentState?.validate() ?? false) {
-    String? userEmail = FirebaseAuth.instance.currentUser?.email;
+                    if (_key.currentState?.validate() ?? false) {
+                      String? userEmail =
+                          FirebaseAuth.instance.currentUser?.email;
 
-    if (userEmail != null) {
-    String? imageUrl = await getImageUrl(userEmail);
+                      if (userEmail != null) {
+                        String? imageUrl = await getImageUrl(userEmail);
 
-    if (imageUrl != null) {
-    _controller.createGroup(context, imageUrl);
-    } else {
-    // Handle the case where imageUrl is null
-    Get.snackbar('App Info', 'Image URL not available.');
-    }
-    } else {
-    // Handle the case where userEmail is null
-    Get.snackbar('App Info', 'User email not available.');
-    }
-    } else {
-    Get.snackbar('App Info', 'Form is not valid.');
-    }
-                    },
+                        if (imageUrl != null) {
+                          _controller.createGroup(context, imageUrl);
+                        } else {
+                          // Handle the case where imageUrl is null
+                          Get.snackbar('App Info', 'Image URL not available.');
+                        }
+                      } else {
+                        // Handle the case where userEmail is null
+                        Get.snackbar('App Info', 'User email not available.');
+                      }
+                    } else {
+                      Get.snackbar('App Info', 'Form is not valid.');
+                    }
+                  },
                   child: Container(
                     height: Get.height * 0.08,
                     width: Get.width * 0.7,
@@ -209,13 +213,13 @@ class CreateGroup extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10)),
                     child: Center(
                         child: TextWidget(
-                          text: "Create",
-                          color: Colors.white,
-                          fontFamily: "Gotham Light",
-                          fontWeight: FontWeight.w800,
-                        )),
+                      text: "Create",
+                      color: Colors.white,
+                      fontFamily: "Gotham Light",
+                      fontWeight: FontWeight.w800,
+                    )),
                   ),
-              )
+                )
               ],
             ),
           ),
@@ -223,6 +227,7 @@ class CreateGroup extends StatelessWidget {
       ),
     );
   }
+
   Future<String?> getImageUrl(String userEmail) async {
     try {
       DocumentSnapshot userSnapshot = await FirebaseFirestore.instance

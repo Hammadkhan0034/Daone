@@ -4,7 +4,7 @@ import 'package:daone/presentation/register_page_one_screen/models/user_model.da
 class GroupModel {
     final String name,description,image;
     Timestamp createdAt;
-    UserModel createdBy;
+    UserModel? createdBy;
     final List<UserModel> users;
 
 
@@ -29,15 +29,21 @@ class GroupModel {
     };
   }
 
-  factory GroupModel.fromMap(Map<String, dynamic> map) {
-        List<dynamic> list=map['users'] as List<dynamic>;
-    return GroupModel(
-      name: map['name'] as String,
-      description: map['description'] as String,
-      image: map['image'] as String,
-      createdAt: map['createdAt'] as Timestamp,
-      createdBy: map['createdBy'] as UserModel,
-      users:list.map((e) => UserModel.fromMap(e)).toList(),
-    );
-  }
+    factory GroupModel.fromMap(Map<String, dynamic> map) {
+      final List<UserModel> usersList = [];
+      if (map['users'] != null && map['users'] is List) {
+        List<dynamic> usersData = map['users'] as List<dynamic>;
+        usersList.addAll(usersData.map((userData) => UserModel.fromMap(userData)));
+      }
+
+      return GroupModel(
+        name: map['name'] as String? ?? '', // Handle null value by providing a default empty string
+        description: map['description'] as String? ?? '', // Handle null value by providing a default empty string
+        image: map['image'] as String? ?? '', // Handle null value by providing a default empty string
+        createdAt: map['createdAt'] ?? Timestamp.now() , // Assuming 'createdAt' is always present and non-null
+        createdBy: map['createdBy']  , // Assuming 'createdBy' is always present and non-null
+        users: usersList,
+      );
+    }
+
 }

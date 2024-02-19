@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/group_page/group_page.dart';
+import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
@@ -166,6 +167,7 @@ class GroupController extends GetxController {
   }
 
   Future<void> createGroup(context,profileImageUrl)async{
+    UserModel? groupcreatedby;
     try {
       User? user = FirebaseAuth.instance.currentUser;
 
@@ -198,36 +200,42 @@ class GroupController extends GetxController {
 
         // Get the download URL of the uploaded image
         imageUrl.value = await taskSnapshot.ref.getDownloadURL();
+GroupModel groupModel=GroupModel(name: groupName.text, description: groupDes.text, image: imageUrl.value, createdAt: Timestamp.now(), createdBy:groupcreatedby!.fullName, users: []);
 
-        await FirebaseFirestore.instance.collection('groups').doc(groupName.text).set({
-        'groupName': groupName.text,
-        'groupCreator': user!.email,
-        'groupDescription': groupDes.text,
-          'groupMembers': [
-            // {
-            //   'email': user!.email,
-            //   'imageUrl': imageUrl,
-            // }
-          ],
+Map<String, dynamic> createGroup=groupModel.toMap();
+        await FirebaseFirestore.instance.collection('groups').doc(groupName.text).set(
+        //{
+        // 'groupName': groupName.text,
+        // 'groupCreator': user!.email,
+        // 'groupDescription': groupDes.text,
         //   'groupMembers': [
-        //
-        // //  user.email,profileImageUrl
+        //     {
+        //       'email': user!.email,
+        //       'imageUrl': imageUrl,
+        //     }
         //   ],
-        'groupStartingDate': formattedDate,
-          'groupImageUrl': imageUrl.value,
-        'postLike': 0,
-        });
+        // //   'groupMembers': [
+        // //
+        // // //  user.email,profileImageUrl
+        // //   ],
+        // 'groupStartingDate': formattedDate,
+        //   'groupImageUrl': imageUrl.value,
+        // 'postLike': 0,
+        // }
+
+        createGroup
+        );
 
         print(3);
 
-        await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('likes').add({
-        });
+        // await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('likes').add({
+        // });
 
         print(4);
 
 
-        await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('comment').add({
-        });
+        // await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('comment').add({
+        // });
 
 
         Get.snackbar("App Info", "Group Created Successfully");
