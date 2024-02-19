@@ -6,6 +6,7 @@ import 'package:confetti/confetti.dart';
 import 'package:daone/core/app_export.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 
@@ -102,10 +103,10 @@ OwnAffirmationModel ownAffirmationModel;
                               decoration: BoxDecoration(
                                 // color: Colors.blue,
                                   shape: BoxShape.circle,
-                                  border: Border.all(color: Colors.blue)
+                                  border: Border.all(color: Colors.deepOrange)
                               ),
                               child: Icon(Icons.mode_edit_outline_outlined,
-                                color: Colors.blue,
+                                color: Colors.deepOrange,
                               ),
                             ),
                           ),
@@ -120,6 +121,7 @@ OwnAffirmationModel ownAffirmationModel;
               SizedBox(height: getVerticalSize(20),),
               InkWell(
                 onTap: () {
+                  controller.blastAffirmation(ownAffirmationModel);
                   // Handle button press
                 },
                 child: Ink(
@@ -136,12 +138,12 @@ OwnAffirmationModel ownAffirmationModel;
                     ),
                     child: Row(
                       mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Icons.edit_outlined, size: 16),
+                        Icon(FontAwesomeIcons.bomb, size: 20, color: Colors.deepOrange,),
                         SizedBox(width: getHorizontalSize(5)),
-                        Text("Add Image", style: TextStyle(fontSize: 12)),
+                        Text("Blast", style: TextStyle(fontSize: 14)),
                       ],
                     ),
                   ),

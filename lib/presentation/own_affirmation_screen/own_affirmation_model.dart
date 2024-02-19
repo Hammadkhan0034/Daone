@@ -16,6 +16,8 @@ class OwnAffirmationModel{
     required this.affirmationCount,
   });
 
+  String get documentID=> date.millisecondsSinceEpoch.toString();
+
   Map<String, dynamic> toMap() {
     return {
       'affirmation': this.affirmation,
