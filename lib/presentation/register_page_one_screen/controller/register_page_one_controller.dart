@@ -1,5 +1,5 @@
 import 'package:daone/core/app_export.dart';
-import 'package:daone/presentation/register_page_one_screen/models/register_page_one_model.dart';
+import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +16,7 @@ class RegisterPageOneController extends GetxController {
 
   TextEditingController passwordController = TextEditingController();
 
-  Rx<RegisterPageOneModel> registerPageOneModelObj = RegisterPageOneModel().obs;
+  Rx<UserModel> registerPageOneModelObj = UserModel().obs;
 
   Rx<bool> isShowPassword = true.obs;
 
@@ -93,7 +93,7 @@ class RegisterPageOneController extends GetxController {
     FirebaseFirestore  firebaseFirestore= FirebaseFirestore.instance;
     User? user = auth.currentUser;
 
-    RegisterPageOneModel userModel= RegisterPageOneModel();
+    UserModel userModel= UserModel();
 
     //writing all the values
     userModel.fullName = fullnameController.text;

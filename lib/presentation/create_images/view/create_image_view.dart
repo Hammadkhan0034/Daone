@@ -130,8 +130,8 @@ class CreateImageView extends StatelessWidget {
                                   //   width: Get.width * 0.1,
                                   // ),
                                   Container(
-                                    height: Get.height * 0.05,
-                                    width: Get.width * 0.13,
+                                    height: 45,
+                                    width: 45,
                                     decoration: BoxDecoration(
                                       // borderRadius: BorderRadius.circular(100),
                                       shape: BoxShape.circle,
@@ -142,7 +142,7 @@ class CreateImageView extends StatelessWidget {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: Get.width * 0.001,
+                                    width: 10,
                                   ),
                                   Stack(
                                       children:[ Container(

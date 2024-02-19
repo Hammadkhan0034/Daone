@@ -18,7 +18,6 @@ class ViewFriendsPage extends StatelessWidget {
       : super(
           key: key,
         );
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   ViewFriendsController controller =
       Get.put(ViewFriendsController(ViewFriendsModel().obs));
 
@@ -164,7 +163,7 @@ class ViewFriendsPage extends StatelessWidget {
                   String groupName = groupNameController.text;
                   if (groupName.isNotEmpty) {
                     // Call a function to save the group to Firebase
-                    saveGroupToFirebase(GroupModel(groupName, []));
+                    // saveGroupToFirebase(GroupModel(groupName, []));
                   }
                   Navigator.of(context).pop();
                 },

@@ -21,7 +21,7 @@ void onInit() {
  super.onInit();
  loadGroups();
 }
-Future<List<GroupModel>?> fetchGroupsFromFirebase() async {
+Future<List<GroupModel>> fetchGroupsFromFirebase() async {
  CollectionReference groups = FirebaseFirestore.instance.collection('groups');
  QuerySnapshot querySnapshot = await groups.get();
 
@@ -30,25 +30,22 @@ Future<List<GroupModel>?> fetchGroupsFromFirebase() async {
 
   querySnapshot.docs.forEach((doc) {
    Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
-   String groupName = data['name'];
-   List<String> users = List<String>.from(data['users']);
-   GroupModel group = GroupModel(groupName, users);
+   
+   GroupModel group = GroupModel.fromMap(data);
    groupsList.add(group);
   });
   print(groupsList);
   return groupsList;
 
  } else {
-  return null;
+  return [];
  }
 }
 
 Future<void> loadGroups() async {
  List<GroupModel>? fetchedGroups = await fetchGroupsFromFirebase();
- if (fetchedGroups != null) {
-  groups.assignAll(fetchedGroups);
+groups.assignAll(fetchedGroups);
  }
-}
 
 
 }

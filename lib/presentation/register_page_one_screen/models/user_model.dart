@@ -1,14 +1,14 @@
 /// This class defines the variables used in the [register_page_one_screen],
 /// and is typically used to hold data that is passed between different parts of the application.
-class RegisterPageOneModel {
+class UserModel {
   var uid,fullName,phoneNumber,email;
   String? imageUrl;
 
-  RegisterPageOneModel({this.uid,this.fullName,this.phoneNumber,this.email,this.imageUrl});
+  UserModel({this.uid,this.fullName,this.phoneNumber,this.email,this.imageUrl});
 
   //data from server
-factory RegisterPageOneModel.fromMap(map){
- return RegisterPageOneModel(
+factory UserModel.fromMap(map){
+ return UserModel(
    uid: map['uid'],
    email: map['email'],
    fullName: map['fullName'],

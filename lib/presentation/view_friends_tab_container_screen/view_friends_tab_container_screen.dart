@@ -26,6 +26,7 @@ class ViewFriendsTabContainerScreen
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
         appBar: AppBar(
+          backgroundColor: Colors.white,
           centerTitle: true,
           title: Text('Friends and Groups',
               style:
@@ -49,6 +50,7 @@ class ViewFriendsTabContainerScreen
         ),
         body: SizedBox(
           width: double.maxFinite,
+          height: Get.height,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -57,34 +59,29 @@ class ViewFriendsTabContainerScreen
                   48,
                 ),
                 width: Get.width,
-                margin: getMargin(
-                  top: 42,
-                ),
-                decoration: BoxDecoration(
-                  color: appTheme.gray20001,
-                  // borderRadius: BorderRadius.circular(
-                  //   getHorizontalSize(
-                  //     20,
-                  //   ),
-                  // ),
-                ),
+
+
                 child: TabBar(
                   controller: controller.tabviewController,
-                  labelColor: appTheme.whiteA700,
-                  labelStyle: TextStyle(),
+                  labelColor: appTheme.deepOrangeA20005,
+                  labelStyle: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16
+
+                  ),
                   unselectedLabelColor: theme.colorScheme.primaryContainer,
-                  unselectedLabelStyle: TextStyle(),
+                  unselectedLabelStyle: TextStyle(
+                      fontWeight: FontWeight.w400,
+                      fontSize: 16
+
+                  ),
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicatorPadding: getPadding(
                     all: 2.0,
                   ),
+
                   indicator: BoxDecoration(
-                    color: appTheme.deepOrangeA20005,
-                    borderRadius: BorderRadius.circular(
-                      getHorizontalSize(
-                        18,
-                      ),
-                    ),
+                   border: Border(bottom: BorderSide(color: appTheme.deepOrangeA20005,width: 1))
                   ),
                   tabs: [
                     Tab(
@@ -118,270 +115,254 @@ class ViewFriendsTabContainerScreen
                   ],
                 ),
               ),
-              SizedBox(
-                height: getVerticalSize(
-                  657,
-
-                ),
-
+              Expanded(
                 child: TabBarView(
                   controller: controller.tabviewController,
                   children: [
                     //user Tab //
-
+                
                     Container(
                      // color: Colors.orange,
                       width: Get.width,
-                      height: Get.height * 0.5,
-                      child: Column(
+                      child: Stack(
+                        alignment: Alignment.topCenter,
                         children: [
-                          Container(
-                            width: Get.width,
-                            height: Get.height * 0.68,
-                            child: StreamBuilder(
-                              stream: FirebaseFirestore.instance
-                                  .collection('users')
-                                  .snapshots(),
-                              builder:
-                                  (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                                if (snapshot.connectionState ==
-                                    ConnectionState.waiting) {
-                                  return Center(
+                          StreamBuilder(
+                            stream: FirebaseFirestore.instance
+                                .collection('users')
+                                .snapshots(),
+                            builder:
+                                (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return Center(
+                                  child: Container(
+                                    width: 30,
+                                    height: 30,
+                                    child: CircularProgressIndicator(
+                                        color: Colors.deepOrange),
+                                  ),
+                                ); // Loading indicator while data is loading.
+                              }
+                              if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              }
+                              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                                return Text('No data available');
+                              }
+                
+                              return ListView.builder(
+                                itemCount: snapshot.data?.docs.length,
+                                itemBuilder: (context, index) {
+                                  final userData = snapshot.data?.docs[index].data();
+                                  final uid = snapshot
+                                      .data?.docs[index].id; // Retrieve the UID
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      width: 30,
-                                      height: 30,
-                                      child: CircularProgressIndicator(
-                                          color: Colors.deepOrange),
-                                    ),
-                                  ); // Loading indicator while data is loading.
-                                }
-                                if (snapshot.hasError) {
-                                  return Text('Error: ${snapshot.error}');
-                                }
-                                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                                  return Text('No data available');
-                                }
-
-                                return ListView.builder(
-                                  itemCount: snapshot.data?.docs.length,
-                                  itemBuilder: (context, index) {
-                                    final userData = snapshot.data?.docs[index].data();
-                                    final uid = snapshot
-                                        .data?.docs[index].id; // Retrieve the UID
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        height: Get.height * 0.11,
-                                        width: Get.width * 0.9,
-                                        decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
-                                          color: Colors.white24,
-                                          border: Border.all(
-                                            color: Colors.black12,
-                                            width: 2.0,
-                                          ),
-                                          boxShadow: [
-                                            BoxShadow(
-                                              color: Colors.white,
-                                              offset: Offset(0, 2),
-                                              blurRadius: 6.0,
-                                              spreadRadius: 2.0,
-                                            ),
-                                          ],
+                                      height: Get.height * 0.11,
+                                      width: Get.width * 0.9,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(15),
+                                        color: Colors.white24,
+                                        border: Border.all(
+                                          color: Colors.black12,
+                                          width: 2.0,
                                         ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(11.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              StreamBuilder(
+                                        boxShadow: [
+                                          BoxShadow(
+                                            color: Colors.white,
+                                            offset: Offset(0, 2),
+                                            blurRadius: 6.0,
+                                            spreadRadius: 2.0,
+                                          ),
+                                        ],
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(11.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            StreamBuilder(
+                                              stream: FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(FirebaseAuth.instance
+                                                      .currentUser?.email)
+                                                  .snapshots(),
+                                              builder: (context,
+                                                  AsyncSnapshot<DocumentSnapshot>
+                                                      snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  // While the data is being fetched, you can return a loading indicator or an empty widget.
+                                                  return CircularProgressIndicator(); // Replace with your loading indicator widget
+                                                }
+                
+                                                if (snapshot.hasError) {
+                                                  // Handle errors here
+                                                  return Text(
+                                                      'Error: ${snapshot.error}');
+                                                }
+                
+                                                if (!snapshot.hasData ||
+                                                    !snapshot.data!.exists) {
+                                                  return Text(
+                                                      'Document not found',style: TextStyle(fontSize: 5),);
+                                                }
+                
+                                                // Access the 'fullName' field from the document data
+                                                String imageUrl =
+                                                    snapshot.data!['imageUrl'];
+                
+                                                return Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                          horizontal: 2.0,
+                                                          vertical: 2),
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.black26,
+                                                    radius: 26,
+                                                    backgroundImage: NetworkImage(
+                                                        (userData as Map<String,dynamic>)['imageUrl'] ??
+                                                            imageUrl),
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                            Container(
+                                              width: Get.width*0.46,
+                                            //  color: Colors.green,
+                                              padding: EdgeInsets.symmetric(horizontal: 10),
+                                              child: TextWidget(text: (userData as Map<String,
+                                                  dynamic>)['fullName'] ??
+                                                  'No Name',color: Colors.black,fsize: 18),
+                                            ),
+                                            Spacer(),
+                                            StreamBuilder(
                                                 stream: FirebaseFirestore.instance
-                                                    .collection('users')
-                                                    .doc(FirebaseAuth.instance
-                                                        .currentUser?.email)
+                                                    .collection("users")
+                                                    .doc(uid)
+                                                    .collection('completeList')
                                                     .snapshots(),
                                                 builder: (context,
-                                                    AsyncSnapshot<DocumentSnapshot>
-                                                        snapshot) {
-                                                  if (snapshot.connectionState ==
-                                                      ConnectionState.waiting) {
-                                                    // While the data is being fetched, you can return a loading indicator or an empty widget.
-                                                    return CircularProgressIndicator(); // Replace with your loading indicator widget
-                                                  }
-
-                                                  if (snapshot.hasError) {
-                                                    // Handle errors here
-                                                    return Text(
-                                                        'Error: ${snapshot.error}');
-                                                  }
-
-                                                  if (!snapshot.hasData ||
-                                                      !snapshot.data!.exists) {
-                                                    return Text(
-                                                        'Document not found',style: TextStyle(fontSize: 5),);
-                                                  }
-
-                                                  // Access the 'fullName' field from the document data
-                                                  String imageUrl =
-                                                      snapshot.data!['imageUrl'];
-
-                                                  return Padding(
-                                                    padding:
-                                                        const EdgeInsets.symmetric(
-                                                            horizontal: 2.0,
-                                                            vertical: 2),
-                                                    child: CircleAvatar(
-                                                      backgroundColor:
-                                                          Colors.black26,
-                                                      radius: 26,
-                                                      backgroundImage: NetworkImage(
-                                                          (userData as Map<String,dynamic>)['imageUrl'] ??
-                                                              imageUrl),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                              Container(
-                                                width: Get.width*0.46,
-                                              //  color: Colors.green,
-                                                padding: EdgeInsets.symmetric(horizontal: 10),
-                                                child: TextWidget(text: (userData as Map<String,
-                                                    dynamic>)['fullName'] ??
-                                                    'No Name',color: Colors.black,fsize: 18),
-                                              ),
-                                              Spacer(),
-                                              StreamBuilder(
-                                                  stream: FirebaseFirestore.instance
-                                                      .collection("users")
-                                                      .doc(uid)
-                                                      .collection('completeList')
-                                                      .snapshots(),
-                                                  builder: (context,
-                                                      AsyncSnapshot snapshotTask) {
-                                                    return StreamBuilder(
-                                                        stream: FirebaseFirestore
-                                                            .instance
-                                                            .collection("users")
+                                                    AsyncSnapshot snapshotTask) {
+                                                  return StreamBuilder(
+                                                      stream: FirebaseFirestore
+                                                          .instance
+                                                          .collection("users")
+                                                          .doc(userData['email'])
+                                                          .collection(
+                                                              'OwnAffirmationList')
+                                                          .snapshots(),
+                                                      builder: (context,
+                                                          AsyncSnapshot
+                                                              snapshot2) {
+                                                       final videos= FirebaseFirestore.instance
+                                                            .collection('users')
                                                             .doc(userData['email'])
-                                                            .collection(
-                                                                'OwnAffirmationList')
-                                                            .snapshots(),
-                                                        builder: (context,
-                                                            AsyncSnapshot
-                                                                snapshot2) {
-                                                         final videos= FirebaseFirestore.instance
-                                                              .collection('users')
-                                                              .doc(userData['email'])
-                                                              .collection('VideosUrl')
-                                                              .get();
-
-                                                          return InkWell(
-                                                            onTap: () {
-                                                              final blogRead = FirebaseFirestore.instance
+                                                            .collection('VideosUrl')
+                                                            .get();
+                
+                                                        return InkWell(
+                                                          onTap: () {
+                                                            final blogRead = FirebaseFirestore.instance
+                                                                .collection('users')
+                                                                .doc(userData['email'])
+                                                                .collection('blogReadList')
+                                                                .get();
+                                                            blogRead.then((QuerySnapshot snapshotBlog) {
+                                                              int blogLength = snapshotBlog.docs.length;
+                                                              final videos = FirebaseFirestore.instance
                                                                   .collection('users')
                                                                   .doc(userData['email'])
-                                                                  .collection('blogReadList')
+                                                                  .collection('VideosUrl')
                                                                   .get();
-                                                              blogRead.then((QuerySnapshot snapshotBlog) {
-                                                                int blogLength = snapshotBlog.docs.length;
-                                                                final videos = FirebaseFirestore.instance
-                                                                    .collection('users')
-                                                                    .doc(userData['email'])
-                                                                    .collection('VideosUrl')
-                                                                    .get();
-                                                                videos.then((QuerySnapshot snapshot) {
-                                                                  int length = snapshot.docs.length;
-                                                                  Get.dialog(
-                                                                    AlertDialog(
-                                                                      backgroundColor: Colors.white,
-                                                                      contentPadding: EdgeInsets.all(10),
-                                                                      insetPadding: const EdgeInsets.only(left: 0),
-                                                                      content: ViewFriendFullProfilePage(
-                                                                        Get.put(ViewFriendFullProfileController()),
-                                                                        affirmationCount: snapshot2.data.docs.length ?? 0,
-                                                                        blogReadCount:blogLength.toString()??'0',
-                                                                        intenseCompleted: length ?? '0',
-                                                                        taskCount: snapshotTask.data.docs.length ?? 0,
-                                                                        userName: userData['fullName'] ?? '0',
-                                                                        number: userData['phoneNumber'] ?? '0',
-                                                                        key: key,
-                                                                        userProfile: userData['imageUrl'] ?? '',
-                                                                        email: userData['email'] ?? '',
-                                                                        name: userData['fullName'] ?? '',
-                                                                      ),
+                                                              videos.then((QuerySnapshot snapshot) {
+                                                                int length = snapshot.docs.length;
+                                                                Get.dialog(
+                                                                  AlertDialog(
+                                                                    backgroundColor: Colors.white,
+                                                                    contentPadding: EdgeInsets.all(10),
+                                                                    insetPadding: const EdgeInsets.only(left: 0),
+                                                                    content: ViewFriendFullProfilePage(
+                                                                      Get.put(ViewFriendFullProfileController()),
+                                                                      affirmationCount: snapshot2.data.docs.length ?? 0,
+                                                                      blogReadCount:blogLength.toString()??'0',
+                                                                      intenseCompleted: length ?? '0',
+                                                                      taskCount: snapshotTask.data.docs.length ?? 0,
+                                                                      userName: userData['fullName'] ?? '0',
+                                                                      number: userData['phoneNumber'] ?? '0',
+                                                                      key: key,
+                                                                      userProfile: userData['imageUrl'] ?? '',
+                                                                      email: userData['email'] ?? '',
+                                                                      name: userData['fullName'] ?? '',
                                                                     ),
-                                                                  );
-                                                                });
-                                                              });
-                                                            },
-                                                            child: Container(
-                                                              width: Get.width * 0.21,
-                                                              height: Get.height * 0.04,
-                                                              decoration: BoxDecoration(
-                                                                borderRadius: BorderRadius.circular(31.0),
-                                                                color: Color(0xff048c44),
-                                                              ),
-                                                              child: Center(
-                                                                child: Text(
-                                                                  "View More",
-                                                                  style: TextStyle(
-                                                                    color: Colors.white,
-                                                                    fontSize: 11,
-                                                                    fontWeight: FontWeight.w500,
                                                                   ),
+                                                                );
+                                                              });
+                                                            });
+                                                          },
+                                                          child: Container(
+                                                            width: Get.width * 0.21,
+                                                            height: Get.height * 0.04,
+                                                            decoration: BoxDecoration(
+                                                              borderRadius: BorderRadius.circular(31.0),
+                                                              color: Color(0xff048c44),
+                                                            ),
+                                                            child: Center(
+                                                              child: Text(
+                                                                "View More",
+                                                                style: TextStyle(
+                                                                  color: Colors.white,
+                                                                  fontSize: 11,
+                                                                  fontWeight: FontWeight.w500,
                                                                 ),
                                                               ),
                                                             ),
-                                                          );
-
-                                                        });}),
-                                            ],
-                                          ),
+                                                          ),
+                                                        );
+                
+                                                      });}),
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                          SizedBox(
-                            width: Get.width,
-                            height: Get.height * 0.09,
-                            child: Row(
-                              children: [
-                                Spacer(),
-                                InkWell(
-                                  onTap: () {
-                                    // Modify the message as needed
-                                    String inviteMessage = "Hey! Check out this awesome app. Download it now!";
-
-                                    // Share the invitation message
-                                    Share.share(inviteMessage);
-                                  },
-                                  child: Container(
-                                    width: Get.width * 0.64,
-                                    height: Get.height * 0.075,
-                                    decoration: BoxDecoration(
-                                      color: Colors.deepOrange,
-                                      borderRadius: BorderRadius.circular(59),
                                     ),
-                                    child: Center(child: TextWidget(text: 'Invite Friends',color: Colors.white,fontFamily: 'Gotham light',fontWeight: FontWeight.w800,)),
-                                  ),
+                                  );
+                                },
+                              );
+                            },
+                          ),
+                          Positioned(
+                            bottom: 10,
+                            child: InkWell(
+                              onTap: () {
+                                // Modify the message as needed
+                                String inviteMessage = "Hey! Check out this awesome app. Download it now!";
+                
+                                // Share the invitation message
+                                Share.share(inviteMessage);
+                              },
+                              child: Container(
+                                width: Get.width * 0.64,
+                                height: Get.height * 0.075,
+                                decoration: BoxDecoration(
+                                  color: Colors.deepOrange,
+                                  borderRadius: BorderRadius.circular(59),
                                 ),
-                                Spacer(),
-                              ],
+                                child: Center(child: TextWidget(text: 'Invite Friends',color: Colors.white,fontFamily: 'Gotham light',fontWeight: FontWeight.w800,)),
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-
+                
                     //  Friends Tab   //
-
+                
                     StreamBuilder(
                       stream: FirebaseFirestore.instance
                           .collection('users').doc(user?.email).collection('FriendList')
@@ -449,14 +430,14 @@ class ViewFriendsTabContainerScreen
                           itemCount: snapshot.data?.docs.length,
                           itemBuilder: (context, index) {
                             final userData = snapshot.data?.docs[index].data();
-
+                
                             final uid = snapshot
                                 .data?.docs[index].id; // Retrieve the UID
                             final imageUrl = (userData as Map<String,dynamic>)['imageUrl'];
                             final friendName =(userData as Map<String,dynamic>)['name'];
                             final number =(userData as Map<String,dynamic>)['number'];
-
-
+                
+                
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Container(
@@ -502,25 +483,25 @@ class ViewFriendsTabContainerScreen
                                                 // While the data is being fetched, you can return a loading indicator or an empty widget.
                                                 return CircularProgressIndicator(); // Replace with your loading indicator widget
                                               }
-
+                
                                               if (snapshot.hasError) {
                                                 // Handle errors here
                                                 return Text(
                                                     'Error: ${snapshot.error}');
                                               }
-
+                
                                               if (!snapshot.hasData ||
                                                   !snapshot.data!.exists) {
                                                 // Handle the case where the document doesn't exist
                                                 return Text(
                                                     'Document not found');
                                               }
-
+                
                                               // Access the 'fullName' field from the document data
                                               String imageUrl =
                                               snapshot.data!['imageUrl'];
-
-
+                
+                
                                               return Padding(
                                                 padding:
                                                 const EdgeInsets.symmetric(
@@ -542,9 +523,9 @@ class ViewFriendsTabContainerScreen
                                             //  color: Colors.red,
                                               child: TextWidget(text: friendName??'N/A' ,color: Colors.black,fsize: 18)),
                                           // Add the rest of your user data widgets here.
-
+                
                                           Spacer(),
-
+                
                                           StreamBuilder(
                                               stream: FirebaseFirestore.instance
                                                   .collection("users")
@@ -573,9 +554,9 @@ class ViewFriendsTabContainerScreen
                                                              phone:  number??'N/A', imgUrl:userData['imageUrl'],
                                                             ),
                                                           );
-
-
-
+                
+                
+                
                                                           // Get.defaultDialog(title: "Profile",
                                                           //     content:profileView(
                                                           //       name: (userData)['fullName'],
@@ -629,10 +610,10 @@ class ViewFriendsTabContainerScreen
                         );
                       },
                     ),
-
-
+                
+                
                     // Groups //
-
+                
                  GroupPage(),
                   ],
                 ),

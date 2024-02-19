@@ -261,7 +261,7 @@ late String name,email;
                                             .roundedBorder11,
                                       ),
                                       child: Text(
-                                        affirmationCount.toString()??'0',
+                                        affirmationCount.toString(),
                                         overflow: TextOverflow.ellipsis,
                                         textAlign: TextAlign.left,
                                         style: CustomTextStyles
