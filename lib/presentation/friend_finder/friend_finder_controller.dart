@@ -96,7 +96,7 @@ class FriendFinderController extends GetxController {
                   contentPadding: EdgeInsets.all(10),
                   insetPadding: const EdgeInsets.only(left: 0),
                   content: SizedBox(
-                    height: Get.height * 0.25,
+                    height: Get.height * 0.40,
                     width: Get.width * 0.8,
                     child: AlertDialog(
                       title: Text('Add Friend'),
