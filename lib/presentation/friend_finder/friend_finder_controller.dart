@@ -38,7 +38,7 @@ class FriendFinderController extends GetxController {
     debounce(
       searchQuery, // Observable to watch for changes
           (_) => searchUser(), // Function to execute
-      time: Duration(milliseconds: 100), // Delay duration
+      time: Duration(milliseconds: 5000), // Delay duration
     );
   }
 
@@ -55,7 +55,8 @@ class FriendFinderController extends GetxController {
         print('Error searching users: $error');
       }
     }
-    if (searchQuery.value.isNotEmpty) {
+
+    else if (searchQuery.value.isNotEmpty) {
       try {
         final snapshot = await FirebaseFirestore.instance
             .collection('users')
@@ -67,7 +68,6 @@ class FriendFinderController extends GetxController {
         print('Error searching users: $error');
       }
     }
-
     else {
       // Clear the user list if search query is empty
       userList.clear();
