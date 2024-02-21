@@ -20,7 +20,8 @@ class _FriendFinderPageState extends State<FriendFinderPage>
   late TabController _tabController;
   List<Contact> _contacts = [];
   TextEditingController emailcontroller = TextEditingController();
-  TextEditingController usernamecontroller=TextEditingController();
+  TextEditingController usernamecontroller = TextEditingController();
+  var searchQuery;
 
   @override
   void initState() {
@@ -131,71 +132,186 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                     child: CircularProgressIndicator(),
                   ),
             // Second Tab Content (Email)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: Get.width * 0.5,
-                  child: TextFormField(
-                    controller: emailcontroller,
-                    decoration: InputDecoration(
-                      labelText: 'Enter Email',
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 15, left: 20),
-                  child: ElevatedButton(
-                      onPressed: () async {
-                        print("Email clicekd");
-                        await ctrl.findUser(emailcontroller.text);
 
-                      },
-                      child: Text("Find user")),
-                )
+            Column(
+              children: [
+                SizedBox(height: 20),
+                Row(
+
+                  children: [
+                    SizedBox(width: 15,),
+
+                    Icon(Icons.person),
+                    SizedBox(width: 15,),
+                    SizedBox(
+                      width: Get.width*0.5,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          ctrl.setSearchQuery(value);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Enter Email',
+                        ),
+                        controller: emailcontroller,
+                      ),
+                    ),
+                  ],
+                ),
+                Obx(() {
+                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty) {
+                    return Text('No email exists.');
+                  } else {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: ctrl.userList.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot doc = ctrl.userList[index];
+
+                          return ListTile(
+                            title: Text(doc['fullName']),
+                            subtitle: Text(doc['email']),
+                            onTap: () {
+                              Get.dialog(
+                                AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(10),
+                                    insetPadding:
+                                        const EdgeInsets.only(left: 0),
+                                    content: SizedBox(
+                                      height: Get.height * 0.40,
+                                      width: Get.width * 0.8,
+                                      child: AlertDialog(
+                                        title: Text('Add Friend'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: <Widget>[
+                                              Text(
+                                                  'Do you want to add this user as a friend?'),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Get.back(closeOverlays: true);
+                                            },
+                                            child: Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              await Get.put(
+                                                      ViewFriendFullProfileController())
+                                                  .addFriendList(
+                                                      context,
+                                                      doc['fullName'],
+                                                      doc['email'],
+                                                      doc['imageUrl'],
+                                                      doc['phoneNumber']);
+                                            },
+                                            child: Text('Add'),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }),
               ],
             ),
+
             // Third Tab Content (Username)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
+            Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 30.0),
-                  child: Icon(
-                    Icons.person,
-                    size: 24,
-                  ),
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                SizedBox(
-                  width: Get.width * 0.5,
-                  child: TextFormField(
-                    controller: usernamecontroller,
-                    decoration: InputDecoration(
-                      labelText: 'Enter UserName',
+                SizedBox(height: 20),
+                Row(
+
+                  children: [
+                    SizedBox(width: 15,),
+
+                    Icon(Icons.person),
+                    SizedBox(width: 15,),
+                    SizedBox(
+                     width: Get.width*0.5,
+                      child: TextFormField(
+                        onChanged: (value) {
+                          ctrl.setSearchQuery(value);
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Enter User Name',
+                        ),
+                        controller: usernamecontroller,
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                ElevatedButton(onPressed: () {
+                Obx(() {
+                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty) {
+                    return Text('No User exists.');
+                  } else {
+                    return Expanded(
+                      child: ListView.builder(
+                        itemCount: ctrl.userList.length,
+                        itemBuilder: (context, index) {
+                          DocumentSnapshot doc = ctrl.userList[index];
 
-                  print("cLICKED");
-                  ctrl.findUser(usernamecontroller.text);
-
-                }, child: Text("Find User"))
+                          return ListTile(
+                            title: Text(doc['fullName']),
+                            onTap: () {
+                              Get.dialog(
+                                AlertDialog(
+                                    backgroundColor: Colors.white,
+                                    contentPadding: EdgeInsets.all(10),
+                                    insetPadding:
+                                        const EdgeInsets.only(left: 0),
+                                    content: SizedBox(
+                                      height: Get.height * 0.40,
+                                      width: Get.width * 0.8,
+                                      child: AlertDialog(
+                                        title: Text('Add Friend'),
+                                        content: SingleChildScrollView(
+                                          child: ListBody(
+                                            children: <Widget>[
+                                              Text(
+                                                  'Do you want to add this user as a friend?'),
+                                            ],
+                                          ),
+                                        ),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            onPressed: () {
+                                              Get.back(closeOverlays: true);
+                                            },
+                                            child: Text('Cancel'),
+                                          ),
+                                          TextButton(
+                                            onPressed: () async {
+                                              await Get.put(
+                                                      ViewFriendFullProfileController())
+                                                  .addFriendList(
+                                                      context,
+                                                      doc['fullName'],
+                                                      doc['email'],
+                                                      doc['imageUrl'],
+                                                      doc['phoneNumber']);
+                                            },
+                                            child: Text('Add'),
+                                          ),
+                                        ],
+                                      ),
+                                    )),
+                              );
+                            },
+                          );
+                        },
+                      ),
+                    );
+                  }
+                }),
               ],
             ),
           ],
