@@ -1,3 +1,4 @@
+import 'package:daone/presentation/friend_finder/friend_finder_controller.dart';
 import 'package:daone/presentation/send_friend_invite/send_friend_invite.dart';
 import 'package:daone/routes/app_routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -12,6 +13,7 @@ import 'presentation/friend_finder/friend_finder.dart';
 
 
 Future<void> main() async {
+  Get.put(FriendFinderController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Alarm.init();
@@ -45,10 +47,10 @@ class MyApp extends StatelessWidget {
       locale: Get.deviceLocale,
       fallbackLocale: Locale('en', 'US'),
       title: 'daone',
-home: FriendFinderPage(),
+// home: FriendFinderPage(),
       initialBinding: InitialBindings(),
-      // initialRoute: determineInitialRoute(),
-      // getPages: AppRoutes.pages,
+      initialRoute: determineInitialRoute(),
+      getPages: AppRoutes.pages,
     );
   }
 

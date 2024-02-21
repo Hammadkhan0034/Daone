@@ -26,18 +26,25 @@ class GroupPage extends StatelessWidget {
       children: [
         StreamBuilder(
           stream: FirebaseFirestore.instance.collection('groups').snapshots(),
-          builder: (context,AsyncSnapshot snapshot){
-            if (!snapshot.hasData || snapshot.data == null || snapshot.data!.docs.isEmpty) {
-              return Center(child: Column(
+          builder: (context, AsyncSnapshot snapshot) {
+            if (!snapshot.hasData ||
+                snapshot.data == null ||
+                snapshot.data!.docs.isEmpty) {
+              return Center(
+                  child: Column(
                 children: [
                   Spacer(),
-                  Icon(Icons.group_add,color: Colors.deepOrange,size: Get.height*0.1),
+                  Icon(Icons.group_add,
+                      color: Colors.deepOrange, size: Get.height * 0.1),
                   Container(
-                    width: Get.width*0.6,
-                    child:Text('You are not currently part of any group, and if you want to create a group,'
+                      width: Get.width * 0.6,
+                      child: Text(
+                        'You are not currently part of any group, and if you want to create a group,'
                         ' please click on the Create Group button below.',
-                    style: TextStyle(overflow: TextOverflow.visible,fontFamily: 'Gotham Light'),
-                    )),
+                        style: TextStyle(
+                            overflow: TextOverflow.visible,
+                            fontFamily: 'Gotham Light'),
+                      )),
                   Spacer(),
                 ],
               ));
@@ -61,85 +68,100 @@ class GroupPage extends StatelessWidget {
               final List<dynamic>? groupMembers = data['groupMembers'];
 
               return groupMembers != null &&
-                  groupMembers.any((member) => member['email'] == userEmail) ||
+                      groupMembers
+                          .any((member) => member['email'] == userEmail) ||
                   data['groupCreator'] == userEmail;
             }).toList();
 
             return Container(
-             // color: Colors.pinkAccent,
-              height: Get.height*0.02,
+              // color: Colors.pinkAccent,
+              height: Get.height * 0.02,
               width: Get.width,
               child: ListView.builder(
-                    itemCount: filteredGroups.length,
-                    // itemCount: snapshot.data.docs.length,
+                itemCount: filteredGroups.length,
+                // itemCount: snapshot.data.docs.length,
                 itemBuilder: (context, index) {
                   // var data= snapshot.data.docs[index].data();
                   var data = filteredGroups[index].data();
-                  var imageUrl =data['groupImageUrl'];
-                  var groupName =data['groupName'];
-                  var groupCreatorName=data['groupCreator'];
-                  var groupStartingDate =data['groupStartingDate'];
-                return InkWell(
-                  onTap: (){
-                    Get.to(()=>GroupPost(groupName,imageUrl,groupCreatorName,groupStartingDate));
-                  },
-                  child: Container(
-                    margin: EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(color: Colors.grey)
+                  var imageUrl = data['groupImageUrl'];
+                  var groupName = data['groupName'];
+                  var groupCreatorName = data['groupCreator'];
+                  var groupStartingDate = data['groupStartingDate'];
+                  return InkWell(
+                    onTap: () {
+                      Get.to(() => GroupPost(groupName, imageUrl,
+                          groupCreatorName, groupStartingDate));
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(color: Colors.grey)),
+                      child: Row(
+                        children: [
+                          Container(
+                            height: Get.height * 0.15,
+                            width: Get.width * 0.4,
+                            padding: EdgeInsets.symmetric(
+                                vertical: 10, horizontal: 15),
+                            child: CachedNetworkImage(
+                              imageUrl: imageUrl == null
+                                  ? 'https://unsplash.com/photos/four-person-hands-wrap-around-shoulders-while-looking-at-sunset-PGnqT0rXWLs'
+                                  : imageUrl,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Column(
+                            children: [
+                              Container(
+                                  //color: Colors.red,
+                                  width: Get.width * 0.5,
+                                  height: Get.height * 0.05,
+                                  child: Text(
+                                    data['groupName'] ?? '',
+                                    style: TextStyle(
+                                        overflow: TextOverflow.visible,
+                                        fontFamily: 'Gotham Light',
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w800),
+                                  )),
+                              Container(
+                                  color: Colors.white,
+                                  width: Get.width * 0.5,
+                                  height: Get.height * 0.066,
+                                  child: Text(
+                                    data['groupDescription'] ?? '',
+                                    style: TextStyle(
+                                        overflow: TextOverflow.visible,
+                                        fontFamily: 'Gotham Light',
+                                        fontSize: 8,
+                                        fontWeight: FontWeight.w800),
+                                  )),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                    child: Row(
-                      children: [
-                        Container(
-                          height: Get.height*0.15,
-                          width: Get.width*0.4,
-                          padding: EdgeInsets.symmetric(vertical: 10,horizontal: 15),
-                          child: CachedNetworkImage(
-                              imageUrl:imageUrl==null ?
-                          'https://unsplash.com/photos/four-person-hands-wrap-around-shoulders-while-looking-at-sunset-PGnqT0rXWLs'
-                              :imageUrl,fit: BoxFit.cover,),
-                        ),
-                        Column(
-                          children: [
-                            Container(
-                              //color: Colors.red,
-                                width: Get.width*0.5,
-                                height: Get.height*0.05,
-
-                                child:Text(data['groupName']??'',
-                                  style: TextStyle(overflow: TextOverflow.visible,fontFamily: 'Gotham Light',
-                                    fontSize: 14,fontWeight: FontWeight.w800
-                                  ),
-                                )),
-                            Container(
-                              color: Colors.white,
-                                width: Get.width*0.5,
-                                height: Get.height*0.066,
-                                child:Text(data['groupDescription']??'',
-                                  style: TextStyle(overflow: TextOverflow.visible,fontFamily: 'Gotham Light',
-                                      fontSize: 8,fontWeight: FontWeight.w800),
-                                )),
-
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },),
+                  );
+                },
+              ),
             );
           },
         ),
-
         Positioned(
-            bottom: 20,right: 20,
+            bottom: 20,
+            right: 20,
             child: FloatingActionButton(
-          backgroundColor: Colors.deepOrange,
-          onPressed: (){
-          Get.to(GetStartedGroupScreen());
-
-        },child: Icon(Icons.add,color: Colors.white,size: 24,),))
+              backgroundColor: Colors.deepOrange,
+              onPressed: () {
+                Get.to(GetStartedGroupScreen());
+              },
+              child: Icon(
+                Icons.add,
+                color: Colors.white,
+                size: 24,
+              ),
+            ))
       ],
     );
   }
@@ -302,5 +324,4 @@ class GroupPage extends StatelessWidget {
   //   // Convert the GroupModel to a map and save it to Firebase
   //   await groups.add(group.toMap());
   // }
-
 }
