@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/presentation/group_page/get_started_group.dart';
 import 'package:daone/presentation/group_page/group_post.dart';
+import 'package:daone/presentation/group_page/models/group_model.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'controller/view_friends_controller.dart';
@@ -24,16 +25,35 @@ class GroupPage extends StatelessWidget {
 
     return Stack(
       children: [
-        StreamBuilder(
-          stream: FirebaseFirestore.instance.collection('groups').snapshots(),
+        StreamBuilder<List<GroupModel>>(
+          stream: FirebaseFirestore.instance.collection('groups').snapshots().map((event) {
+            List<GroupModel> list=[];
+            final String email = FirebaseAuth.instance.currentUser!.email!;
+
+            for(final snap in event.docs){
+              GroupModel groupModel=GroupModel.fromMap(snap.data());
+              if(groupModel.containsUser(email)){
+                list.add(groupModel);
+              }
+            }
+            return list;
+          }),
           builder: (context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              // Loading indicator while data is being fetched
+              return Center(
+                child: CircularProgressIndicator(
+                  color: Colors.deepOrangeAccent,
+                ),
+              );
+            }
             if (!snapshot.hasData ||
                 snapshot.data == null ||
-                snapshot.data!.docs.isEmpty) {
+                snapshot.data.isEmpty) {
               return Center(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Spacer(),
                   Icon(Icons.group_add,
                       color: Colors.deepOrange, size: Get.height * 0.1),
                   Container(
@@ -45,106 +65,83 @@ class GroupPage extends StatelessWidget {
                             overflow: TextOverflow.visible,
                             fontFamily: 'Gotham Light'),
                       )),
-                  Spacer(),
                 ],
               ));
             }
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              // Loading indicator while data is being fetched
-              return Center(
-                child: CircularProgressIndicator(
-                  color: Colors.deepOrangeAccent,
-                ),
-              );
-            }
+
             if (snapshot.hasError) {
               return Text('Error: ${snapshot.error}');
             }
-            final String userEmail = FirebaseAuth.instance.currentUser!.email!;
 
-            // Filter groups based on user's email in 'groupMembers' or as 'groupCreator'
-            final filteredGroups = snapshot.data.docs.where((doc) {
-              final data = doc.data();
-              final List<dynamic>? groupMembers = data['groupMembers'];
-
-              return groupMembers != null &&
-                      groupMembers
-                          .any((member) => member['email'] == userEmail) ||
-                  data['groupCreator'] == userEmail;
-            }).toList();
-
-            return Container(
-              // color: Colors.pinkAccent,
-              height: Get.height * 0.02,
-              width: Get.width,
-              child: ListView.builder(
-                itemCount: filteredGroups.length,
-                // itemCount: snapshot.data.docs.length,
-                itemBuilder: (context, index) {
-                  // var data= snapshot.data.docs[index].data();
-                  var data = filteredGroups[index].data();
-                  var imageUrl = data['groupImageUrl'];
-                  var groupName = data['groupName'];
-                  var groupCreatorName = data['groupCreator'];
-                  var groupStartingDate = data['groupStartingDate'];
-                  return InkWell(
-                    onTap: () {
-                      Get.to(() => GroupPost(groupName, imageUrl,
-                          groupCreatorName, groupStartingDate));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(color: Colors.grey)),
-                      child: Row(
-                        children: [
-                          Container(
-                            height: Get.height * 0.15,
-                            width: Get.width * 0.4,
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 15),
-                            child: CachedNetworkImage(
-                              imageUrl: imageUrl == null
-                                  ? 'https://unsplash.com/photos/four-person-hands-wrap-around-shoulders-while-looking-at-sunset-PGnqT0rXWLs'
-                                  : imageUrl,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                  //color: Colors.red,
-                                  width: Get.width * 0.5,
-                                  height: Get.height * 0.05,
-                                  child: Text(
-                                    data['groupName'] ?? '',
-                                    style: TextStyle(
-                                        overflow: TextOverflow.visible,
-                                        fontFamily: 'Gotham Light',
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w800),
-                                  )),
-                              Container(
-                                  color: Colors.white,
-                                  width: Get.width * 0.5,
-                                  height: Get.height * 0.066,
-                                  child: Text(
-                                    data['groupDescription'] ?? '',
-                                    style: TextStyle(
-                                        overflow: TextOverflow.visible,
-                                        fontFamily: 'Gotham Light',
-                                        fontSize: 8,
-                                        fontWeight: FontWeight.w800),
-                                  )),
-                            ],
+            return ListView.builder(
+              itemCount: snapshot.data.length,
+              itemBuilder: (context, index) {
+                // var data= snapshot.data.docs[index].data();
+               GroupModel groupModel=snapshot.data[index];
+                return InkWell(
+                  onTap: () {
+                    Get.to(() => GroupPost(groupModel.name, groupModel.image,
+                        groupModel.createdBy.fullName, groupModel.createdAt.toDate()));
+                  },
+                  child: Container(
+                    height: 70,
+                    margin: EdgeInsets.all(10),
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.grey)),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 50,
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 15),
+                          child:
+                          CustomImageView(url: groupModel.image.isEmpty
+                              ? 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                              : groupModel.image,
+                          height: 50,width: 50, radius: BorderRadius.circular(50),
+                            fit: BoxFit.fill,
                           )
-                        ],
-                      ),
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                                //color: Colors.red,
+
+                                width: Get.width * 0.7,
+                                child: Text(
+                                  groupModel.name,
+                                  maxLines: 1,
+                                  style: TextStyle(
+                                      overflow: TextOverflow.visible,
+                                      fontFamily: 'Gotham Light',
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w800),
+                                )),
+                            Container(
+                              margin: EdgeInsets.only(top: 2.5),
+                                color: Colors.white,
+                                width: Get.width * 0.7,
+                                child: Text(
+                                  groupModel.description,
+                                  maxLines: 2,
+                                  style: TextStyle(
+                                      overflow: TextOverflow.visible,
+                                      fontFamily: 'Gotham Light',
+                                      fontSize: 8,
+                                      fontWeight: FontWeight.w800),
+                                )),
+                          ],
+                        )
+                      ],
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             );
           },
         ),

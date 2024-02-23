@@ -1,10 +1,11 @@
   import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 
 class GroupModel {
     final String name,description,image;
     Timestamp createdAt;
-    UserModel? createdBy;
+    UserModel createdBy;
     final List<UserModel> users;
 
 
@@ -18,14 +19,23 @@ class GroupModel {
     required this.users,
   });
 
+    bool containsUser(String email){
+if(createdBy.email==email) return true;
+     UserModel? userModel= users.firstWhereOrNull((element) {
+      return  element.email==email;
+      });
+
+      return userModel!=null;
+    }
+
     Map<String, dynamic> toMap() {
     return {
       'name': this.name,
       'description': this.description,
       'image': this.image,
       'createdAt': this.createdAt,
-      'createdBy': this.createdBy,
-      'users': this.users.map((e) => e.toMap()).toList(growable: false),
+      'createdBy': this.createdBy.toMap(),
+      'users':  this.users.map((e) => e.toMap()).toList(growable: false),
     };
   }
 
@@ -37,11 +47,11 @@ class GroupModel {
       }
 
       return GroupModel(
-        name: map['name'] as String? ?? '', // Handle null value by providing a default empty string
-        description: map['description'] as String? ?? '', // Handle null value by providing a default empty string
-        image: map['image'] as String? ?? '', // Handle null value by providing a default empty string
-        createdAt: map['createdAt'] ?? Timestamp.now() , // Assuming 'createdAt' is always present and non-null
-        createdBy: map['createdBy']  , // Assuming 'createdBy' is always present and non-null
+        name: map['name'] ?? '', // Handle null value by providing a default empty string
+        description: map['description']?? '', // Handle null value by providing a default empty string
+        image: map['image']  ?? '', // Handle null value by providing a default empty string
+        createdAt: map['createdAt'] as Timestamp, // Assuming 'createdAt' is always present and non-null
+        createdBy: UserModel.fromMap( map['createdBy'])  , // Assuming 'createdBy' is always present and non-null
         users: usersList,
       );
     }

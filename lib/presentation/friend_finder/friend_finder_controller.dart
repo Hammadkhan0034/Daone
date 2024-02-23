@@ -1,11 +1,16 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import '../register_page_one_screen/models/user_model.dart';
 
 
 class FriendFinderController extends GetxController {
   final searchQuery = ''.obs;
-  final userList = <DocumentSnapshot>[].obs;
+  final List<UserModel>userList = <UserModel>[];
   Future<Map<dynamic, dynamic>> checkIfPhoneNumberExistsInFirebase(
       String? phoneNumber) async {
     try {
@@ -32,47 +37,66 @@ class FriendFinderController extends GetxController {
 
 
 
-  void setSearchQuery(String query) {
-    searchQuery.value = query;
+  // void setSearchQuery(String query) {
+  //   searchQuery.value = query;
+  //
+  //   debounce(
+  //     searchQuery, // Observable to watch for changes
+  //         (_) => searchUser(), // Function to execute
+  //     time: Duration(milliseconds: 5000), // Delay duration
+  //   );
+  // }
 
-    debounce(
-      searchQuery, // Observable to watch for changes
-          (_) => searchUser(), // Function to execute
-      time: Duration(milliseconds: 5000), // Delay duration
-    );
-  }
+   Future<void> searchUsersByUserName(String searchCase) async {
+     String currentUserId=FirebaseAuth.instance.currentUser!.uid;
+     try {
+       final snapshot=await  FirebaseFirestore.instance
+           .collection('users')
+           .where("fullName", isGreaterThanOrEqualTo: searchCase)
+           .where("fullName",
+           isLessThan: searchCase+'z')
+           .get();
+       if(snapshot.size>0)
+       {
+         userList.clear();
+         for(final user in snapshot.docs){
+           UserModel userModel=UserModel.fromMap(user.data());
+           if(user.id==currentUserId) continue;
+           userList.add(userModel);
+         }
+         update();
+       }
+     }  catch (e) {
+       print(e);
+     }
 
-  void searchUser() async {
-    if (searchQuery.value.isNotEmpty) {
-      try {
-        final snapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('email', isGreaterThanOrEqualTo: searchQuery.value)
-            .get();
-        userList.value = snapshot.docs;
-      } catch (error) {
-        // Handle errors if any
-        print('Error searching users: $error');
-      }
-    }
 
-    else if (searchQuery.value.isNotEmpty) {
-      try {
-        final snapshot = await FirebaseFirestore.instance
-            .collection('users')
-            .where('userName', isGreaterThanOrEqualTo: searchQuery.value)
-            .get();
-        userList.value = snapshot.docs;
-      } catch (error) {
-        // Handle errors if any
-        print('Error searching users: $error');
-      }
-    }
-    else {
-      // Clear the user list if search query is empty
-      userList.clear();
-    }
-  }
+   }
+   Future<void> searchUsersByEmail(String searchCase) async {
+     String currentUserId=FirebaseAuth.instance.currentUser!.uid;
+     try {
+       final snapshot=await  FirebaseFirestore.instance
+           .collection('users')
+           .where("email", isGreaterThanOrEqualTo: searchCase)
+           .where("email",
+           isLessThan: searchCase+'z')
+           .get();
+       if(snapshot.size>0)
+       {
+         userList.clear();
+         for(final user in snapshot.docs){
+           UserModel userModel=UserModel.fromMap(user.data());
+           if(user.id==currentUserId) continue;
+           userList.add(userModel);
+         }
+         update();
+       }
+     }  catch (e) {
+       print(e);
+     }
+   }
+
+
 
 
 }

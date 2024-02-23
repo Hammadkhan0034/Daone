@@ -1,10 +1,10 @@
 /// This class defines the variables used in the [register_page_one_screen],
 /// and is typically used to hold data that is passed between different parts of the application.
 class UserModel {
-  var uid,fullName,phoneNumber,email;
+  String uid,fullName,phoneNumber,email,searchCase;
   String? imageUrl;
 
-  UserModel({this.uid,this.fullName,this.phoneNumber,this.email,this.imageUrl});
+  UserModel({required this.searchCase, required this.uid,required this.fullName,required this.phoneNumber,required this.email,this.imageUrl});
 
   //data from server
 factory UserModel.fromMap(map){
@@ -13,7 +13,7 @@ factory UserModel.fromMap(map){
    email: map['email'],
    fullName: map['fullName'],
    phoneNumber: map['phoneNumber'],
-   imageUrl: map['imageUrl']
+   imageUrl: map['imageUrl'], searchCase: map['searchCase']??""
 
  );
 }
@@ -24,7 +24,8 @@ return{
   'email' :email,
   'fullName' :fullName,
   'phoneNumber':phoneNumber,
-  'imageUrl' :imageUrl
+  'imageUrl' :imageUrl,
+  'searchCase':searchCase
   };
 }
 

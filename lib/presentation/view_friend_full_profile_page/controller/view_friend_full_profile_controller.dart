@@ -47,8 +47,8 @@ class ViewFriendFullProfileController extends GetxController {
           Get.snackbar("Info", "$name Add in your friend list Successfully");
 
           // Hide the progress indicator and navigate
-          Navigator.of(context).pop();
-          Get.offAndToNamed(AppRoutes.accountSettingScreen);
+         Get.back();
+
         } else {
           // Handle the case where any of the required values is null
           print('One or more values are null');

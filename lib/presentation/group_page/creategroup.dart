@@ -184,27 +184,10 @@ class CreateGroup extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () async {
-                    if (_key.currentState?.validate() ?? false) {
-                      String? userEmail =
-                          FirebaseAuth.instance.currentUser?.email;
+                    if (_key.currentState?.validate() ?? false ) {
+                          _controller.createGroup();
 
-                      if (userEmail != null) {
-                        String? imageUrl = await getImageUrl(userEmail);
-
-                        if (imageUrl != null) {
-                          _controller.createGroup(context, imageUrl);
-                        } else {
-                          // Handle the case where imageUrl is null
-                          Get.snackbar('App Info', 'Image URL not available.');
-                        }
-                      } else {
-                        // Handle the case where userEmail is null
-                        Get.snackbar('App Info', 'User email not available.');
-                      }
-                    } else {
-                      Get.snackbar('App Info', 'Form is not valid.');
-                    }
-                  },
+                  }},
                   child: Container(
                     height: Get.height * 0.08,
                     width: Get.width * 0.7,

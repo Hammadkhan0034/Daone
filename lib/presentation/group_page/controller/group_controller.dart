@@ -6,9 +6,7 @@ import 'package:daone/presentation/group_page/group_page.dart';
 import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 
@@ -165,89 +163,53 @@ class GroupController extends GetxController {
       selectedImage.value = File(pickedFile.path);
     }
   }
+Future<UserModel> getUserById()async{
+  DocumentSnapshot<Map<String, dynamic>>snapshot=await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.email!).get();
+  print(snapshot.data());
+return UserModel.fromMap(snapshot.data());
+}
 
-  Future<void> createGroup(context,profileImageUrl)async{
-    UserModel? groupcreatedby;
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
+  Future<void> createGroup()async{
+    Get.showOverlay(asyncFunction: ()async{
 
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
-      if (user != null){
-        print('hello');
-        final dateTime = DateTime.now();
-      String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-        String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      try {
+        User? user = FirebaseAuth.instance.currentUser;
+        imageUrl.value="";
+        UserModel createdBy=await getUserById();
+        Timestamp timestamp=Timestamp.now();
+        String fileName = timestamp.millisecondsSinceEpoch.toString();
+        if(selectedImage.value!=null){
+          Reference storageReference =
+          FirebaseStorage.instance.ref().child('group_images/$fileName');
+          // Upload the image to Firebase Storage
+          UploadTask uploadTask = storageReference.putFile(selectedImage.value!);
+          TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => {
+            print('photo upload '),
+          });
+          imageUrl.value = await taskSnapshot.ref.getDownloadURL();
+        }
 
-        // Get a reference to the Firebase Storage location
-        Reference storageReference =
-        FirebaseStorage.instance.ref().child('group_images/$fileName');
-        print(1);
-        // Upload the image to Firebase Storage
-        UploadTask uploadTask = storageReference.putFile(selectedImage.value as File);
-        TaskSnapshot taskSnapshot = await uploadTask.whenComplete(() => {
-          print('photo upload '),
-        });
-        print(2);
+        GroupModel groupModel=GroupModel(name: groupName.text, description: groupDes.text, image: imageUrl.value, createdAt: timestamp, createdBy:createdBy, users: []);
 
-        // Get the download URL of the uploaded image
-        imageUrl.value = await taskSnapshot.ref.getDownloadURL();
-GroupModel groupModel=GroupModel(name: groupName.text, description: groupDes.text, image: imageUrl.value, createdAt: Timestamp.now(), createdBy:groupcreatedby!.fullName, users: []);
+        Map<String,dynamic> data=groupModel.toMap();
 
-Map<String, dynamic> createGroup=groupModel.toMap();
-        await FirebaseFirestore.instance.collection('groups').doc(groupName.text).set(
-        //{
-        // 'groupName': groupName.text,
-        // 'groupCreator': user!.email,
-        // 'groupDescription': groupDes.text,
-        //   'groupMembers': [
-        //     {
-        //       'email': user!.email,
-        //       'imageUrl': imageUrl,
-        //     }
-        //   ],
-        // //   'groupMembers': [
-        // //
-        // // //  user.email,profileImageUrl
-        // //   ],
-        // 'groupStartingDate': formattedDate,
-        //   'groupImageUrl': imageUrl.value,
-        // 'postLike': 0,
-        // }
-
-        createGroup
+        await FirebaseFirestore.instance.collection('groups').doc(groupModel.groupId).set(
+            data
         );
-
-        print(3);
-
-        // await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('likes').add({
-        // });
-
-        print(4);
-
-
-        // await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('comment').add({
-        // });
-
-
-        Get.snackbar("App Info", "Group Created Successfully");
-      Get.offAllNamed(AppRoutes.viewFriendsTabContainerScreen);
-    }else{
-        Get.snackbar('Error', 'User is not authenticated');
         Get.back();
-    }
-    }catch(e){
-      Get.snackbar('Error :', '$e');
-      Get.back();
-    }
+        Get.back();
+        Get.snackbar("App Info", "Group Created Successfully");
+
+      }catch(e,stackTrace){
+        print(stackTrace);
+        print(e);
+        Get.snackbar('Error :', '$e');
+      }
+
+
+    },loadingWidget: Center(child: SizedBox(height: 60,width: 60,child: CircularProgressIndicator(color: Colors.deepOrange,),),));
+
+
   }
 
 

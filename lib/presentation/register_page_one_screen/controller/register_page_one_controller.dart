@@ -16,7 +16,6 @@ class RegisterPageOneController extends GetxController {
 
   TextEditingController passwordController = TextEditingController();
 
-  Rx<UserModel> registerPageOneModelObj = UserModel().obs;
 
   Rx<bool> isShowPassword = true.obs;
 
@@ -87,28 +86,16 @@ class RegisterPageOneController extends GetxController {
 
 
   postDetailsToFirestore()async{
-    //calling our firestore
-    //calling our user Model
-    //sending thes values
     FirebaseFirestore  firebaseFirestore= FirebaseFirestore.instance;
     User? user = auth.currentUser;
-
-    UserModel userModel= UserModel();
-
-    //writing all the values
-    userModel.fullName = fullnameController.text;
-    userModel.email = user!.email;
-    userModel.uid = user!.uid;
-    userModel.phoneNumber =phonenumberController.text;
-    userModel.imageUrl ='https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png';
-
+    UserModel userModel= UserModel(searchCase: fullnameController.text.toLowerCase(), uid: user!.uid, fullName: fullnameController.text, phoneNumber: phonenumberController.text, email: user.email!.toLowerCase(),imageUrl: 'https://cdn3.iconfinder.com/data/icons/essential-rounded/64/Rounded-31-512.png');
     await firebaseFirestore
         .collection('users')
-        .doc(user!.email)
+        .doc(user.email)
         .set(userModel.toMap());
     SnackBar(content: Text("account create successfully"));
     print('account created');
-    Get.offAndToNamed(AppRoutes.successRegistrationScreen);
+    Get.offAllNamed(AppRoutes.successRegistrationScreen);
   }
   String? errorMessage;
 

@@ -281,89 +281,92 @@ class ViewFriendsTabContainerScreen
 
                                                         return InkWell(
                                                           onTap: () {
-                                                            final blogRead =
-                                                                FirebaseFirestore
-                                                                    .instance
-                                                                    .collection(
-                                                                        'users')
-                                                                    .doc(userData[
-                                                                        'email'])
-                                                                    .collection(
-                                                                        'blogReadList')
-                                                                    .get();
-                                                            blogRead.then(
-                                                                (QuerySnapshot
-                                                                    snapshotBlog) {
-                                                              int blogLength =
-                                                                  snapshotBlog
-                                                                      .docs
-                                                                      .length;
-                                                              final videos = FirebaseFirestore
+                                                            Get.showOverlay(asyncFunction: ()async{
+                                                              final blogRead =
+                                                               FirebaseFirestore
                                                                   .instance
                                                                   .collection(
-                                                                      'users')
+                                                                  'users')
                                                                   .doc(userData[
-                                                                      'email'])
+                                                              'email'])
                                                                   .collection(
-                                                                      'VideosUrl')
+                                                                  'blogReadList')
                                                                   .get();
-                                                              videos.then(
-                                                                  (QuerySnapshot
-                                                                      snapshot) {
-                                                                int length =
-                                                                    snapshot
-                                                                        .docs
-                                                                        .length;
-                                                                Get.dialog(
-                                                                  AlertDialog(
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    contentPadding:
-                                                                        EdgeInsets.all(
-                                                                            10),
-                                                                    insetPadding:
-                                                                        const EdgeInsets
-                                                                            .only(
-                                                                            left:
-                                                                                0),
-                                                                    content:
-                                                                        ViewFriendFullProfilePage(
-                                                                      Get.put(
-                                                                          ViewFriendFullProfileController()),
-                                                                      affirmationCount:
-                                                                          snapshot2.data.docs.length ??
-                                                                              0,
-                                                                      blogReadCount:
-                                                                          blogLength.toString() ??
-                                                                              '0',
-                                                                      intenseCompleted:
-                                                                          length ??
-                                                                              '0',
-                                                                      taskCount:
-                                                                          snapshotTask.data.docs.length ??
-                                                                              0,
-                                                                      userName:
-                                                                          userData['fullName'] ??
-                                                                              '0',
-                                                                      number:
-                                                                          userData['phoneNumber'] ??
-                                                                              '0',
-                                                                      key: key,
-                                                                      userProfile:
-                                                                          userData['imageUrl'] ??
-                                                                              '',
-                                                                      email:
-                                                                          userData['email'] ??
-                                                                              '',
-                                                                      name: userData[
-                                                                              'fullName'] ??
-                                                                          '',
-                                                                    ),
-                                                                  ),
-                                                                );
-                                                              });
-                                                            });
+                                                             await blogRead.then(
+                                                                      (QuerySnapshot
+                                                                  snapshotBlog) {
+                                                                    int blogLength =
+                                                                        snapshotBlog
+                                                                            .docs
+                                                                            .length;
+                                                                    final videos = FirebaseFirestore
+                                                                        .instance
+                                                                        .collection(
+                                                                        'users')
+                                                                        .doc(userData[
+                                                                    'email'])
+                                                                        .collection(
+                                                                        'VideosUrl')
+                                                                        .get();
+                                                                    videos.then(
+                                                                            (QuerySnapshot
+                                                                        snapshot) {
+                                                                          int length =
+                                                                              snapshot
+                                                                                  .docs
+                                                                                  .length;
+                                                                          Get.dialog(
+                                                                            AlertDialog(
+                                                                              backgroundColor:
+                                                                              Colors
+                                                                                  .white,
+                                                                              contentPadding:
+                                                                              EdgeInsets.all(
+                                                                                  10),
+                                                                              insetPadding:
+                                                                              const EdgeInsets
+                                                                                  .only(
+                                                                                  left:
+                                                                                  0),
+                                                                              content:
+                                                                              ViewFriendFullProfilePage(
+                                                                                Get.put(
+                                                                                    ViewFriendFullProfileController()),
+                                                                                affirmationCount:
+                                                                                snapshot2.data.docs.length ??
+                                                                                    0,
+                                                                                blogReadCount:
+                                                                                blogLength.toString() ??
+                                                                                    '0',
+                                                                                intenseCompleted:
+                                                                                length ??
+                                                                                    '0',
+                                                                                taskCount:
+                                                                                snapshotTask.data.docs.length ??
+                                                                                    0,
+                                                                                userName:
+                                                                                userData['fullName'] ??
+                                                                                    '0',
+                                                                                number:
+                                                                                userData['phoneNumber'] ??
+                                                                                    '0',
+                                                                                key: key,
+                                                                                userProfile:
+                                                                                userData['imageUrl'] ??
+                                                                                    '',
+                                                                                email:
+                                                                                userData['email'] ??
+                                                                                    '',
+                                                                                name: userData[
+                                                                                'fullName'] ??
+                                                                                    '',
+                                                                              ),
+                                                                            ),
+                                                                          );
+                                                                        });
+                                                                  });
+                                                            },loadingWidget: Center(child: SizedBox(width: 60,height: 60,child: CircularProgressIndicator(color: Colors.deepOrange,),),));
+
                                                           },
                                                           child: Container(
                                                             width: Get.width *

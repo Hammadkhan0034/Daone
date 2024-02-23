@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/core/common_widgets/user_list_tile.dart';
 import 'package:daone/presentation/add_friends_screen/controller/add_friends_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -6,6 +7,7 @@ import 'package:contacts_service/contacts_service.dart';
 import 'package:share_plus/share_plus.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_iconbutton.dart';
+import '../register_page_one_screen/models/user_model.dart';
 import '../view_friend_full_profile_page/controller/view_friend_full_profile_controller.dart';
 import '../view_friend_full_profile_page/view_friend_full_profile_page.dart';
 import 'friend_finder_controller.dart';
@@ -147,7 +149,7 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                       width: Get.width*0.5,
                       child: TextFormField(
                         onChanged: (value) {
-                          ctrl.setSearchQuery(value);
+                          ctrl.searchUsersByEmail(value);
                         },
                         decoration: InputDecoration(
                           labelText: 'Enter Email',
@@ -157,70 +159,19 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                     ),
                   ],
                 ),
-                Obx(() {
-                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty) {
-                    return Text('No email exists.');
-                  } else {
-                    return Expanded(
+                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty)
+                     Text('No email exists.')
+                   else Expanded(
                       child: ListView.builder(
                         itemCount: ctrl.userList.length,
                         itemBuilder: (context, index) {
-                          DocumentSnapshot doc = ctrl.userList[index];
+                          UserModel userModel = ctrl.userList[index];
 
-                          return ListTile(
-                            title: Text(doc['fullName']),
-                            subtitle: Text(doc['email']),
-                            onTap: () {
-                              Get.dialog(
-                                AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    contentPadding: EdgeInsets.all(10),
-                                    insetPadding:
-                                        const EdgeInsets.only(left: 0),
-                                    content: SizedBox(
-                                      height: Get.height * 0.40,
-                                      width: Get.width * 0.8,
-                                      child: AlertDialog(
-                                        title: Text('Add Friend'),
-                                        content: SingleChildScrollView(
-                                          child: ListBody(
-                                            children: <Widget>[
-                                              Text(
-                                                  'Do you want to add this user as a friend?'),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Get.back(closeOverlays: true);
-                                            },
-                                            child: Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              await Get.put(
-                                                      ViewFriendFullProfileController())
-                                                  .addFriendList(
-                                                      context,
-                                                      doc['fullName'],
-                                                      doc['email'],
-                                                      doc['imageUrl'],
-                                                      doc['phoneNumber']);
-                                            },
-                                            child: Text('Add'),
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              );
-                            },
-                          );
+                          return UserListTileWidget(userModel: userModel);
                         },
                       ),
-                    );
-                  }
-                }),
+                    )
+
               ],
             ),
 
@@ -239,7 +190,7 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                      width: Get.width*0.5,
                       child: TextFormField(
                         onChanged: (value) {
-                          ctrl.setSearchQuery(value);
+                          ctrl.searchUsersByUserName(value);
                         },
                         decoration: InputDecoration(
                           labelText: 'Enter User Name',
@@ -257,56 +208,9 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                       child: ListView.builder(
                         itemCount: ctrl.userList.length,
                         itemBuilder: (context, index) {
-                          DocumentSnapshot doc = ctrl.userList[index];
+                         UserModel userModel = ctrl.userList[index];
 
-                          return ListTile(
-                            title: Text(doc['fullName']),
-                            onTap: () {
-                              Get.dialog(
-                                AlertDialog(
-                                    backgroundColor: Colors.white,
-                                    contentPadding: EdgeInsets.all(10),
-                                    insetPadding:
-                                        const EdgeInsets.only(left: 0),
-                                    content: SizedBox(
-                                      height: Get.height * 0.40,
-                                      width: Get.width * 0.8,
-                                      child: AlertDialog(
-                                        title: Text('Add Friend'),
-                                        content: SingleChildScrollView(
-                                          child: ListBody(
-                                            children: <Widget>[
-                                              Text(
-                                                  'Do you want to add this user as a friend?'),
-                                            ],
-                                          ),
-                                        ),
-                                        actions: <Widget>[
-                                          TextButton(
-                                            onPressed: () {
-                                              Get.back(closeOverlays: true);
-                                            },
-                                            child: Text('Cancel'),
-                                          ),
-                                          TextButton(
-                                            onPressed: () async {
-                                              await Get.put(
-                                                      ViewFriendFullProfileController())
-                                                  .addFriendList(
-                                                      context,
-                                                      doc['fullName'],
-                                                      doc['email'],
-                                                      doc['imageUrl'],
-                                                      doc['phoneNumber']);
-                                            },
-                                            child: Text('Add'),
-                                          ),
-                                        ],
-                                      ),
-                                    )),
-                              );
-                            },
-                          );
+                          return UserListTileWidget(userModel: userModel);
                         },
                       ),
                     );
