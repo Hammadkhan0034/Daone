@@ -94,7 +94,7 @@ final Map<String, String> enUs = {
   "lbl_31": "31",
   "lbl_home_no_task": "Home no task",
   "lbl_completed": "Completed",
-  "lbl_add_friends": "Add Friends",
+  "lbl_add_friends": "Add Friend",
   "msg_let_s_start_a_healthy":
       "Let's start a healthy lifestyle with us, we can determine your diet every day. healthy eating is fun",
   "lbl_su": "Su",

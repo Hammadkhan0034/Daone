@@ -80,8 +80,7 @@ class GroupPage extends StatelessWidget {
                GroupModel groupModel=snapshot.data[index];
                 return InkWell(
                   onTap: () {
-                    Get.to(() => GroupPost(groupModel.name, groupModel.image,
-                        groupModel.createdBy.fullName, groupModel.createdAt.toDate()));
+                    Get.to(() => GroupPost(groupModel: groupModel,));
                   },
                   child: Container(
                     height: 70,

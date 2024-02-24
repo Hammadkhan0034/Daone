@@ -3,10 +3,10 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 
 class GroupModel {
-    final String name,description,image;
+     String name,description,image;
     Timestamp createdAt;
     UserModel createdBy;
-    final List<UserModel> users;
+     List<UserModel> users;
 
 
     String get groupId=>createdAt.millisecondsSinceEpoch.toString();

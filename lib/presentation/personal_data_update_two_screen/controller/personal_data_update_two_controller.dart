@@ -9,12 +9,15 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../register_page_one_screen/models/user_model.dart';
+
 /// A controller class for the PersonalDataUpdateTwoScreen.
 ///
 /// This class manages the state of the PersonalDataUpdateTwoScreen, including the
 /// current personalDataUpdateTwoModelObj
 class PersonalDataUpdateTwoController extends GetxController {
-  TextEditingController lastnameController = TextEditingController();
+  late UserModel userModel;
+  TextEditingController nameController = TextEditingController();
 
   TextEditingController phonenumberController = TextEditingController();
 
@@ -26,8 +29,7 @@ class PersonalDataUpdateTwoController extends GetxController {
 
   User? user = FirebaseAuth.instance.currentUser;
 
-  Rx<PersonalDataUpdateTwoModel> personalDataUpdateTwoModelObj =
-      PersonalDataUpdateTwoModel().obs;
+
 
   Rx<bool> isShowPassword = true.obs;
 
@@ -35,16 +37,18 @@ class PersonalDataUpdateTwoController extends GetxController {
 
   SelectionPopupModel? selectedDropDownValue;
 
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    await getUserById();
+    nameController.text=userModel.fullName;
+    phonenumberController.text=userModel.phoneNumber;
     getImageUrl();
-    print("yeahhhhhh");
   }
 
   @override
   void onClose() {
     super.onClose();
-    lastnameController.dispose();
+    nameController.dispose();
     phonenumberController.dispose();
     emailController.dispose();
     passwordController.dispose();
@@ -83,37 +87,29 @@ class PersonalDataUpdateTwoController extends GetxController {
 // Update fields in a Firestore document
   Future<void> updateDocumentFields(String newNumber,String newName) async {
     // Get a reference to the Firestore document you want to update
-    DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc(user?.email);
+    Get.showOverlay(asyncFunction: ()async{
 
-    try {
+      try {
+if(imagePath.value.isNotEmpty){
+  uploadImageToFirestore(File(imagePath.value), FirebaseAuth.instance.currentUser!.uid);
+}        DocumentReference documentReference = FirebaseFirestore.instance.collection('users').doc(user?.email);
 
-      // Update specific fields in the document
-      await documentReference.update({
-        'fullName': newName,
-        'phoneNumber':newNumber,
-      });
-      Get.snackbar('Personal Data Info','Document fields updated successfully.');
-      print('Document fields updated successfully.');
-      Get.toNamed(AppRoutes.accountSettingScreen);
-    } catch (e) {
-      Get.snackbar('Error updating document','$e');
-    }
-  }
-
-
-
-onSelected(dynamic value) {
-    for (var element
-        in personalDataUpdateTwoModelObj.value.dropdownItemList.value) {
-      element.isSelected = false;
-      if (element.id == value.id) {
-        element.isSelected = true;
+        // Update specific fields in the document
+        await documentReference.update({
+          'fullName': newName,
+          'phoneNumber':newNumber,
+        });
+        Get.snackbar('Personal Data Info','Document fields updated successfully.');
+        print('Document fields updated successfully.');
+        Get.toNamed(AppRoutes.accountSettingScreen);
+      } catch (e) {
+        Get.snackbar('Error updating document','$e');
       }
-    }
-    personalDataUpdateTwoModelObj.value.dropdownItemList.refresh();
+
+    },loadingWidget: Center(child: SizedBox(width: 60,height: 60,child: CircularProgressIndicator(color: Colors.deepOrange,),),));
+
   }
 
-  //image picking functions
 
   RxString imagePath= "".obs;
   RxString imageUrl = ''.obs;
@@ -134,7 +130,7 @@ onSelected(dynamic value) {
   }
 
 
-  Future<void> uploadImageToFirestore(File imageFile, String userId,context) async {
+  Future<void> uploadImageToFirestore(File imageFile, String userId,) async {
     User? user = FirebaseAuth.instance.currentUser;
     RxDouble uploadProgress = 0.0.obs;
 
@@ -145,16 +141,7 @@ onSelected(dynamic value) {
     }
 
     try {
-      showDialog(
-      context: context,
-      builder: (context) {
-        return Center(
-          child: CircularProgressIndicator(
-            color: Colors.deepOrange,
-          ),
-        );
-      },
-    );
+
       // Create a reference to the Firebase Storage location where you want to store the image.
       final storageRef = FirebaseStorage.instance.ref().child('userImages/$userId');
 
@@ -173,20 +160,24 @@ onSelected(dynamic value) {
       // Get the download URL of the uploaded image.
       final imageUrl = await storageRef.getDownloadURL();
 
+
       // Save the image URL to Firestore in the "users" collection.
       await FirebaseFirestore.instance.collection('users').doc(user.email).update({
         'imageUrl': imageUrl,
       });
-      Get.back();
+      imagePath.value="";
       // The image has been successfully uploaded and the URL is saved in Firestore.
-      Get.snackbar('Image Upload', 'Image uploaded successfully.');
     } catch (e) {
       // Handle errors, e.g., file upload or Firestore update errors.
       Get.snackbar('Error', 'Error uploading image: $e');
     }
   }
 
-
+  Future getUserById()async{
+    DocumentSnapshot<Map<String, dynamic>>snapshot=await FirebaseFirestore.instance.collection("users").doc(FirebaseAuth.instance.currentUser!.email!).get();
+    print(snapshot.data());
+    userModel= UserModel.fromMap(snapshot.data());
+  }
 
 
 }

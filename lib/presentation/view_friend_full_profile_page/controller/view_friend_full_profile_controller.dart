@@ -20,18 +20,9 @@ class ViewFriendFullProfileController extends GetxController {
       String? profile,
       String? number
       ) async {
+    // Get.showOverlay(asyncFunction: ()async{});
     try {
       User? user = FirebaseAuth.instance.currentUser;
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
 
       if (user != null) {
         if (name != null && gmail != null && profile != null ) {
@@ -43,29 +34,26 @@ class ViewFriendFullProfileController extends GetxController {
             'number': number
 
           });  // Data saved successfully
+          Get.back();
 
           Get.snackbar("Info", "$name Add in your friend list Successfully");
 
           // Hide the progress indicator and navigate
-         Get.back();
 
         } else {
           // Handle the case where any of the required values is null
           print('One or more values are null');
           Get.snackbar('Error', 'One or more values are null');
-          Navigator.of(context).pop(); // Hide the progress indicator
         }
       } else {
         // Handle the case where the user is not authenticated
         print('User is not authenticated');
         Get.snackbar('Error', 'User is not authenticated');
-        Navigator.of(context).pop(); // Hide the progress indicator
       }
     } catch (e) {
       // Handle errors here
       print('Error saving task: $e');
       Get.snackbar('Error saving task:', '$e');
-      Navigator.of(context).pop(); // Hide the progress indicator
     }
   }
 

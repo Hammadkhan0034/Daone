@@ -58,8 +58,8 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                           controller.getImage();
                         },
                         child: Container(
-                          height: Get.height*0.2,
-                          width: Get.width*0.4,
+                          height: 200,
+                          width: 200,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(100),
                             color: Colors.black54,
@@ -80,52 +80,52 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                           ),
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0),
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
-                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
-                                padding: MaterialStateProperty.all(EdgeInsets.all(12)),
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                )),
-                              ),
-                              onPressed: () {
-                                controller.getImage();
-                              },
-                              child: TextWidget(text: "Pick Image", color: Colors.white, fsize: 12),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
-                            child: TextButton(
-                              style: ButtonStyle(
-                                backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
-                                textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
-                                padding: MaterialStateProperty.all(EdgeInsets.all(12)),
-                                shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20),
-                                )),
-                              ),
-                              onPressed: () {
-                                controller.uploadImageToFirestore(
-
-                                    File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid,context);
-                              },
-                              child: TextWidget(text: "Save Image", color: Colors.white, fsize: 12),
-                            ),
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: [
+                      //     Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      //       child: TextButton(
+                      //         style: ButtonStyle(
+                      //           backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
+                      //           textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+                      //           padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      //           shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //           )),
+                      //         ),
+                      //         onPressed: () {
+                      //           controller.getImage();
+                      //         },
+                      //         child: TextWidget(text: "Pick Image", color: Colors.white, fsize: 12),
+                      //       ),
+                      //     ),
+                      //     Padding(
+                      //       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
+                      //       child: TextButton(
+                      //         style: ButtonStyle(
+                      //           backgroundColor: MaterialStateProperty.all(Colors.deepOrange),
+                      //           textStyle: MaterialStateProperty.all(TextStyle(color: Colors.white)),
+                      //           padding: MaterialStateProperty.all(EdgeInsets.all(12)),
+                      //           shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      //             borderRadius: BorderRadius.circular(20),
+                      //           )),
+                      //         ),
+                      //         onPressed: () {
+                      //           controller.uploadImageToFirestore(
+                      //
+                      //               File(controller.imagePath.value), FirebaseAuth.instance.currentUser!.uid,context);
+                      //         },
+                      //         child: TextWidget(text: "Save Image", color: Colors.white, fsize: 12),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
                     ],
                   )),
                   CustomTextFormField(
-                    controller: controller.lastnameController,
+                    controller: controller.nameController,
                     margin: getMargin(top: 40),
                     contentPadding: getPadding(top: 15, right: 30, bottom: 15),
                     textStyle: CustomTextStyles.bodySmallGray50005,
@@ -180,7 +180,7 @@ class PersonalDataUpdateTwoScreen extends GetWidget<PersonalDataUpdateTwoControl
                   CustomElevatedButton(
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        controller.updateDocumentFields(controller.phonenumberController.text, controller.lastnameController.text);
+                        controller.updateDocumentFields(controller.phonenumberController.text, controller.nameController.text);
                       }
                     },
                     width: getHorizontalSize(315),

@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:daone/core/app_export.dart';
 import 'package:daone/presentation/group_page/controller/group_controller.dart';
 import 'package:daone/presentation/group_page/group_detailed.dart';
 import 'package:daone/widgets/text_widget.dart';
@@ -19,10 +20,12 @@ import '../../theme/custom_text_style.dart';
 import '../../theme/theme_helper.dart';
 import '../../widgets/app_bar/appbar_iconbutton.dart';
 import '../../widgets/custom_text_form_field.dart';
+import 'models/group_model.dart';
+
 
 class GroupPost extends StatelessWidget {
-  var groupName,imageUrl,groupCreatorName,groupStartingDate;
-  GroupPost(this.groupName,this.imageUrl,this.groupCreatorName,this.groupStartingDate);
+  GroupModel groupModel;
+  GroupPost({required this.groupModel});
 
   @override
   Widget build(BuildContext context) {
@@ -218,9 +221,8 @@ class GroupPost extends StatelessWidget {
                   width: Get.width,
                   height: Get.height*0.3,
                   child: CachedNetworkImage(
-                  imageUrl:imageUrl==''?
-                  'https://images.unsplash.com/photo-1511632765486-a01980e01a18?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-                      :imageUrl,fit: BoxFit.cover,),
+                  imageUrl:groupModel.image==''?dummyGroupImage
+                      :groupModel.image,fit: BoxFit.cover,),
                 ),
                InkWell(
                  onTap: (){
@@ -239,8 +241,7 @@ class GroupPost extends StatelessWidget {
                       top: Get.height*0.01,
                       child:InkWell(
                           onTap: (){
-                            Get.to(()=>GroupDetailed(groupName: groupName,groupCreatorName: groupCreatorName,
-                              groupStartingDate: groupStartingDate,
+                            Get.to(()=>GroupDetailed(groupModel:groupModel ,
                             ));
                           },
                           child: Material(
@@ -254,7 +255,7 @@ class GroupPost extends StatelessWidget {
                       decoration: glassmorphicDecoration(),
                       margin: EdgeInsets.all(15),
                       padding: EdgeInsets.all(10),
-                      child: TextWidget(text: groupName,color: Colors.white,
+                      child: TextWidget(text: groupModel.name,color: Colors.white,
                         fsize: 17,
                         fontFamily: 'Gotham Light',fontWeight: FontWeight.w400,),
                     ))
@@ -264,7 +265,7 @@ class GroupPost extends StatelessWidget {
             ///Group Posting Section
 
             StreamBuilder(
-              stream: FirebaseFirestore.instance.collection('groups').doc(groupName).
+              stream: FirebaseFirestore.instance.collection('groups').doc(groupModel.groupId).
               collection('groupPost').snapshots(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -274,7 +275,9 @@ class GroupPost extends StatelessWidget {
                   return Text('Error: ${snapshot.error}');
                 }
                 if (!snapshot.hasData || snapshot.data == null || snapshot.data.docs.isEmpty) {
-                  return Text('No posts found');
+                  return SizedBox(
+                      height: Get.height*0.5,
+                      child: Center(child: Text('No posts found')));
                 }
 
 
@@ -285,7 +288,7 @@ class GroupPost extends StatelessWidget {
                     itemCount: snapshot.data!.docs.length,
                     itemBuilder: (context, index) {
                       final postData = snapshot.data?.docs[index].data() as Map<String, dynamic>;
-                      final likeData= FirebaseFirestore.instance.collection('groups').doc(groupName).snapshots();
+                      final likeData= FirebaseFirestore.instance.collection('groups').doc(groupModel.groupId).snapshots();
                       final userName = postData['userName'];
                       final userProfile = postData['userProfilePic'];
                       final postPic = postData['postPic'];
@@ -392,7 +395,7 @@ class GroupPost extends StatelessWidget {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        _controller.likeFunction(postId:documentId,userId: _controller.user,currentGroupName: groupName);
+                                        _controller.likeFunction(postId:documentId,userId: _controller.user,currentGroupName: groupModel.name);
                                       },
                                       child: Material(
                                         color: Colors.white,
@@ -497,7 +500,7 @@ class GroupPost extends StatelessWidget {
                                                             StreamBuilder(
                                                                 stream:FirebaseFirestore.instance
                                                                     .collection('groups')
-                                                                    .doc(groupName)
+                                                                    .doc(groupModel.groupId)
                                                                     .collection('comment')
                                                                     .orderBy('date', descending: true) // Order comments by date in descending order
                                                                     .snapshots(),
@@ -676,7 +679,7 @@ class GroupPost extends StatelessWidget {
                                                                               name: userName,
                                                                               postId: documentId,
                                                                               comment: _controller.groupPostComment.text,
-                                                                              currentGroupName: groupName.toString(),
+                                                                              currentGroupId: groupModel.groupId,
                                                                               profile: imageUrl,
                                                                               context: context
                                                                           );

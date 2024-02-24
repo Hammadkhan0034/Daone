@@ -3,20 +3,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/utils/size_utils.dart';
 import 'package:daone/presentation/group_page/add_member.dart';
 import 'package:daone/presentation/group_page/controller/group_controller.dart';
+import 'package:daone/presentation/group_page/creategroup.dart';
+import 'package:daone/widgets/custom_image_view.dart';
 import 'package:daone/widgets/text_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/utils/image_constant.dart';
 import '../../widgets/app_bar/appbar_iconbutton.dart';
+import '../register_page_one_screen/models/user_model.dart';
+import 'models/group_model.dart';
 
 class GroupDetailed extends StatelessWidget {
-  var groupName, groupCreatorName, groupStartingDate;
+ GroupModel groupModel;
 
   GroupDetailed(
-      {required this.groupName,
-      required this.groupCreatorName,
-      required this.groupStartingDate});
+      {required this.groupModel});
 
   @override
   Widget build(BuildContext context) {
@@ -42,254 +45,177 @@ class GroupDetailed extends StatelessWidget {
             bottom: 5,
           ),
         ),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Container(
-            height: Get.height * 0.09,
-            width: Get.width * 1,
-            margin: EdgeInsets.only(left: 10, right: 10, top: 15, bottom: 0),
-            //color: Colors.pinkAccent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextWidget(
-                  text: "Group Name",
-                  fontFamily: 'Gotham Light',
-                  fontWeight: FontWeight.w800,
-                  fsize: 16,
-                ),
-                SizedBox(height: Get.height * 0.005),
-                TextWidget(
-                    text: groupName,
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    fsize: 16,
-                    color: Colors.deepOrange),
-              ],
-            ),
-          ),
-          Container(
-            height: Get.height * 0.09,
-            width: Get.width * 1,
-            margin: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 5),
-            //color: Colors.pinkAccent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextWidget(
-                  text: "Group Creator Name",
-                  fontFamily: 'Gotham Light',
-                  fontWeight: FontWeight.w800,
-                  fsize: 16,
-                ),
-                SizedBox(height: Get.height * 0.005),
-                TextWidget(
-                    text: groupCreatorName,
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    fsize: 16,
-                    color: Colors.deepOrange),
-              ],
-            ),
-          ),
-          Container(
-            height: Get.height * 0.09,
-            width: Get.width * 1,
-            margin: EdgeInsets.only(left: 10, right: 10, top: 0, bottom: 5),
-            //color: Colors.pinkAccent,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                TextWidget(
-                  text: "Date",
-                  fontFamily: 'Gotham Light',
-                  fontWeight: FontWeight.w800,
-                  fsize: 16,
-                ),
-                SizedBox(height: Get.height * 0.005),
-                TextWidget(
-                    text: groupStartingDate.toString(),
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    fsize: 16,
-                    color: Colors.deepOrange),
-              ],
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: TextWidget(
-              text: "Group Members",
-              fontFamily: 'Gotham Light',
-              fontWeight: FontWeight.w800,
-              fsize: 16,
-            ),
-          ),
-          StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('groups')
-                .doc(groupName)
-                .snapshots(),
-            builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return CircularProgressIndicator(color: Colors.deepOrange,); // Show a loading indicator
-              } else if (snapshot.hasError) {
-                return Text('Error: ${snapshot.error}');
-              } else if (!snapshot.hasData || !snapshot.data!.exists) {
-                return Text(
-                    'Document does not exist'); // Handle no data scenario
-              }
+        actions: [
+          InkWell(
+          onTap: (){
+            Get.to(()=>CreateGroup(isEdit: true,oldGroupModel: groupModel,));
 
-              // Access your array of members from the document snapshot
-              List<dynamic> members = snapshot.data?.get('groupMembers') ?? [];
-              List<String> imageUrls = [];
-              for (dynamic member in members) {
-                if (member is Map<String, dynamic> && member.containsKey('imageUrl')) {
-                  String imageUrl = member['imageUrl'];
-                  imageUrls.add(imageUrl);
-                }
-              }
+          },
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Icon(Icons.edit,color: Colors.green,size: 24,weight: 2,),
+        )),
+ InkWell(
+          onTap: (){
+            groupController.deleteGroup(groupModel.groupId);
 
+          },
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Icon(Icons.delete,color: Colors.red,size: 24,weight: 2,),
+        ))
 
-              return Container(
-                height: Get.height * 0.1,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 10),
-                padding: EdgeInsets.symmetric(horizontal: 5),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black26),
-                ),
-                child: ListView.builder(
-                  itemCount: members.length,
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) {
-                    if (index < imageUrls.length) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: CircleAvatar(
-                          backgroundImage: CachedNetworkImageProvider(
-                            imageUrls[index],
-                          ),
-                        ),
-                      );
-                    } else {
-                      // Handle the case where index is out of bounds
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: CircleAvatar(),
-                      );
-                    }
-                    // return FutureBuilder<CircleAvatar>(
-                    //   future: getProfile(members[index]),
-                    //   builder: (context, snapshot) {
-                    //     if (snapshot.connectionState ==
-                    //         ConnectionState.waiting) {
-                    //       return Center(child: CircularProgressIndicator());
-                    //     } else if (snapshot.hasError) {
-                    //       return Text('Error: ${snapshot.error}');
-                    //     } else {
-                    //       return snapshot.data ??
-                    //           CircleAvatar(); // Return CircleAvatar or a default avatar if data is null
-                      //  }
-                     // },
-                   // );
-                  },
-                ),
-              );
-            },
-          ),
-          SizedBox(
-            height: Get.height * 0.05,
-          ),
-          Row(
-            children: [
-              Spacer(),
-              InkWell(
-                onTap: () {
-                   Get.to(()=>AddMember(groupName: groupName,));
-                },
-                child: Container(
-                  width: Get.width * 0.64,
-                  height: Get.height * 0.075,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                      child: TextWidget(
-                    text: 'Add member',
-                    color: Colors.white,
-                    fontFamily: 'Gotham light',
-                    fontWeight: FontWeight.w800,
-                  )),
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
-          Row(
-            children: [
-              Spacer(),
-              InkWell(
-                onTap: () {
-                  groupController.deleteGroup(groupName);
-                },
-                child: Container(
-                  width: Get.width * 0.64,
-                  height: Get.height * 0.075,
-                  margin: EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                      child: TextWidget(
-                    text: 'Delete Group',
-                    color: Colors.white,
-                    fontFamily: 'Gotham light',
-                    fontWeight: FontWeight.w800,
-                  )),
-                ),
-              ),
-              Spacer(),
-            ],
-          ),
         ],
+      ),
+      body: StreamBuilder<GroupModel?>(
+        stream:  FirebaseFirestore.instance.collection('groups').doc(groupModel.groupId).snapshots().map((event) {
+if(!event.exists) return null;
+            GroupModel groupModel=GroupModel.fromMap(event.data()!);
+
+          return groupModel;
+        }),
+        builder: (context, snapshot) {
+          GroupModel updatedGroupModel=snapshot.data??groupModel;
+          return SizedBox(
+            width: Get.width,
+            height: Get.height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SizedBox(height: 30,),
+                CustomImageView(url:updatedGroupModel.image.isEmpty?dummyGroupImage:updatedGroupModel.image ,width: 200,height:200,fit: BoxFit.fill,radius: BorderRadius.circular(200),),
+                SizedBox(height: 20,),
+
+                Container(
+                  constraints: BoxConstraints(maxWidth: Get.width*0.8),
+                  child: TextWidget(
+                    text: updatedGroupModel.name,
+                    fontFamily: 'Gotham Light',
+                    fontWeight: FontWeight.bold,
+
+                    fsize: 16,
+                  ),
+                ),
+
+                Container(
+                  constraints: BoxConstraints(maxWidth: Get.width*0.8),
+
+                  child: TextWidget(
+                      text: updatedGroupModel.description,
+                      fontFamily: 'Gotham Light',
+                      fontWeight: FontWeight.w800,
+                      fsize: 16,
+                      color: Colors.black54),
+                ),
+
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 30, left: 20,right: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextWidget(
+                        text: "Group Members",
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w800,
+                        fsize: 16,
+                      ),
+                      InkWell(
+                          onTap: (){
+                            Get.to(()=>AddMember(groupId: groupModel.groupId));
+                          },
+                          child: Icon(Icons.add,color: Colors.deepOrange,size: 24,weight: 2,))
+
+                    ],
+                  ),
+                ),
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                  decoration: BoxDecoration(
+                    border: Border(top:BorderSide(color: Colors.grey[300]!)),
+                  ),
+                  child:
+                  updatedGroupModel.users.isEmpty?SizedBox(
+                      height: Get.height*0.4,
+                      child: Center(child: TextWidget(text: "No people added in the group yet",),))
+              :
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: updatedGroupModel.users.length,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 2,
+                      color: Colors.white,
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(vertical: 10),
+                         padding: const EdgeInsets.symmetric(horizontal: 10),
+
+                        height: 60,
+                        width: Get.width * 0.9,
+                        // decoration: BoxDecoration(
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   color: Colors.white24,
+                        //   border: Border.all(
+                        //     color: Colors.black12,
+                        //     width: 2.0,
+                        //   ),
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: Colors.white,
+                        //       offset: Offset(0, 2),
+                        //       blurRadius: 6.0,
+                        //       spreadRadius: 2.0,
+                        //     ),
+                        //   ],
+                        // ),
+                        child: Row(
+                          mainAxisAlignment:
+                          MainAxisAlignment.start,
+                          crossAxisAlignment:
+                          CrossAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                              backgroundColor:
+                              Colors.black26,
+                              radius: 26,
+                              backgroundImage: NetworkImage(
+                                  updatedGroupModel.users[index].imageUrl??dummyGroupImage),
+                            ),
+                            Container(
+                              width: Get.width*0.6,
+                              //  color: Colors.green,
+                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              child: TextWidget(text: updatedGroupModel.users[index].fullName,color: Colors.black,fsize: 18,fontWeight: FontWeight.w600,),
+                            ),
+                            Spacer(),
+                            updatedGroupModel.createdBy.uid==FirebaseAuth.instance.currentUser!.uid?InkWell(
+
+                              onTap: (){
+                               UserModel deletedUser= updatedGroupModel.users.removeAt(index);
+                                groupController.removeMember( userList: updatedGroupModel.users, userModel: deletedUser, groupId: updatedGroupModel.groupId);
+                              },
+                              child: Icon(Icons.delete,color: Colors.red,size: 20,),
+                            ):SizedBox.shrink()
+
+                          ],
+                        ),
+                      ),
+                    );
+
+                    },
+                  ),
+                ),
+
+              ],
+            ),
+          );
+        }
       ),
     );
   }
 
-  // Future<CircleAvatar> getProfile(String userDoc) async {
-  //   try {
-  //     DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
-  //         .collection('users')
-  //         .doc(userDoc)
-  //         .get();
-  //
-  //     // Ensure that 'imageUrl' is a String field in the document
-  //     String? imageUrl = userSnapshot.get('imageUrl');
-  //
-  //     // Ensure imageUrl is not null before using it
-  //     if (imageUrl != null && imageUrl.isNotEmpty) {
-  //       return CircleAvatar(
-  //         child: CachedNetworkImage(imageUrl: imageUrl),
-  //       );
-  //     } else {
-  //       // Return a default avatar if imageUrl is null or empty
-  //       return CircleAvatar();
-  //     }
-  //   } catch (e) {
-  //     // Handle any potential errors
-  //     print('Error fetching user profile: $e');
-  //     return CircleAvatar(); // Return a default avatar on error
-  //   }
-  // }
 
 }

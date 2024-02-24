@@ -281,20 +281,21 @@ class ViewFriendsTabContainerScreen
 
                                                         return InkWell(
                                                           onTap: () {
-                                                            Get.showOverlay(asyncFunction: ()async{
-                                                              final blogRead =
-                                                               FirebaseFirestore
-                                                                  .instance
-                                                                  .collection(
-                                                                  'users')
-                                                                  .doc(userData[
-                                                              'email'])
-                                                                  .collection(
-                                                                  'blogReadList')
-                                                                  .get();
-                                                             await blogRead.then(
+                                                            Get.showOverlay(
+                                                                asyncFunction:
+                                                                    () async {
+                                                                  final blogRead = FirebaseFirestore
+                                                                      .instance
+                                                                      .collection(
+                                                                          'users')
+                                                                      .doc(userData[
+                                                                          'email'])
+                                                                      .collection(
+                                                                          'blogReadList')
+                                                                      .get();
+                                                                  await blogRead.then(
                                                                       (QuerySnapshot
-                                                                  snapshotBlog) {
+                                                                          snapshotBlog) {
                                                                     int blogLength =
                                                                         snapshotBlog
                                                                             .docs
@@ -302,71 +303,63 @@ class ViewFriendsTabContainerScreen
                                                                     final videos = FirebaseFirestore
                                                                         .instance
                                                                         .collection(
-                                                                        'users')
+                                                                            'users')
                                                                         .doc(userData[
-                                                                    'email'])
+                                                                            'email'])
                                                                         .collection(
-                                                                        'VideosUrl')
+                                                                            'VideosUrl')
                                                                         .get();
                                                                     videos.then(
-                                                                            (QuerySnapshot
-                                                                        snapshot) {
-                                                                          int length =
-                                                                              snapshot
-                                                                                  .docs
-                                                                                  .length;
-                                                                          Get.dialog(
-                                                                            AlertDialog(
-                                                                              backgroundColor:
-                                                                              Colors
-                                                                                  .white,
-                                                                              contentPadding:
-                                                                              EdgeInsets.all(
-                                                                                  10),
-                                                                              insetPadding:
-                                                                              const EdgeInsets
-                                                                                  .only(
-                                                                                  left:
-                                                                                  0),
-                                                                              content:
-                                                                              ViewFriendFullProfilePage(
-                                                                                Get.put(
-                                                                                    ViewFriendFullProfileController()),
-                                                                                affirmationCount:
-                                                                                snapshot2.data.docs.length ??
-                                                                                    0,
-                                                                                blogReadCount:
-                                                                                blogLength.toString() ??
-                                                                                    '0',
-                                                                                intenseCompleted:
-                                                                                length ??
-                                                                                    '0',
-                                                                                taskCount:
-                                                                                snapshotTask.data.docs.length ??
-                                                                                    0,
-                                                                                userName:
-                                                                                userData['fullName'] ??
-                                                                                    '0',
-                                                                                number:
-                                                                                userData['phoneNumber'] ??
-                                                                                    '0',
-                                                                                key: key,
-                                                                                userProfile:
-                                                                                userData['imageUrl'] ??
-                                                                                    '',
-                                                                                email:
-                                                                                userData['email'] ??
-                                                                                    '',
-                                                                                name: userData[
-                                                                                'fullName'] ??
-                                                                                    '',
-                                                                              ),
-                                                                            ),
-                                                                          );
-                                                                        });
+                                                                        (QuerySnapshot
+                                                                            snapshot) {
+                                                                      int length = snapshot
+                                                                          .docs
+                                                                          .length;
+                                                                      Get.bottomSheet(
+                                                                        ViewFriendFullProfilePage(
+                                                                          Get.put(
+                                                                              ViewFriendFullProfileController()),
+                                                                          affirmationCount:
+                                                                              snapshot2.data.docs.length ?? 0,
+                                                                          blogReadCount:
+                                                                              blogLength.toString() ?? '0',
+                                                                          intenseCompleted:
+                                                                              length ?? '0',
+                                                                          taskCount:
+                                                                              snapshotTask.data.docs.length ?? 0,
+                                                                          userName:
+                                                                              userData['fullName'] ?? '0',
+                                                                          number:
+                                                                              userData['phoneNumber'] ?? '0',
+                                                                          key:
+                                                                              key,
+                                                                          userProfile:
+                                                                              userData['imageUrl'] ?? '',
+                                                                          email:
+                                                                              userData['email'] ?? '',
+                                                                          name: userData['fullName'] ??
+                                                                              '',
+                                                                        ),
+                                                                        backgroundColor:
+                                                                            Colors.white,
+                                                                        isScrollControlled: true
+                                                                      );
+                                                                    });
                                                                   });
-                                                            },loadingWidget: Center(child: SizedBox(width: 60,height: 60,child: CircularProgressIndicator(color: Colors.deepOrange,),),));
-
+                                                                },
+                                                                loadingWidget:
+                                                                    Center(
+                                                                  child:
+                                                                      SizedBox(
+                                                                    width: 60,
+                                                                    height: 60,
+                                                                    child:
+                                                                        CircularProgressIndicator(
+                                                                      color: Colors
+                                                                          .deepOrange,
+                                                                    ),
+                                                                  ),
+                                                                ));
                                                           },
                                                           child: Container(
                                                             width: Get.width *
@@ -413,7 +406,6 @@ class ViewFriendsTabContainerScreen
                             bottom: 10,
                             child: InkWell(
                               onTap: () {
-
                                 String inviteMessage =
                                     "Hey! Check out this awesome app. Download it now!";
 
@@ -657,11 +649,13 @@ class ViewFriendsTabContainerScreen
                                                                     snapshot2) {
                                                               return InkWell(
                                                                 onTap: () {
-                                                                  Get.defaultDialog(
-                                                                    title:
-                                                                        'Profile',
-                                                                    content:
-                                                                        userProfile(
+                                                                  Get.dialog(
+                                                                    // backgroundColor: Colors.white,
+                                                                    //
+                                                                    // title:
+                                                                    //     'Profile',
+                                                                    // content:
+                                                                    userProfile(
                                                                       context,
                                                                       name:
                                                                           friendName,
@@ -764,428 +758,100 @@ class ViewFriendsTabContainerScreen
       {required String imgUrl, name, email, phone}) {
     ViewFriendFullProfileController controller =
         Get.put(ViewFriendFullProfileController());
-    return Container(
-        height: Get.height * 0.17,
-        width: Get.width * 0.8,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Card(
+          color: Colors.white,
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            height: 200,
+            width: Get.width * 0.8,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CustomImageView(
-                  url: imgUrl ??
-                      'https://img.icons8.com/?size=50&id=14736&format=png',
-                  fit: BoxFit.cover,
-                  height: getSize(
-                    120,
-                  ),
-                  width: getSize(
-                    120,
-                  ),
-                  radius: BorderRadius.circular(
-                    getHorizontalSize(
-                      40,
-                    ),
-                  ),
-                  alignment: Alignment.topCenter,
-                ),
-                Column(
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                        //   color: Colors.orange,for test
-                        width: Get.width * 0.4,
-                        child: TextWidget(
-                          text: name ?? 'No name',
-                          color: Colors.black,
-                          fsize: 14,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Container(
-                        width: Get.width * 0.4,
-                        //  color: Colors.green,for test
-                        child: TextWidget(
-                          text: email ?? 'xyz@gmail.com',
-                          color: Colors.black,
-                          fsize: 10,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    Container(
-                        // color: Colors.orange, for test
-                        width: Get.width * 0.4,
-                        child: TextWidget(
-                          text: phone ?? 'No Number',
-                          color: Colors.black,
-                          fsize: 10,
-                          fontWeight: FontWeight.w600,
-                        )),
-                    SizedBox(height: 10),
-                    InkWell(
-                      onTap: () {
-                        controller.deleteFriend(context, name);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            color: Colors.red,
-                            borderRadius: BorderRadius.circular(8)),
-                        padding: EdgeInsets.all(5),
-                        child: TextWidget(
-                            text: "Unfollow",
-                            color: Colors.white,
-                            fontFamily: 'Gotham Light'),
+                    CustomImageView(
+                      url: imgUrl ??
+                          'https://img.icons8.com/?size=50&id=14736&format=png',
+                      fit: BoxFit.cover,
+                      height: getSize(
+                        120,
                       ),
+                      width: getSize(
+                        120,
+                      ),
+                      radius: BorderRadius.circular(
+                        getHorizontalSize(
+                          120,
+                        ),
+                      ),
+                      alignment: Alignment.topCenter,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            //   color: Colors.orange,for test
+                            width: Get.width * 0.4,
+                            child: TextWidget(
+                              text: name ?? 'No name',
+                              color: Colors.black,
+                              fsize: 18,
+                              fontWeight: FontWeight.w800,
+                            )),
+                        SizedBox(height: 5),
+                        Container(
+                            width: Get.width * 0.4,
+                            //  color: Colors.green,for test
+                            child: TextWidget(
+                              text: email ?? 'xyz@gmail.com',
+                              color: Colors.black,
+                              fsize: 12,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        SizedBox(height: 5),
+                        Container(
+                            // color: Colors.orange, for test
+                            width: Get.width * 0.4,
+                            child: TextWidget(
+                              text: phone ?? 'No Number',
+                              color: Colors.black,
+                              fsize: 12,
+                              fontWeight: FontWeight.w600,
+                            )),
+                        SizedBox(height: 10),
+                        InkWell(
+                          onTap: () {
+                            controller.deleteFriend(context, name);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(8)),
+                            padding: EdgeInsets.all(5),
+                            child: TextWidget(
+                                text: "Unfollow",
+                                color: Colors.white,
+                                fontFamily: 'Gotham Light'),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ],
             ),
-          ],
-        ));
+          ),
+        ),
+      ],
+    );
   }
-
-// Widget profileView({var imageUrl,fullName,required int affirmation,required String name,
-//   required int intention,required int task,required int blogReads,required String unfollowEmail}){
-//
-//   ViewFriendFullProfileController friendFullProfileController = Get.put(ViewFriendFullProfileController());
-//
-//   return Container(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//
-//         children: [
-//           Padding(
-//             padding: const EdgeInsets.symmetric(horizontal: 18.0),
-//             child: Row(
-//               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 CustomImageView(
-//                   url: imageUrl??
-//                       'https://img.icons8.com/?size=50&id=14736&format=png',fit: BoxFit.cover,
-//                   height: getSize(
-//                     70,
-//                   ),
-//                   width: getSize(
-//                     70,
-//                   ),
-//                   radius: BorderRadius.circular(
-//                     getHorizontalSize(
-//                       40,
-//                     ),
-//                   ),
-//                   alignment: Alignment.topCenter,
-//                 ),
-//                 Column(
-//                   mainAxisAlignment: MainAxisAlignment.start,
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     Padding(
-//                       padding: const EdgeInsets.all(8.0),
-//                       child: TextWidget(text: fullName??'', color: Colors.black, fsize: 15,font:FontWeight.w600,),
-//                     ),
-//                     Padding(
-//                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-//                       child: InkWell(
-//                         onTap: (){
-//                           Get.defaultDialog(title:'Do you want to unfollow?',
-//                             content:Row(
-//                               crossAxisAlignment: CrossAxisAlignment.center,
-//                               mainAxisAlignment: MainAxisAlignment.center,
-//                               children: [
-//                                 InkWell(
-//                                   onTap:(){
-//                                     friendFullProfileController.unFollowedFriend(unfollowEmail,name);
-//                                     Get.offAllNamed(AppRoutes.accountSettingScreen);
-//                                   },
-//                                   child: Container(
-//                                     height: 30,
-//                                     width: 50,
-//                                     decoration: BoxDecoration(
-//                                       color: Colors.red,
-//                                       borderRadius: BorderRadius.circular(12),
-//                                     ),
-//                                     child: Center(child: TextWidget(color: Colors.white,text: "Yes",fsize: 12),),
-//                                   ),
-//                                 ),
-//                                 SizedBox(width: 10),
-//                                 InkWell(
-//                                   onTap: (){
-//                                     Get.back();
-//                                   },
-//                                   child: Container(
-//                                       height: 30,
-//                                       width: 50,
-//                                       decoration: BoxDecoration(
-//                                         color: Colors.blue,
-//                                         borderRadius: BorderRadius.circular(12),
-//                                       ),
-//                                       child: Center(child: TextWidget(color: Colors.white,text: "No",fsize: 12),)
-//                                   ),
-//                                 )
-//                               ],
-//
-//                             ), );
-//                         },
-//                         child: Container(
-//                           height: Get.height*0.04,
-//                           width: Get.width*0.24,
-//                           decoration: BoxDecoration(
-//                             color: Colors.blue,borderRadius: BorderRadius.circular(12),
-//                           ),
-//                           child: Center(child: TextWidget(text: "Followed",fsize: 12,color: Colors.white)),
-//                         ),
-//                       ),
-//                     ),
-//                   ],
-//                 ),
-//                 Spacer(),
-//               ],
-//             ),
-//           ),
-//           SizedBox(height: Get.height*0.03),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Material(
-//                 borderRadius: BorderRadius.circular(25.921112060546875),
-//                 elevation: 5,
-//                 child: Container(
-//                   width: Get.width * 0.28,
-//                   height: Get.height * 0.12,
-//                   decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25.921112060546875),
-//                       color: Colors.white),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Container(
-//                         width: Get.width * 0.2,
-//                         height: Get.height * 0.04,
-//                         child: Row(
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                             TextWidget(
-//                               text: affirmation.toString(),
-//                               color: Colors.black,
-//                               fsize: 20,
-//                               font: FontWeight.w600,
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.only(top:3.0,left: 3),
-//                               child: Image.asset(
-//                                 ImageConstant.group10110,
-//                                 scale: 5,
-//                               ),
-//                             ),
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: Get.height * 0.01,
-//                       ),
-//                       Center(
-//                           child: TextWidget(
-//                             text: "lbl_affirmation_completed".tr,
-//                             color: Colors.black54,
-//                             fsize: 9,
-//                             font: FontWeight.w500,
-//                           )),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(width: Get.width*0.05),
-//               Material(
-//                 borderRadius: BorderRadius.circular(25.921112060546875),
-//                 elevation: 5,
-//                 child: Container(
-//                   width: Get.width * 0.28,
-//                   height: Get.height * 0.12,
-//                   decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25.921112060546875),
-//                       color: Colors.white),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Container(
-//                         width: Get.width * 0.2,
-//                         height: Get.height * 0.04,
-//                         child: Row(
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.only(top:3.0,left: 3),
-//                               child: TextWidget(
-//                                 text: intention.toString(),
-//                                 color: Colors.black,
-//                                 fsize: 20,
-//                                 font: FontWeight.w600,
-//                               ),
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.only(top:3.0),
-//                               child:Image.asset(
-//                                 ImageConstant.camIcon,
-//                                                    scale: 5,
-//                                                  ),
-//                             ),
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: Get.height * 0.01,
-//                       ),
-//                       Center(
-//                           child: TextWidget(
-//                             text: "lbl_intentions_completed".tr,
-//                             color: Colors.black54,
-//                             fsize: 9,
-//                             font: FontWeight.w500,
-//                           )),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           SizedBox(height: Get.height*0.02),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.center,
-//             children: [
-//               Material(
-//                 borderRadius: BorderRadius.circular(25.921112060546875),
-//                 elevation: 5,
-//                 child: Container(
-//                   width: Get.width * 0.28,
-//                   height: Get.height * 0.12,
-//                   decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25.921112060546875),
-//                       color: Colors.white),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Container(
-//                         width: Get.width * 0.2,
-//                         height: Get.height * 0.04,
-//                         child: Row(
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                             TextWidget(
-//                               text: task.toString(),
-//                               color: Colors.black,
-//                               fsize: 20,
-//                               font: FontWeight.w600,
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.only(top:3.0,left: 3),
-//                               child:Image.asset(
-//                                                       ImageConstant.group10111,
-//                                                       scale: 3.8,
-//                                                ),
-//                             ),
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: Get.height * 0.01,
-//                       ),
-//                       Center(
-//                           child: TextWidget(
-//                             text: "lbl_tasks_completed".tr,
-//                             color: Colors.black54,
-//                             fsize: 9,
-//                             font: FontWeight.w500,
-//                           )),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//               SizedBox(width: Get.width*0.05),
-//               Material(
-//                 borderRadius: BorderRadius.circular(25.921112060546875),
-//                 elevation: 5,
-//                 child: Container(
-//                   width: Get.width * 0.28,
-//                   height: Get.height * 0.12,
-//                   decoration: BoxDecoration(
-//                       borderRadius: BorderRadius.circular(25.921112060546875),
-//                       color: Colors.white),
-//                   child: Column(
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Container(
-//                         width: Get.width * 0.2,
-//                         height: Get.height * 0.04,
-//                         child: Row(
-//                           crossAxisAlignment: CrossAxisAlignment.center,
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                             TextWidget(
-//                               text: blogReads.toString(),
-//                               color: Colors.black,
-//                               fsize: 20,
-//                               font: FontWeight.w600,
-//                             ),
-//                             Padding(
-//                               padding: const EdgeInsets.only(top:3.0,left: 3),
-//                               child: Image.asset(
-//                                                       ImageConstant.msgIcon,
-//                                                       scale: 3.8,
-//                                                     ),
-//                             ),
-//                             SizedBox(
-//                               width: Get.width * 0.01,
-//                             ),
-//                           ],
-//                         ),
-//                       ),
-//                       SizedBox(
-//                         height: Get.height * 0.01,
-//                       ),
-//                       Center(
-//                           child: TextWidget(
-//                             text: "lbl_blog_read".tr,
-//                             color: Colors.black54,
-//                             fsize: 9,
-//                             font: FontWeight.w500,
-//                           )),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ],
-//       ),
-//     );
-// }
 }

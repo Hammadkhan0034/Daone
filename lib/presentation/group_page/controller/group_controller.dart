@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:daone/core/utils/utils.dart';
 import 'package:daone/presentation/group_page/group_page.dart';
 import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,6 +16,7 @@ import '../models/group_model.dart';
 class GroupController extends GetxController {
 
   Rx<File?> selectedImage = Rx<File?>(null);
+  GroupModel? oldGroupModel;
   TextEditingController groupName =TextEditingController();
   TextEditingController groupDes =TextEditingController();
   TextEditingController postTextController =TextEditingController();
@@ -100,55 +102,46 @@ class GroupController extends GetxController {
 
   Future<void> addMember({
     required BuildContext context,
-    String? gmail,
-    String? profile,
-    String? groupName
+   required UserModel userModel,
+    required String groupId
   }) async {
     try {
-      User? user = FirebaseAuth.instance.currentUser;
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
 
-      if (user != null) {
-        if (gmail != null && profile != null ) {
-          DocumentReference userDocRef = FirebaseFirestore.instance.collection('groups').doc(groupName);
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('groups').doc(groupId);
           await userDocRef.update({
-            'groupMembers':FieldValue.arrayUnion([
-            {'email': gmail,
-            'imageUrl': profile,
-            }
+            'users':FieldValue.arrayUnion([
+            userModel.toMap()
             ]),
           });  // Data saved successfully
 
-          Get.snackbar("Info", "Add in your group Successfully");
+          Get.snackbar("Info", "${userModel.fullName} added to group successfully");
 
-          // Hide the progress indicator and navigate
-          Navigator.of(context).pop();
-          Get.offAndToNamed(AppRoutes.accountSettingScreen);
-        } else {
-          // Handle the case where any of the required values is null
-          Get.snackbar('Error', 'Unexpected error');
-          Navigator.of(context).pop(); // Hide the progress indicator
-        }
-      } else {
-        // Handle the case where the user is not authenticated
-        print('User is not authenticated');
-        Get.snackbar('Error', 'User is not authenticated');
-        Navigator.of(context).pop(); // Hide the progress indicator
-      }
     } catch (e) {
       // Handle errors here
-      print('Error saving task: $e');
-      Get.snackbar('Error saving task:', '$e');
-      Navigator.of(context).pop(); // Hide the progress indicator
+      print('Error Adding user: $e');
+      Get.snackbar('Error Adding user:', '$e');
+    }
+  }
+
+  Future<void> removeMember({
+
+    required List<UserModel> userList,
+   required UserModel userModel,
+    required String groupId
+  }) async {
+    if(await Utils.askForConfirmation(Get.context!, "remove ${userModel.fullName} from this group", "Remove Participant")) try {
+
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('groups').doc(groupId);
+          await userDocRef.update({
+            'users': userList.map((e) => e.toMap()).toList(growable: false)
+          });  // Data saved successfully
+
+          Get.snackbar("Info", "${userModel.fullName} removed from the group");
+
+    } catch (e) {
+      // Handle errors here
+      print('Error Adding user: $e');
+      Get.snackbar('Error removing user:', '$e');
     }
   }
 
@@ -177,7 +170,7 @@ return UserModel.fromMap(snapshot.data());
         imageUrl.value="";
         UserModel createdBy=await getUserById();
         Timestamp timestamp=Timestamp.now();
-        String fileName = timestamp.millisecondsSinceEpoch.toString();
+        String fileName =oldGroupModel==null? timestamp.millisecondsSinceEpoch.toString():oldGroupModel!.groupId;
         if(selectedImage.value!=null){
           Reference storageReference =
           FirebaseStorage.instance.ref().child('group_images/$fileName');
@@ -189,16 +182,25 @@ return UserModel.fromMap(snapshot.data());
           imageUrl.value = await taskSnapshot.ref.getDownloadURL();
         }
 
-        GroupModel groupModel=GroupModel(name: groupName.text, description: groupDes.text, image: imageUrl.value, createdAt: timestamp, createdBy:createdBy, users: []);
+        GroupModel groupModel;
+        if(oldGroupModel==null){
+         groupModel= GroupModel(name: groupName.text, description: groupDes.text, image: imageUrl.value, createdAt: timestamp, createdBy:createdBy, users: []);
+        }else{
+          oldGroupModel!.name=groupName.text;
+          oldGroupModel!.description=groupDes.text;
+          oldGroupModel!.image=imageUrl.value.isEmpty?oldGroupModel!.image:imageUrl.value;
+          groupModel=oldGroupModel!;
+        }
 
         Map<String,dynamic> data=groupModel.toMap();
 
         await FirebaseFirestore.instance.collection('groups').doc(groupModel.groupId).set(
             data
         );
-        Get.back();
-        Get.back();
-        Get.snackbar("App Info", "Group Created Successfully");
+        bool isNew=oldGroupModel==null;
+        Get.until((route) => Get.currentRoute == AppRoutes.viewFriendsTabContainerScreen);
+
+        Get.snackbar("App Info", isNew?"Group Created Successfully":"Group updated successfully");
 
       }catch(e,stackTrace){
         print(stackTrace);
@@ -309,7 +311,7 @@ return UserModel.fromMap(snapshot.data());
   }
 
   ///comment section
-  Future commentsSection({context, var postId, profile, comment,name,currentGroupName}) async {
+  Future commentsSection({context, var postId, profile, comment,name,currentGroupId}) async {
     try {
       showDialog(
         context: context,
@@ -322,7 +324,7 @@ return UserModel.fromMap(snapshot.data());
         },
       );
       await FirebaseFirestore.instance.collection('groups')
-          .doc(currentGroupName).collection('comment')
+          .doc(currentGroupId).collection('comment')
           .add({
         'profile': profile,
         'postId': postId,
@@ -340,15 +342,18 @@ return UserModel.fromMap(snapshot.data());
 
 
   Future<void> deleteGroup(String groupName) async {
+    if(await Utils.askForConfirmation(Get.context!, "delete this group", "Delete Group"))
     try {
       await FirebaseFirestore.instance.collection('groups').doc(groupName).delete();
-      Get.snackbar("Info", "Group deleted successfully");
       // You can navigate to another screen or handle the navigation as needed
-      Get.offAndToNamed(AppRoutes.viewFriendsTabContainerScreen);
+      Get.until((route) => Get.currentRoute == AppRoutes.viewFriendsTabContainerScreen);
+      Get.snackbar("Info", "Group deleted successfully");
+
     } catch (e) {
       Get.snackbar("Error", "Error deleting group: $e");
       print("Error deleting group: $e");
     }
+
   }
 
 
