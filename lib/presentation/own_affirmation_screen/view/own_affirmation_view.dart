@@ -127,7 +127,9 @@ class _OwnAffirmationViewState extends State<OwnAffirmationView>
                 if (snapshot.size == 0) return [];
                 List<OwnAffirmationModel> list = [];
                 for (var affirmation in snapshot.docs) {
-                  OwnAffirmationModel ownAffirmationModel = OwnAffirmationModel
+                  print(affirmation.data());
+                  print(user?.email);
+                                    OwnAffirmationModel ownAffirmationModel = OwnAffirmationModel
                       .fromMap(affirmation.data());
                   list.add(ownAffirmationModel);
                 }

@@ -96,6 +96,109 @@ class EditAffirmationController extends GetxController {
     }
   }
 
+  Future<void> OwnAffirmationBackgroundList(
+      BuildContext context,
+      String? imageUrl,
+      Timestamp timestamp
+
+      ) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.deepOrange,
+            ),
+          );
+        },
+      );
+
+      if (user != null) {
+
+        if ( imageUrl != null ) {
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
+          await userDocRef.collection('OwnAffirmationList').doc(timestamp.millisecondsSinceEpoch.toString()).update({
+            'imageUrl': imageUrl,
+          });  // Data saved successfully
+          print('Task saved to Firestore');
+          Get.snackbar("Affirmation", "Affirmation Saved Successfully");
+
+          // Hide the progress indicator and navigate
+          Navigator.of(context).pop();
+          // Get.offAndToNamed(AppRoutes.selectAffirmationScreen);
+        } else {
+          // Handle the case where any of the required values is null
+          print('One or more values are null');
+          Get.snackbar('Error', 'One or more values are null');
+          Navigator.of(context).pop(); // Hide the progress indicator
+        }
+      } else {
+        // Handle the case where the user is not authenticated
+        print('User is not authenticated');
+        Get.snackbar('Error', 'User is not authenticated');
+        Navigator.of(context).pop(); // Hide the progress indicator
+      }
+    } catch (e) {
+      // Handle errors here
+      print('Error saving task: $e');
+      Get.snackbar('Error saving task:', '$e');
+      Navigator.of(context).pop(); // Hide the progress indicator
+    }
+  }
+
+  Future<void> OwnAffirmationTextList(
+      BuildContext context,
+      String? affirmation,
+      Timestamp timestamp
+      ) async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      showDialog(
+        context: context,
+        builder: (context) {
+          return Center(
+            child: CircularProgressIndicator(
+              color: Colors.deepOrange,
+            ),
+          );
+        },
+      );
+
+      if (user != null) {
+
+        if (affirmation != null ) {
+          DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
+          await userDocRef.collection('OwnAffirmationList').doc(timestamp.millisecondsSinceEpoch.toString()).update({
+            'affirmation': affirmation,
+          });  // Data saved successfully
+          print('Task saved to Firestore');
+          Get.snackbar("Affirmation", "Affirmation Saved Successfully");
+
+          // Hide the progress indicator and navigate
+          Navigator.of(context).pop();
+          Get.offAndToNamed(AppRoutes.selectAffirmationScreen);
+        } else {
+          // Handle the case where any of the required values is null
+          print('One or more values are null');
+          Get.snackbar('Error', 'One or more values are null');
+          Navigator.of(context).pop(); // Hide the progress indicator
+        }
+      } else {
+        // Handle the case where the user is not authenticated
+        print('User is not authenticated');
+        Get.snackbar('Error', 'User is not authenticated');
+        Navigator.of(context).pop(); // Hide the progress indicator
+      }
+    } catch (e) {
+      // Handle errors here
+      print('Error saving task: $e');
+      Get.snackbar('Error saving task:', '$e');
+      Navigator.of(context).pop(); // Hide the progress indicator
+    }
+  }
+
 
   TextEditingController messageController = TextEditingController();
   Rx<EditAffirmationModel> editAffirmationModelObj = EditAffirmationModel().obs;
@@ -114,9 +217,8 @@ class EditAffirmationController extends GetxController {
    }}
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-    // Fetch background images from Firestore when the controller initializes
     fetchBackgrounds();
 
     // Listen to changes in the text field and update displayText
