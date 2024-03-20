@@ -40,18 +40,22 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
       children: [
         Container(
           width: getHorizontalSize(
-            318,
+            Get.width,
           ),
+          height: getVerticalSize(Get.height*0.85),
           padding: getPadding(
             left: 21,
             top: 24,
             right: 21,
             bottom: 24,
           ),
-          decoration: AppDecoration.fill.copyWith(
-            borderRadius: BorderRadiusStyle.roundedBorder22,
+          decoration: AppDecoration.outline16.copyWith(
+            borderRadius: BorderRadius.only(topRight: Radius.circular(12),topLeft: Radius.circular(12)),
+
+            // borderRadius: BorderRadiusStyle.roundedBorder22,
           ),
           child: Column(
+
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -105,50 +109,59 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
                   top: 20,
                 ),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Expanded(
-                      child: CustomElevatedButton(
-                        onTap: () {
-                          Get.toNamed(AppRoutes.selectAffirmationScreen);
-                        },
-                        text: "lbl_select".tr,
-                        margin: getMargin(
-                          right: 4,
-                        ),
-                        buttonStyle: CustomButtonStyles.fillGreen300.copyWith(
-                            fixedSize: MaterialStateProperty.all<Size>(Size(
-                          double.maxFinite,
-                          getVerticalSize(
-                            40,
-                          ),
-                        ))),
-                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteA700,
-                      ),
+                    Container(
+                      width: Get.width*0.3,
+                      height: 52,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)
+                        ,
+                        borderRadius: BorderRadius.circular(10)
+                        ,),
+                      child: TextButton(
+                            onPressed: (){
+                        Get.toNamed(AppRoutes.selectAffirmationScreen);
+                      },
+                        child: Text("lbl_select".tr, style: TextStyle(color: Colors.black,fontSize: 20,),),),
                     ),
-                    Expanded(
-                      child: CustomElevatedButton(
-                        onTap: () {
-                          Get.to(()=>EditAffirmationScreen(
-                            // Get.put(
-                            //   EditAffirmationController(),
-                            // ),
-                          ));
-                        },
-                        text: "lbl_add_new".tr,
-                        margin: getMargin(
-                          left: 4,
-                        ),
-                        buttonStyle: CustomButtonStyles.fillGray90003.copyWith(
-                            fixedSize: MaterialStateProperty.all<Size>(Size(
-                          double.maxFinite,
-                          getVerticalSize(
-                            40,
-                          ),
-                        ))),
-                        buttonTextStyle: CustomTextStyles.bodyMediumWhiteA700,
-                      ),
+                    Container(
+                      width: Get.width*0.3,
+                      height: 52,
+                      decoration: BoxDecoration(border: Border.all(color: Colors.black)
+                        ,
+                        borderRadius: BorderRadius.circular(10)
+                        ,),
+                      child: TextButton(
+                            onPressed: (){
+                              Get.to(()=>EditAffirmationScreen(
+                                // Get.put(
+                                //   EditAffirmationController(),
+                                // ),
+                              ));
+                      },
+                        child: Text("lbl_add_new".tr, style: TextStyle(color: Colors.black,fontSize: 20,),),),
                     ),
+                    // CustomElevatedButton(
+                    //   onTap: () {
+                    //     Get.to(()=>EditAffirmationScreen(
+                    //       // Get.put(
+                    //       //   EditAffirmationController(),
+                    //       // ),
+                    //     ));
+                    //   },
+                    //   text: "lbl_add_new".tr,
+                    //   margin: getMargin(
+                    //     left: 4,
+                    //   ),
+                    //   buttonStyle: CustomButtonStyles.fillGray90003.copyWith(
+                    //       fixedSize: MaterialStateProperty.all<Size>(Size(
+                    //     double.maxFinite,
+                    //     getVerticalSize(
+                    //       40,
+                    //     ),
+                    //   ))),
+                    //   buttonTextStyle: CustomTextStyles.bodyMediumWhiteA700,
+                    // ),
                   ],
                 ),
               ),
@@ -208,3 +221,5 @@ class GratitudeAffirmationBlastEffectDialog extends StatelessWidget {
     );
   }
 }
+
+

@@ -108,16 +108,10 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                           top: getVerticalSize(10),
                           child: InkWell(
                             onTap: () {
-                              // showDialog(
-                              //   barrierColor: Colors.transparent,
-                              //   context: context,
-                              //   builder: (BuildContext context) {
-                              //     return MyDialog(ownAffirmationModel: ownAffirmationModel);
-                              //   },
-                              // );
                               Get.dialog(
                                   barrierColor: Colors.transparent,
                                   EditAffirmationDialougue(ownAffirmationModel: ownAffirmationModel));
+
                               // Get.to(() =>
                               //     EditAffirmationScreen(
                               //       ownAffirmationModel: ownAffirmationModel,));

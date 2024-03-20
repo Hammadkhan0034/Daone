@@ -133,26 +133,41 @@ class _GratitudeAffirmationViewState extends State<GratitudeAffirmationView> wit
       
                         return InkWell(
                           onTap: () {
-                            Get.dialog(
-                              AlertDialog(
-                                backgroundColor: Colors.transparent,
-                                contentPadding: EdgeInsets.zero,
-                                insetPadding: const EdgeInsets.only(left: 0),
-                                content: GratitudeAffirmationBlastEffectDialog(
-                                  Get.put(GratitudeAffirmationController()),
-                                  currentAffirmationCount: affirmationCount,
-                                  documentId: documentId,
-                                  decorationImage: DecorationImage(
-                                    image: gratitudeAffirmationData['imageUrl'] == ""
-                                        ? CachedNetworkImageProvider(
-                                        "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
-                                        : CachedNetworkImageProvider(gratitudeAffirmationData['imageUrl']),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  graditudeAffirmationText: gratitudeAffirmationData['graditudeAffirmation'],
+                            Get.bottomSheet(
+                              GratitudeAffirmationBlastEffectDialog(
+                                Get.put(GratitudeAffirmationController()),
+                                currentAffirmationCount: affirmationCount,
+                                documentId: documentId,
+                                decorationImage: DecorationImage(
+                                  image: gratitudeAffirmationData['imageUrl'] == ""
+                                      ? CachedNetworkImageProvider(
+                                      "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
+                                      : CachedNetworkImageProvider(gratitudeAffirmationData['imageUrl']),
+                                  fit: BoxFit.cover,
                                 ),
+                                graditudeAffirmationText: gratitudeAffirmationData['graditudeAffirmation'],
                               ),
                             );
+                            // Get.dialog(
+                            //   AlertDialog(
+                            //     backgroundColor: Colors.transparent,
+                            //     contentPadding: EdgeInsets.zero,
+                            //     insetPadding: const EdgeInsets.only(left: 0),
+                            //     content: GratitudeAffirmationBlastEffectDialog(
+                            //       Get.put(GratitudeAffirmationController()),
+                            //       currentAffirmationCount: affirmationCount,
+                            //       documentId: documentId,
+                            //       decorationImage: DecorationImage(
+                            //         image: gratitudeAffirmationData['imageUrl'] == ""
+                            //             ? CachedNetworkImageProvider(
+                            //             "https://images.unsplash.com/photo-1483197452165-7abc4b248905?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=60")
+                            //             : CachedNetworkImageProvider(gratitudeAffirmationData['imageUrl']),
+                            //         fit: BoxFit.cover,
+                            //       ),
+                            //       graditudeAffirmationText: gratitudeAffirmationData['graditudeAffirmation'],
+                            //     ),
+                            //   ),
+                            // );
                           },
                           child: FadeTransition(
                             opacity: _animationController.drive(CurveTween(curve: Curves.easeInOut)),
