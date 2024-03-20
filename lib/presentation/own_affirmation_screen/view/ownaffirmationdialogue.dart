@@ -115,7 +115,9 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
                               //     return MyDialog(ownAffirmationModel: ownAffirmationModel);
                               //   },
                               // );
-                              Get.dialog(MyDialog(ownAffirmationModel: ownAffirmationModel));
+                              Get.dialog(
+                                  barrierColor: Colors.transparent,
+                                  EditAffirmationDialougue(ownAffirmationModel: ownAffirmationModel));
                               // Get.to(() =>
                               //     EditAffirmationScreen(
                               //       ownAffirmationModel: ownAffirmationModel,));
@@ -305,11 +307,11 @@ class OwnAffirmationBlastEffectDialog extends StatelessWidget {
   }
 }
 
-class MyDialog extends StatelessWidget {
+class EditAffirmationDialougue extends StatelessWidget {
 
    OwnAffirmationModel? ownAffirmationModel;
    final _formKey = GlobalKey<FormState>();
-  MyDialog({
+  EditAffirmationDialougue({
     this.ownAffirmationModel,
     Key? key,
 

@@ -219,10 +219,10 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                     borderRadius: BorderRadius.circular(
                                         getHorizontalSize(22)),
                                   ),
-                                 child: ClipRRect(
-                                   borderRadius: BorderRadius.circular(
-                                       getHorizontalSize(22)),
-                                   child: CachedNetworkImage(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(
+                                        getHorizontalSize(22)),
+                                    child: CachedNetworkImage(
                                       imageUrl: image,
                                       fit: BoxFit.cover,
                                       placeholder: (context, url) => Center(
@@ -230,9 +230,10 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                           color: Colors.deepOrange,
                                         ),
                                       ),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
-                                 ),
+                                  ),
                                 ),
                                 Align(
                                   alignment: Alignment.bottomCenter,
@@ -252,12 +253,11 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                               maxLines: 3,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.left,
-                                              style:TextStyle(
-                                                fontSize: 18,
-                                                fontFamily: 'Gotham Light',
-                                                fontWeight: FontWeight.w800,
-                                                color: Colors.white
-                                              ),
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  fontFamily: 'Gotham Light',
+                                                  fontWeight: FontWeight.w800,
+                                                  color: Colors.white),
                                             ),
                                           ),
                                         ),
@@ -486,7 +486,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15),
                                     image: DecorationImage(
-                                      image: AssetImage('assets/images/noaffir.jpg'),
+                                      image: AssetImage(
+                                          'assets/images/noaffir.jpg'),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -497,12 +498,16 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                     children: [
                                       Center(
                                         child: Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                                          child: Text('Create your own affirmation',style: TextStyle(
-                                              fontFamily: 'Gotham Light',
-                                              fontWeight: FontWeight.w800,
-                                              fontSize: 20,color: Colors.white,
-                                          )),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0),
+                                          child: Text(
+                                              'Create your own affirmation',
+                                              style: TextStyle(
+                                                fontFamily: 'Gotham Light',
+                                                fontWeight: FontWeight.w800,
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                              )),
                                         ),
                                       ),
                                     ],
@@ -538,8 +543,8 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                                               child: TextWidget(
                                             text:
                                                 affirmationData['affirmation'],
-                                                fontFamily: 'Gotham Light',
-                                                fontWeight: FontWeight.w800,
+                                            fontFamily: 'Gotham Light',
+                                            fontWeight: FontWeight.w800,
                                             fsize: 13,
                                             color: Colors.black,
                                           )),
@@ -587,7 +592,7 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                     InkWell(
                       onTap: () {
                         Get.toNamed(AppRoutes.visualizationRoute);
-                       // Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
+                        // Get.toNamed(AppRoutes.dailyIntensionRecordOneScreen);
                       },
                       child: Container(
                         height: Get.height * 0.26,
@@ -595,11 +600,13 @@ class HomeOneScreen extends GetWidget<HomeOneController> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(15),
                           image: DecorationImage(
-                              image:
-                                  AssetImage('assets/images/vid.jpg'),
+                              image: AssetImage('assets/images/vid.jpg'),
                               fit: BoxFit.cover),
                         ),
-                        child: Image.asset('assets/images/play.png',scale: 2,),
+                        child: Image.asset(
+                          'assets/images/play.png',
+                          scale: 2,
+                        ),
                       ),
                     ),
                     SizedBox(
