@@ -111,7 +111,11 @@ class CustomTextFormField extends StatelessWidget {
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,
           decoration: decoration,
-          validator: validator,
+          validator: validator??(value){
+            if(value==null||value.isEmpty) return "This field is required";
+            return null;
+
+          },
         ),
       );
   InputDecoration get decoration => InputDecoration(

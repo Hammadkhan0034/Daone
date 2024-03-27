@@ -22,7 +22,6 @@ class LoginPageController extends GetxController {
   late BuildContext context;
 
 
-  final formKey = GlobalKey<FormState>();
   RxString errorMessage = ''.obs;
 
 
@@ -38,7 +37,6 @@ class LoginPageController extends GetxController {
       },
     );
     try {
-      if (formKey.currentState!.validate()) {
         await
         FirebaseAuth.instance.signInWithEmailAndPassword(
           email: email,
@@ -47,7 +45,7 @@ class LoginPageController extends GetxController {
 
         // If sign-in is successful, navigate to the dashboard using GetX
         Get.offAllNamed(AppRoutes.dashboardRoute);
-      }
+
     } on FirebaseAuthException catch (e) {
       switch (e.code) {
         case "user-not-found":
@@ -60,6 +58,7 @@ class LoginPageController extends GetxController {
           errorMessage.value = 'An error occurred during authentication.';
       }
       // Show a Snackbar with the error message
+      Get.back();
       Get.snackbar(
         "Authentication Error",
         errorMessage.value,

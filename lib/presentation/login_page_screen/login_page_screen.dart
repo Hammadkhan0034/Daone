@@ -15,6 +15,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
       : super(
           key: key,
         );
+  final _formKey = GlobalKey<FormState>();
 
 
   @override
@@ -26,7 +27,7 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: controller.formKey,
+          key: _formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -318,8 +319,12 @@ class LoginPageScreen extends GetWidget<LoginPageController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                   controller.logIn(controller.emailController.text,controller.passwordController.text,context);
-                  },
+    if (_formKey.currentState!.validate()) {
+      controller.logIn(
+          controller.emailController.text, controller.passwordController.text,
+          context);
+    }
+    },
                   width: getHorizontalSize(
                     315,
                   ),
