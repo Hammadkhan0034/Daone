@@ -18,6 +18,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
         );
 
 
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,7 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
         resizeToAvoidBottomInset: false,
         backgroundColor: appTheme.whiteA700,
         body: Form(
-          key: controller.formKey,
+          key: _formKey,
           child: Container(
             width: double.maxFinite,
             padding: getPadding(
@@ -132,7 +133,9 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                     ),
                   ),
                   validator: (value) {
-                    if (!isValidPhone(value)) {
+                    if (value==null||value.isEmpty) {
+                      return "This field is required";
+                    }if (!isValidPhone(value)) {
                       return "Please enter valid phone number";
                     }
                     return null;
@@ -275,7 +278,9 @@ class RegisterPageOneScreen extends GetWidget<RegisterPageOneController> {
                 Spacer(),
                 CustomElevatedButton(
                   onTap: (){
-                    controller.signUp(controller.emailController.text,controller.passwordController.text, context);},
+    if (_formKey.currentState!.validate()) {
+
+    controller.signUp(controller.emailController.text,controller.passwordController.text, context);}},
                   width: getHorizontalSize(
                     315,
                   ),

@@ -23,12 +23,10 @@ class RegisterPageOneController extends GetxController {
 
   final auth = FirebaseAuth.instance;
 
-  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   late BuildContext context;
 
   void signUp(String email, String pass, var context) async {
-    if (formKey.currentState!.validate()) {
       showDialog(
         context: context,
         barrierDismissible: false,
@@ -43,17 +41,20 @@ class RegisterPageOneController extends GetxController {
             .createUserWithEmailAndPassword(email: email, password: pass)
             .then((value) {
           postDetailsToFirestore();
-        })
-            .catchError((e) {
-          final errorMessage = "An error occurred during sign-up.";
-          final snackBar = SnackBar(content: Text(errorMessage));
-          ScaffoldMessenger.of(context).showSnackBar(snackBar);
         });
+        //     .catchError((e) {
+        //   final errorMessage = "An error occurred during sign-up.";
+        //   final snackBar = SnackBar(content: Text(errorMessage));
+        //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+        // });
       } on FirebaseAuthException catch (error) {
         String errorMessage = ""; // Initialize an empty string
         switch (error.code) {
           case "invalid-email":
             errorMessage = "Your email address appears to be malformed.";
+            break;
+            case "email-already-in-use":
+            errorMessage = "Email is already linked to an other account.";
             break;
           case "wrong-password":
             errorMessage = "Your password is wrong.";
@@ -71,16 +72,18 @@ class RegisterPageOneController extends GetxController {
             errorMessage = "Signing in with Email and Password is not enabled.";
             break;
           default:
-            errorMessage = "An undefined Error happened.";
+            errorMessage = "An undefined Error happened.Please check your internet connection and try again.";
         }
         final snackBar = SnackBar(content: Text(errorMessage));
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
         print(errorMessage);
-      } finally{
+      }
+
+      finally{
         Get.back();
       }
     }
-  }
+
 
 
 
