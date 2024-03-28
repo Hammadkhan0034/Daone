@@ -1,20 +1,17 @@
-
+import 'package:daone/core/app_export.dart';
+import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
+import 'package:daone/widgets/custom_elevated_button.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 import 'package:image_picker/image_picker.dart';
 
 import '../../widgets/text_widget.dart';
 import '../visualization/visualization_view/daily_intentions_videos_screen.dart';
 import 'controller/daily_intension_record_controller.dart';
-import 'package:daone/core/app_export.dart';
-import 'package:daone/widgets/custom_elevated_button.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg_provider/flutter_svg_provider.dart' as fs;
 
 // ignore_for_file: must_be_immutable
 class DailyIntensionRecordScreen
     extends GetWidget<DailyIntensionRecordController> {
-
-
-
   const DailyIntensionRecordScreen({Key? key})
       : super(
           key: key,
@@ -26,6 +23,27 @@ class DailyIntensionRecordScreen
 
     return SafeArea(
       child: Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          // title: Text('Add Tasks',
+          //     style: TextStyle(
+          //         fontFamily: 'Gotham Light',
+          //         fontWeight: FontWeight.w800,
+          //         fontSize: 25,
+          //         color: Colors.black)),
+          leadingWidth: 68,
+          leading: AppbarIconbutton(
+            onTap: () {
+              Get.back();
+            },
+            svgPath: ImageConstant.imgInfo,
+            margin: getMargin(
+              left: 10,
+              top: 10,
+              bottom: 5,
+            ),
+          ),
+        ),
         backgroundColor: appTheme.whiteA700,
         body: Container(
           width: double.maxFinite,
@@ -157,16 +175,14 @@ class DailyIntensionRecordScreen
                 padding: getPadding(
                   top: 45,
                 ),
-                child: Text(
-                  "msg_record_your_today_s".tr,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.left,
-                  style:TextStyle(
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    color: Colors.black,fontSize: 19
-                  )
-                ),
+                child: Text("msg_record_your_today_s".tr,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w800,
+                        color: Colors.black,
+                        fontSize: 19)),
               ),
               Container(
                 width: getHorizontalSize(
@@ -174,23 +190,21 @@ class DailyIntensionRecordScreen
                 ),
                 margin: getMargin(
                   left: 23,
-                   top: 11,
+                  top: 11,
                   right: 21,
                 ),
-                child: Text(
-                  "msg_capture_your_daily".tr,
-                  maxLines: 3,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.center,
-                  style:TextStyle(
-                      fontFamily: 'Gotham Light',
-                      fontWeight: FontWeight.w400,
-                      color: Colors.black45,fontSize: 12
-                  )
-                ),
+                child: Text("msg_capture_your_daily".tr,
+                    maxLines: 3,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: 'Gotham Light',
+                        fontWeight: FontWeight.w400,
+                        color: Colors.black45,
+                        fontSize: 12)),
               ),
               CustomElevatedButton(
-                onTap: (){
+                onTap: () {
                   // Get.toNamed(AppRoutes.remindersScreen);
                   Get.dialog(
                     AlertDialog(
@@ -198,8 +212,8 @@ class DailyIntensionRecordScreen
                       contentPadding: EdgeInsets.zero,
                       insetPadding: const EdgeInsets.only(left: 0),
                       content: Container(
-                      width:Get.width*0.5,
-                        height: Get.height*0.4,
+                        width: Get.width * 0.5,
+                        height: Get.height * 0.4,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(13),
                           color: Colors.white,
@@ -209,27 +223,34 @@ class DailyIntensionRecordScreen
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                                onTap:(){
-                                  controller.getVideoFile(ImageSource.gallery);
-                                },
+                              onTap: () {
+                                controller.getVideoFile(ImageSource.gallery);
+                              },
                               child: Padding(
-                                padding: const EdgeInsets.only(right: 12.0,left: 12,top: 12),
+                                padding: const EdgeInsets.only(
+                                    right: 12.0, left: 12, top: 12),
                                 child: Container(
-                                  width: Get.width*0.6,
-                                  height: Get.height*0.08,
+                                  width: Get.width * 0.6,
+                                  height: Get.height * 0.08,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(13),
                                       color: Colors.deepOrange),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.phone_android,size: 40,color: Colors.white),
-                                      SizedBox(width: Get.width*0.03,),
-                                      TextWidget(color: Colors.white, fsize: 15,
+                                      Icon(Icons.phone_android,
+                                          size: 40, color: Colors.white),
+                                      SizedBox(
+                                        width: Get.width * 0.03,
+                                      ),
+                                      TextWidget(
+                                        color: Colors.white,
+                                        fsize: 15,
                                         text: "Phone Gallery",
-                                        fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
-
+                                        fontFamily: 'Gotham Light',
+                                        fontWeight: FontWeight.w800,
                                       ),
                                     ],
                                   ),
@@ -237,30 +258,40 @@ class DailyIntensionRecordScreen
                               ),
                             ),
                             InkWell(
-                                onTap:(){
-                                  controller.getVideoFile(ImageSource.camera);
-                                },
+                              onTap: () {
+                                controller.getVideoFile(ImageSource.camera);
+                              },
                               child: Padding(
                                 padding: const EdgeInsets.all(12),
                                 child: Container(
-                                  width: Get.width*0.6,
-                                  height: Get.height*0.08,
+                                  width: Get.width * 0.6,
+                                  height: Get.height * 0.08,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(13),
                                       color: Colors.deepOrange),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Icon(Icons.camera_alt,size: 40,color: Colors.white),
-                                        SizedBox(width: Get.width*0.02,),
+                                        Icon(Icons.camera_alt,
+                                            size: 40, color: Colors.white),
+                                        SizedBox(
+                                          width: Get.width * 0.02,
+                                        ),
                                         Padding(
-                                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                          child: TextWidget(color: Colors.white, fsize: 15,
-                                            fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
-                                            text: "Camera     ",),
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 8.0),
+                                          child: TextWidget(
+                                            color: Colors.white,
+                                            fsize: 15,
+                                            fontFamily: 'Gotham Light',
+                                            fontWeight: FontWeight.w800,
+                                            text: "Camera     ",
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -269,12 +300,12 @@ class DailyIntensionRecordScreen
                               ),
                             ),
                             InkWell(
-                                onTap:(){
-                                  Get.back();
-                                },
+                              onTap: () {
+                                Get.back();
+                              },
                               child: Container(
-                                width: Get.width*0.6,
-                                height: Get.height*0.08,
+                                width: Get.width * 0.6,
+                                height: Get.height * 0.08,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(13),
                                     color: Colors.deepOrange),
@@ -282,20 +313,24 @@ class DailyIntensionRecordScreen
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Icon(Icons.cancel,size: 40,color: Colors.white),
-                                    SizedBox(width: Get.width*0.02,),
-                                    TextWidget(color: Colors.white, fsize: 15,
-                                      fontFamily: 'Gotham Light',fontWeight: FontWeight.w800,
-                                      text: "  Cancel       ",),
+                                    Icon(Icons.cancel,
+                                        size: 40, color: Colors.white),
+                                    SizedBox(
+                                      width: Get.width * 0.02,
+                                    ),
+                                    TextWidget(
+                                      color: Colors.white,
+                                      fsize: 15,
+                                      fontFamily: 'Gotham Light',
+                                      fontWeight: FontWeight.w800,
+                                      text: "  Cancel       ",
+                                    ),
                                   ],
                                 ),
-
                               ),
                             ),
-
                           ],
                         ),
-                        
                       ),
                     ),
                   );
@@ -324,7 +359,7 @@ class DailyIntensionRecordScreen
                 buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
               ),
               CustomElevatedButton(
-                onTap: (){
+                onTap: () {
                   Get.to(() => DailyIntentionsVideoScreen());
                   // Get.toNamed(AppRoutes.remindersScreen);
                 },

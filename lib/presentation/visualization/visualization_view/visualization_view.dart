@@ -1,15 +1,12 @@
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:daone/presentation/visualization/visualization_view/daily_intentions_videos_screen.dart';
 import 'package:daone/presentation/visualization/visualization_view/daone_videos_screen.dart';
 import 'package:daone/presentation/visualization/visualization_view/fav_videos.dart';
 import 'package:daone/presentation/visualization/visualization_view/videoplay/video_player_screen.dart';
 import 'package:daone/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -21,6 +18,7 @@ import '../../daily_intension_record_screen/models/daily_intension_record_model.
 
 class VisualizationView extends StatelessWidget {
   const VisualizationView({Key? key}) : super(key: key);
+
   Future<String?> generateThumbnail(String videoUrl) async {
     Directory tempDir = await getTemporaryDirectory();
 
@@ -32,19 +30,19 @@ class VisualizationView extends StatelessWidget {
       quality: 100,
     );
   }
+
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
         child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text('Visualization',
-            style:
-                TextStyle(
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    fontSize: 25, color: Colors.black)),
+            style: TextStyle(
+                fontFamily: 'Gotham Light',
+                fontWeight: FontWeight.w800,
+                fontSize: 25,
+                color: Colors.black)),
         leadingWidth: 68,
         leading: AppbarIconbutton(
           onTap: () {
@@ -130,10 +128,11 @@ class VisualizationView extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 13.0),
                           child: Text('Daone Affirmation Videos',
                               style: TextStyle(
-                                  fontFamily: 'Gotham Light',
-                                  fontWeight: FontWeight.w800,
-                                  fontSize:Get.width*0.056,
-                                  color: Colors.white,)),
+                                fontFamily: 'Gotham Light',
+                                fontWeight: FontWeight.w800,
+                                fontSize: Get.width * 0.056,
+                                color: Colors.white,
+                              )),
                         ),
                       ),
                     ),
@@ -146,23 +145,25 @@ class VisualizationView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 18),
             child: Text('Recent Videos',
                 style: TextStyle(
-                    fontFamily: 'Gotham Light',
-                    fontWeight: FontWeight.w800,
-                    fontSize: 25,
-                    color: Colors.deepOrange,
+                  fontFamily: 'Gotham Light',
+                  fontWeight: FontWeight.w800,
+                  fontSize: 25,
+                  color: Colors.deepOrange,
                 )),
           ),
           StreamBuilder<List<DailyIntentionModel>>(
             stream: FirebaseFirestore.instance
                 .collection('daoneVideos')
-                .snapshots().map((event) {
-    List<DailyIntentionModel> list=[];
-    for( var data in event.docs){
-    list.add(DailyIntentionModel.fromMap(data.data()));
-    }
-    return list;
-    }),
-            builder: (context, AsyncSnapshot<List<DailyIntentionModel>> snapshot) {
+                .snapshots()
+                .map((event) {
+              List<DailyIntentionModel> list = [];
+              for (var data in event.docs) {
+                list.add(DailyIntentionModel.fromMap(data.data()));
+              }
+              return list;
+            }),
+            builder:
+                (context, AsyncSnapshot<List<DailyIntentionModel>> snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
                   child: CircularProgressIndicator(
@@ -206,7 +207,8 @@ class VisualizationView extends StatelessWidget {
                 child: ListView.builder(
                   itemCount: itemCount,
                   itemBuilder: (context, index) {
-                    DailyIntentionModel dailyIntentionModel = snapshot.data![index];
+                    DailyIntentionModel dailyIntentionModel =
+                        snapshot.data![index];
 
                     // Convert the Timestamp to a DateTime
                     DateTime dateTime = dailyIntentionModel.date.toDate();
@@ -250,18 +252,27 @@ class VisualizationView extends StatelessWidget {
                         var thumbnailPath = thumbnailSnapshot.data;
 
                         return Container(
-                          margin: EdgeInsets.symmetric(horizontal: 15,vertical: 10),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 10),
                           decoration: BoxDecoration(
-                              gradient:LinearGradient(stops: [0,0.8], begin: Alignment.bottomRight, end: Alignment.topLeft, colors: [Colors.deepOrangeAccent,Colors.orange??Colors.orangeAccent]) ,
-                              borderRadius: BorderRadius.circular(20)
-                          ),
+                              gradient: LinearGradient(
+                                  stops: [0, 0.8],
+                                  begin: Alignment.bottomRight,
+                                  end: Alignment.topLeft,
+                                  colors: [
+                                    Colors.deepOrangeAccent,
+                                    Colors.orange ?? Colors.orangeAccent
+                                  ]),
+                              borderRadius: BorderRadius.circular(20)),
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               InkWell(
-                                onTap: (){
-                                  Get.to(()=> VideoPlayerScreen(dailyIntentionModel: dailyIntentionModel));
+                                onTap: () {
+                                  Get.to(() => VideoPlayerScreen(
+                                      dailyIntentionModel:
+                                          dailyIntentionModel));
                                 },
                                 child: Padding(
                                     padding: const EdgeInsets.symmetric(
@@ -271,34 +282,37 @@ class VisualizationView extends StatelessWidget {
                                       children: [
                                         Container(
                                           height: 100,
-                                          width:100,
+                                          width: 100,
                                           decoration: BoxDecoration(
                                             color: Colors.black,
-                                            borderRadius: BorderRadius.circular(12),
+                                            borderRadius:
+                                                BorderRadius.circular(12),
                                           ),
                                           child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(13),
+                                            borderRadius:
+                                                BorderRadius.circular(13),
                                             child: thumbnailPath != null
                                                 ? Image.file(
-                                              File(thumbnailPath),
-                                              fit: BoxFit.cover,
-                                            )
+                                                    File(thumbnailPath),
+                                                    fit: BoxFit.cover,
+                                                  )
                                                 : Image.asset(
-                                              "assets/images/novideo.png",
-                                              scale: 2,
+                                                    "assets/images/novideo.png",
+                                                    scale: 2,
+                                                  ),
+                                          ),
+                                        ),
+                                        Positioned.fill(
+                                          child: Center(
+                                            child: Icon(
+                                              Icons.play_circle,
+                                              color: Colors.grey,
+                                              size: 70,
                                             ),
                                           ),
                                         ),
-                                        Positioned.fill(child: Center(
-                                          child: Icon(
-                                            Icons.play_circle,
-                                            color: Colors.grey,
-                                            size: 70,
-                                          ),
-                                        ),),
                                       ],
-                                    )
-                                ),
+                                    )),
                               ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -306,32 +320,39 @@ class VisualizationView extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    width: Get.width*0.54,
+                                    width: Get.width * 0.53,
                                     child: TextWidget(
                                       color: Colors.white,
-                                      text:formattedDate==null? 'null': formattedDate,fsize: 14,fontWeight: FontWeight.w600,),
+                                      text: formattedDate == null
+                                          ? 'null'
+                                          : formattedDate,
+                                      fsize: 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
                                   ),
                                   SizedBox(height: 5),
-
                                   Container(
-                                      width: Get.width*0.54,
-                                      child: Text(dailyIntentionModel.title==null? 'No Title':dailyIntentionModel.title,
+                                      width: Get.width * 0.53,
+                                      child: Text(
+                                        dailyIntentionModel.title == null
+                                            ? 'No Title'
+                                            : dailyIntentionModel.title,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             color: Colors.white,
                                             fontSize: 18,
-                                            fontWeight: FontWeight.w700
-                                        ),)
-                                  ),
+                                            fontWeight: FontWeight.w700),
+                                      )),
                                   SizedBox(height: 5),
-
                                   Container(
-                                      width: Get.width*0.54,
-                                      child: Text(dailyIntentionModel.tags,style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w600,fontSize: 14
-                                      ),)
-                                  ),
+                                      width: Get.width * 0.50,
+                                      child: Text(
+                                        dailyIntentionModel.tags,
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 14),
+                                      )),
                                 ],
                               ),
                             ],

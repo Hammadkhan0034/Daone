@@ -34,11 +34,12 @@ class AddTaskController extends GetxController {
   SelectionPopupModel? selectedDropDownValue;
 
   CollectionReference tasksCollection =
-  FirebaseFirestore.instance.collection('tasks');
+      FirebaseFirestore.instance.collection('tasks');
 
-  Future<void> saveTaskToFirestore(BuildContext context,taskTitle,String taskDescription) async {
+  Future<void> saveTaskToFirestore(
+      BuildContext context, taskTitle, String taskDescription) async {
     try {
-      User? user =FirebaseAuth.instance.currentUser;
+      User? user = FirebaseAuth.instance.currentUser;
       showDialog(
         context: context,
         builder: (context) {
@@ -49,18 +50,19 @@ class AddTaskController extends GetxController {
           );
         },
       );
-      if (user!=null){
-        final dateTime=DateTime.now();
+      if (user != null) {
+        final dateTime = DateTime.now();
         String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
-        DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(user.email);
-      await userDocRef.collection('tasks').add({
-        'taskType' :selectedValue.value,
-        'taskTitle': taskTitle,
-        'status' : '',
-        'date': Timestamp.fromDate(DateTime.now()),
-        //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
-        'description':taskDescription,
-      });  // Data saved successfully
+        DocumentReference userDocRef =
+            FirebaseFirestore.instance.collection('users').doc(user.email);
+        await userDocRef.collection('tasks').add({
+          'taskType': selectedValue.value,
+          'taskTitle': taskTitle,
+          'status': '',
+          'date': Timestamp.fromDate(DateTime.now()),
+          //'date': DateFormat('dd-MM-yyyy').format(DateTime.now()),
+          'description': taskDescription,
+        }); // Data saved successfully
         print('Task saved to Firestore');
         Get.snackbar("Task Information", "Task Saved Successfully");
 
@@ -86,11 +88,11 @@ class AddTaskController extends GetxController {
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
         DocumentReference userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(user.email);
+            FirebaseFirestore.instance.collection('users').doc(user.email);
 
         // Specify the path to the document you want to delete
         DocumentReference taskDocRef =
-        userDocRef.collection('tasks').doc(documentId);
+            userDocRef.collection('tasks').doc(documentId);
 
         // Delete the task
         await taskDocRef.delete();
@@ -109,11 +111,8 @@ class AddTaskController extends GetxController {
     }
   }
 
-
-
-
-
   Rx<DateTime?> selectedDate = Rx<DateTime?>(null);
+
   void selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -126,15 +125,16 @@ class AddTaskController extends GetxController {
       selectedDate.value = picked;
     }
   }
+
   //
   // void updateSelectedDate(DateTime? date){
   // selectedDate.value = date;
   // }
 
-@override
+  @override
   void onInit() {
-  titleFocusNode=FocusNode();
-  descriptionFocusNode=FocusNode();
+    // titleFocusNode=FocusNode();
+    // descriptionFocusNode=FocusNode();
     super.onInit();
   }
 
@@ -156,36 +156,42 @@ class AddTaskController extends GetxController {
     }
     addTaskModelObj.value.dropdownItemList.refresh();
   }
+
   //To Do List
-    void updateToTodo(var documentId,){
-      DocumentReference documentReference = FirebaseFirestore.instance
-          .collection('users')
-          .doc(user)
-          .collection('tasks')
-          .doc(documentId); // Replace with the ID of the document you want to update
-
-      String newStatus = 'todo';
-
-
-      documentReference.update({
-        'status': newStatus,
-      }).then((value) {
-        Get.back();
-        Get.snackbar("Task Add to Todo List", "Task Saved Successfully");
-      }).catchError((error) {
-        Get.snackbar('Error', 'User is not authenticated');
-      });
-    }
-    //completeTask
-  void updateToComplete(var documentId,){
+  void updateToTodo(
+    var documentId,
+  ) {
     DocumentReference documentReference = FirebaseFirestore.instance
         .collection('users')
         .doc(user)
         .collection('tasks')
-        .doc(documentId); // Replace with the ID of the document you want to update
+        .doc(
+            documentId); // Replace with the ID of the document you want to update
+
+    String newStatus = 'todo';
+
+    documentReference.update({
+      'status': newStatus,
+    }).then((value) {
+      Get.back();
+      Get.snackbar("Task Add to Todo List", "Task Saved Successfully");
+    }).catchError((error) {
+      Get.snackbar('Error', 'User is not authenticated');
+    });
+  }
+
+  //completeTask
+  void updateToComplete(
+    var documentId,
+  ) {
+    DocumentReference documentReference = FirebaseFirestore.instance
+        .collection('users')
+        .doc(user)
+        .collection('tasks')
+        .doc(
+            documentId); // Replace with the ID of the document you want to update
 
     String newStatus = 'compelete';
-
 
     documentReference.update({
       'status': newStatus,
@@ -196,13 +202,4 @@ class AddTaskController extends GetxController {
       Get.snackbar('Error', 'User is not authenticated');
     });
   }
-
-
-
-
-
-
-
-
-
 }
