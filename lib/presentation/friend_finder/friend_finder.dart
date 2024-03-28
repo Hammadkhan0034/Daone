@@ -159,7 +159,7 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                     ),
                   ],
                 ),
-                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty)
+                  if (ctrl.userList.isEmpty && ctrl.searchQuery.value.isNotEmpty)
                      Text('No email exists.')
                    else Expanded(
                       child: ListView.builder(
@@ -201,10 +201,10 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                   ],
                 ),
                 Obx(() {
-                  if (ctrl.userList.isEmpty && ctrl.searchQuery.isNotEmpty) {
-                    return Text('No User exists.');
-                  } else {
-                    return Expanded(
+                 return ctrl.userList.isEmpty && ctrl.searchQuery.value.isNotEmpty?
+                     Text('No User exists.')
+                   :
+                     Expanded(
                       child: ListView.builder(
                         itemCount: ctrl.userList.length,
                         itemBuilder: (context, index) {
@@ -214,7 +214,7 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                         },
                       ),
                     );
-                  }
+
                 }),
               ],
             ),

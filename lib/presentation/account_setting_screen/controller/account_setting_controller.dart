@@ -11,7 +11,7 @@ class AccountSettingController extends GetxController {
 
   Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
-    Get.toNamed(AppRoutes.loginPageScreen);
+    Get.offAllNamed(AppRoutes.loginPageScreen);
   }
 
 

@@ -255,8 +255,6 @@ class CommunityPage extends StatelessWidget {
                   if (!snapshot.hasData || snapshot.data == null || snapshot.data.docs.isEmpty) {
                     return Text('No posts found');
                   }
-                  
-                  
                   return Container(
                     height: Get.height * 0.8,
                     child: ListView.builder(
@@ -590,10 +588,12 @@ class CommunityPage extends StatelessWidget {
                                                                 }
                                                                 return null; // Return null to indicate no error
                                                               },
+
                                                               decoration: InputDecoration(
-                                                                labelText: 'Type Something here...',
+                                                                floatingLabelBehavior: FloatingLabelBehavior.never,
+                                                                hintText: 'Type Something here...',
                                                                 enabledBorder: InputBorder.none,
-                                                                labelStyle: TextStyle(color: Colors.black),
+                                                                hintStyle: TextStyle(color: Colors.black54),
 
                                                                 border: OutlineInputBorder(
                                                                   borderRadius: BorderRadius.circular(50.0),

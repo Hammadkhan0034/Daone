@@ -47,8 +47,13 @@ class FriendFinderController extends GetxController {
   //   );
   // }
 
+
+bool isSearching=false;
    Future<void> searchUsersByUserName(String searchCase) async {
+     if(isSearching) return;
      String currentUserId=FirebaseAuth.instance.currentUser!.uid;
+     isSearching=true;
+
      try {
        final snapshot=await  FirebaseFirestore.instance
            .collection('users')
@@ -56,18 +61,20 @@ class FriendFinderController extends GetxController {
            .where("fullName",
            isLessThan: searchCase+'z')
            .get();
-       if(snapshot.size>0)
-       {
+
          userList.clear();
          for(final user in snapshot.docs){
            UserModel userModel=UserModel.fromMap(user.data());
            if(user.id==currentUserId) continue;
            userList.add(userModel);
          }
+         isSearching=false;
          update();
-       }
+
      }  catch (e) {
        print(e);
+       isSearching=false;
+
      }
 
 

@@ -5,6 +5,7 @@ import 'package:daone/core/app_export.dart';
 import 'package:daone/core/utils/utils.dart';
 import 'package:daone/presentation/group_page/group_page.dart';
 import 'package:daone/presentation/register_page_one_screen/models/user_model.dart';
+import 'package:daone/widgets/custom_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -36,65 +37,57 @@ class GroupController extends GetxController {
 
 
   Future<void> postCollection(BuildContext context,
+      String groupId,
       String? profilePic,
       String? userName,
       String? postTitle,
       File? postImageFile,) async {
-    try {
-      User? user = FirebaseAuth.instance.currentUser;
+    Get.showOverlay(asyncFunction: ()async{
 
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
+      try {
 
-      if (postImageFile != null && userName != null && profilePic != null) {
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('postImages/${DateTime
-            .now()
-            .millisecondsSinceEpoch}.jpg');
-        final uploadTask = storageRef.putFile(postImageFile);
-        final TaskSnapshot uploadTaskSnapshot =
-        await uploadTask.whenComplete(() => null);
+        if (postImageFile != null && userName != null && profilePic != null) {
+          final storageRef = FirebaseStorage.instance
+              .ref()
+              .child('postImages/${DateTime
+              .now()
+              .millisecondsSinceEpoch}.jpg');
+          final uploadTask = storageRef.putFile(postImageFile);
+          final TaskSnapshot uploadTaskSnapshot =
+          await uploadTask.whenComplete(() => null);
 
-        if (uploadTaskSnapshot.state == TaskState.success) {
-          final imageUrl = await storageRef.getDownloadURL();
+          if (uploadTaskSnapshot.state == TaskState.success) {
+            final imageUrl = await storageRef.getDownloadURL();
 
-          final postDoc =
-          await FirebaseFirestore.instance.collection('groups').doc(groupName.text).collection('groupPost').add({
-            'userName': userName,
-            'userProfilePic': profilePic,
-            'date': Timestamp.fromDate(DateTime.now()),
-            'postTitle': postTitle,
-            'postPic': imageUrl,
-            'postLike': 0, // Initialize likes count to 0
-          });
+            final postDoc =
+            await FirebaseFirestore.instance.collection('groups').doc(groupId).collection('groupPost').add({
+              'userName': userName,
+              'userProfilePic': profilePic,
+              'date': Timestamp.fromDate(DateTime.now()),
+              'postTitle': postTitle,
+              'postPic': imageUrl,
+              'postLike': 0, // Initialize likes count to 0
+            });
 
-          print('Post saved');
-          Get.snackbar("Info", "Post Saved");
-          Get.offAllNamed(AppRoutes.accountSettingScreen);
+            print('Post saved');
+            Get.back();
+            Get.snackbar("Info", "Post Saved");
+          } else {
+            print('Error uploading image');
+            Get.snackbar('Error', 'Error uploading image');
+            Navigator.of(context).pop();
+          }
         } else {
-          print('Error uploading image');
-          Get.snackbar('Error', 'Error uploading image');
-          Navigator.of(context).pop();
+          print('One or more values are null');
+          Get.snackbar('Error', 'One or more values are null');
         }
-      } else {
-        print('One or more values are null');
-        Get.snackbar('Error', 'One or more values are null');
-        Navigator.of(context).pop();
+      } catch (e) {
+        print('Error saving post: $e');
+        Get.snackbar('Error saving post:', '$e');
       }
-    } catch (e) {
-      print('Error saving post: $e');
-      Get.snackbar('Error saving post:', '$e');
-      Navigator.of(context).pop();
-    }
+
+    },loadingWidget: CustomLoadingWidget());
+
   }
 
 

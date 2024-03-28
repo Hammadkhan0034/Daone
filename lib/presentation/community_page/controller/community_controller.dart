@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:daone/core/app_export.dart';
+import 'package:daone/widgets/custom_loading_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -180,30 +181,27 @@ class CommunityController extends GetxController {
 
 
   Future commentsSection({context, var postId, profile, comment,name}) async {
-    try {
-      showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-            child: CircularProgressIndicator(
-              color: Colors.deepOrange,
-            ),
-          );
-        },
-      );
-      await FirebaseFirestore.instance.collection('postCollection')
-          .doc(postId).collection('comment')
-          .add({
-        'profile': profile,
-        'postId': postId,
-        'comment':comment,
-        'username':name,
-        'date': DateTime.now(),
-      });
-     Get.toNamed(AppRoutes.accountSettingScreen);
-    } catch (e) {
-      Get.snackbar('Info','$e');
-      print('Error adding comment: $e');
-    }
+    Get.showOverlay(asyncFunction: ()async{
+      try {
+
+        await FirebaseFirestore.instance.collection('postCollection')
+            .doc(postId).collection('comment')
+            .add({
+          'profile': profile,
+          'postId': postId,
+          'comment':comment,
+          'username':name,
+          'date': DateTime.now(),
+        });
+        commentController.text="";
+      } catch (e) {
+        Get.snackbar('Info','$e');
+        print('Error adding comment: $e');
+      }
+
+    },
+    loadingWidget: CustomLoadingWidget());
+
+
   }
 }

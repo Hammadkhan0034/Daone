@@ -1,4 +1,5 @@
 
+import 'package:daone/widgets/custom_loading_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'dart:io';
 
@@ -56,33 +57,31 @@ class PersonalDataUpdateTwoController extends GetxController {
   }
 
   Future<void> updatePassword(String? currentPassword, String? newPassword,BuildContext context) async {
-    try {
-      showDialog(
-        context: context,
-        barrierDismissible: false, // Prevent user from dismissing the dialog
-        builder: (BuildContext context) {
-          return Center(
-            child: CircularProgressIndicator(color: Colors.deepOrange
-            ),
-          );
-        },
-      );
-      User? user = FirebaseAuth.instance.currentUser;
+   Get.showOverlay(asyncFunction: ()async{
 
-      // Reauthenticate the user with their current password
-      AuthCredential credential = EmailAuthProvider.credential(email: user!.email!, password: currentPassword!);
-      await user?.reauthenticateWithCredential(credential);
+     try {
+       User? user = FirebaseAuth.instance.currentUser;
 
-      // Update the password
-      await user?.updatePassword(newPassword!);
+       // Reauthenticate the user with their current password
+       AuthCredential credential = EmailAuthProvider.credential(email: user!.email!, password: currentPassword!);
+       await user.reauthenticateWithCredential(credential);
 
-      // Password updated successfully
-      print("Password updated successfully");
-      Get.toNamed(AppRoutes.loginPageScreen);
-    } catch (e) {
-      // Handle errors (e.g., wrong current password)
-      print("Error updating password: $e");
-    }
+       // Update the password
+       await user.updatePassword(newPassword!);
+
+       // Password updated successfully
+       print("Password updated successfully");
+      await  FirebaseAuth.instance.signOut();
+       Get.offAllNamed(AppRoutes.loginPageScreen);
+     } catch (e) {
+       // Handle errors (e.g., wrong current password)
+       Get.snackbar( "Update Password","Invalid current password");
+       print("Error updating password: $e");
+     }
+
+   },loadingWidget: CustomLoadingWidget());
+
+
   }
 // Update fields in a Firestore document
   Future<void> updateDocumentFields(String newNumber,String newName) async {
