@@ -33,18 +33,18 @@ class ViewAllTaskTabContainerScreen extends GetWidget<ViewAllTaskTabContainerCon
               fontWeight: FontWeight.w800,
               fontSize: 30,color: Colors.black
           )),
-          leadingWidth: 68,
-          leading: AppbarIconbutton(
-            onTap: (){
-              Get.back();
-            },
-
-            svgPath: ImageConstant.imgInfo,
-            margin: getMargin(
-              left: 10,
-              top: 10,
-              bottom: 5,
-            ),),
+          // leadingWidth: 68,
+          // leading: AppbarIconbutton(
+          //   onTap: (){
+          //     Get.back();
+          //   },
+          //
+          //   svgPath: ImageConstant.imgInfo,
+          //   margin: getMargin(
+          //     left: 10,
+          //     top: 10,
+          //     bottom: 5,
+          //   ),),
         ),
         body: SizedBox(
           width: double.maxFinite,

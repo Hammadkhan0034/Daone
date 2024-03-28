@@ -166,13 +166,8 @@ class _UploadVideoState extends State<UploadVideo> {
                       48,
                     ),
                   ),
-                  // validator: (value) {
-                  //   if (value == null ||
-                  //       (!isValidEmail(value, isRequired: true))) {
-                  //     return "Please enter valid email";
-                  //   }
-                  //   return null;
-                  // },
+                  validator: (value) {
+                  },
                   filled: true,
                   fillColor: appTheme.gray50,
                 ),

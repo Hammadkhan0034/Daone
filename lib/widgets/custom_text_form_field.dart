@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField({
+
     Key? key,
     this.alignment,
     this.width,
@@ -10,6 +11,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.focusNode,
     this.textStyle,
+
     this.obscureText = false,
     this.textInputAction = TextInputAction.next,
     this.textInputType = TextInputType.text,
@@ -28,7 +30,7 @@ class CustomTextFormField extends StatelessWidget {
     this.focusedBorderDecoration,
     this.disabledBorderDecoration,
     this.validator,
-    this.function,
+    this.function,  this.autofocus=false,
   }) : super(
           key: key,
         );
@@ -42,6 +44,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
 
   final FocusNode? focusNode;
+final  bool autofocus;
 
 
   final TextStyle? textStyle;
@@ -101,15 +104,14 @@ class CustomTextFormField extends StatelessWidget {
           onSaved: function,
           controller: controller,
           focusNode: focusNode ,
-          autofocus: false,
           style: textStyle,
           obscureText: obscureText!,
           textInputAction: textInputAction,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,
           decoration: decoration,
-          validator: validator??(value){
-            if(value==null||value.isEmpty) return "This field is required";
+          validator: validator ?? (value) {
+            if(value==null||value.isEmpty || value=='') return "This field is required";
             return null;
 
           },

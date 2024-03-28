@@ -11,6 +11,7 @@ import '../register_page_one_screen/models/user_model.dart';
 class FriendFinderController extends GetxController {
   final searchQuery = ''.obs;
   final List<UserModel>userList = <UserModel>[];
+  final List<UserModel>userListByName = <UserModel>[];
   Future<Map<dynamic, dynamic>> checkIfPhoneNumberExistsInFirebase(
       String? phoneNumber) async {
     try {
@@ -62,11 +63,11 @@ bool isSearching=false;
            isLessThan: searchCase+'z')
            .get();
 
-         userList.clear();
+       userListByName.clear();
          for(final user in snapshot.docs){
            UserModel userModel=UserModel.fromMap(user.data());
            if(user.id==currentUserId) continue;
-           userList.add(userModel);
+           userListByName.add(userModel);
          }
          isSearching=false;
          update();

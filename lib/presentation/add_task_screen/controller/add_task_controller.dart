@@ -11,6 +11,8 @@ import '../models/add_task_model.dart';
 /// This class manages the state of the AddTaskScreen, including the
 /// current addTaskModelObj
 class AddTaskController extends GetxController {
+  late FocusNode titleFocusNode;
+  late FocusNode descriptionFocusNode;
   TextEditingController group216Controller = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
@@ -129,13 +131,20 @@ class AddTaskController extends GetxController {
   // selectedDate.value = date;
   // }
 
-
+@override
+  void onInit() {
+  titleFocusNode=FocusNode();
+  descriptionFocusNode=FocusNode();
+    super.onInit();
+  }
 
   @override
   void onClose() {
     super.onClose();
     group216Controller.dispose();
     descriptionController.dispose();
+    titleFocusNode.dispose();
+    descriptionFocusNode.dispose();
   }
 
   onSelected(dynamic value) {
