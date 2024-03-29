@@ -1,4 +1,5 @@
 import 'package:daone/core/app_export.dart';
+import 'package:daone/presentation/dashboard/view/dashboard_view.dart';
 import 'package:daone/widgets/app_bar/appbar_iconbutton.dart';
 import 'package:daone/widgets/custom_elevated_button.dart';
 import 'package:daone/widgets/custom_text_form_field.dart';
@@ -37,8 +38,9 @@ class AddTaskScreen extends GetWidget<AddTaskController> {
             onTap: () {
               controller.group216Controller.clear();
               controller.descriptionController.clear();
-              Get.back();
-            },
+                                            Get.back();
+                                            Get.back();
+},
             svgPath: ImageConstant.imgInfo,
             margin: getMargin(
               left: 10,
