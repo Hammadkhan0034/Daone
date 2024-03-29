@@ -45,8 +45,8 @@ class CreateImageView extends StatelessWidget {
           },
           svgPath: ImageConstant.imgInfo,
           margin: getMargin(
-            left: 30,
-            top: 10,
+            left: 20,
+            top: 8,
             bottom: 5,
           ),
         ),

@@ -16,7 +16,7 @@ class CommunityPage extends StatelessWidget {
   CommunityPage({Key? key}) : super(key: key);
 
   CommunityController controller =
-  Get.put(CommunityController(CommunityModel().obs));
+      Get.put(CommunityController(CommunityModel().obs));
 
   @override
   Widget build(BuildContext context) {
@@ -29,13 +29,16 @@ class CommunityPage extends StatelessWidget {
           height: getVerticalSize(
             70,
           ),
-          title: TextWidget(text: 'Community', color:Colors.black,
+          title: TextWidget(
+            text: 'Community',
+            color: Colors.black,
             fontFamily: 'Gotham Light',
             fontWeight: FontWeight.w800,
-            fsize: 25,),
+            fsize: 25,
+          ),
           leadingWidth: 72,
           leading: AppbarIconbutton(
-            onTap: (){
+            onTap: () {
               Get.back();
             },
             svgPath: ImageConstant.imgInfo,
@@ -65,7 +68,10 @@ class CommunityPage extends StatelessWidget {
                   builder: (BuildContext context,
                       AsyncSnapshot<DocumentSnapshot> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: CircularProgressIndicator(color: Colors.deepOrange,));
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.deepOrange,
+                      ));
                     }
 
                     if (snapshot.hasError) {
@@ -76,9 +82,13 @@ class CommunityPage extends StatelessWidget {
                       return Text('Document does not exist');
                     }
 
-                    final userData = snapshot.data!.data() as Map<String, dynamic>?;
+                    final userData =
+                        snapshot.data!.data() as Map<String, dynamic>?;
                     if (userData == null) {
-                      return Center(child: CircularProgressIndicator(color: Colors.deepOrange,)); // Handle appropriately
+                      return Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.deepOrange,
+                      )); // Handle appropriately
                     }
 
                     final userName = userData['fullName'] ?? '';
@@ -153,41 +163,41 @@ class CommunityPage extends StatelessWidget {
                             ),
                           ),
                           Obx(() => InkWell(
-                            onTap: () {
-                              controller.getImage();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 18.0, vertical: 4),
-                              child: Container(
-                                height: Get.height * 0.2,
-                                width: Get.width * 0.8,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Colors.black54,
-                                  image: (controller.imagePath.isEmpty)
-                                      ? DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/no-image.png'),
-                                  )
-                                      : DecorationImage(
-                                    image: FileImage(
-                                        File(controller.imagePath.value)),
-                                    fit: BoxFit.cover,
+                                onTap: () {
+                                  controller.getImage();
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 18.0, vertical: 4),
+                                  child: Container(
+                                    height: Get.height * 0.2,
+                                    width: Get.width * 0.8,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      color: Colors.black54,
+                                      image: (controller.imagePath.isEmpty)
+                                          ? DecorationImage(
+                                              image: AssetImage(
+                                                  'assets/images/no-image.png'),
+                                            )
+                                          : DecorationImage(
+                                              image: FileImage(File(
+                                                  controller.imagePath.value)),
+                                              fit: BoxFit.cover,
+                                            ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          )),
+                              )),
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 18.0, horizontal: 8),
                             child: InkWell(
                               onTap: () {
                                 File? postImageFile =
-                                controller.imagePath.value.isNotEmpty
-                                    ? File(controller.imagePath.value)
-                                    : null;
+                                    controller.imagePath.value.isNotEmpty
+                                        ? File(controller.imagePath.value)
+                                        : null;
                                 controller.postCollection(
                                   context,
                                   imageUrl,
@@ -229,7 +239,6 @@ class CommunityPage extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               // Material(
               //   color: Colors.white,
               //   elevation: 3,
@@ -244,15 +253,22 @@ class CommunityPage extends StatelessWidget {
               //   ),
               // ),
               StreamBuilder(
-                stream: FirebaseFirestore.instance.collection('postCollection').snapshots(),
+                stream: FirebaseFirestore.instance
+                    .collection('postCollection')
+                    .snapshots(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator(color: Colors.deepOrange,));
+                    return Center(
+                        child: CircularProgressIndicator(
+                      color: Colors.deepOrange,
+                    ));
                   }
                   if (snapshot.hasError) {
                     return Text('Error: ${snapshot.error}');
                   }
-                  if (!snapshot.hasData || snapshot.data == null || snapshot.data.docs.isEmpty) {
+                  if (!snapshot.hasData ||
+                      snapshot.data == null ||
+                      snapshot.data.docs.isEmpty) {
                     return Text('No posts found');
                   }
                   return Container(
@@ -260,7 +276,8 @@ class CommunityPage extends StatelessWidget {
                     child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (context, index) {
-                        final postData = snapshot.data?.docs[index].data() as Map<String, dynamic>;
+                        final postData = snapshot.data?.docs[index].data()
+                            as Map<String, dynamic>;
                         final userName = postData['userName'];
                         final userProfile = postData['userProfilePic'];
                         final postPic = postData['postPic'];
@@ -269,9 +286,11 @@ class CommunityPage extends StatelessWidget {
                         final documentId = snapshot.data.docs[index].id;
                         Timestamp timestamp = postData['date'];
                         DateTime dateTime = timestamp.toDate();
-                        String formattedDateTime = DateFormat('d-M-yyyy hh:mm a').format(dateTime);
+                        String formattedDateTime =
+                            DateFormat('d-M-yyyy hh:mm a').format(dateTime);
 
-                        bool isLiked = false; // Add this variable to track the like status
+                        bool isLiked =
+                            false; // Add this variable to track the like status
                         if (postData.containsKey('isLiked')) {
                           isLiked = postData['isLiked'];
                         }
@@ -283,14 +302,14 @@ class CommunityPage extends StatelessWidget {
                         // });
 
                         return Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 10),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 22.0, vertical: 10),
                           child: Container(
                             height: Get.height * 0.41,
                             width: Get.width * 0.9,
                             decoration: BoxDecoration(
-                              color: Colors.grey.withOpacity(0.1),
-                              borderRadius: BorderRadius.circular(18)
-                            ),
+                                color: Colors.grey.withOpacity(0.1),
+                                borderRadius: BorderRadius.circular(18)),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -311,22 +330,33 @@ class CommunityPage extends StatelessWidget {
                                             image: NetworkImage(userProfile),
                                             fit: BoxFit.cover,
                                           ),
-                                          borderRadius: BorderRadius.circular(100),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
                                         ),
                                       ),
                                       Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                            child: TextWidget(text: userName,
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: TextWidget(
+                                                text: userName,
                                                 fontFamily: 'Gotham Light',
-                                                fontWeight: FontWeight.w800,color: Colors.black, fsize: 12),
+                                                fontWeight: FontWeight.w800,
+                                                color: Colors.black,
+                                                fsize: 12),
                                           ),
                                           Padding(
-                                            padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                            child: TextWidget(text: formattedDateTime, color: Colors.black, fsize: 10),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 8.0),
+                                            child: TextWidget(
+                                                text: formattedDateTime,
+                                                color: Colors.black,
+                                                fsize: 10),
                                           ),
                                         ],
                                       ),
@@ -334,11 +364,15 @@ class CommunityPage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 4.0),
+                                  padding:
+                                      const EdgeInsets.symmetric(vertical: 4.0),
                                   child: Container(
                                     padding: EdgeInsets.all(2),
                                     width: Get.width * 0.7,
-                                    child: TextWidget(text: postTitle, color: Colors.black, fsize: 12),
+                                    child: TextWidget(
+                                        text: postTitle,
+                                        color: Colors.black,
+                                        fsize: 12),
                                   ),
                                 ),
                                 Container(
@@ -362,12 +396,15 @@ class CommunityPage extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                          await controller.likeFunction(controller.user!, documentId);
+                                          await controller.likeFunction(
+                                              controller.user!, documentId);
                                         },
                                         child: FutureBuilder<bool>(
-                                          future: controller.getLikeStatus(controller.user!, documentId),
+                                          future: controller.getLikeStatus(
+                                              controller.user!, documentId),
                                           builder: (context, snapshot) {
-                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                            if (snapshot.connectionState ==
+                                                ConnectionState.waiting) {
                                               // While waiting for the result, return the default like icon
                                               return buildLikeButton(false);
                                             } else if (snapshot.hasError) {
@@ -382,287 +419,412 @@ class CommunityPage extends StatelessWidget {
                                         ),
                                       ),
 
-
-                                      // InkWell(
-                                      //   onTap: () async {
-                                      //   controller.likeFunction(controller.user,documentId);
-                                      //
-                                      //   },
-                                      //   child: Material(
-                                      //     color: Colors.white,
-                                      //     elevation: 2,
-                                      //     borderRadius: BorderRadius.circular(100),
-                                      //     child: Padding(
-                                      //       padding: EdgeInsets.all(8),
-                                      //       child: Center(
-                                      //         child: Image.asset('assets/images/like1.png', scale: 4),
-                                      //       ),
-                                      //     ),
-                                      //   ),
-                                      // ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                                        child: TextWidget(text: postLike.toString(), color: Colors.deepOrange, fsize: 16),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 8.0),
+                                        child: TextWidget(
+                                            text: postLike.toString(),
+                                            color: Colors.deepOrange,
+                                            fsize: 16),
                                       ),
                                       SizedBox(
                                         width: Get.width * 0.1,
                                       ),
                                       InkWell(
-                                        onTap: (){
-                                          Get.bottomSheet(
-                                            StreamBuilder(
-                                               stream: FirebaseFirestore.instance
-                                                    .collection('users')
-                                                    .doc(controller.user)
-                                                    .snapshots(),
-                                                builder: (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-                                                  if (snapshot.connectionState == ConnectionState.waiting) {
-                                                    return Center(child: CircularProgressIndicator(color: Colors.deepOrange));
-                                                  }
+                                        onTap: () {
+                                          Get.bottomSheet(StreamBuilder(
+                                              stream: FirebaseFirestore.instance
+                                                  .collection('users')
+                                                  .doc(controller.user)
+                                                  .snapshots(),
+                                              builder: (BuildContext context,
+                                                  AsyncSnapshot<
+                                                          DocumentSnapshot>
+                                                      snapshot) {
+                                                if (snapshot.connectionState ==
+                                                    ConnectionState.waiting) {
+                                                  return Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                              color: Colors
+                                                                  .deepOrange));
+                                                }
 
-                                                  if (snapshot.hasError) {
-                                                    return Text('Error: ${snapshot.error}');
-                                                  }
+                                                if (snapshot.hasError) {
+                                                  return Text(
+                                                      'Error: ${snapshot.error}');
+                                                }
 
-                                                  if (!snapshot.hasData || !snapshot.data!.exists) {
-                                                    return Text('Document does not exist');
-                                                  }
+                                                if (!snapshot.hasData ||
+                                                    !snapshot.data!.exists) {
+                                                  return Text(
+                                                      'Document does not exist');
+                                                }
 
-                                                  final userData = snapshot.data!.data() as Map<String, dynamic>?;
+                                                final userData = snapshot.data!
+                                                        .data()
+                                                    as Map<String, dynamic>?;
 
-                                                  if (userData == null) {
-                                                    return Center(child: CircularProgressIndicator(color: Colors.deepOrange));
-                                                    // You can handle this case as needed
-                                                  }
+                                                if (userData == null) {
+                                                  return Center(
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                              color: Colors
+                                                                  .deepOrange));
+                                                  // You can handle this case as needed
+                                                }
 
-                                                  final userName = userData['fullName'] ?? '';
-                                                  final imageUrl = userData['imageUrl'] ?? '';
-                                                  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+                                                final userName =
+                                                    userData['fullName'] ?? '';
+                                                final imageUrl =
+                                                    userData['imageUrl'] ?? '';
+                                                final GlobalKey<FormState>
+                                                    _formKey =
+                                                    GlobalKey<FormState>();
 
-                                                  return Container(
-                                            color: Colors.white,
-
-                                            child: SingleChildScrollView(
-                                              child: Form(
-                                                key: _formKey,
-                                                child: Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Row(
-                                                      mainAxisAlignment: MainAxisAlignment.center,
-                                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                                      children: [
-                                                        Padding(
-                                                          padding: const EdgeInsets.symmetric(vertical: 8.0),
-                                                          child: Container(
-                                                              height: Get.height*0.007,
-                                                              width: Get.width*0.5,
-                                                              decoration: BoxDecoration(
-                                                                color: Colors.deepOrange,
-                                                                borderRadius: BorderRadius.circular(10),
-                                                              )
+                                                return Container(
+                                                  color: Colors.white,
+                                                  child: SingleChildScrollView(
+                                                    child: Form(
+                                                      key: _formKey,
+                                                      child: Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                    .symmetric(
+                                                                    vertical:
+                                                                        8.0),
+                                                                child:
+                                                                    Container(
+                                                                        height: Get.height *
+                                                                            0.007,
+                                                                        width: Get.width *
+                                                                            0.5,
+                                                                        decoration:
+                                                                            BoxDecoration(
+                                                                          color:
+                                                                              Colors.deepOrange,
+                                                                          borderRadius:
+                                                                              BorderRadius.circular(10),
+                                                                        )),
+                                                              ),
+                                                            ],
                                                           ),
-                                                        ),
-
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                                                      child: TextWidget(text: 'Comments', color:Colors.black, fsize: 18),
-                                                    ),
-                                                    Divider(color: Colors.black12),
-                                                    StreamBuilder(
-                                                        stream:FirebaseFirestore.instance
-                                                        .collection('postCollection')
-                                                        .doc(documentId)
-                                                        .collection('comment')
-                                                        .orderBy('date', descending: true) // Order comments by date in descending order
-                                                        .snapshots(),
-                                                        builder: (context,AsyncSnapshot snapshot){
-                                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                                            return Center(child: CircularProgressIndicator(color: Colors.deepOrange,)); // Loading indicator while fetching comments
-                                                          }
-                                                          if (snapshot.hasError) {
-                                                            return Text('Error: ${snapshot.error}');
-                                                          }
-                                                          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                                                            return Text('No comments found'); // Display a message if there are no comments
-                                                          }
-                                                      return  Container(
-                                                          height: Get.height*0.38,
-                                                          width: Get.width*1,
-                                                          child:ListView.builder(
-                                                              itemCount: snapshot.data!.docs.length,
-                                                              itemBuilder: (context,index){
-                                                                final comment = snapshot.data!.docs[index];
-                                                                final data = comment.data() as Map<String, dynamic>;
-                                                                final profile = data['profile'];
-                                                                final commentText = data['comment'];
-                                                                final name = data['username'];
-                                                                final date = data['date'] as Timestamp;
-                                                                final formattedDate =
-                                                                DateFormat('d-M-yyyy hh:mm a').format(date.toDate());
-                                                                return Padding(
-                                                                  padding: const EdgeInsets.all(5.0),
-                                                                  child: Container(
-                                                                    height: Get.height*0.1,
-                                                                    width: Get.width*1,
-                                                                    decoration: BoxDecoration(
-                                                                      borderRadius: BorderRadius.circular(100),
-                                                                  //    color: Colors.blue,
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    horizontal:
+                                                                        12.0),
+                                                            child: TextWidget(
+                                                                text:
+                                                                    'Comments',
+                                                                color: Colors
+                                                                    .black,
+                                                                fsize: 18),
+                                                          ),
+                                                          Divider(
+                                                              color: Colors
+                                                                  .black12),
+                                                          StreamBuilder(
+                                                              stream: FirebaseFirestore
+                                                                  .instance
+                                                                  .collection(
+                                                                      'postCollection')
+                                                                  .doc(
+                                                                      documentId)
+                                                                  .collection(
+                                                                      'comment')
+                                                                  .orderBy(
+                                                                      'date',
+                                                                      descending:
+                                                                          true) // Order comments by date in descending order
+                                                                  .snapshots(),
+                                                              builder: (context,
+                                                                  AsyncSnapshot
+                                                                      snapshot) {
+                                                                if (snapshot
+                                                                        .connectionState ==
+                                                                    ConnectionState
+                                                                        .waiting) {
+                                                                  return Center(
+                                                                      child:
+                                                                          CircularProgressIndicator(
+                                                                    color: Colors
+                                                                        .deepOrange,
+                                                                  )); // Loading indicator while fetching comments
+                                                                }
+                                                                if (snapshot
+                                                                    .hasError) {
+                                                                  return Text(
+                                                                      'Error: ${snapshot.error}');
+                                                                }
+                                                                if (!snapshot
+                                                                        .hasData ||
+                                                                    snapshot
+                                                                        .data!
+                                                                        .docs
+                                                                        .isEmpty) {
+                                                                  return Text(
+                                                                      'No comments found'); // Display a message if there are no comments
+                                                                }
+                                                                return Container(
+                                                                    height:
+                                                                        Get.height *
+                                                                            0.38,
+                                                                    width:
+                                                                        Get.width *
+                                                                            1,
+                                                                    child: ListView
+                                                                        .builder(
+                                                                            itemCount:
+                                                                                snapshot.data!.docs.length,
+                                                                            itemBuilder: (context, index) {
+                                                                              final comment = snapshot.data!.docs[index];
+                                                                              final data = comment.data() as Map<String, dynamic>;
+                                                                              final profile = data['profile'];
+                                                                              final commentText = data['comment'];
+                                                                              final name = data['username'];
+                                                                              final date = data['date'] as Timestamp;
+                                                                              final formattedDate = DateFormat('d-M-yyyy hh:mm a').format(date.toDate());
+                                                                              return Padding(
+                                                                                padding: const EdgeInsets.all(5.0),
+                                                                                child: Container(
+                                                                                  height: Get.height * 0.1,
+                                                                                  width: Get.width * 1,
+                                                                                  decoration: BoxDecoration(
+                                                                                    borderRadius: BorderRadius.circular(100),
+                                                                                    //    color: Colors.blue,
+                                                                                  ),
+                                                                                  child: Padding(
+                                                                                    padding: const EdgeInsets.all(1.0),
+                                                                                    child: Row(
+                                                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                      mainAxisAlignment: MainAxisAlignment.start,
+                                                                                      children: [
+                                                                                        Container(
+                                                                                          height: Get.height * 0.07,
+                                                                                          width: Get.width * 0.15,
+                                                                                          decoration: BoxDecoration(
+                                                                                            borderRadius: BorderRadius.circular(100),
+                                                                                            color: Colors.white,
+                                                                                            image: DecorationImage(
+                                                                                              image: NetworkImage(profile),
+                                                                                              fit: BoxFit.cover,
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
+                                                                                        Column(
+                                                                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                                                                          mainAxisAlignment: MainAxisAlignment.start,
+                                                                                          children: [
+                                                                                            SizedBox(height: Get.height * 0.01),
+                                                                                            Row(
+                                                                                              children: [
+                                                                                                SizedBox(width: Get.width * 0.02),
+                                                                                                TextWidget(
+                                                                                                  text: name,
+                                                                                                  color: Colors.black,
+                                                                                                  fsize: 14,
+                                                                                                  fontWeight: FontWeight.w500,
+                                                                                                ),
+                                                                                                SizedBox(width: Get.width * 0.04),
+                                                                                                TextWidget(text: formattedDate.toString(), color: Colors.black45, fsize: 12),
+                                                                                              ],
+                                                                                            ),
+                                                                                            Expanded(
+                                                                                                child: Padding(
+                                                                                              padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 0),
+                                                                                              child: TextWidget(text: commentText ?? '', color: Colors.black, fsize: 13),
+                                                                                            )),
+                                                                                            Divider(color: Colors.black12),
+                                                                                          ],
+                                                                                        ),
+                                                                                      ],
+                                                                                    ),
+                                                                                  ),
+                                                                                ),
+                                                                              );
+                                                                            }));
+                                                              }),
+                                                          Container(
+                                                            //   color: Colors.purpleAccent,
+                                                            height: Get.height *
+                                                                0.08,
+                                                            width:
+                                                                Get.width * 1,
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          50),
+                                                              // border: Border.all(
+                                                              //   color: Colors.black, // Border color
+                                                              //   width: 2.0, // Border width
+                                                              // ),
+                                                            ),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                    width: Get
+                                                                            .width *
+                                                                        0.05),
+                                                                Container(
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.05,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.11,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            100),
+                                                                    color: Colors
+                                                                        .white,
+                                                                    image:
+                                                                        DecorationImage(
+                                                                      image: NetworkImage(
+                                                                          imageUrl),
+                                                                      fit: BoxFit
+                                                                          .cover,
                                                                     ),
-                                                                    child:  Padding(
-                                                                      padding: const EdgeInsets.all(1.0),
-                                                                      child: Row(
-                                                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                                                        mainAxisAlignment: MainAxisAlignment.start,
-                                                                        children: [
-                                                                          Container(
-                                                                            height: Get.height * 0.07,
-                                                                            width: Get.width * 0.15,
-                                                                            decoration: BoxDecoration(
-                                                                              borderRadius: BorderRadius.circular(100),
-                                                                              color: Colors.white,
-                                                                              image: DecorationImage(
-                                                                                image: NetworkImage(profile),
-                                                                                fit: BoxFit.cover,
-                                                                              ),
-                                                                            ),
-                                                                          ),
-                                                                          Column(
-                                                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                                                            mainAxisAlignment: MainAxisAlignment.start,
-                                                                            children: [
-                                                                              SizedBox(height: Get.height*0.01),
-                                                                              Row(
-                                                                                children: [
-                                                                                  SizedBox(width: Get.width*0.02),
-                                                                                  TextWidget(text: name, color: Colors.black, fsize:14,fontWeight: FontWeight.w500, ),
-                                                                                  SizedBox(width: Get.width*0.04),
-                                                                                  TextWidget(text: formattedDate.toString(), color: Colors.black45, fsize: 12),
+                                                                  ),
+                                                                ),
+                                                                SizedBox(
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.01,
+                                                                ),
+                                                                Container(
+                                                                  // color: Colors.yellow,
+                                                                  height:
+                                                                      Get.height *
+                                                                          0.09,
+                                                                  width:
+                                                                      Get.width *
+                                                                          0.7,
+                                                                  decoration:
+                                                                      BoxDecoration(),
+                                                                  child:
+                                                                      TextFormField(
+                                                                    onSaved:
+                                                                        (value) {
+                                                                      controller
+                                                                          .commentController
+                                                                          .text = value!;
+                                                                    },
+                                                                    controller:
+                                                                        controller
+                                                                            .commentController,
+                                                                    validator:
+                                                                        (value) {
+                                                                      if (value ==
+                                                                              null ||
+                                                                          value
+                                                                              .isEmpty) {
+                                                                        return 'Please enter a comment';
+                                                                      }
+                                                                      return null; // Return null to indicate no error
+                                                                    },
+                                                                    decoration:
+                                                                        InputDecoration(
+                                                                      floatingLabelBehavior:
+                                                                          FloatingLabelBehavior
+                                                                              .never,
+                                                                      hintText:
+                                                                          'Type Something here...',
+                                                                      enabledBorder:
+                                                                          InputBorder
+                                                                              .none,
+                                                                      hintStyle:
+                                                                          TextStyle(
+                                                                              color: Colors.black54),
 
-                                                                                ],
-                                                                              ),
-                                                                              Expanded(child: Padding(
-                                                                                padding: const EdgeInsets.symmetric(horizontal: 4.0,vertical: 0),
-                                                                                child: TextWidget(text:commentText??'', color:Colors.black, fsize: 13),
-                                                                              )),
-                                                                              Divider(color: Colors.black12),
-
-                                                                            ],
-                                                                          ),
-                                                                        ],
+                                                                      border:
+                                                                          OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50.0),
+                                                                        borderSide: BorderSide(
+                                                                            color:
+                                                                                Colors.transparent,
+                                                                            width: 0.0),
+                                                                      ),
+                                                                      // Custom border for the input field when focused
+                                                                      focusedBorder:
+                                                                          OutlineInputBorder(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(50.0),
+                                                                        borderSide: BorderSide(
+                                                                            color:
+                                                                                Colors.transparent,
+                                                                            width: 0.0),
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                );
-                                                              })
-                                                      );
-
-                                                    }),
-
-                                                    Container(
-                                                      //   color: Colors.purpleAccent,
-                                                      height: Get.height*0.08,
-                                                      width: Get.width*1,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(50),
-                                                        // border: Border.all(
-                                                        //   color: Colors.black, // Border color
-                                                        //   width: 2.0, // Border width
-                                                        // ),
-                                                      ),
-                                                      child: Row(
-                                                        children: [
-                                                          SizedBox(width: Get.width*0.05),
-                                                          Container(
-                                                            height: Get.height * 0.05,
-                                                            width: Get.width * 0.11,
-                                                            decoration: BoxDecoration(
-                                                              borderRadius: BorderRadius.circular(100),
-                                                              color: Colors.white,
-                                                              image: DecorationImage(
-                                                                image: NetworkImage(imageUrl),
-                                                                fit: BoxFit.cover,
-                                                              ),
-                                                            ),
-                                                          ),
-
-                                                          SizedBox(
-                                                            width: Get.width*0.01,
-
-                                                          ),
-                                                          Container(
-                                                            // color: Colors.yellow,
-                                                            height: Get.height*0.09,
-                                                            width: Get.width*0.7,
-                                                            decoration: BoxDecoration(
-
-                                                            ),
-                                                            child: TextFormField(
-                                                              onSaved: (value){
-                                                                controller.commentController.text =value!;
-                                                              },
-                                                              controller: controller.commentController ,
-                                                              validator: (value) {
-                                                                if (value == null || value.isEmpty) {
-                                                                  return 'Please enter a comment';
-                                                                }
-                                                                return null; // Return null to indicate no error
-                                                              },
-
-                                                              decoration: InputDecoration(
-                                                                floatingLabelBehavior: FloatingLabelBehavior.never,
-                                                                hintText: 'Type Something here...',
-                                                                enabledBorder: InputBorder.none,
-                                                                hintStyle: TextStyle(color: Colors.black54),
-
-                                                                border: OutlineInputBorder(
-                                                                  borderRadius: BorderRadius.circular(50.0),
-                                                                  borderSide: BorderSide(color: Colors.transparent, width: 0.0),
                                                                 ),
-                                                                // Custom border for the input field when focused
-                                                                focusedBorder: OutlineInputBorder(
-                                                                  borderRadius: BorderRadius.circular(50.0),
-                                                                  borderSide: BorderSide(color: Colors.transparent, width: 0.0),
-                                                                ),
-                                                              ),
+                                                                InkWell(
+                                                                    onTap: () {
+                                                                      if (_formKey
+                                                                          .currentState!
+                                                                          .validate()) {
+                                                                        // The form is valid, proceed with your action
+                                                                        controller.commentsSection(
+                                                                            name:
+                                                                                userName,
+                                                                            postId:
+                                                                                documentId,
+                                                                            comment: controller
+                                                                                .commentController.text,
+                                                                            profile:
+                                                                                imageUrl,
+                                                                            context:
+                                                                                context);
+                                                                      }
+                                                                    },
+                                                                    child: Image
+                                                                        .asset(
+                                                                      'assets/images/send.png',
+                                                                      scale:
+                                                                          2.4,
+                                                                    )),
+                                                              ],
                                                             ),
                                                           ),
-                                                          InkWell(
-                                                              onTap: (){
-                                                                if (_formKey.currentState!.validate()) {
-                                                                  // The form is valid, proceed with your action
-                                                                  controller.commentsSection(
-                                                                    name: userName,
-                                                                    postId: documentId,
-                                                                    comment: controller.commentController.text,
-                                                                    profile: imageUrl,
-                                                                    context: context
-                                                                  );
-                                                                }
-                                                              },
-                                                              child: Image.asset('assets/images/send.png',scale: 2.4,)),
-
                                                         ],
                                                       ),
                                                     ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );}));
-
+                                                  ),
+                                                );
+                                              }));
                                         },
                                         child: Material(
                                           color: Colors.white,
                                           elevation: 2,
-                                          borderRadius: BorderRadius.circular(100),
+                                          borderRadius:
+                                              BorderRadius.circular(100),
                                           child: Padding(
                                             padding: EdgeInsets.all(8),
                                             child: Center(
-                                              child: Image.asset('assets/images/comment.png', scale: 4),
+                                              child: Image.asset(
+                                                  'assets/images/comment.png',
+                                                  scale: 4),
                                             ),
                                           ),
                                         ),
@@ -693,6 +855,7 @@ class CommunityPage extends StatelessWidget {
       ),
     );
   }
+
   Widget buildLikeButton(bool isLiked) {
     return Material(
       color: Colors.white,
@@ -701,16 +864,18 @@ class CommunityPage extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(8),
         child: Center(
-          child: isLiked ? Image.asset(
-            'assets/images/like1.png',color: Colors.deepOrange,
-            scale: 4,
-          ): Image.asset(
-            'assets/images/like1.png',
-            scale: 4,
-          ),
+          child: isLiked
+              ? Image.asset(
+                  'assets/images/like1.png',
+                  color: Colors.deepOrange,
+                  scale: 4,
+                )
+              : Image.asset(
+                  'assets/images/like1.png',
+                  scale: 4,
+                ),
         ),
       ),
     );
   }
-
 }
