@@ -287,7 +287,7 @@ class _FriendFinderPageState extends State<FriendFinderPage>
                       width: Get.width * 0.5,
                       child: TextFormField(
                         onChanged: (value) {
-                          ctrl.searchUsersByUserName(value);
+                            ctrl.searchUsersByUserName(value);
                         },
                         decoration: InputDecoration(
                           labelText: 'Enter User Name',
