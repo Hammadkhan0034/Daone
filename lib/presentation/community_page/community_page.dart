@@ -362,21 +362,44 @@ class CommunityPage extends StatelessWidget {
                                       ),
                                       InkWell(
                                         onTap: () async {
-                                        controller.likeFunction(controller.user,documentId);
-
+                                          await controller.likeFunction(controller.user!, documentId);
                                         },
-                                        child: Material(
-                                          color: Colors.white,
-                                          elevation: 2,
-                                          borderRadius: BorderRadius.circular(100),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(8),
-                                            child: Center(
-                                              child: Image.asset('assets/images/like1.png', scale: 4),
-                                            ),
-                                          ),
+                                        child: FutureBuilder<bool>(
+                                          future: controller.getLikeStatus(controller.user!, documentId),
+                                          builder: (context, snapshot) {
+                                            if (snapshot.connectionState == ConnectionState.waiting) {
+                                              // While waiting for the result, return the default like icon
+                                              return buildLikeButton(false);
+                                            } else if (snapshot.hasError) {
+                                              // If an error occurred, handle it appropriately
+                                              return buildLikeButton(false);
+                                            } else {
+                                              // If the like status is obtained successfully, update the UI
+                                              bool isLiked = snapshot.data!;
+                                              return buildLikeButton(isLiked);
+                                            }
+                                          },
                                         ),
                                       ),
+
+
+                                      // InkWell(
+                                      //   onTap: () async {
+                                      //   controller.likeFunction(controller.user,documentId);
+                                      //
+                                      //   },
+                                      //   child: Material(
+                                      //     color: Colors.white,
+                                      //     elevation: 2,
+                                      //     borderRadius: BorderRadius.circular(100),
+                                      //     child: Padding(
+                                      //       padding: EdgeInsets.all(8),
+                                      //       child: Center(
+                                      //         child: Image.asset('assets/images/like1.png', scale: 4),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                         child: TextWidget(text: postLike.toString(), color: Colors.deepOrange, fsize: 16),
@@ -670,4 +693,24 @@ class CommunityPage extends StatelessWidget {
       ),
     );
   }
+  Widget buildLikeButton(bool isLiked) {
+    return Material(
+      color: Colors.white,
+      elevation: 2,
+      borderRadius: BorderRadius.circular(100),
+      child: Padding(
+        padding: EdgeInsets.all(8),
+        child: Center(
+          child: isLiked ? Image.asset(
+            'assets/images/like1.png',color: Colors.deepOrange,
+            scale: 4,
+          ): Image.asset(
+            'assets/images/like1.png',
+            scale: 4,
+          ),
+        ),
+      ),
+    );
+  }
+
 }

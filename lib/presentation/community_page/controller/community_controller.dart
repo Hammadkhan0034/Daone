@@ -19,7 +19,6 @@ class CommunityController extends GetxController {
   RxInt commentLength =0.obs;
   RxInt  commentId= 0.obs;
 
-  var isLiked = false.obs;
 
   onSelected(dynamic value) {
     for (var element in communityModelObj.value.dropdownItemList.value) {
@@ -142,7 +141,6 @@ class CommunityController extends GetxController {
   }
 
 
-// Function to get the like status of a post for a specific user
   Future<bool> getLikeStatus(String userId, String postId) async {
     final querySnapshot = await FirebaseFirestore.instance.collection('likes')
         .where('userId', isEqualTo: userId)
