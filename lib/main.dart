@@ -13,11 +13,10 @@ import 'presentation/friend_finder/friend_finder.dart';
 
 
 Future<void> main() async {
-  Get.put(FriendFinderController());
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await Alarm.init();
-
+  Get.put(FriendFinderController());
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]).then((value) {
