@@ -14,11 +14,43 @@
       },
       "oauth_client": [
         {
+          "client_id": "1056216974066-a9ednvuajc9ces8rvnoe2j29rk61ee12.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "75caf891a8d17ef171da1996f0bd0b7c47b6ca60"
+          }
+        },
+        {
+          "client_id": "1056216974066-d7qjtg3ojmd8ennogms9pbulf25cc34d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "bd22c456bd28860adcfe630a79d965bcca75bead"
+          }
+        },
+        {
+          "client_id": "1056216974066-deji204frnkubeu89e2nslonf6mpob20.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "a4c3634777cd155bf9da3801b005e41512172d91"
+          }
+        },
+        {
           "client_id": "1056216974066-tnf79brvj08bp6ql3n6bj0ikd2ja1qc8.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.daone.app",
             "certificate_hash": "82a946200102fbee8467fede275cc53c787ced70"
+          }
+        },
+        {
+          "client_id": "1056216974066-v8eq2buuulua61q8fbhfvgnailid02v4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.daone.app",
+            "certificate_hash": "6b7e2727b7ff55b6fa7c9de76b94dedb3bb94b37"
           }
         },
         {
